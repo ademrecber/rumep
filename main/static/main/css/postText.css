@@ -1,0 +1,31 @@
+/* main/static/main/css/postTex.css */
+.post-text {
+    font-size: 1rem;
+    margin: 5px 0;
+    line-height: 1.5;
+    max-height: none !important; /* Sınırlama varsa kaldır */
+    overflow: visible !important; /* Sınırlama varsa kaldır */
+}
+
+.text-preview {
+    max-height: 12em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.show-more-btn {
+    cursor: pointer;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    font-size: 0.9rem;
+}
+
+.full-text {
+    white-space: pre-line;
+    animation: fadeIn 0.3s ease;
+    max-height: none !important; /* Sınırlama varsa kaldır */
+    overflow: visible !important; /* Sınırlama varsa kaldır */
+}

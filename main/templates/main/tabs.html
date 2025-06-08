@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Ana Sayfa - Rumep{% endblock %}
+{% block content %}
+<div class="container twitter-container" id="main-content">
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a class="nav-link {% if sekme == 'ana_sayfa' or not sekme %}active{% endif %}" href="?sekme=ana_sayfa">Ana Sayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if sekme == 'katkilar' %}active{% endif %}" href="?sekme=katkilar">Katkılar</a>
+        </li>
+    </ul>
+    
+    <div class="tab-content">
+        {% if sekme == 'ana_sayfa' or not sekme %}
+            <div class="tab-pane active" id="post-list">
+                {% include 'main/home.html' %}
+            </div>
+        {% else %}
+            <div class="tab-pane active" id="katki-list">
+                {% include 'main/katki/katki_list.html' %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

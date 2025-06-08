@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Kişiler - Rumep{% endblock %}
+{% block content %}
+    <div class="container twitter-container">
+        <h3>Kişiler</h3>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Kişi Listesi</h5>
+                    <a href="{% url 'kisi_ekle' %}" class="btn btn-primary rounded-pill">Kişi Ekle</a>
+                </div>
+                <div class="d-flex flex-wrap mb-3">
+                    <a href="{% url 'kisi_liste' %}" class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}">Tümü</a>
+                    {% for harf in harfler %}
+                        <a href="?harf={{ harf }}" class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}">{{ harf|upper }}</a>
+                    {% endfor %}
+                </div>
+                <form id="filter-form" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Kişi ara..." value="{{ request.GET.q }}">
+                        <select name="kategori" class="form-control select2">
+                            <option value="">Tüm Kategoriler</option>
+                            {% for kategori in kategoriler %}
+                                <option value="{{ kategori.slug }}" {% if request.GET.kategori == kategori.slug %}selected{% endif %}>{{ kategori.ad }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Filtrele</button>
+                    </div>
+                </form>
+                <div id="kisi-list">
+                    {% for kisi in kisiler %}
+                        <div class="kisi-item mb-2" data-kisi-id="{{ kisi.id }}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <a href="{% url 'kisi_detay' kisi.id %}" class="text-decoration-none">
+                                    <strong>{{ kisi.ad }}</strong>
+                                    <p class="text-muted small">{{ kisi.biyografi|striptags|truncatechars:100 }}</p>
+                                </a>
+                                {% if kisi.kullanici == user %}
+                                    <div class="dropdown">
+                                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="{{ kisi.id }}">Sil</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Bu harfle başlayan kişi bulunamadı.</p>
+                    {% endfor %}
+                </div>
+                <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+                <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_scripts %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}

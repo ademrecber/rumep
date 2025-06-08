@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Albüm Ekle - {{ kisi.ad }}{% endblock %}
+{% block content %}
+<div class="container twitter-container sarki-container">
+    <h3>{{ kisi.ad }} için Albüm Ekle</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <form id="album-ekle-form" method="post" action="{% url 'sarki_album_ekle' kisi.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_ad" class="form-label">Albüm Adı</label>
+                    {{ album_form.ad }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_yil" class="form-label">Albüm Yılı (İsteğe Bağlı)</label>
+                    {{ album_form.yil }}
+                </div>
+                <div id="album-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                <button type="submit" class="btn btn-primary rounded-pill">Albüm Ekle</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_loader.js' %}"></script>
+    <script type="module">
+        import { initAlbumEkle } from "{% static 'main/js/modules/sarki/sarki_loader.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initAlbumEkle();
+        });
+    </script>
+{% endblock %}

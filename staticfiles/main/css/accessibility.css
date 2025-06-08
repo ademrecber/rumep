@@ -1,0 +1,126 @@
+/* Accessibility improvements */
+
+/* Focus styles */
+:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Skip to content link (hidden until focused) */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  z-index: 9999;
+  transition: top 0.3s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Improved contrast for text */
+.text-muted {
+  color: #6b7280 !important; /* Darker than default Bootstrap text-muted */
+}
+
+/* Improved button focus states */
+.btn:focus, 
+.btn:active:focus {
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.5);
+}
+
+/* Improved form control focus states */
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+}
+
+/* Improved link focus and hover states */
+a:focus, 
+a:hover {
+  text-decoration: underline;
+}
+
+/* Improved dropdown menu focus states */
+.dropdown-item:focus {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Improved modal focus trap */
+.modal {
+  outline: none;
+}
+
+.modal-content:focus {
+  outline: none;
+}
+
+/* Improved form labels */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Improved form validation feedback */
+.invalid-feedback {
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* Improved alert contrast */
+.alert-danger {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+/* Improved button text contrast */
+.btn-primary {
+  color: white !important;
+}
+
+/* Improved card contrast */
+.card {
+  border: 1px solid var(--border-color);
+}
+
+/* Improved table accessibility */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  font-weight: 600;
+}
+
+/* Improved form placeholder contrast */
+::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+
+/* Improved focus visible utility */
+.focus-visible:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

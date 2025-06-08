@@ -1,0 +1,29 @@
+/* Link Alanı Stilleri */
+.link-field {
+    margin-bottom: 1rem; /* Alt boşluk */
+}
+
+.link-field .form-label {
+    font-weight: 600; /* Kalın etiket */
+    font-size: 1rem; /* Normal boyutta etiket */
+    color: #333; /* Koyu renk */
+    margin-bottom: 0.3rem; /* Etiket ile input arası */
+    display: block; /* Etiketin üstte kalması */
+}
+
+.link-field input[name="link"] {
+    font-size: 1.2rem; /* Başlıkla aynı boyutta */
+    padding: 0.6rem 0;
+    border: none !important; /* Bootstrap’i eziyor */
+    width: 100%;
+    background: #f5f8fa;
+    border-radius: 0;
+    box-shadow: none;
+    color: #007bff;
+    transition: background-color 0.2s ease;
+}
+
+.link-field input[name="link"]:focus {
+    background: #e8f0fe; /* Odaklandığında hafif mavi arka plan */
+    outline: none; /* Varsayılan outline kaldır */
+}

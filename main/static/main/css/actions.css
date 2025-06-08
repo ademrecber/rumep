@@ -1,0 +1,17 @@
+.upvote-btn.active {
+    color: #28a745 !important;
+    font-weight: bold;
+}
+
+.downvote-btn.active {
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.vote-form button {
+    transition: all 0.2s ease;
+}
+
+.vote-form button:hover {
+    transform: scale(1.1);
+}

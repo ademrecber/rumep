@@ -1,0 +1,160 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{{ item.kelime }} - Rumep{% endblock %}
+{% block content %}
+<div class="container twitter-container atasozu-deyim-container">
+    <h3>{{ item.kelime }}</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <h5>{% if tur == 'atasozu' %}Atasözü{% else %}Deyim{% endif %}</h5>
+                {% if item.kullanici == user %}
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-outline-primary btn-sm me-2" data-action="duzenle" data-tur="{{ tur }}" data-id="{{ item.id }}" title="Düzenle">
+                            <i class="bi bi-pencil"></i> Düzenle
+                        </button>
+                        <form method="post" action="{% url 'atasozu_deyim_sil' tur=tur id=item.id %}" class="d-inline" id="sil-form" data-tur="{{ tur }}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Sil">
+                                <i class="bi bi-trash"></i> Sil
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <p><strong>Anlam:</strong> {{ item.anlami|linebreaks }}</p>
+            {% if item.ornek %}
+                <p><strong>Örnek:</strong> {{ item.ornek|linebreaks }}</p>
+            {% endif %}
+            <p class="text-muted small">Ekleyen: {{ item.kullanici.profile.username }} | Tarih: {{ item.eklenme_tarihi|date:"d.m.Y" }}</p>
+        </div>
+    </div>
+
+    <!-- Detaylar Bölümü -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Ek Detaylar</h5>
+                {% if item.kullanici != user %}
+                    <button class="btn btn-primary rounded-pill" data-action="detay-ekle" data-tur="{{ tur }}" data-id="{{ item.id }}">Detay Ekle</button>
+                {% endif %}
+            </div>
+            <div id="detay-list">
+                {% for detay in detaylar %}
+                    <div class="detay-item mb-3" data-detay-id="{{ detay.id }}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p>{{ detay.detay|linebreaks }}</p>
+                                <small class="text-muted">Ekleyen: {{ detay.kullanici.profile.username }} - {{ detay.eklenme_tarihi|date:"d.m.Y H:i" }}</small>
+                            </div>
+                            {% if detay.kullanici == user %}
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-link text-primary p-0 me-2" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Düzenle">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-link text-danger p-0" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Sil">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Ekle Modal -->
+<div class="modal fade" id="detayEkleModal" tabindex="-1" aria-labelledby="detayEkleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detayEkleModalLabel">Detay Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="detay-ekle-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="detay-ekle-tur" name="tur">
+                    <input type="hidden" id="detay-ekle-id" name="id">
+                    <div class="mb-3">
+                        <label for="detay-ekle-text" class="form-label">Detay</label>
+                        <textarea id="detay-ekle-text" name="detay" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Düzenle Modal -->
+<div class="modal fade" id="detayDuzenleModal" tabindex="-1" aria-labelledby="detayDuzenleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detayDuzenleModalLabel">Detay Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="detay-duzenle-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="detay-duzenle-id" name="detay_id">
+                    <div class="mb-3">
+                        <label for="detay-duzenle-text" class="form-label">Detay</label>
+                        <textarea id="detay-duzenle-text" name="detay" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Atasözü/Deyim Düzenle Modal -->
+<div class="modal fade" id="duzenleModal" tabindex="-1" aria-labelledby="duzenleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="duzenleModalLabel">{% if tur == 'atasozu' %}Atasözü{% else %}Deyim{% endif %} Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="duzenle-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="duzenle-tur" name="tur" value="{{ tur }}">
+                    <input type="hidden" id="duzenle-id" name="id" value="{{ item.id }}">
+                    <div class="mb-3">
+                        <label for="duzenle-kelime" class="form-label">Kelime</label>
+                        <input type="text" id="duzenle-kelime" name="kelime" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="duzenle-anlami" class="form-label">Anlam</label>
+                        <textarea id="duzenle-anlami" name="anlami" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="duzenle-ornek" class="form-label">Örnek</label>
+                        <textarea id="duzenle-ornek" name="ornek" class="form-control" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/modern.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_actions.js' %}"></script>
+    <script type="module">
+        import { initAtasozuDeyimActions } from "{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_actions.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initAtasozuDeyimActions();
+        });
+    </script>
+{% endblock %}

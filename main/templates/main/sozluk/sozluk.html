@@ -1,0 +1,213 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Kürtçe Sözlük{% endblock %}
+
+{% block meta_description %}Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme{% endblock %}
+
+{% block extra_head %}
+    <meta name="csrf-token" content="{% csrf_token %}">
+    <!-- Dictionary-specific resource hints -->
+    <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}" as="script">
+    <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_search.js' %}" as="script">
+    <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_form.js' %}">
+    <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_detay.js' %}">
+    <!-- Dictionary-specific styles -->
+    <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container twitter-container sozluk-container">
+        <h1 class="h3">Kürtçe Sözlük</h1>
+        
+        <!-- Kelime Ekleme Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <form id="sozluk-form" method="post" action="{% url 'sozluk_ana_sayfa' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
+                    <button type="submit" class="btn btn-primary rounded-pill">
+                        <i class="bi bi-plus-circle me-1"></i> Kelime Ekle
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Arama Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5><i class="bi bi-search me-2"></i>Kelime Ara</h5>
+                <form id="sozluk-arama-form" class="d-flex gap-2">
+                    <div class="flex-grow-1">
+                        <input type="text" 
+                               id="arama-input" 
+                               class="form-control" 
+                               placeholder="Kelime ara (ör. ab)" 
+                               aria-label="Arama"
+                               autocomplete="off">
+                    </div>
+                    <div>
+                        <select id="tur-filtresi" class="form-select" aria-label="Kelime türü filtresi">
+                            <option value="">Tüm Türler</option>
+                            <option value="isim">İsim</option>
+                            <option value="fiil">Fiil</option>
+                            <option value="sifat">Sıfat</option>
+                            <option value="zarf">Zarf</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill">
+                        <i class="bi bi-search me-1"></i> Ara
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Harf Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Harfler</h5>
+                <nav aria-label="Alfabe navigasyonu">
+                    <div class="d-flex flex-wrap gap-1">
+                        <a id="tum-kelimeler-btn"
+                           href="{% url 'sozluk_ana_sayfa' %}" 
+                           class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}"
+                           aria-label="Tüm kelimeler">
+                           Tümü
+                        </a>
+                        {% for harf in harfler %}
+                            <a href="{% url 'sozluk_harf' harf %}" 
+                               class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}"
+                               aria-label="{{ harf|upper }} harfi ile başlayan kelimeler">
+                                {{ harf|upper }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Kelime Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0"><i class="bi bi-book me-2"></i>Tüm Kelimeler</h5>
+                </div>
+                <div id="arama-sonuc-listesi" class="list-group list-group-flush">
+                    <p class="text-muted">
+                        <i class="bi bi-hourglass-split me-2"></i>Kelimeler yükleniyor...
+                    </p>
+                </div>
+                <div id="loading" class="text-center mt-3 d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Yükleniyor...</span>
+                    </div>
+                </div>
+                <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+            </div>
+        </div>
+
+        <!-- Düzenleme Modalı -->
+        <div class="modal fade" id="editKelimeModal" tabindex="-1" aria-labelledby="editKelimeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editKelimeModalLabel">
+                            <i class="bi bi-pencil-square me-2"></i>Kelime Düzenle
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-kelime-form" method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="kelime" class="form-label">Kelime</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="kelime" 
+                                       name="kelime" 
+                                       required
+                                       autocomplete="off">
+                                <div class="invalid-feedback">
+                                    Lütfen bir kelime girin.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="detay" class="form-label">Detay</label>
+                                <textarea class="form-control" 
+                                          id="detay" 
+                                          name="detay" 
+                                          rows="4" 
+                                          required></textarea>
+                                <div class="invalid-feedback">
+                                    Lütfen kelime detayını girin.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tur" class="form-label">Tür</label>
+                                <select class="form-select" id="tur" name="tur">
+                                    <option value="">Seçiniz</option>
+                                    <option value="isim">İsim</option>
+                                    <option value="fiil">Fiil</option>
+                                    <option value="sifat">Sıfat</option>
+                                    <option value="zarf">Zarf</option>
+                                </select>
+                            </div>
+                            <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check2 me-1"></i>Kaydet
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script type="module">
+        // Modern JavaScript modules
+        import { initSozlukForm, initSozlukLoader } from "{% static 'main/js/modules/sozluk/sozluk_loader.js' %}";
+        import { initSozlukArama, initTumKelimeler, bindKelimeActions } from "{% static 'main/js/modules/sozluk/sozluk_search.js' %}";
+        import { initEditKelimeForm } from "{% static 'main/js/modules/sozluk/sozluk_form.js' %}";
+        import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/sozluk/sozluk_detay.js' %}";
+        
+        // Initialize all features when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enable Bootstrap form validation
+            const forms = document.querySelectorAll('.needs-validation');
+            forms.forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                });
+            });
+
+            // Initialize dictionary features
+            const cleanup = {
+                loader: initSozlukLoader(''),
+                search: initSozlukArama(),
+                words: initTumKelimeler(true)
+            };
+
+            // Initialize forms
+            initSozlukForm();
+            initEditKelimeForm();
+            initDetayEkleForm();
+            initEditDetayForm();
+            bindKelimeActions();
+
+            // Cleanup on page unload
+            window.addEventListener('unload', () => {
+                Object.values(cleanup).forEach(fn => fn?.());
+            });
+        });
+    </script>
+{% endblock %}

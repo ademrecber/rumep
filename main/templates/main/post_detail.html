@@ -1,0 +1,229 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load post_tags %}
+{% block title %}{{ post.title|default:'Başlıksız' }}{% endblock %}
+{% block content %}
+    <meta name="critique-url" content="{% url 'list_critiques' %}?post_id={{ post.id }}">
+    <div class="container twitter-container">
+        <div class="card mb-3 tweet-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p class="mb-1">
+                        <strong>{{ post.user.profile.nickname }}</strong> 
+                        <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id}} · {{ post.created_at|timesince }}</span>
+                    </p>
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if post.user == user %}
+                                <li>
+                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                    </form>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if bookmarked %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">
+                                        {% if bookmarked %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <h5>{{ post.title|default:'Başlıksız' }}</h5>
+                <div class="post-text">
+                    <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
+                </div>
+                {% if post.link %}
+                    <a href="{{ post.link }}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
+                {% endif %}
+                {% if post.embed_code %}
+                    <div class="social-embed">{{ post.embed_code|safe }}</div>
+                {% endif %}
+                <div class="post-meta text-muted mt-2">
+                    <span>Beğeni: {{ like_count }}</span> | 
+                    <span>Yorum: {{ comment_count }}</span> | 
+                    <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
+                </div>
+                <div class="post-actions mt-2">
+                    <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
+                            <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ like_count }}
+                        </button>
+                    </form>
+                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="vote" value="up">
+                        <button type="submit" class="btn btn-link text-success p-0 upvote-btn" data-vote-type="up">{{ post.upvotes }} ↑</button>
+                    </form>
+                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="vote" value="down">
+                        <button type="submit" class="btn btn-link text-danger p-0 downvote-btn" data-vote-type="down">{{ post.downvotes }} ↓</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobil için eleştiri butonu ve liste -->
+        <div class="card mb-3 d-md-none">
+            <div class="card-body">
+                <button class="btn btn-primary rounded-pill mb-3" id="mobile-toggle-critique-btn">Bu metni değerlendir</button>
+                <button class="btn btn-link text-primary p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#mobile-critique-list" aria-expanded="false" aria-controls="mobile-critique-list">
+                    Son Eleştiriler <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="collapse" id="mobile-critique-list" style="max-height: 300px; overflow-y: auto;">
+                    <!-- Dinamik olarak critique_loader.js tarafından dolduruluyor -->
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3" id="critique-section" style="display: none;">
+            <div class="card-body">
+                <form method="post" id="critique-form" data-action="{% url 'add_critique' post.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="critique_submit" value="1">
+                    <div class="input-group">
+                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="Eleştirinizi yazın..." maxlength="5000" required></textarea>
+                        <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
+                            <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <button type="submit" class="btn btn-primary rounded-pill">Gönder</button>
+                        <button type="button" class="btn btn-primary rounded-pill" id="cancel-critique-btn">İptal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Emoji Picker Modal -->
+        <div class="modal fade" id="emojiModal" tabindex="-1" aria-labelledby="emojiModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="emojiModalLabel">Emoji Seç</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="emojiKeyboard" class="d-flex flex-wrap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eleştiri Modal -->
+        <div class="modal fade" id="critiqueModal" tabindex="-1" aria-labelledby="critiqueModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="critiqueModalLabel">Eleştiri Detayı</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <strong id="modal-nickname"></strong> 
+                            <span class="text-muted" id="modal-username"></span>
+                            <span class="text-muted" id="modal-short-id"></span>
+                        </p>
+                        <p class="text-muted small" id="modal-date"></p>
+                        <p id="modal-text"></p>
+                        <p id="modal-rating" class="text-muted small">Ortalama Puan: <span id="modal-rating-value"></span></p>
+                        <p id="modal-user-rating" class="text-muted small">Sizin Puanınız: <span id="modal-user-rating-value"></span></p>
+                        <div id="rating-buttons" class="mt-2"></div>
+                        <form id="delete-critique-form" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">Eleştiriyi Sil</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puanlama Modalı -->
+        <div class="modal fade" id="voteCritiqueModal" tabindex="-1" aria-labelledby="voteCritiqueModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="voteCritiqueModalLabel">Puan Ver</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bu eleştiriye kaç puan verirsiniz?</p>
+                        <div id="star-rating" class="d-flex flex-wrap">
+                            {% for i in "12345678910" %}
+                                <i class="bi bi-star-fill text-warning star-rating-item mx-1" data-value="{{ i }}" style="cursor: pointer; font-size: 1.5rem;"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary rounded-pill" id="submit-vote-critique" disabled>Gönder</button>
+                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">İptal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yorum Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <form method="post" id="commentForm" action="{% url 'post_detail' post.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="comment_submit" value="1">
+                    <div class="input-group">
+                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="Yorumunuzu yazın..." maxlength="5000" required></textarea>
+                        <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
+                            <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill mt-2">Yorum Yap</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="comments-section">
+            {% include 'main/comment_tree.html' with comment_tree=comment_tree %}
+        </div>
+
+        <!-- Toast Mesajı -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Bilgi</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Bağlantı kopyalandı!
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/copy-link.js' %}"></script>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const textareas = document.querySelectorAll('textarea.auto-grow');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = `${this.scrollHeight}px`;
+                });
+            });
+        });
+    </script>
+{% endblock %}

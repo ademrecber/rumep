@@ -1,0 +1,208 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Şarkı Sözleri - {{ sarki.ad }}{% endblock %}
+{% block content %}
+<div class="container twitter-container sarki-container">
+    <h3>{{ sarki.ad }} {% if sarki.tur %}<small class="text-muted">({{ sarki.tur }})</small>{% endif %}</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h5>Şarkı Sözleri</h5>
+                    <p class="text-muted">Albüm: {{ sarki.album.ad }}</p>
+                </div>
+                {% if sarki.kullanici == user %}
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-outline-primary btn-sm sarki-duzenle-btn me-2" 
+                                data-sarki-id="{{ sarki.id }}"
+                                data-url-duzenle="{% url 'sarki_duzenle' sarki.id %}">
+                            <i class="bi bi-pencil"></i> Düzenle
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm album-degistir-btn me-2" 
+                                data-sarki-id="{{ sarki.id }}"
+                                data-url-degistir-veri="{% url 'sarki_album_degistir_veri' sarki.id %}" 
+                                data-url-degistir="{% url 'sarki_album_degistir' sarki.id %}">
+                            <i class="bi bi-arrow-left-right"></i> Albüm Değiştir
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm sarki-sil-btn" 
+                                data-sarki-id="{{ sarki.id }}"
+                                data-album-id="{{ sarki.album.id }}"
+                                data-url-sil="{% url 'sarki_sil' sarki.id %}">
+                            <i class="bi bi-trash"></i> Sil
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+            <p>{{ sarki.sozler|linebreaks }}</p>
+            {% if sarki.link %}
+                <p><a href="{{ sarki.link }}" target="_blank" class="text-primary">Şarkıyı Dinle</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Detaylar Bölümü -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Ek Detaylar</h5>
+                <button class="btn btn-primary rounded-pill" data-action="detay-ekle" data-sarki-id="{{ sarki.id }}">Detay Ekle</button>
+            </div>
+            <div id="detay-list">
+                {% for detay in detaylar %}
+                    <div class="detay-item mb-3" data-detay-id="{{ detay.id }}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p>{{ detay.detay|linebreaks }}</p>
+                                <small class="text-muted">Ekleyen: {{ detay.kullanici.profile.username }} - {{ detay.eklenme_tarihi|date:"d.m.Y H:i" }}</small>
+                            </div>
+                            {% if detay.kullanici == user %}
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-link text-primary p-0 me-2" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Düzenle">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-link text-danger p-0" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Sil">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Ekle Modal -->
+<div class="modal fade" id="detayEkleModal" tabindex="-1" aria-labelledby="detayEkleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detayEkleModalLabel">Detay Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="detay-ekle-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="detay-ekle-sarki-id" name="sarki_id">
+                    <div class="mb-3">
+                        <label for="detay-ekle-text" class="form-label">Detay</label>
+                        <textarea id="detay-ekle-text" name="detay" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Düzenle Modal -->
+<div class="modal fade" id="detayDuzenleModal" tabindex="-1" aria-labelledby="detayDuzenleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detayDuzenleModalLabel">Detay Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="detay-duzenle-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="detay-duzenle-id" name="detay_id">
+                    <div class="mb-3">
+                        <label for="detay-duzenle-text" class="form-label">Detay</label>
+                        <textarea id="detay-duzenle-text" name="detay" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Albüm Değiştir Modal -->
+<div class="modal fade" id="albumDegistirModal" tabindex="-1" aria-labelledby="albumDegistirModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="albumDegistirModalLabel">Albüm Değiştir</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="album-degistir-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="sarki-id" name="sarki_id">
+                    <div class="mb-3">
+                        <label for="album-select" class="form-label">Yeni Albüm Seç</label>
+                        <select id="album-select" name="album_id" class="form-select" required>
+                            <!-- Albümler JS ile doldurulacak -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Değiştir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Şarkı Düzenle Modal -->
+<div class="modal fade" id="sarkiDuzenleModal" tabindex="-1" aria-labelledby="sarkiDuzenleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sarkiDuzenleModalLabel">Şarkı Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="sarki-duzenle-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="sarki-duzenle-ad" class="form-label">Şarkı Adı</label>
+                        <input type="text" id="sarki-duzenle-ad" name="ad" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sarki-duzenle-sozler" class="form-label">Şarkı Sözleri</label>
+                        <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="6" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sarki-duzenle-link" class="form-label">Şarkı Linki (İsteğe Bağlı)</label>
+                        <input type="url" id="sarki-duzenle-link" name="link" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sarki-duzenle-tur" class="form-label">Tür (İsteğe Bağlı)</label>
+                        <select id="sarki-duzenle-tur" name="tur" class="form-select">
+                            <option value="">Tür Seçiniz</option>
+                            <option value="pop">Pop</option>
+                            <option value="klasik">Klasik</option>
+                            <option value="arabesk">Arabesk</option>
+                            <option value="dengbej">Dengbêj</option>
+                            <option value="halk">Halk Müziği</option>
+                            <option value="serbest">Serbest</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_actions.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_album_actions.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_edit_actions.js' %}"></script>
+    <script type="module">
+        import { initSarkiActions } from "{% static 'main/js/modules/sarki/sarki_actions.js' %}";
+        import { initSarkiAlbumActions } from "{% static 'main/js/modules/sarki/sarki_album_actions.js' %}";
+        import { initSarkiEditActions } from "{% static 'main/js/modules/sarki/sarki_edit_actions.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initSarkiActions();
+            initSarkiAlbumActions();
+            initSarkiEditActions();
+        });
+    </script>
+{% endblock %}

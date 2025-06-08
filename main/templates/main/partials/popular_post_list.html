@@ -1,0 +1,72 @@
+{% load post_tags %}
+{% for post in posts %}
+    <div class="card mb-2 tweet-card" id="post-{{ post.id }}">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <p class="mb-1">
+                    <strong>{{ post.user.profile.nickname }}</strong> 
+                    <span class="text-muted">@{{ post.user.profile.username }} · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
+                </p>
+                <div class="dropdown">  <!-- Koşuldan çıkarıldı, tüm kullanıcılar için görünecek -->
+                    <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if post.user == user %}
+                            <li>
+                                <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                </form>
+                            </li>
+                        {% endif %}
+                        <li>  <!-- Yeni -->
+                            <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">
+                                    {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="post-text">
+                {% if post.text|length > 400 or post.text|count_lines > 15 %}
+                    <div class="text-preview">{{ post.text|truncatechars:100|linebreaks }}</div>
+                    <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                    <div class="full-text d-none">{{ post.text|linebreaks }}</div>
+                {% else %}
+                    {{ post.text|linebreaks }}
+                {% endif %}
+            </div>
+            <div class="post-meta text-muted mt-2">
+                <span>Beğeni: {{ post.like_count }}</span> | 
+                <span>Yorum: {{ post.comments.count }}</span> | 
+                <span>Görüntüleme: {{ post.views }}</span>
+            </div>
+            <div class="post-actions mt-2">
+                <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
+                        <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
+                    </button>
+                </form>
+                <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote" value="up">
+                    <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
+                </form>
+                <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote" value="down">
+                    <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
+                </form>
+                <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-chat"></i></a>
+                <span class="text-muted ms-2">Skor: {{ post.total_score|floatformat:1 }}</span>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-muted p-3">Henüz popüler eleştiri yok.</p>
+{% endfor %}

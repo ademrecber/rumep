@@ -1,0 +1,129 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Atasözü ve Deyimler - Rumep{% endblock %}
+{% block content %}
+<div class="container twitter-container atasozu-deyim-container">
+    <h3>Atasözü ve Deyimler</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if sekme == 'atasozu' or not sekme %}active{% endif %}" href="?sekme=atasozu{% if secili_harf %}&harf={{ secili_harf }}{% endif %}">Atasözleri</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if sekme == 'deyim' %}active{% endif %}" href="?sekme=deyim{% if secili_harf %}&harf={{ secili_harf }}{% endif %}">Deyimler</a>
+                </li>
+            </ul>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>{% if sekme == 'deyim' %}Deyimler{% else %}Atasözleri{% endif %}</h5>
+                <a href="{% url 'atasozu_deyim_ekle' %}" class="btn btn-primary rounded-pill">Ekle</a>
+            </div>
+            <!-- Arama ve Filtreleme Formu -->
+            <form id="atasozu-deyim-arama-form" class="mb-3">
+                <input type="hidden" name="sekme" value="{{ sekme }}">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        {{ arama_form.query.label_tag }}
+                        {{ arama_form.query }}
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        {{ arama_form.tarih_baslangic.label_tag }}
+                        {{ arama_form.tarih_baslangic }}
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        {{ arama_form.tarih_bitis.label_tag }}
+                        {{ arama_form.tarih_bitis }}
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        {{ arama_form.kullanici.label_tag }}
+                        {{ arama_form.kullanici }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Ara ve Filtrele</button>
+            </form>
+            <!-- Arama Sonuçları -->
+            <div id="search-results" class="mb-3"></div>
+            <!-- Harf Seçimi -->
+            <div class="d-flex flex-wrap mb-3">
+                <a href="?sekme={{ sekme }}" class="btn btn-link text-primary m-1 {% if not secili_harf %}active{% endif %}">Tümü</a>
+                {% for harf in harfler %}
+                    <a href="?sekme={{ sekme }}&harf={{ harf }}" class="btn btn-link text-primary m-1 {% if secili_harf == harf %}active{% endif %}">{{ harf|upper }}</a>
+                {% endfor %}
+            </div>
+            <div id="item-list">
+                {% if sekme == 'deyim' %}
+                    {% for harf, items in deyim_gruplari %}
+                        {% if items %}
+                            <h6 class="mt-3">{{ harf|upper }}</h6>
+                            <ul class="list-unstyled item-list">
+                                {% for item in items %}
+                                    <li class="item mb-2">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <a href="{% url 'atasozu_deyim_detay' tur='deyim' id=item.id %}" class="text-decoration-none">
+                                                <strong>{{ item.kelime }}</strong>
+                                                <p class="text-muted small">{{ item.anlami|truncatechars:100 }}</p>
+                                            </a>
+                                            {% if item.kullanici == user %}
+                                                <form method="post" action="{% url 'atasozu_deyim_sil' tur='deyim' id=item.id %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="deyim">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% empty %}
+                        <p class="text-muted">Bu harfle başlayan deyim bulunamadı.</p>
+                    {% endfor %}
+                {% else %}
+                    {% for harf, items in atasozu_gruplari %}
+                        {% if items %}
+                            <h6 class="mt-3">{{ harf|upper }}</h6>
+                            <ul class="list-unstyled item-list">
+                                {% for item in items %}
+                                    <li class="item mb-2">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <a href="{% url 'atasozu_deyim_detay' tur='atasozu' id=item.id %}" class="text-decoration-none">
+                                                <strong>{{ item.kelime }}</strong>
+                                                <p class="text-muted small">{{ item.anlami|truncatechars:100 }}</p>
+                                            </a>
+                                            {% if item.kullanici == user %}
+                                                <form method="post" action="{% url 'atasozu_deyim_sil' tur='atasozu' id=item.id %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="atasozu">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% empty %}
+                        <p class="text-muted">Bu harfle başlayan atasözü bulunamadı.</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/modern.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_loader.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_actions.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_search.js' %}"></script>
+    <script type="module">
+        import { initAtasozuDeyimEkle } from "{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_loader.js' %}";
+        import { initAtasozuDeyimActions } from "{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_actions.js' %}";
+        import { initAtasozuDeyimArama } from "{% static 'main/js/modules/atasozu_deyim/atasozu_deyim_search.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initAtasozuDeyimEkle();
+            initAtasozuDeyimActions();
+            initAtasozuDeyimArama();
+        });
+    </script>
+{% endblock %}

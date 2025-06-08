@@ -1,0 +1,26 @@
+/* main/static/main/css/twittercard.css */
+.tweet-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    background: white;
+    max-height: none !important; /* Sınırlama varsa kaldır */
+    overflow: visible !important; /* Sınırlama varsa kaldır */
+}
+
+.tweet-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.tweet-card.reply {
+    background-color: rgba(29, 161, 242, 0.03);
+    border-left: 3px solid #1da1f2 !important;
+}
+
+.card-body {
+    max-height: none !important;
+    overflow: visible !important;
+}

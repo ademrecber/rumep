@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Şarkı Sözü Ekle - Rumep{% endblock %}
+{% block content %}
+<div class="container twitter-container sarki-container">
+    <h3>Şarkı Sözü Ekle</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>Kişi Ara</h5>
+            <form id="kisi-ara-form" action="{% url 'sarki_kisi_ara' %}" method="get">
+                <div class="input-group">
+                    <input type="text" id="kisi-ara-input" class="form-control rounded-pill" placeholder="Kişi adını yazın..." aria-label="Kişi ara">
+                    <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+                <div id="kisi-ara-sonuc" class="mt-3"></div>
+            </form>
+            <p class="text-muted mt-3">Aradığınız kişi yok mu? <a href="{% url 'kisi_ekle' %}">Hemen ekle!</a></p>
+        </div>
+    </div>
+    {% if kisi %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ kisi.ad }} için Albüm Ekle</h5>
+                <form id="album-ekle-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="album_submit" value="1">
+                    <div class="mb-3">
+                        <label for="id_ad" class="form-label">Albüm Adı</label>
+                        {{ album_form.ad }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_yil" class="form-label">Albüm Yılı (İsteğe Bağlı)</label>
+                        {{ album_form.yil }}
+                    </div>
+                    <div id="album-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                    <button type="submit" class="btn btn-primary rounded-pill">Albüm Ekle</button>
+                </form>
+            </div>
+        </div>
+        {% if albumler %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>{{ kisi.ad }} için Şarkı Sözü Ekle</h5>
+                    <form id="sarki-ekle-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="sarki_submit" value="1">
+                        <div class="mb-3">
+                            <label for="album" class="form-label">Albüm Seç</label>
+                            <select name="album" id="album" class="form-select" required>
+                                <option value="">Bir albüm seçin</option>
+                                {% for album in albumler %}
+                                    <option value="{{ album.id }}">{{ album.ad }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_ad" class="form-label">Şarkı Adı</label>
+                            {{ sarki_form.ad }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_sozler" class="form-label">Şarkı Sözleri</label>
+                            {{ sarki_form.sozler }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_tur" class="form-label">Tür (İsteğe Bağlı)</label>
+                            {{ sarki_form.tur }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_link" class="form-label">Şarkı Linki (İsteğe Bağlı)</label>
+                            {{ sarki_form.link }}
+                        </div>
+                        <div id="sarki-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                        <button type="submit" class="btn btn-primary rounded-pill">Şarkı Ekle</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_loader.js' %}"></script>
+    <script type="module">
+        import { initKisiAra, initAlbumEkle, initSarkiEkle } from "{% static 'main/js/modules/sarki/sarki_loader.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initKisiAra();
+            initAlbumEkle();
+            initSarkiEkle();
+        });
+    </script>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
+{% endblock %}

@@ -1,0 +1,41 @@
+/* DROPDOWN VE DİĞER ELEMENTLER */
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: none;
+}
+
+.dropdown-item {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f7f7f7;
+}
+
+/* İsteğe bağlı stil */
+form button:hover i {
+    color: #0d6efd; /* Mavi renk */
+}
+
+/* Görüntüleme ikonu için stil */
+.post-meta .bi-bar-chart {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+/* Değerlendirme ikonu için stil */
+.post-meta .bi-list-ul {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+/* Post detayına yönlendirme ikonu için stil */
+.post-actions .bi-arrow-right {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+/* Diğer genel stiller (varsa) */

@@ -1,0 +1,44 @@
+.kisi-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.kisi-container .btn-link {
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    color: #007bff;
+}
+
+.kisi-container .btn-link.active {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.kisi-container .kisi-item:hover {
+    background-color: #f8f9fa;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.quill-editor {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.quill-editor .ql-container {
+    min-height: 150px;
+    font-size: 1.1rem;
+}
+
+.quill-editor .ql-editor {
+    padding: 12px;
+    outline: none;
+    cursor: text;
+}

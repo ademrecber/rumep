@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{{ harf|upper }} Harfi - Kürtçe Sözlük{% endblock %}
+{% block extra_head %}
+    <meta name="csrf-token" content="{% csrf_token %}">
+{% endblock %}
+{% block content %}
+    <div class="container twitter-container">
+        <h3>{{ harf|upper }} Harfi</h3>
+        <div id="kelime-list" class="card mb-3">
+            <div class="card-body">
+                {% for kelime in kelimeler %}
+                    <div class="kelime-item mb-2" data-kelime-id="{{ kelime.id }}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <a href="{% url 'sozluk_kelime' kelime.id %}" class="text-decoration-none">
+                                <strong>{{ kelime.kelime }}</strong>
+                                <p class="text-muted small">{{ kelime.detay|truncatechars:100 }}</p>
+                            </a>
+                            {% if kelime.kullanici == user %}
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}">Sil</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Bu harfle başlayan kelime bulunamadı.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+        <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+
+        <!-- Düzenleme Modalı -->
+        <div class="modal fade" id="editKelimeModal" tabindex="-1" aria-labelledby="editKelimeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editKelimeModalLabel">Kelime Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-kelime-form" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="kelime" class="form-label">Kelime</label>
+                                <input type="text" class="form-control" id="kelime" name="kelime" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="detay" class="form-label">Detay</label>
+                                <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
+                            </div>
+                            <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                            <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}"></script>
+    <script type="module">
+        import { initSozlukLoader, bindKelimeActions, initEditKelimeForm } from "{% static 'main/js/modules/sozluk/sozluk_loader.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initSozlukLoader('{{ harf }}');
+            bindKelimeActions();
+            initEditKelimeForm();
+        });
+    </script>
+{% endblock %}

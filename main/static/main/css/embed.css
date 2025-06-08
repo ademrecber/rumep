@@ -1,0 +1,31 @@
+/* Embed kodları için modern stil */
+.social-embed {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.social-embed iframe {
+    width: 100%;
+    max-height: 500px;
+    border: none;
+    display: block;
+}
+
+/* Responsive iframe boyutları */
+@media (max-width: 768px) {
+    .social-embed iframe {
+        max-height: 300px;
+    }
+}
+
+/* Kullanıcı adını gizle */
+.social-embed [data-testid="User-Name"],
+.social-embed [class*="username"],
+.social-embed [class*="user-name"] {
+    display: none !important;
+}

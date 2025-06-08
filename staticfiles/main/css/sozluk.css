@@ -1,0 +1,38 @@
+.sozluk-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.sozluk-container .btn-outline-primary {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+.sozluk-container .kelime-item:hover {
+    background-color: #f8f9fa;
+}
+
+.sozluk-container .kelime-list {
+    margin-top: 10px;
+}
+
+.sozluk-container .kelime-list h6 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sozluk-container .kelime-list ul {
+    padding-left: 20px;
+}
+
+.sozluk-container .kelime-list li {
+    margin-bottom: 8px;
+}

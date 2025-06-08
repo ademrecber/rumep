@@ -1,0 +1,77 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Şarkı Sözleri - Rumep{% endblock %}
+{% block content %}
+<div class="container twitter-container sarki-container">
+    <h3>Şarkı Sözleri</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <!-- Arama ve Tür Filtresi -->
+            <div class="mb-3">
+                <form id="sarki-arama-form" class="d-flex justify-content-between align-items-center">
+                    <div class="input-group me-2">
+                        <input type="text" id="sarki-arama-input" class="form-control rounded-pill" placeholder="Şarkı adı veya sözleriyle ara..." aria-label="Arama">
+                        <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                    <select id="tur-filtre" class="form-select rounded-pill" style="max-width: 200px;">
+                        <option value="">Tüm Türler</option>
+                        {% for tur in turler %}
+                            <option value="{{ tur }}">{{ tur }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <div id="sarki-arama-sonuc" class="mt-3"></div>
+            </div>
+
+            <!-- Harf Filtresi ve Kişi Listesi -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Kişiler</h5>
+                <a href="{% url 'sarki_ekle' %}" class="btn btn-primary rounded-pill">Şarkı Sözü Ekle</a>
+            </div>
+            <div class="d-flex flex-wrap mb-3">
+                <a href="{% url 'sarki_sozleri' %}" class="btn btn-link text-primary m-1 {% if not secili_harf %}active{% endif %}">Tümü</a>
+                {% for harf in harfler %}
+                    <a href="?harf={{ harf }}" class="btn btn-link text-primary m-1 {% if secili_harf == harf %}active{% endif %}">{{ harf|upper }}</a>
+                {% endfor %}
+            </div>
+            <div id="kisi-list">
+                {% for harf, kisiler in kisi_gruplari %}
+                    {% if kisiler %}
+                        <h6 class="mt-3">{{ harf|upper }}</h6>
+                        <ul class="list-unstyled kisi-list">
+                            {% for kisi in kisiler %}
+                                <li class="kisi-item mb-2">
+                                    <a href="{% url 'sarki_album_liste' kisi.id %}" class="text-decoration-none">
+                                        <strong>{{ kisi.ad }}</strong>
+                                        <p class="text-muted small">
+                                            {{ kisi.album_sayisi }} albüm, 
+                                            {{ kisi.sarki_sayisi }} şarkı
+                                        </p>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% empty %}
+                    <p class="text-muted">Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_loader.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sarki/sarki_search.js' %}"></script>
+    <script type="module">
+        import { initSarkiLoader } from "{% static 'main/js/modules/sarki/sarki_loader.js' %}";
+        import { initSarkiSearch } from "{% static 'main/js/modules/sarki/sarki_search.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            initSarkiLoader();
+            initSarkiSearch();
+        });
+    </script>
+{% endblock %}

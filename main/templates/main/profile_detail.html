@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load post_tags %}
+{% block title %}Profil - {{ profile.nickname }}{% endblock %}
+{% block content %}
+<div class="container twitter-container">
+    <!-- Profil Bilgileri -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>{{ profile.nickname }} <small class="text-muted">@{{ profile.username }}</small></h3>
+            <p class="text-muted mb-1">E-posta: {{ profile.user.email }}</p>
+            {% if profile.instagram_username %}
+                <p class="text-muted mb-1">Instagram: <a href="https://instagram.com/{{ profile.instagram_username }}" target="_blank">@{{ profile.instagram_username }}</a></p>
+            {% endif %}
+            {% if profile.twitter_username %}
+                <p class="text-muted mb-1">Twitter: <a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank">@{{ profile.twitter_username }}</a></p>
+            {% endif %}
+            <p class="text-muted">Toplam Post: {{ posts_count }}</p>
+        </div>
+    </div>
+
+    <!-- Sekmeler -->
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=posts">Post</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=comments">Yorum</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=critiques">Değerlendirme</a>
+        </li>
+    </ul>
+
+    <!-- Sekme İçeriği -->
+    <div class="tab-content">
+        {% if tab == 'posts' %}
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="card mb-2">
+                        <div class="card-body p-3">
+                            <p class="mb-1">
+                                <strong>{{ post.user.profile.nickname }}</strong> 
+                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
+                            </p>
+                            <p class="mb-1"><a href="{% url 'post_detail' post.id %}" class="text-dark text-decoration-none">{{ post.text|render_emojis|safe|linebreaks }}</a></p>
+                            {% if post.link %}
+                                <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-primary">{{ post.link|truncatechars:50 }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">Bu kullanıcı henüz post paylaşmadı veya postlar gizli.</p>
+            {% endif %}
+        {% elif tab == 'comments' %}
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="card mb-2">
+                        <div class="card-body p-3">
+                            <p class="mb-1">
+                                <strong>{{ comment.user.profile.nickname }}</strong> 
+                                <span class="text-muted"><a href="{% url 'profile_detail' comment.user.profile.username %}" class="text-muted text-decoration-none">@{{ comment.user.profile.username }}</a> · {{ comment.created_at }}</span>
+                            </p>
+                            <p class="mb-1"><a href="{% url 'post_detail' comment.post.id %}" class="text-dark text-decoration-none">{{ comment.text|render_emojis|safe|linebreaks }}</a></p>
+                            <p class="text-muted small">Post: <a href="{% url 'post_detail' comment.post.id %}" class="text-muted">{{ comment.post.title|default:comment.post.text|truncatechars:50 }}</a></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">Bu kullanıcı henüz yorum yapmadı veya yorumlar gizli.</p>
+            {% endif %}
+        {% elif tab == 'critiques' %}
+            {% if critiques %}
+                {% for critique in critiques %}
+                    <div class="card mb-2">
+                        <div class="card-body p-3">
+                            <p class="mb-1">
+                                <strong>{{ critique.user.profile.nickname }}</strong> 
+                                <span class="text-muted"><a href="{% url 'profile_detail' critique.user.profile.username %}" class="text-muted text-decoration-none">@{{ critique.user.profile.username }}</a> · {{ critique.created_at }} · ID: {{ critique.short_id }}</span>
+                            </p>
+                            <p class="mb-1"><a href="{% url 'post_detail' critique.post.id %}" class="text-dark text-decoration-none">{{ critique.text|render_emojis|safe|linebreaks }}</a></p>
+                            <p class="text-muted small">Post: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
+                            <p class="text-muted small">Puan: {{ critique.rating|floatformat:1 }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

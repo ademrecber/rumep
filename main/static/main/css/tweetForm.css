@@ -1,0 +1,51 @@
+/* Tweet Form Stilleri */
+.tweet-form {
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.tweet-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.tweet-form .form-label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.tweet-form textarea[name="text"] {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    border: none !important;
+    width: 100%;
+    background: #f5f8fa;
+    border-radius: 0;
+    box-shadow: none;
+    resize: none; /* Scroll’u kaldır */
+    overflow: hidden; /* Scroll’u gizle */
+    min-height: 60px;
+    transition: background-color 0.2s ease;
+}
+
+.tweet-form textarea[name="text"]:focus {
+    background: #e8f0fe;
+    outline: none;
+}
+
+.tweet-form .btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 20px;
+}
+
+.tweet-form .text-muted {
+    font-size: 0.9rem;
+}
+
+.tweet-form .alert-danger {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}

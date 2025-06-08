@@ -1,0 +1,73 @@
+{% load post_tags %}
+{% for comment in comment_tree %}
+    <div class="card mb-2 tweet-card {% if comment.parent_id %}ms-4 border-start{% endif %}" id="comment-{{ comment.id }}">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <p class="mb-1">
+                    <strong>{{ comment.user.profile.nickname }}</strong> 
+                    <span class="text-muted"><a href="{% url 'profile_detail' comment.user.profile.username %}" class="text-muted text-decoration-none">@{{ comment.user.profile.username }}</a> · {{ comment.created_at|timesince }}</span>
+                </p>
+                {% if comment.user == user %}
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form method="post" action="{% url 'delete_comment' comment.id %}" onsubmit="return deleteComment(event, '{{ comment.id }}')">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="post-text">
+                {% if comment.text|length > 400 or comment.text|count_lines > 15 %}
+                    <div class="text-preview"><p>{{ comment.text|render_emojis|safe }}</p></div>
+                    <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                    <div class="full-text d-none"><p>{{ comment.text|render_emojis|safe }}</p></div>
+                    <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                {% else %}
+                    <p>{{ comment.text|render_emojis|safe }}</p>
+                {% endif %}
+            </div>
+            <div class="post-actions mt-2">
+                <button class="btn btn-link text-primary p-0 reply-btn" data-comment-id="{{ comment.id }}">
+                    <i class="bi bi-reply"></i> Yanıtla
+                </button>
+                <form method="post" action="{% url 'vote_comment' comment.id %}" class="vote-form d-inline" data-comment-id="{{ comment.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote" value="up">
+                    <button type="submit" class="btn btn-link text-success p-0 upvote-btn" data-vote-type="up">{{ comment.upvotes }} ↑</button>
+                </form>
+                <form method="post" action="{% url 'vote_comment' comment.id %}" class="vote-form d-inline" data-comment-id="{{ comment.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote" value="down">
+                    <button type="submit" class="btn btn-link text-danger p-0 downvote-btn" data-vote-type="down">{{ comment.downvotes }} ↓</button>
+                </form>
+                <span class="text-muted ms-2">Skor: {{ comment.total_score|floatformat:1 }}</span>
+            </div>
+            <div class="reply-form mt-2" id="reply-form-{{ comment.id }}" style="display:none;">
+                <form method="post" action="{% url 'post_detail' post.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <div class="input-group">
+                        <textarea name="text" class="form-control auto-resize mb-2" rows="2" placeholder="Yanıtınız..." maxlength="500"></textarea>
+                        <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
+                            <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Gönder</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply">İptal</button>
+                </form>
+            </div>
+            {% if comment.children %}
+                {% with comment_tree=comment.children %}
+                    {% include 'main/comment_tree.html' %}
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

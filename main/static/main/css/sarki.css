@@ -1,0 +1,65 @@
+.sarki-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.sarki-container .btn-outline-primary {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.sarki-container .btn-outline-primary:hover {
+    background-color: #f8f9fa;
+}
+
+.sarki-container .kisi-item:hover,
+.sarki-container .album-item:hover,
+.sarki-container .sarki-item:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s;
+}
+
+.sarki-container .kisi-list,
+.sarki-container .album-list,
+.sarki-container .sarki-list {
+    margin-top: 10px;
+}
+
+.sarki-container .kisi-list h6,
+.sarki-container .album-list h6,
+.sarki-container .sarki-list h6 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sarki-container .kisi-list ul,
+.sarki-container .album-list ul,
+.sarki-container .sarki-list ul {
+    padding-left: 20px;
+}
+
+.sarki-container .kisi-list li,
+.sarki-container .album-list li,
+.sarki-container .sarki-list li {
+    margin-bottom: 8px;
+}
+
+.sarki-container .btn-primary {
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+.sarki-container .card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
