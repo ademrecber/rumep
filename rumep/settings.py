@@ -75,11 +75,15 @@ WSGI_APPLICATION = 'rumep.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'rumep_db_vdej',
+             'USER': 'rumep_user',
+             'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
+             'HOST': 'dpg-d15141be5dus73cskem0-a',
+             'PORT': '5432',
+         }
+     }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
