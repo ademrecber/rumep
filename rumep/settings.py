@@ -81,7 +81,7 @@ DATABASES = {
              'NAME': 'rumep_db_vdej',
              'USER': 'rumep_user',
              'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
-             'HOST': 'dpg-d13141be5dus73cskem0-a',  # 151 yerine 131 düzeltildi
+             'HOST': 'dpg-d13141be5dus73cskem0-a',
              'PORT': '5432',
          }
      }
