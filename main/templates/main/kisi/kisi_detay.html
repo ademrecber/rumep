@@ -1,50 +1,52 @@
 {% extends 'main/base.html' %}
-{% load static %}
-{% block title %}{{ kisi.ad }} - Rumep{% endblock %}
-{% block content %}
-    <div class="container twitter-container">
-        <h3>{{ kisi.ad }}</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                <p><strong>Biyografi:</strong> {{ kisi.biyografi|safe }}</p>
-                <p><strong>Kategoriler:</strong> {% for kat in kisi.kategoriler.all %}{{ kat.ad }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <p><strong>Ekleyen:</strong> <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}">{{ kisi.kullanici.profile.nickname }}</a> (@{{ kisi.kullanici.profile.username }})</p>
-                <p><strong>Eklenme Tarihi:</strong> {{ kisi.eklenme_tarihi }}</p>
-                {% if kisi.kullanici == user %}
-                    <button class="btn btn-danger btn-sm delete-kisi-btn" data-kisi-id="{{ kisi.id }}">Sil</button>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-{% endblock %}
-{% block extra_scripts %}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const deleteBtn = document.querySelector('.delete-kisi-btn');
-            if (deleteBtn) {
-                deleteBtn.addEventListener('click', async () => {
-                    if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
-                    try {
-                        const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
-                            method: 'POST',
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
-                            }
-                        });
-                        const data = await response.json();
-                        if (data.success) {
-                            alert('Kişi başarıyla silindi!');
-                            window.location.href = '/kisi/liste/';
-                        } else {
-                            alert(data.error || 'Kişi silinirken hata oluştu.');
-                        }
-                    } catch (error) {
-                        console.error('Silme hatası:', error);
-                        alert('Bir hata oluştu, lütfen tekrar deneyin.');
-                    }
-                });
-            }
-        });
-    </script>
-{% endblock %}
+     {% load static %}
+     {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
+     {% block content %}
+         <div class="container twitter-container">
+             <h3>{{ kisi.ad }}</h3>
+             <div class="card mb-3">
+                 <div class="card-body">
+                     <p><strong>Biyografi:</strong> {{ kisi.biyografi|safe }}</p>
+                     <p><strong>Kategoriler:</strong> {% for kat in kisi.kategoriler.all %}{{ kat.ad }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                     <p><strong>Ekleyen:</strong> <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}">{{ kisi.kullanici.profile.nickname }}</a> (@{{ kisi.kullanici.profile.username }})</p>
+                     <p><strong>Eklenme Tarihi:</strong> {{ kisi.eklenme_tarihi }}</p>
+                     {% if kisi.kullanici == user %}
+                         <button class="btn btn-danger btn-sm delete-kisi-btn" data-kisi-id="{{ kisi.id }}">Sil</button>
+                     {% endif %}
+                 </div>
+             </div>
+         </div>
+     {% endblock %}
+     {% block extra_scripts %}
+         <script type="module">
+             import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
+             document.addEventListener('DOMContentLoaded', () => {
+                 const deleteBtn = document.querySelector('.delete-kisi-btn');
+                 if (deleteBtn) {
+                     deleteBtn.addEventListener('click', async () => {
+                         if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
+                         try {
+                             const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
+                                 method: 'POST',
+                                 headers: {
+                                     'X-Requested-With': 'XMLHttpRequest',
+                                     'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                                 }
+                             });
+                             const data = await response.json();
+                             if (data.success) {
+                                 alert('Kişi başarıyla silindi!');
+                                 window.location.href = '/kisi/liste/';
+                             } else {
+                                 alert(data.error || 'Kişi silinirken hata oluştu.');
+                             }
+                         } catch (error) {
+                             console.error('Silme hatası:', error);
+                             alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                         }
+                     });
+                 }
+                 initKisiLoader();
+             });
+         </script>
+     {% endblock %}
