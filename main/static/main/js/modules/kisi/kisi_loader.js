@@ -120,7 +120,7 @@ export function initKisiLoader() {
                         <a href="/kisi/detay/${kisi.id}/" class="text-decoration-none">
                             <strong>${kisi.ad}</strong>
                             <p class="text-muted small">${kisi.biyografi}</p>
-                            <p class="text-muted small"><strong>Kategoriler:</strong> ${kisi.kategoriler.join(', ')}</p>
+                            <p class="text-muted small"><strong>Kategoriler:</strong> ${kisi.kategoriler.length ? kisi.kategoriler.join(', ') : 'Yok'}</p>
                         </a>
                         ${kisi.is_owner ? `
                             <div class="dropdown">

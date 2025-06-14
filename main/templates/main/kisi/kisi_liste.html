@@ -35,7 +35,7 @@
                                 <a href="{% url 'kisi_detay' kisi.id %}" class="text-decoration-none">
                                     <strong>{{ kisi.ad }}</strong>
                                     <p class="text-muted small">{{ kisi.biyografi|striptags|truncatechars:100 }}</p>
-                                    <p class="text-muted small"><strong>Kategoriler:</strong> {% for kat in kisi.kategoriler.all %}{{ kat.ad }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                                    <p class="text-muted small"><strong>Kategoriler:</strong> {% for kat in kisi.kategoriler.all %}{{ kat.ad }}{% if not forloop.last %}, {% endif %}{% empty %}Yok{% endfor %}</p>
                                 </a>
                                 {% if kisi.kullanici == user %}
                                     <div class="dropdown">
