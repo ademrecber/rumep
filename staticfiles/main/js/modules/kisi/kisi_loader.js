@@ -116,25 +116,26 @@ export function initKisiLoader() {
                     kisiDiv.className = 'kisi-item mb-2';
                     kisiDiv.dataset.kisiId = kisi.id;
                     kisiDiv.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-start">
-                            <a href="/kisi/detay/${kisi.id}/" class="text-decoration-none">
-                                <strong>${kisi.ad}</strong>
-                                <p class="text-muted small">${kisi.biyografi}</p>
-                            </a>
-                            ${kisi.is_owner ? `
-                                <div class="dropdown">
-                                    <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="bi bi-three-dots"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">Sil</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
+                    <div class="d-flex justify-content-between align-items-start">
+                        <a href="/kisi/detay/${kisi.id}/" class="text-decoration-none">
+                            <strong>${kisi.ad}</strong>
+                            <p class="text-muted small">${kisi.biyografi}</p>
+                            <p class="text-muted small"><strong>Kategoriler:</strong> ${kisi.kategoriler.length ? kisi.kategoriler.join(', ') : 'Yok'}</p>
+                        </a>
+                        ${kisi.is_owner ? `
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">Sil</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
                     fragment.appendChild(kisiDiv);
                 });
                 kisiList.appendChild(fragment);
