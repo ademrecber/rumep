@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'social_django',
+    'csp',
     'main',
 ]
 
@@ -174,3 +175,13 @@ KATKI_PUANLARI = {
 HUMANIZE_TIME_FORMAT = 'd M Y H:i'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+CSP_SCRIPT_SRC = [
+         "'self'",
+         "'unsafe-inline'",
+         "'unsafe-eval'",
+         "https://cdn.jsdelivr.net",
+         "https://platform.twitter.com",
+         "https://www.instagram.com",
+         "https://code.jquery.com",  # jQuery için eklendi
+     ]
