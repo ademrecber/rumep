@@ -18,36 +18,37 @@
          </div>
      {% endblock %}
 {% block extra_scripts %}
-         <script type="module" src="{% static 'main/js/modules/kisi/kisi_loader.js' %}"></script>
-         <script type="module">
-             import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
-             document.addEventListener('DOMContentLoaded', () => {
-                 const deleteBtn = document.querySelector('.delete-kisi-btn');
-                 if (deleteBtn) {
-                     deleteBtn.addEventListener('click', async () => {
-                         if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
-                         try {
-                             const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
-                                 method: 'POST',
-                                 headers: {
-                                     'X-Requested-With': 'XMLHttpRequest',
-                                     'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
-                                 }
-                             });
-                             const data = await response.json();
-                             if (data.success) {
-                                 alert('Kişi başarıyla silindi!');
-                                 window.location.href = '/kisi/liste/';
-                             } else {
-                                 alert(data.error || 'Kişi silinirken hata oluştu.');
-                             }
-                         } catch (error) {
-                             console.error('Silme hatası:', error);
-                             alert('Bir hata oluştu, lütfen tekrar deneyin.');
-                         }
-                     });
-                 }
-                 initKisiLoader();
-             });
-         </script>
-     {% endblock %}
+           <script type="module" src="{% static 'main/js/modules/kisi/kisi_loader.js' %}"></script>
+           <script type="module">
+               import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
+               document.addEventListener('DOMContentLoaded', () => {
+                   const deleteBtn = document.querySelector('.delete-kisi-btn');
+                   if (deleteBtn) {
+                       deleteBtn.addEventListener('click', async () => {
+                           if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
+                           try {
+                               const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
+                                   method: 'POST',
+                                   headers: {
+                                       'X-Requested-With': 'XMLHttpRequest',
+                                       'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                                   }
+                               });
+                               const data = await response.json();
+                               if (data.success) {
+                                   alert('Kişi başarıyla silindi!');
+                                   window.location.href = '/kisi/liste/';
+                               } else {
+                                   alert(data.error || 'Kişi silinirken hata oluştu.');
+                               }
+                           } catch (error) {
+                               console.error('Silme hatası:', error);
+                               alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                           }
+                       });
+                   }
+                   initKisiLoader();
+                   console.log('kisi_detay.html script çalıştı');
+               });
+           </script>
+       {% endblock %}
