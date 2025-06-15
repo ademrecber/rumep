@@ -62,12 +62,13 @@
          </div>
      {% endblock %}
 {% block extra_scripts %}
-         <script type="module">
-             import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
+         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+         <script type="module" src="{% static 'main/js/modules/kisi/kisi_loader.js' %}"></script>
+         <script>
              document.addEventListener('DOMContentLoaded', () => {
                  $('.select2').select2();
-                 initKisiLoader();
-                 console.log('kisi_liste.html script çalıştı');
+                 console.log('kisi_liste.html select2 çalıştı');
              });
          </script>
      {% endblock %}
