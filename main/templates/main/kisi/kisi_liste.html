@@ -70,4 +70,11 @@
                  console.log('kisi_liste.html select2 çalıştı');
              });
          </script>
+         <script type="module">
+             import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
+             document.addEventListener('DOMContentLoaded', () => {
+                 initKisiLoader();
+                 console.log('kisi_liste.html initKisiLoader çalıştı');
+             });
+         </script>
      {% endblock %}
