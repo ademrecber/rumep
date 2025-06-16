@@ -186,6 +186,7 @@ CONTENT_SECURITY_POLICY = {
                  "https://platform.twitter.com",
                  "https://www.instagram.com",
                  "https://code.jquery.com",
+                 "https://www.google-analytics.com",  # Analytics için eklendi
              ],
              'style-src': [
                  "'self'",
@@ -203,6 +204,7 @@ CONTENT_SECURITY_POLICY = {
              ],
              'connect-src': [
                  "'self'",
+                 "https://www.google-analytics.com",  # Analytics için eklendi
              ],
          }
      }
