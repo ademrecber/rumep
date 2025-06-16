@@ -61,8 +61,8 @@
     </div>
 {% endblock %}
 {% block extra_scripts %}
-    <!-- jQuery'nin Select2'den önce yüklendiğinden emin olun (genellikle base.html'de olur) -->
-    <!-- Örnek: <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <!-- jQuery'yi CSP uyumlu bir CDN'den yükleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
