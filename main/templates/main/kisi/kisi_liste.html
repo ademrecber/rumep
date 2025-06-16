@@ -60,20 +60,37 @@
         </div>
     </div>
 {% endblock %}
+{% endblock %}
 {% block extra_scripts %}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery'yi Select2'den önce yükleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script type="module">
+        import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select2'yi jQuery yüklendikten sonra başlat
+            // Bu, sayfadaki .select2 class'ına sahip tüm select elementlerini hedefler (örn: kategori filtresi)
+            if (typeof $ !== 'undefined' && typeof $.fn.select2 === 'function') {
+                $('.select2').select2();
+                console.log('kisi_liste.html select2 başlatıldı.');
+            } else {
+                console.error('jQuery veya Select2 kütüphanesi kisi_liste.html için yüklenemedi.');
+            }
+
+            initKisiLoader(); // Bu, silme veya sayfalama gibi diğer işlevler içindir.
+            console.log('kisi_liste.html initKisiLoader çalıştı');
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
      <script>
         document.addEventListener('DOMContentLoaded', () => {
             $('.select2').select2();
         });
-    </script>,
-        <script type="module">
-        import { initKisiLoader } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
-        document.addEventListener('DOMContentLoaded', () => {
-            initKisiLoader();
-            console.log('kisi_liste.html initKisiLoader çalıştı');
-        });
     </script>
 
-     {% endblock %}
+      {% endblock %}
