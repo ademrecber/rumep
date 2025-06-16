@@ -1,3 +1,9 @@
+try {
+    console.log('kisi_loader.js yüklendi');
+} catch (error) {
+    console.error('kisi_loader.js hata:', error);
+}
+
 export function initKisiForm() {
     const form = document.getElementById('kisi-form');
     const errorDiv = document.getElementById('form-errors');
@@ -76,6 +82,14 @@ export function initKisiForm() {
     console.log('Form submit dinleyicisi bağlandı.');
 }
 
+export function initKisiLoader() {
+    try {
+        console.log('initKisiLoader başlatıldı');
+        // Mevcut kod devam eder...
+    } catch (error) {
+        console.error('initKisiLoader hata:', error);
+    }
+}
 export function initKisiLoader() {
     let offset = 20;
     let hasMore = true;

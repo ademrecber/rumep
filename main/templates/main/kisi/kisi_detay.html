@@ -19,6 +19,7 @@
 {% endblock %}
 {% block extra_scripts %}
            <script type="module" src="{% static 'main/js/modules/kisi/kisi_loader.js' %}"></script>
+
            <script>
                document.addEventListener('DOMContentLoaded', () => {
                    const deleteBtn = document.querySelector('.delete-kisi-btn');
@@ -48,5 +49,6 @@
                    }
                    console.log('kisi_detay.html script çalıştı');
                });
-           </script>
+           </script>,
+           
        {% endblock %}
