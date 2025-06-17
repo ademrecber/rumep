@@ -7,7 +7,6 @@
     <meta name="description" content="{% block meta_description %}Rumep - Türkçe Sözlük ve Kültür Platformu{% endblock %}">
     <meta name="theme-color" content="#ffffff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    {% csrf_token %}
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Rumep - {% block title %}{% endblock %}</title>
     <!-- Performance optimizations -->
@@ -112,9 +111,10 @@
             <div class="col-12 col-md-2 col-lg-2 sidebar" id="sidebar">
                 <div class="d-flex justify-content-between align-items-center p-3">
                     <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
-                    <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()">
+                    <button class="btn btn-link text-muted d-md-none" id="sidebar-toggle-close-btn">
                         <i class="bi bi-x-lg"></i>
                     </button>
+
                 </div>
                 <ul class="nav flex-column p-3">
                     <li class="nav-item">
@@ -148,7 +148,7 @@
             <div class="col-12 col-md-8 col-lg-8 main-content" id="main-content">
                 <!-- Mobil için üstte hamburger menü ve arama alanı -->
                 <div class="d-md-none d-flex justify-content-between align-items-center p-3 bg-light sticky-top mobile-header">
-                    <button class="btn btn-link text-muted" onclick="toggleSidebar()">
+                    <button class="btn btn-link text-muted" id="sidebar-toggle-open-btn">
                         <i class="bi bi-list fs-3"></i>
                     </button>
                     <form method="get" action="{% url 'search' %}" class="search-bar-mobile">
@@ -218,18 +218,21 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap with SRI -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <!-- Load social media widgets only when needed -->
+     <!-- Load social media widgets only when needed -->
     {% if has_social_embeds %}
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script async src="https://www.instagram.com/embed.js"></script>
     {% endif %}
+      <!-- jQuery (Select2 gibi bazı eklentiler için gereklidir ve diğer scriptlerden önce yüklenmeli) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    {% block extra_scripts %}{% endblock %}
+    <!-- Bootstrap with SRI -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
     <script>
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
             if (sidebar.classList.contains('active')) {
                 document.addEventListener('click', closeSidebarOnClickOutside);
@@ -239,12 +242,14 @@
         }
         
         function closeSidebarOnClickOutside(event) {
-            const sidebar = document.getElementById('sidebar');
-            if (!sidebar.contains(event.target) && !event.target.classList.contains('bi-list')) {
+           // Eğer tıklanan element sidebar'ın içinde değilse VE açma butonu değilse kapat
+            if (sidebar && !sidebar.contains(event.target) && openBtn && !openBtn.contains(event.target) && !event.target.closest('#sidebar-toggle-open-btn')) {
                 sidebar.classList.remove('active');
                 document.removeEventListener('click', closeSidebarOnClickOutside);
             }
         }
+        if(openBtn) openBtn.addEventListener('click', toggleSidebar);
+        if(closeBtn) closeBtn.addEventListener('click', toggleSidebar);
     </script>
     <!-- Beğen butonları için like.js -->
     <script type="module">
@@ -266,8 +271,6 @@
     <!-- Arama işlevselliği için search.js -->
     <script type="module" src="{% static 'main/js/search.js' %}"></script>
        <!-- jQuery (Select2 gibi bazı eklentiler için gereklidir) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
-    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
