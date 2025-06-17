@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay
+from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, Kategori
 import bleach
 import re
 
@@ -114,13 +114,19 @@ class SarkiDetayForm(forms.ModelForm):
         return detay
 
 class KisiForm(forms.ModelForm):
+    kategoriler = forms.ModelMultipleChoiceField(
+        queryset=Kategori.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-control select2', 'placeholder': 'Kategori seçin'}),
+        required=True,
+        label="Kategoriler"
+    )
+
     class Meta:
         model = Kisi
         fields = ['ad', 'biyografi', 'kategoriler']
         widgets = {
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kişinin adını girin', 'required': True}),
             'biyografi': forms.Textarea(attrs={'class': 'form-control d-none', 'id': 'biyografi-hidden', 'required': True}),
-            'kategoriler': forms.SelectMultiple(attrs={'class': 'form-control select2', 'required': True}),
         }
 
     def clean_ad(self):

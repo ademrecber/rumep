@@ -256,7 +256,6 @@
     </script>
     <!-- Tüm modüller için scripts.js -->
     <script type="module" src="{% static 'main/js/scripts.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Diğer script’ler -->
     <!-- Tema değiştirme için theme-toggle.js -->
     <script src="{% static 'main/js/theme-toggle.js' %}"></script>
@@ -266,6 +265,8 @@
     <script type="module" src="{% static 'main/js/performance.js' %}"></script>
     <!-- Arama işlevselliği için search.js -->
     <script type="module" src="{% static 'main/js/search.js' %}"></script>
+       <!-- jQuery (Select2 gibi bazı eklentiler için gereklidir) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
     {% block extra_scripts %}{% endblock %}
 </body>
