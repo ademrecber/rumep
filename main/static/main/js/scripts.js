@@ -11,6 +11,7 @@ import { loadMorePosts } from './load-more.js';
 import { loadMorePopularPosts } from './load-more-popular.js';
 import { initEmojiPicker } from './emoji.js';
 import { initGoogleSignIn, initProfileCompletion } from './auth.js';
+import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -58,6 +59,18 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("initCritiqueLoader tamamlandı");
         } else {
             console.warn('Critique URL bulunamadı');
+        }
+
+        // Yalnızca kişi ekleme sayfasında initKisiForm başlat
+        if (window.location.pathname.includes('/kisi/ekle/')) {
+            initKisiForm();
+            console.log("initKisiForm tamamlandı");
+        }
+
+        // Yalnızca kişi listesi sayfasında initKisiLoader başlat
+        if (window.location.pathname.includes('/kisi/liste/')) {
+            initKisiLoader();
+            console.log("initKisiLoader tamamlandı");
         }
 
         // Katkılar modülünü başlat

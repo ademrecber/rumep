@@ -23,35 +23,8 @@
     </div>
 {% endblock %}
 {% block extra_scripts %}
-         <!-- Select2 ve Quill için gerekli CSS dosyaları -->
-         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-         <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
-
-         <!-- jQuery'yi Select2'den önce yükleyin -->
-         <!-- jQuery'yi CSP uyumlu bir CDN'den yükleyin -->
-         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
-         <!-- Select2 ve Quill JS dosyaları -->
-         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
-
-         <!-- Modül scripti: kisi_loader.js'den fonksiyonları import eder ve DOM yüklendiğinde çalıştırır -->
-         <script type="module">
-             import { initKisiForm } from "{% static 'main/js/modules/kisi/kisi_loader.js' %}";
-
-             document.addEventListener('DOMContentLoaded', () => {
-                 // Select2'yi jQuery yüklendikten sonra başlat
-                 // Bu, formdaki {{ form.kategoriler }} gibi .select2 class'ına sahip elementleri hedefler.
-                 // Django formunuzdaki 'kategoriler' alanının widget'ına 'select2' class'ını eklediğinizden emin olun.
-                 if (typeof $ !== 'undefined' && typeof $.fn.select2 === 'function') {
-                    $('.select2').select2();
-                    console.log('kisi_ekle.html select2 başlatıldı.');
-                 } else {
-                    console.error('jQuery veya Select2 kütüphanesi kisi_ekle.html için yüklenemedi.');
-                 }
-
-                 initKisiForm(); // Bu, Quill editörü ve diğer forma özel JS'yi başlatır
-                 console.log('kisi_ekle.html initKisiForm çalıştı');
-             });
-         </script>
-     {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+{% endblock %}
