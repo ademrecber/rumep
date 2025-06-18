@@ -68,7 +68,7 @@ def kisi_ekle(request):
             logger.debug(f"Linkify sonrası biyografi: {kisi.biyografi}")
             try:
                 kisi.save()
-                form.save_m2m()
+                form.save_m2m()  # Save the many-to-many relationships (categories)
                 logger.info(f"Kişi eklendi: {kisi.ad}, Kullanıcı: {request.user.username}")
                 return JsonResponse({'success': True})
             except ValidationError as e:
@@ -77,8 +77,14 @@ def kisi_ekle(request):
         else:
             logger.error(f"Form hataları: {form.errors.get_json_data()}")
             return JsonResponse({'success': False, 'errors': {field: errors[0]['message'] for field, errors in form.errors.get_json_data().items()}})
+    
+    # Get all categories for the form
+    kategoriler = Kategori.objects.all().order_by('ad')
     form = KisiForm()
-    return render(request, 'main/kisi/kisi_ekle.html', {'form': form})
+    return render(request, 'main/kisi/kisi_ekle.html', {
+        'form': form,
+        'kategoriler': kategoriler
+    })
 
 def kisi_liste(request):
     harf = request.GET.get('harf', None)
