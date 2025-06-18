@@ -7,6 +7,7 @@
     <meta name="description" content="{% block meta_description %}Rumep - Türkçe Sözlük ve Kültür Platformu{% endblock %}">
     <meta name="theme-color" content="#ffffff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% csrf_token %}
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Rumep - {% block title %}{% endblock %}</title>
     <!-- Performance optimizations -->
@@ -217,6 +218,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     {% block extra_scripts %}{% endblock %}
 
@@ -248,7 +250,7 @@
             }
         }
     </script>
-    <!-- Beğen butonları için like.js -->
+     <!-- Beğen butonları için like.js -->
     <script type="module">
         import { initLikes } from "{% static 'main/js/like.js' %}";
         document.addEventListener('DOMContentLoaded', () => {
@@ -258,7 +260,6 @@
     </script>
     <!-- Tüm modüller için scripts.js -->
     <script type="module" src="{% static 'main/js/scripts.js' %}"></script>
-    <!-- Diğer script’ler -->
     <!-- Tema değiştirme için theme-toggle.js -->
     <script src="{% static 'main/js/theme-toggle.js' %}"></script>
     <!-- UI geliştirmeleri için ui-enhancements.js -->
@@ -266,7 +267,7 @@
     <!-- Performans optimizasyonları için performance.js -->
     <script type="module" src="{% static 'main/js/performance.js' %}"></script>
     <!-- Arama işlevselliği için search.js -->
-    <script type="module" src="{% static 'main/js/search.js' %}"></script>    
+    <script type="module" src="{% static 'main/js/search.js' %}"></script>
 
 </body>
 </html>
