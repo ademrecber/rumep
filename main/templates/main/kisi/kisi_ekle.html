@@ -27,40 +27,4 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
-     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Select2'yi kategoriler alanı için başlat
-            // Django formunuzda 'kategoriler' alanının name="kategoriler" olduğunu varsayıyoruz.
-            // Ayrıca, Bootstrap 5 kullanıyorsanız tema ayarını yapabilirsiniz.
-            $('select[name="kategoriler"]').select2({
-                placeholder: "Kategori seçin",
-                allowClear: true,
-                // theme: "bootstrap-5" // Eğer select2-bootstrap-5-theme gibi bir tema kullanıyorsanız aktif edin
-            });
-
-            // Quill editörünü başlat
-            const quill = new Quill('#biyografi-editor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}],
-                        ['link', 'image'], // İsteğe bağlı olarak resim ekleme
-                        ['clean']
-                    ]
-                }
-            });
-
-            const kisiForm = document.getElementById('kisi-form');
-            const biyografiHiddenInput = document.getElementById('biyografi-hidden');
-
-            // Form gönderilmeden önce Quill içeriğini gizli input'a kopyala
-            if (kisiForm && biyografiHiddenInput) {
-                kisiForm.addEventListener('submit', () => {
-                    biyografiHiddenInput.value = quill.root.innerHTML;
-                });
-            }
-        });
-    </script>
 {% endblock %}
