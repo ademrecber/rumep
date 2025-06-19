@@ -1,5 +1,3 @@
-// rumep/main/static/main/js/ai.js
-
 import { getCsrfToken } from './like.js';
 
 export function initAiEnhance() {
@@ -18,6 +16,7 @@ export function initAiEnhance() {
             console.warn('Textarea boş, metin geliştirme iptal edildi.');
             return;
         }
+        console.log('Sihir değneği tıklandı, metin:', textarea.value);
         bootstrap.Toast.getOrCreateInstance(aiToast).show();
     });
 
@@ -27,6 +26,9 @@ export function initAiEnhance() {
             console.error('CSRF token bulunamadı.');
             return;
         }
+
+        console.log('Gönderilen metin:', textarea.value);
+        console.log('CSRF Token:', csrfToken);
 
         try {
             const response = await fetch('/enhance-text/', {
@@ -39,11 +41,13 @@ export function initAiEnhance() {
                 body: `text=${encodeURIComponent(textarea.value)}`
             });
 
+            const data = await response.json();
+            console.log('Sunucu yanıtı:', data);
+
             if (!response.ok) {
-                throw new Error(`Sunucu hatası: ${response.status}`);
+                throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Bilinmeyen hata'}`);
             }
 
-            const data = await response.json();
             if (data.success) {
                 textarea.value = data.enhanced_text;
                 textarea.dispatchEvent(new Event('input')); // Karakter sayısını güncelle
