@@ -47,16 +47,10 @@ export function initKisiForm() {
         errorDiv.innerHTML = '';
 
         const formData = new FormData(form);
-        // Quill içeriğini FormData'ya ekle (eğer gizli input güncellenmediyse diye)
-        const biyografiHidden = document.getElementById('biyografi-hidden');
-        if (biyografiHidden && biyografiHidden.value) {
-            formData.set('biyografi', biyografiHidden.value);
-        }
-
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
-                //headers
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
                 body: formData
             });
             console.log('AJAX isteği gönderildi, yanıt bekleniyor...');
@@ -65,9 +59,6 @@ export function initKisiForm() {
             if (data.success) {
                 form.reset();
                 console.log('Form sıfırlandı, alert gösteriliyor...');
-                 if (typeof Quill !== 'undefined' && quill) {
-                    quill.setText(''); // Quill içeriğini de sıfırla
-                }
                 alert('Kişi başarıyla eklendi!');
             } else {
                 console.warn('Form hataları:', data.errors);
@@ -94,11 +85,6 @@ export function initKisiLoader() {
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error-message');
     const filterForm = document.getElementById('filter-form');
-
-     if (!kisiList) {
-        console.warn('Kişi listesi elementi (kisi-list) bulunamadı.');
-        return;
-    }
 
     const loadMoreKisiler = async () => {
         if (loading || !hasMore) return;
@@ -155,6 +141,10 @@ export function initKisiLoader() {
                 offset += 20;
                 hasMore = data.has_more;
 
+                document.querySelectorAll('.delete-kisi-btn').forEach(btn => {
+                    btn.removeEventListener('click', handleDelete);
+                    btn.addEventListener('click', handleDelete);
+                });
             } else {
                 hasMore = false;
             }
@@ -169,25 +159,14 @@ export function initKisiLoader() {
     };
 
     const handleDelete = async (e) => {
-        const btn = e.target.closest('.delete-kisi-btn'); // Event delegation için
-        if (!btn) return;
-
-        const kisiId = btn.dataset.kisiId;
+        const btn = e.target;
         if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
-
-        const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-        if (!csrfTokenMeta) {
-            console.error('CSRF token meta tag bulunamadı!');
-            errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Güvenlik hatası, işlem gerçekleştirilemedi.';
-            return;
-        }
         try {
-            const response = await fetch(`/kisi/sil/${kisiId}/`, {
+            const response = await fetch(`/kisi/sil/${btn.dataset.kisiId}/`, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                     'X-CSRFToken': csrfTokenMeta.content
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
                 }
             });
             const data = await response.json();
@@ -212,11 +191,6 @@ export function initKisiLoader() {
     };
     window.addEventListener('scroll', scrollHandler);
 
-     // Event delegation for delete buttons
-    if (kisiList) {
-        kisiList.addEventListener('click', handleDelete);
-    }
-
     if (filterForm) {
         filterForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -226,4 +200,9 @@ export function initKisiLoader() {
             loadMoreKisiler();
         });
     }
+
+    document.querySelectorAll('.delete-kisi-btn').forEach(btn => {
+        btn.removeEventListener('click', handleDelete);
+        btn.addEventListener('click', handleDelete);
+    });
 }

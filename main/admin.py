@@ -21,3 +21,5 @@ admin.site.register(Sozluk)
 admin.site.register(Atasozu)
 admin.site.register(Deyim)
 admin.site.register(Katki)
+
+
