@@ -1,5 +1,6 @@
 {% load static %}
 {% load post_tags %}
+<link href="{% static 'main/css/ai.css' %}" rel="stylesheet">
 <div class="card mb-3 tweet-form">
     <div class="card-body">
         <form method="post" id="postForm">
@@ -12,6 +13,7 @@
                 <label for="{{ form.text.id_for_label }}" class="form-label w-100">Metin</label>
                 {{ form.text }}
                 <button type="button" id="emojiButton" class="btn btn-link p-0 mt-1"><i class="bi bi-emoji-smile"></i></button>
+                <button type="button" id="aiEnhanceButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
             </div>
             <div class="link-field form-group mb-2">
                 <label for="{{ form.link.id_for_label }}" class="form-label">Link (isteğe bağlı)</label>
@@ -39,7 +41,23 @@
         </div>
     </div>
 </div>
-<!-- Toast Mesajı -->
+<!-- AI Enhance Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="aiEnhanceToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Metni Geliştir</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Metni geliştirme ister misiniz?
+            <div class="mt-2">
+                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Evet</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mevcut Toast Mesajı -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">

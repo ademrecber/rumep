@@ -11,6 +11,8 @@ from django.db import models
 import logging
 from ..utils.embed_utils import generate_embed_code
 from ..utils.shortener import create_short_link
+from django.http import JsonResponse
+from ..ai.utils import enhance_text
 
 # Loglama ayarları
 logging.basicConfig(level=logging.DEBUG)
@@ -114,3 +116,20 @@ def home(request):
         'user': request.user,
         'sekme': sekme
     })
+
+@login_required
+@profile_required
+@csrf_protect
+def enhance_post_text(request):
+    """
+    Kullanıcının metnini Grok API ile geliştirir ve JSON yanıtı döndürür.
+    """
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        text = request.POST.get('text', '')
+        try:
+            enhanced_text = enhance_text(text)
+            return JsonResponse({'success': True, 'enhanced_text': enhanced_text})
+        except Exception as e:
+            logger.error(f"Metin geliştirme hatası: {str(e)}")
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
