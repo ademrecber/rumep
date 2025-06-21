@@ -125,16 +125,16 @@ def enhance_post_text(request):
     """
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         text = request.POST.get('text', '')
-        logger.debug(f"Alınan metin: {text}")  # Metni logla
+        logger.debug(f"Alınan metin: {text}")
         if not text.strip():
             logger.warning("Boş metin alındı.")
             return JsonResponse({'success': False, 'error': 'Metin boş olamaz'}, status=400)
         try:
             enhanced_text = enhance_text(text)
             logger.info("Metin başarıyla geliştirildi.")
-            return JsonResponse({'success': True, 'enhanced_text': enhanced_text})
+            return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
         except Exception as e:
             logger.error(f"Metin geliştirme hatası: {str(e)}")
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
     logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
