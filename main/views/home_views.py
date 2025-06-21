@@ -135,6 +135,6 @@ def enhance_post_text(request):
             return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
         except Exception as e:
             logger.error(f"Metin geliştirme hatası: {str(e)}")
-            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+            return JsonResponse({'success': False, 'error': f"Grok API hatası: {str(e)}. Kredi durumunuzu https://console.x.ai'de kontrol edin."}, status=403)
     logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)

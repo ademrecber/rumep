@@ -14,6 +14,19 @@ export function initAiEnhance() {
     aiButton.addEventListener('click', () => {
         if (!textarea.value.trim()) {
             console.warn('Textarea boş, metin geliştirme iptal edildi.');
+            const errorToast = document.createElement('div');
+            errorToast.className = 'toast';
+            errorToast.innerHTML = `
+                <div class="toast-header">
+                    <strong class="me-auto">Hata</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Lütfen önce bir metin yazın.
+                </div>
+            `;
+            document.querySelector('.toast-container').appendChild(errorToast);
+            bootstrap.Toast.getOrCreateInstance(errorToast).show();
             return;
         }
         console.log('Sihir değneği tıklandı, metin:', textarea.value);
@@ -54,9 +67,35 @@ export function initAiEnhance() {
                 bootstrap.Toast.getInstance(aiToast).hide();
             } else {
                 console.error('Metin geliştirme hatası:', data.error);
+                const errorToast = document.createElement('div');
+                errorToast.className = 'toast';
+                errorToast.innerHTML = `
+                    <div class="toast-header">
+                        <strong class="me-auto">Hata</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${data.error}
+                    </div>
+                `;
+                document.querySelector('.toast-container').appendChild(errorToast);
+                bootstrap.Toast.getOrCreateInstance(errorToast).show();
             }
         } catch (error) {
             console.error('AI enhance hatası:', error);
+            const errorToast = document.createElement('div');
+            errorToast.className = 'toast';
+            errorToast.innerHTML = `
+                <div class="toast-header">
+                    <strong class="me-auto">Hata</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Metin geliştirme başarısız: ${error.message}
+                </div>
+            `;
+            document.querySelector('.toast-container').appendChild(errorToast);
+            bootstrap.Toast.getOrCreateInstance(errorToast).show();
         }
     });
 }
