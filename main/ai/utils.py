@@ -1,43 +1,41 @@
 import os
 import logging
-from abc import ABC, abstractmethod
 from openai import OpenAI
-from transformers import pipeline
 from main.models import AIProviderConfig
-import requests
+# import requests  # Grok için gerekli, şu an yorumda
 
 logger = logging.getLogger(__name__)
 
-class AIProvider(ABC):
-    @abstractmethod
-    def enhance_text(self, text):
-        pass
+def enhance_text(text):
+    if not text.strip():
+        logger.warning("Boş metin gönderildi.")
+        raise ValueError("Metin boş olamaz.")
+    try:
+        config = AIProviderConfig.objects.get(is_active=True, provider='deepseek')
+        if not config.api_key:
+            raise ValueError("DeepSeek için API anahtarı eksik.")
+        client = OpenAI(api_key=config.api_key, base_url="https://api.deepseek.com")
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": "Metni düzelt, yazım hatalarını gider ve daha akıcı, güçlü bir şekilde yeniden yaz."},
+                {"role": "user", "content": text}
+            ],
+            stream=False
+        )
+        enhanced_text = response.choices[0].message.content
+        logger.info("DeepSeek: Metin başarıyla geliştirildi.")
+        return enhanced_text
+    except AIProviderConfig.DoesNotExist:
+        logger.error("Aktif DeepSeek sağlayıcısı bulunamadı.")
+        raise ValueError("Aktif DeepSeek sağlayıcısı tanımlı değil.")
+    except Exception as e:
+        logger.error(f"DeepSeek API hatası: {str(e)}")
+        raise
 
-class DeepSeekProvider(AIProvider):
-    def __init__(self, api_key):
-        self.client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
-
-    def enhance_text(self, text):
-        if not text.strip():
-            logger.warning("Boş metin gönderildi.")
-            raise ValueError("Metin boş olamaz.")
-        try:
-            response = self.client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": "Metni düzelt, yazım hatalarını gider ve daha akıcı, güçlü bir şekilde yeniden yaz."},
-                    {"role": "user", "content": text}
-                ],
-                stream=False
-            )
-            enhanced_text = response.choices[0].message.content
-            logger.info("DeepSeek: Metin başarıyla geliştirildi.")
-            return enhanced_text
-        except Exception as e:
-            logger.error(f"DeepSeek API hatası: {str(e)}")
-            raise
-
-class GrokProvider(AIProvider):
+"""
+# GrokProvider sınıfı (gelecekte kullanılmak üzere yorumda)
+class GrokProvider:
     def __init__(self, api_key):
         self.api_key = api_key
 
@@ -67,27 +65,4 @@ class GrokProvider(AIProvider):
         except requests.RequestException as e:
             logger.error(f"Grok API hatası: {str(e)}")
             raise
-
-def get_active_provider():
-    try:
-        config = AIProviderConfig.objects.get(is_active=True)
-        if config.provider == 'deepseek':
-            if not config.api_key:
-                raise ValueError("DeepSeek için API anahtarı eksik.")
-            return DeepSeekProvider(config.api_key)
-        elif config.provider == 'grok':
-            if not config.api_key:
-                raise ValueError("Grok için API anahtarı eksik.")
-            return GrokProvider(config.api_key)
-        else:
-            raise ValueError(f"Geçersiz sağlayıcı: {config.provider}")
-    except AIProviderConfig.DoesNotExist:
-        logger.error("Aktif AI sağlayıcısı bulunamadı.")
-        raise ValueError("Aktif AI sağlayıcısı tanımlı değil.")
-    except Exception as e:
-        logger.error(f"Sağlayıcı yüklenirken hata: {str(e)}")
-        raise
-
-def enhance_text(text):
-    provider = get_active_provider()
-    return provider.enhance_text(text)
+"""
