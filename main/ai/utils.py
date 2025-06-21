@@ -37,24 +37,6 @@ class DeepSeekProvider(AIProvider):
             logger.error(f"DeepSeek API hatası: {str(e)}")
             raise
 
-class HuggingFaceProvider(AIProvider):
-    def __init__(self):
-        self.pipeline = pipeline("text2text-generation", model="t5-small", device=-1)  # CPU-only
-
-    def enhance_text(self, text):
-        if not text.strip():
-            logger.warning("Boş metin gönderildi.")
-            raise ValueError("Metin boş olamaz.")
-        try:
-            prompt = f"Düzelt ve daha akıcı yap: {text}"
-            result = self.pipeline(prompt, max_length=512, num_return_sequences=1)
-            enhanced_text = result[0]['generated_text']
-            logger.info("Hugging Face: Metin başarıyla geliştirildi.")
-            return enhanced_text
-        except Exception as e:
-            logger.error(f"Hugging Face hatası: {str(e)}")
-            raise
-
 class GrokProvider(AIProvider):
     def __init__(self, api_key):
         self.api_key = api_key
@@ -93,8 +75,6 @@ def get_active_provider():
             if not config.api_key:
                 raise ValueError("DeepSeek için API anahtarı eksik.")
             return DeepSeekProvider(config.api_key)
-        elif config.provider == 'huggingface':
-            return HuggingFaceProvider()
         elif config.provider == 'grok':
             if not config.api_key:
                 raise ValueError("Grok için API anahtarı eksik.")
