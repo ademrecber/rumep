@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '6c683f6c9f2d3b1d4f8121e8e4424f37f55213fceee0d73ec77f3ea69b77b3d9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ["*"] # Tüm hostlara izin verildi, üretim ortamında dikkatli kullanılmalı
 
@@ -77,16 +79,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'rumep.wsgi.application'
 
 # Database
-DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.postgresql',
-             'NAME': 'rumep_db_vdej',
-             'USER': 'rumep_user',
-             'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
-             'HOST': 'dpg-d13141be5dus73cskem0-a',
-             'PORT': '5432',
-         }
-     }
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='postgresql://rumep_user:WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p@dpg-d13141be5dus73cskem0-a:5432/rumep_db_vdej',
+            conn_max_age=600
+        )
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -208,4 +214,4 @@ CONTENT_SECURITY_POLICY = {
                  "https://www.google-analytics.com",
              ],
          }
-     }
+}
