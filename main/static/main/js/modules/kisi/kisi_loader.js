@@ -206,3 +206,4 @@ export function initKisiLoader() {
         btn.addEventListener('click', handleDelete);
     });
 }
+   

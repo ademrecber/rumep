@@ -119,5 +119,5 @@ urlpatterns = [
 
 
 
-    
+    path('enhance-biography/', views.kisi_ekle.enhance_biography, name='enhance_biography'),
 ]   
