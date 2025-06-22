@@ -38,11 +38,13 @@ def enhance_text(text):
     }
 
     try:
+        logger.debug(f"Grok API isteği gönderiliyor: {data}")
         response = requests.post('https://api.x.ai/v1/chat/completions', headers=headers, json=data)
+        logger.debug(f"Grok API yanıtı: status={response.status_code}, content={response.text}")
         response.raise_for_status()
         enhanced_text = response.json()['choices'][0]['message']['content']
         logger.info("Metin başarıyla geliştirildi.")
         return enhanced_text
     except requests.RequestException as e:
-        logger.error(f"Grok API hatası: {str(e)}")
+        logger.error(f"Grok API hatası: {str(e)}, status={getattr(e.response, 'status_code', 'Bilinmiyor')}, response={getattr(e.response, 'text', 'Bilinmiyor')}")
         raise

@@ -11,6 +11,7 @@ from django.db import models
 import logging
 from ..utils.embed_utils import generate_embed_code
 from ..utils.shortener import create_short_link
+from ..ai.utils import enhance_text
 
 # Loglama ayarları
 logging.basicConfig(level=logging.DEBUG)
@@ -114,3 +115,26 @@ def home(request):
         'user': request.user,
         'sekme': sekme
     })
+
+@login_required
+@profile_required
+@csrf_protect
+def enhance_post_text(request):
+    """
+    Kullanıcının metnini Grok API ile geliştirir ve JSON yanıtı döndürür.
+    """
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        text = request.POST.get('text', '')
+        logger.debug(f"Alınan metin: {text}")
+        if not text.strip():
+            logger.warning("Boş metin alındı.")
+            return JsonResponse({'success': False, 'error': 'Metin boş olamaz'}, status=400)
+        try:
+            enhanced_text = enhance_text(text)
+            logger.info("Metin başarıyla geliştirildi.")
+            return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
+        except Exception as e:
+            logger.error(f"Metin geliştirme hatası: {str(e)}")
+            return JsonResponse({'success': False, 'error': f"Grok API hatası: {str(e)}. Kredi durumunuzu https://console.x.ai'de kontrol edin."}, status=403)
+    logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)

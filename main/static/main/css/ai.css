@@ -1,0 +1,64 @@
+
+/* AI Widget Stilleri */
+
+/* Sihir Değneği Butonu */
+#aiEnhanceButton {
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.2s ease;
+    font-size: 1.1rem; /* emojiButton ile uyumlu */
+}
+
+#aiEnhanceButton:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* AI Toast */
+#aiEnhanceToast {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    font-size: 0.95rem;
+}
+
+#aiEnhanceToast .toast-header {
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+#aiEnhanceToast .toast-body {
+    color: var(--text-color);
+    padding: 1rem;
+}
+
+#aiEnhanceToast .btn-primary {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: var(--border-radius-sm);
+}
+
+#aiEnhanceToast .btn-secondary {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: var(--border-radius-sm);
+    margin-left: 0.5rem;
+}
+
+/* Responsive ayarlar */
+@media (max-width: 767.98px) {
+    #aiEnhanceButton {
+        font-size: 1rem;
+    }
+
+    #aiEnhanceToast .toast-body {
+        padding: 0.75rem;
+    }
+
+    #aiEnhanceToast .btn-primary,
+    #aiEnhanceToast .btn-secondary {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+    }
+}

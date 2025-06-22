@@ -13,6 +13,7 @@ import { initEmojiPicker } from './emoji.js';
 import { initGoogleSignIn, initProfileCompletion } from './auth.js';
 import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
+import { initAiEnhance } from './ai.js'; // Yeni import
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("scripts.js yüklendi");
@@ -110,6 +111,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("initEmojiPicker tamamlandı");
         } else {
             console.warn("Emoji picker için gerekli elementler bulunamadı");
+        }
+
+        console.log("initAiEnhance yükleniyor...");
+        if (document.getElementById('aiEnhanceButton')) {
+            initAiEnhance();
+            console.log("initAiEnhance tamamlandı");
+        } else {
+            console.warn("AI enhance için gerekli elementler bulunamadı");
         }
     } catch (e) {
         console.error("scripts.js genel hatası:", e.message, e.stack);
