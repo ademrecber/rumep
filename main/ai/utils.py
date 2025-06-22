@@ -14,9 +14,11 @@ def enhance_text(text):
            config = AIProviderConfig.objects.get(is_active=True, provider='deepseek')
            if not config.api_key:
                raise ValueError("DeepSeek için API anahtarı eksik.")
+           # Create client with basic configuration
            client = OpenAI(
                api_key=config.api_key,
-               base_url="https://api.deepseek.com")
+               base_url="https://api.deepseek.com"
+           )
            response = client.chat.completions.create(
                model="deepseek-chat",
                messages=[
