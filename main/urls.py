@@ -9,6 +9,7 @@ from .views import home_views
 handler404 = 'main.views.custom_404'
 urlpatterns = [
     path('', home_views.home, name='home'),
+    path('enhance-text/', home_views.enhance_post_text, name='enhance_post_text'),
     path('login/', views.login_page, name='login_page'),
     path('complete-profile/', views.complete_profile, name='complete_profile'),
     path('delete-post/<uuid:post_id>/', views.delete_post, name='delete_post'),

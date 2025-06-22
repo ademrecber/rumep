@@ -1,3 +1,4 @@
+// scripts.js
 import { initTextarea } from './textarea.js';
 import { initLikes } from './like.js';
 import { initShowMore } from './showMore.js';
@@ -13,7 +14,12 @@ import { initEmojiPicker } from './emoji.js';
 import { initGoogleSignIn, initProfileCompletion } from './auth.js';
 import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
+<<<<<<< HEAD
 import { initAiEnhance } from './ai.js'; // Yeni import
+=======
+import { initAiEnhance } from './ai.js'; 
+
+>>>>>>> 2b310c748fc7b044974ef4450e151abdf26f7025
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("scripts.js yüklendi");
