@@ -66,6 +66,7 @@ urlpatterns = [
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
     path('kisi/detay/<int:kisi_id>/', views.kisi_detay, name='kisi_detay'),
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
+    path('enhance-biography/', views.enhance_biography, name='enhance_biography'),
     
     # Account management URLs
     path('account/freeze/', account_views.freeze_account, name='freeze_account'),
@@ -117,7 +118,4 @@ urlpatterns = [
     path('katki/load-more/', views.load_more_katkilar, name='load_more_katkilar'),
     path('katki/load-more-liderler/', views.load_more_liderler, name='load_more_liderler'),
 
-
-
-    path('enhance-biography/', views.kisi_ekle.enhance_biography, name='enhance_biography'),
 ]   
