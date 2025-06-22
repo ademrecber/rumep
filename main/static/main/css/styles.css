@@ -1,23 +1,4 @@
-<<<<<<< HEAD
 
-@import url('general.css');
-@import url('tweetForm.css');
-@import url('tweetCard.css');
-@import url('postText.css');
-@import url('actions.css');
-@import url('elements.css');
-@import url('title.css');
-@import url('link.css'); 
-@import url('profile.css');
-@import url('embed.css');
-@import url('comments.css');
-@import url('home-page.css'); /* Custom styles for homepage */
-@import url('popular-pages.css'); /* Custom styles for popular pages */
-@import url('critique-pages.css'); /* Custom styles for critique/review pages */
-@import url('modern.css'); /* Modern design improvements */
-@import url('accessibility.css'); /* Accessibility improvements */
-@import url('ai.css'); /* AI widget styles */
-=======
     @import url('general.css');
     @import url('tweetForm.css');
     @import url('tweetCard.css');
@@ -35,4 +16,4 @@
     @import url('modern.css'); /* Modern design improvements */
     @import url('accessibility.css'); /* Accessibility improvements */
     @import url('ai.css'); /* AI widget styles */
->>>>>>> 2b310c748fc7b044974ef4450e151abdf26f7025
+
