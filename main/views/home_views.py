@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -120,9 +121,6 @@ def home(request):
 @profile_required
 @csrf_protect
 def enhance_post_text(request):
-    """
-    Kullanıcının metnini Grok API ile geliştirir ve JSON yanıtı döndürür.
-    """
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         text = request.POST.get('text', '')
         logger.debug(f"Alınan metin: {text}")
@@ -133,8 +131,11 @@ def enhance_post_text(request):
             enhanced_text = enhance_text(text)
             logger.info("Metin başarıyla geliştirildi.")
             return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
+        except ValueError as e:
+            logger.error(f"Değer hatası: {str(e)}")
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
         except Exception as e:
             logger.error(f"Metin geliştirme hatası: {str(e)}")
-            return JsonResponse({'success': False, 'error': f"Grok API hatası: {str(e)}. Kredi durumunuzu https://console.x.ai'de kontrol edin."}, status=403)
+            return JsonResponse({'success': False, 'error': f"Metin geliştirme başarısız: {str(e)}"}, status=500)
     logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
