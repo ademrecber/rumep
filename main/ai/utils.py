@@ -15,8 +15,8 @@ def enhance_text(text):
            if not config.api_key:
                raise ValueError("DeepSeek için API anahtarı eksik.")
            client = OpenAI(
-               api_key=config.api_key, base_url="https://api.deepseek.com",
-               http_client=httpx.Client(proxies=None))
+               api_key=config.api_key,
+               base_url="https://api.deepseek.com")
            response = client.chat.completions.create(
                model="deepseek-chat",
                messages=[
