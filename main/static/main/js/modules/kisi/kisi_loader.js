@@ -46,7 +46,7 @@ export function initKisiForm() {
 
         // AI Biyografi Düzeltme
         if (aiButton && aiToast && confirmButton) {
-            console.log('AI biyografi düzeltme elementleri bulundu:', { aiButton, aiToast, confirmButton });
+            console.log('AI biyografi düzeltme elementleri bulundu:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
             aiButton.addEventListener('click', () => {
                 console.log('Sihir değneği tıklandı, biyografi:', quill.root.innerHTML);
                 if (!quill.root.innerHTML.trim() || quill.root.innerHTML === '<p><br></p>') {
