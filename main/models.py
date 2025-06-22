@@ -439,45 +439,45 @@ class Katki(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.tur} - {self.eklenme_tarihi}"
-    
+
 class AIProviderConfig(models.Model):
-    PROVIDER_CHOICES = [
-        ('deepseek', 'DeepSeek'),
-        ('huggingface', 'Hugging Face'),
-        ('grok', 'Grok'),
-    ]
+      PROVIDER_CHOICES = [
+          ('deepseek', 'DeepSeek'),
+          ('huggingface', 'Hugging Face'),
+          ('grok', 'Grok'),
+          ('gemini', 'Gemini'),
+      ]
 
-    provider = models.CharField(
-        max_length=20,
-        choices=PROVIDER_CHOICES,
-        default='deepseek',
-        unique=True,
-        verbose_name='AI Sağlayıcısı'
-    )
-    is_active = models.BooleanField(default=False, verbose_name='Aktif')
-    api_key = models.CharField(max_length=256, blank=True, null=True, verbose_name='API Anahtarı')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma Tarihi')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme Tarihi')
+      provider = models.CharField(
+          max_length=20,
+          choices=PROVIDER_CHOICES,
+          default='gemini',
+          unique=True,
+          verbose_name='AI Sağlayıcısı'
+      )
+      is_active = models.BooleanField(default=False, verbose_name='Aktif')
+      api_key = models.CharField(max_length=256, blank=True, null=True, verbose_name='API Anahtarı')
+      created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma Tarihi')
+      updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme Tarihi')
 
-    class Meta:
-        verbose_name = 'AI Sağlayıcı Konfigürasyonu'
-        verbose_name_plural = 'AI Sağlayıcı Konfigürasyonları'
+      class Meta:
+          verbose_name = 'AI Sağlayıcı Konfigürasyonu'
+          verbose_name_plural = 'AI Sağlayıcı Konfigürasyonları'
 
-    def __str__(self):
-        return f"{self.get_provider_display()} - {'Aktif' if self.is_active else 'Pasif'}"
+      def __str__(self):
+          return f"{self.get_provider_display()} - {'Aktif' if self.is_active else 'Pasif'}"
 
-    def clean(self):
-        if self.is_active:
-            # Sadece bir sağlayıcı aktif olabilir
-            other_active = AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk)
-            if other_active.exists():
-                raise ValidationError('Sadece bir AI sağlayıcısı aktif olabilir.')
-        if self.provider in ['deepseek', 'grok'] and not self.api_key:
-            raise ValidationError(f'{self.get_provider_display()} için API anahtarı zorunludur.')
+      def clean(self):
+          if self.is_active:
+              other_active = AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk)
+              if other_active.exists():
+                  raise ValidationError('Sadece bir AI sağlayıcısı aktif olabilir.')
+          if self.provider in ['deepseek', 'grok', 'gemini'] and not self.api_key:
+              raise ValidationError(f'{self.get_provider_display()} için API anahtarı zorunludur.')
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        if self.is_active:
-            # Diğer sağlayıcıları pasif yap
-            AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
-        super().save(*args, **kwargs)
+      def save(self, *args, **kwargs):
+          self.full_clean()
+          if self.is_active:
+              AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+          super().save(*args, **kwargs)
+  
