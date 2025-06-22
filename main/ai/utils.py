@@ -2,6 +2,7 @@ import os
 import logging
 from openai import OpenAI
 from main.models import AIProviderConfig
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +14,9 @@ def enhance_text(text):
            config = AIProviderConfig.objects.get(is_active=True, provider='deepseek')
            if not config.api_key:
                raise ValueError("DeepSeek için API anahtarı eksik.")
-           client = OpenAI(api_key=config.api_key, base_url="https://api.deepseek.com")
+           client = OpenAI(
+               api_key=config.api_key, base_url="https://api.deepseek.com",
+               http_client=httpx.Client(proxies=None))
            response = client.chat.completions.create(
                model="deepseek-chat",
                messages=[
