@@ -157,7 +157,7 @@ def enhance_biography(request):
             logger.warning("Boş biyografi alındı.")
             return JsonResponse({'success': False, 'error': 'Biyografi boş olamaz'}, status=400)
         try:
-            enhanced_text = enhance_text(text)
+            enhanced_text = enhance_text(text, task_type='biography')
             logger.info("Biyografi başarıyla geliştirildi.")
             return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
         except ValueError as e:

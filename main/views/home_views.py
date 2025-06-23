@@ -117,18 +117,17 @@ def home(request):
         'sekme': sekme
     })
 
+
 @login_required
-@profile_required
 @csrf_protect
 def enhance_post_text(request):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         text = request.POST.get('text', '')
-        logger.debug(f"Alınan metin: {text}")
         if not text.strip():
             logger.warning("Boş metin alındı.")
             return JsonResponse({'success': False, 'error': 'Metin boş olamaz'}, status=400)
         try:
-            enhanced_text = enhance_text(text)
+            enhanced_text = enhance_text(text, task_type='general')
             logger.info("Metin başarıyla geliştirildi.")
             return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
         except ValueError as e:
@@ -139,3 +138,4 @@ def enhance_post_text(request):
             return JsonResponse({'success': False, 'error': f"Metin geliştirme başarısız: {str(e)}"}, status=500)
     logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
+
