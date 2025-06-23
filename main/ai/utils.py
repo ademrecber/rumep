@@ -20,14 +20,15 @@ def enhance_text(text, task_type='general'):
         # Görev tipine göre prompt seç
         if task_type == 'biography':
             prompt = f"""
-                Aşağıdaki metni bir biyografi talebi olarak kabul et ve ilgili kişi hakkında detaylı, akıcı ve doğru bir biyografi hazırla.
-                Yazım hatalarını düzelt, metni akıcı hale getir ve 200-300 kelime arasında kapsamlı bir biyografi üret.
+                Aşağıdaki metni bir biyografi talebi olarak kabul et ve ilgili kişi hakkında detaylı, özgün ve kapsamlı bir biyografi hazırla. 
+                Kişinin hayatı, kariyeri, başarıları, kültürel etkisi ve bilinen önemli eserleri veya olayları hakkında 300-400 kelime arasında bilgi ver. 
+                Yazım hatalarını düzelt, metni akıcı ve doğal hale getir. Eğer kişi hakkında sınırlı bilgi varsa, bilinen gerçeklere dayanarak mantıklı ve yaratıcı bir şekilde tamamla, ancak uydurma bilgilerden kaçın. 
                 Metin: {text}
             """
         else:  # general (postlar için)
             prompt = f"""
-                Aşağıdaki metni düzelt, yazım hatalarını gider ve daha akıcı, doğal bir şekilde yeniden yaz.
-                Yeni içerik üretme, sadece mevcut metni geliştir.
+                Aşağıdaki metni düzelt, yazım hatalarını gider ve daha akıcı, doğal bir şekilde yeniden yaz. 
+                Yeni içerik üretme, sadece mevcut metni geliştir ve anlamını koru. 
                 Metin: {text}
             """
         
