@@ -148,6 +148,7 @@ def kisi_sil(request, kisi_id):
     logger.info(f"Kişi silindi: {kisi.ad}, Kullanıcı: {request.user.username}")
     return JsonResponse({'success': True})
 
+
 @login_required
 @csrf_protect
 def enhance_biography(request):
@@ -157,7 +158,7 @@ def enhance_biography(request):
             logger.warning("Boş biyografi alındı.")
             return JsonResponse({'success': False, 'error': 'Biyografi boş olamaz'}, status=400)
         try:
-            enhanced_text = enhance_text(text, task_type='biography')
+            enhanced_text = enhance_text(text, task_type='biography', language='ku')
             logger.info("Biyografi başarıyla geliştirildi.")
             return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
         except ValueError as e:
