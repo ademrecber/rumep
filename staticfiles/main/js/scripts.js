@@ -14,7 +14,7 @@ import { initEmojiPicker } from './emoji.js';
 import { initGoogleSignIn, initProfileCompletion } from './auth.js';
 import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
-import { initAiEnhance } from './ai.js'; 
+import { initAiEnhance } from './ai.js'; // Yeni import
 
 
 document.addEventListener('DOMContentLoaded', function() {

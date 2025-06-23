@@ -1,3 +1,4 @@
+
 import { getCsrfToken } from './like.js';
 
 export function initAiEnhance() {

@@ -1,6 +1,12 @@
+import { getCsrfToken } from './like.js';
+
 export function initKisiForm() {
     const form = document.getElementById('kisi-form');
     const errorDiv = document.getElementById('form-errors');
+    const aiButton = document.getElementById('aiEnhanceBioButton');
+    const aiToast = document.getElementById('aiEnhanceBioToast');
+    const confirmButton = document.getElementById('confirmEnhanceBio');
+
     if (!form || !errorDiv) {
         console.warn('Kişi ekleme formu veya hata divi bulunamadı:', { form: !!form, errorDiv: !!errorDiv });
         return;
@@ -36,6 +42,96 @@ export function initKisiForm() {
             console.log('Form gönderiliyor, Quill içeriği aktarılıyor...');
             biyografiHidden.value = quill.root.innerHTML;
         });
+
+        // AI Biyografi Düzeltme
+        if (aiButton && aiToast && confirmButton) {
+            console.log('AI biyografi düzeltme elementleri bulundu:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
+            aiButton.addEventListener('click', () => {
+                console.log('Sihir değneği tıklandı, biyografi:', quill.root.innerHTML);
+                if (!quill.root.innerHTML.trim() || quill.root.innerHTML === '<p><br></p>') {
+                    console.warn('Biyografi boş, düzeltme iptal edildi.');
+                    const errorToast = document.createElement('div');
+                    errorToast.className = 'toast';
+                    errorToast.innerHTML = `
+                        <div class="toast-header">
+                            <strong class="me-auto">Hata</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                        </div>
+                        <div class="toast-body">
+                            Lütfen önce bir biyografi yazın.
+                        </div>
+                    `;
+                    document.querySelector('.toast-container').appendChild(errorToast);
+                    bootstrap.Toast.getOrCreateInstance(errorToast).show();
+                    return;
+                }
+                bootstrap.Toast.getOrCreateInstance(aiToast).show();
+            });
+
+            confirmButton.addEventListener('click', async () => {
+                console.log('Biyografi düzeltme onaylandı, AJAX isteği gönderiliyor...');
+                const csrfToken = getCsrfToken();
+                if (!csrfToken) {
+                    console.error('CSRF token bulunamadı.');
+                    return;
+                }
+                try {
+                    const response = await fetch('/enhance-biography/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `text=${encodeURIComponent(quill.root.innerHTML)}`
+                    });
+                    console.log('AJAX yanıtı alındı:', response.status);
+                    const data = await response.json();
+                    console.log('Sunucu yanıtı:', data);
+                    if (!response.ok) {
+                        throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Bilinmeyen hata'}`);
+                    }
+                    if (data.success) {
+                        console.log('Biyografi düzeltildi:', data.enhanced_text);
+                        quill.root.innerHTML = data.enhanced_text;
+                        biyografiHidden.value = data.enhanced_text;
+                        bootstrap.Toast.getInstance(aiToast).hide();
+                    } else {
+                        console.error('Biyografi düzeltme hatası:', data.error);
+                        const errorToast = document.createElement('div');
+                        errorToast.className = 'toast';
+                        errorToast.innerHTML = `
+                            <div class="toast-header">
+                                <strong class="me-auto">Hata</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${data.error}
+                            </div>
+                        `;
+                        document.querySelector('.toast-container').appendChild(errorToast);
+                        bootstrap.Toast.getOrCreateInstance(errorToast).show();
+                    }
+                } catch (error) {
+                    console.error('Biyografi düzeltme hatası:', error);
+                    const errorToast = document.createElement('div');
+                    errorToast.className = 'toast';
+                    errorToast.innerHTML = `
+                        <div class="toast-header">
+                            <strong class="me-auto">Hata</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                        </div>
+                        <div class="toast-body">
+                            Biyografi düzeltme başarısız: ${error.message}
+                        </div>
+                    `;
+                    document.querySelector('.toast-container').appendChild(errorToast);
+                    bootstrap.Toast.getOrCreateInstance(errorToast).show();
+                }
+            });
+        } else {
+            console.error('AI biyografi düzeltme için gerekli elementler bulunamadı:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
+        }
     } else {
         console.error('Quill.js yüklenemedi, düzenleyici başlatılamadı.');
     }

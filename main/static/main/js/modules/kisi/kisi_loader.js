@@ -1,4 +1,4 @@
-import { getCsrfToken } from '../like.js';
+import { getCsrfToken } from './like.js';
 
 export function initKisiForm() {
     const form = document.getElementById('kisi-form');
