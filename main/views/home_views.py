@@ -12,7 +12,7 @@ from django.db import models
 import logging
 from ..utils.embed_utils import generate_embed_code
 from ..utils.shortener import create_short_link
-from ..ai.utils import enhance_text
+from ..ai.utils import process_request
 
 # Loglama ayarları
 logging.basicConfig(level=logging.DEBUG)
@@ -116,28 +116,5 @@ def home(request):
         'user': request.user,
         'sekme': sekme
     })
-
-
-
-@login_required
-@csrf_protect
-def enhance_post_text(request):
-    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        text = request.POST.get('text', '')
-        if not text.strip():
-            logger.warning("Boş metin alındı.")
-            return JsonResponse({'success': False, 'error': 'Metin boş olamaz'}, status=400)
-        try:
-            enhanced_text = enhance_text(text, task_type='general', language='tr')
-            logger.info("Metin başarıyla geliştirildi.")
-            return JsonResponse({'success': True, 'enhanced_text': enhanced_text}, status=200)
-        except ValueError as e:
-            logger.error(f"Değer hatası: {str(e)}")
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
-        except Exception as e:
-            logger.error(f"Metin geliştirme hatası: {str(e)}")
-            return JsonResponse({'success': False, 'error': f"Metin geliştirme başarısız: {str(e)}"}, status=500)
-    logger.warning("Geçersiz istek: Yöntem veya başlık hatalı.")
-    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 

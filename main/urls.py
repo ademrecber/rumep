@@ -4,12 +4,13 @@ from .views import popular_views, profile_views
 from .views import post_views
 from .views import account_views
 from .views import home_views
+from .views import ai_views
 
 
 handler404 = 'main.views.custom_404'
 urlpatterns = [
+
     path('', home_views.home, name='home'),
-    path('enhance-text/', home_views.enhance_post_text, name='enhance_post_text'),
     path('login/', views.login_page, name='login_page'),
     path('complete-profile/', views.complete_profile, name='complete_profile'),
     path('delete-post/<uuid:post_id>/', views.delete_post, name='delete_post'),
@@ -66,7 +67,7 @@ urlpatterns = [
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
     path('kisi/detay/<int:kisi_id>/', views.kisi_detay, name='kisi_detay'),
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
-    path('enhance-biography/', views.enhance_biography, name='enhance_biography'),
+  
     
     # Account management URLs
     path('account/freeze/', account_views.freeze_account, name='freeze_account'),
@@ -117,5 +118,8 @@ urlpatterns = [
     # Katkılar URL’leri
     path('katki/load-more/', views.load_more_katkilar, name='load_more_katkilar'),
     path('katki/load-more-liderler/', views.load_more_liderler, name='load_more_liderler'),
+
+    # AI URL’leri
+    path('enhance/', ai_views.process_text, name='enhance'),
 
 ]   
