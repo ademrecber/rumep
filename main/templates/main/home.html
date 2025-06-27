@@ -1,177 +1,184 @@
+
+{% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-<link href="{% static 'main/css/ai.css' %}" rel="stylesheet">
-<div class="card mb-3 tweet-form">
-    <div class="card-body">
-        <form method="post" id="postForm">
-            {% csrf_token %}
-            <div class="title-field form-group mb-2">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Başlık</label>
-                {{ form.title }}
-            </div>
-            <div class="input-group mb-2">
-                <label for="{{ form.text.id_for_label }}" class="form-label w-100">Metin</label>
-                {{ form.text }}
-                <button type="button" id="emojiButton" class="btn btn-link p-0 mt-1"><i class="bi bi-emoji-smile"></i></button>
-                <button type="button" id="aiEnhanceButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
-            </div>
-            <div class="link-field form-group mb-2">
-                <label for="{{ form.link.id_for_label }}" class="form-label">Link (isteğe bağlı)</label>
-                {{ form.link }}
-            </div>
-            {% if form.non_field_errors %}<div class="alert alert-danger mt-2">{{ form.non_field_errors }}</div>{% endif %}
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <span class="text-muted" id="charCount">10000</span>
-                <button type="submit" class="btn btn-primary rounded-pill">Paylaş</button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- Emoji Modal -->
-<div class="modal fade" id="emojiModal" tabindex="-1" aria-labelledby="emojiModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="emojiModalLabel">Emojiler</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
-            </div>
+{% block title %}Ana Sayfa - Rumep{% endblock %}
+{% block content %}
+    <link href="{% static 'main/css/ai.css' %}" rel="stylesheet">
+    <div class="card mb-3 tweet-form">
+        <div class="card-body">
+            <form method="post" id="postForm">
+                {% csrf_token %}
+                <div class="title-field form-group mb-2">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Başlık</label>
+                    {{ form.title }}
+                </div>
+                <div class="input-group mb-2">
+                    <label for="{{ form.text.id_for_label }}" class="form-label w-100">Metin</label>
+                    {{ form.text }}
+                    <button type="button" id="emojiButton" class="btn btn-link p-0 mt-1"><i class="bi bi-emoji-smile"></i></button>
+                    <button type="button" id="aiEnhanceButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
+                </div>
+                <div class="link-field form-group mb-2">
+                    <label for="{{ form.link.id_for_label }}" class="form-label">Link (isteğe bağlı)</label>
+                    {{ form.link }}
+                </div>
+                {% if form.non_field_errors %}<div class="alert alert-danger mt-2">{{ form.non_field_errors }}</div>{% endif %}
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="text-muted" id="charCount">10000</span>
+                    <button type="submit" class="btn btn-primary rounded-pill">Paylaş</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-<!-- AI Enhance Toast -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="aiEnhanceToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Metni Geliştir</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Metni geliştirme ister misiniz?
-            <div class="mt-2">
-                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Evet</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+    <!-- Emoji Modal -->
+    <div class="modal fade" id="emojiModal" tabindex="-1" aria-labelledby="emojiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emojiModalLabel">Emojiler</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Mevcut Toast Mesajı -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Bilgi</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Bağlantı kopyalandı!
+    <!-- AI Enhance Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="aiEnhanceToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Metni Geliştir</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Metni geliştirme ister misiniz?
+                <div class="mt-2">
+                    <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Evet</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="post-container">
-    {% for post in posts %}
-        <div class="card mb-2 tweet-card" id="post-{{ post.id }}">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <p class="mb-1">
-                        <strong>{{ post.user.profile.nickname }}</strong> 
-                        <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
-                    </p>
-                    <div class="dropdown">
-                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            {% if post.user == user %}
+    <!-- Mevcut Toast Mesajı -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Bilgi</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Bağlantı kopyalandı!
+            </div>
+        </div>
+    </div>
+    <div class="post-container">
+        {% for post in posts %}
+            <div class="card mb-2 tweet-card" id="post-{{ post.id }}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <p class="mb-1">
+                            <strong>{{ post.user.profile.nickname }}</strong> 
+                            <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
+                        </p>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% if post.user == user %}
+                                    <li>
+                                        <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                        </form>
+                                    </li>
+                                {% endif %}
                                 <li>
-                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                    <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
                                         {% csrf_token %}
-                                        <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                        <button type="submit" class="dropdown-item">
+                                            {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                        </button>
                                     </form>
                                 </li>
-                            {% endif %}
-                            <li>
-                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="dropdown-item">
-                                        {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
-                            </li>
-                        </ul>
+                                <li>
+                                    <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h5>{{ post.title|default:'Başlıksız' }}</h5>
+                    <div class="post-text">
+                        {% if post.text|length > 500 or post.text|count_lines > 15 %}
+                            <div class="text-preview"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
+                            <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                            <div class="full-text d-none"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
+                            <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                        {% else %}
+                            <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
+                        {% endif %}
+                    </div>
+                    {% if post.link %}
+                        <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
+                    {% endif %}
+                    {% if post.embed_code %}
+                        <div class="social-embed">{{ post.embed_code|safe }}</div>
+                    {% endif %}
+                    <div class="post-meta text-muted mt-2">
+                        <span>Beğeni: {{ post.like_count }}</span> | 
+                        <span>Yorum: {{ post.comments.count }}</span> | 
+                        <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
+                        <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
+                    </div>
+                    <div class="post-actions mt-2">
+                        <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
+                                <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="vote" value="up">
+                            <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
+                        </form>
+                        <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="vote" value="down">
+                            <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
+                        </form>
+                        <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
-                <h5>{{ post.title|default:'Başlıksız' }}</h5>
-                <div class="post-text">
-                    {% if post.text|length > 500 or post.text|count_lines > 15 %}
-                        <div class="text-preview"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
-                        <div class="full-text d-none"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
-                    {% else %}
-                        <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
-                    {% endif %}
-                </div>
-                {% if post.link %}
-                    <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
-                {% endif %}
-                {% if post.embed_code %}
-                    <div class="social-embed">{{ post.embed_code|safe }}</div>
-                {% endif %}
-                <div class="post-meta text-muted mt-2">
-                    <span>Beğeni: {{ post.like_count }}</span> | 
-                    <span>Yorum: {{ post.comments.count }}</span> | 
-                    <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
-                    <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
-                </div>
-                <div class="post-actions mt-2">
-                    <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
-                            <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
-                        </button>
-                    </form>
-                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="vote" value="up">
-                        <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
-                    </form>
-                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="vote" value="down">
-                        <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
-                    </form>
-                    <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                </div>
             </div>
-        </div>
-    {% empty %}
-        <p class="text-muted p-3">Henüz eleştiri yok.</p>
-    {% endfor %}
-</div>
-<div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
-<button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Daha Fazla Yükle</button>
-<div id="error-message" class="text-danger mt-3" style="display: none;"></div>
+        {% empty %}
+            <p class="text-muted p-3">Henüz eleştiri yok.</p>
+        {% endfor %}
+    </div>
+    <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+    <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Daha Fazla Yükle</button>
+    <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/load-more.js' %}"></script>
+    <script type="module" src="{% static 'main/js/ai.js' %}"></script>
+    <script>
+        window.offset = 10;
+        window.hasMore = true;
+        window.loading = false;
 
-<script type="module" src="{% static 'main/js/load-more.js' %}"></script>
-<script>
-    window.offset = 10;
-    window.hasMore = true;
-    window.loading = false;
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const textarea = document.querySelector('textarea[name="text"]');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = `${this.scrollHeight}px`;
-            const charCount = document.getElementById('charCount');
-            if (charCount) {
-                charCount.textContent = 10000 - this.value.length;
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.querySelector('textarea[name="text"]');
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = `${this.scrollHeight}px`;
+                const charCount = document.getElementById('charCount');
+                if (charCount) {
+                    charCount.textContent = 10000 - this.value.length;
+                }
+            });
         });
-    });
-</script>
+    </script>
+{% endblock %}

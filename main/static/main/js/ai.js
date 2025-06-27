@@ -5,7 +5,7 @@ export function initAiEnhance() {
     const aiButton = document.getElementById('aiEnhanceButton');
     const aiToast = document.getElementById('aiEnhanceToast');
     const confirmButton = document.getElementById('confirmEnhance');
-    const postInput = document.getElementById('post-input');
+    const postInput = document.getElementById('id_text'); // Doğru ID: id_text
 
     if (aiButton && aiToast && confirmButton && postInput) {
         console.log('AI metin işleme elementleri bulundu:', { aiButton, aiToast, confirmButton, postInput });
