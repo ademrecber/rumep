@@ -20,11 +20,12 @@ def process_request(text, language='tr'):
         # Esnek prompt: Kullanıcının talebine göre yanıt üret
         prompt = f"""
             Aşağıdaki metni {language} dilinde (Kürtçe için Kurmanci lehçesi tercih et) oku ve kullanıcının talebine uygun bir şekilde yanıt ver.
-            - Eğer biyografi isteniyorsa, ilgili kişi hakkında 300-400 kelime arasında detaylı, özgün ve doğru bir biyografi yaz. Bilinen gerçeklere dayan, uydurma bilgilerden kaçın.
-            - Eğer metin düzeltme isteniyorsa, yazım hatalarını gider, metni akıcı ve doğal hale getir, ama yeni içerik ekleme.
-            - Eğer bilgi isteniyorsa, konu hakkında 200-300 kelime arasında doğru ve bilgilendirici bir yanıt ver.
+            - Eğer biyografi isteniyorsa, ilgili kişi hakkında 1200 kelime arasında detaylı, özgün ve doğru bir biyografi yaz. Bilinen gerçeklere dayan, uydurma bilgilerden kaçın webdeki kaynakları kullan.
+            - Eğer metin düzeltme isteniyorsa, yazım hatalarını gider, metni akıcı ve doğal hale getir, kullanıcı için yeni cümleler öner.
+            - Eğer bilgi isteniyorsa, konu hakkında 1200 kelime arasında doğru ve bilgilendirici bir yanıt ver.
             - Talebin ne olduğu açık değilse, metni en uygun şekilde geliştir (örneğin, akıcı bir hikaye, bilgi veya düzeltme).
-            - İnternetten araştırma yapıyormuş gibi, bilinen gerçeklere dayalı ve güncel bilgiler kullan.
+            - İnternetten araştırma yap, ve internetteki kaynaklardan detaylı ve güncel bilgiler kullan.
+            - Metni geliştirirken, kullanıcıya özgün ve kaliteli bir içerik sun.
             Metin: {text}
         """
         

@@ -224,6 +224,36 @@ class Kisi(models.Model):
 
     def __str__(self):
         return self.ad
+    
+class KisiDetay(models.Model):
+    kisi = models.ForeignKey(Kisi, on_delete=models.CASCADE, related_name='detaylar')
+    kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    detay = models.TextField(max_length=20000, validators=[MinLengthValidator(10)])
+    eklenme_tarihi = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-eklenme_tarihi']
+        verbose_name = 'Kişi Detay'
+        verbose_name_plural = 'Kişi Detayları'
+
+    def clean(self):
+        if not self.detay.strip():
+            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        Katki.objects.create(
+            user=self.kullanici,
+            tur='kisi_detay',
+            icerik_id=self.id,
+            puan=settings.KATKI_PUANLARI.get('kisi_detay', 5)
+        )
+        self.kullanici.profile.katki_puani += settings.KATKI_PUANLARI.get('kisi_detay', 5)
+        self.kullanici.profile.save()
+
+    def __str__(self):
+        return f"{self.kisi.ad} - {self.detay[:50]}"
 
 class Album(models.Model):
     kisi = models.ForeignKey(Kisi, on_delete=models.CASCADE, related_name='albumler')
