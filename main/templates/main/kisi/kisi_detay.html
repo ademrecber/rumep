@@ -85,9 +85,7 @@
     </div>
 {% endblock %}
 {% block extra_scripts %}
-    <script type="module" src="{% static 'main/js/modules/kisi/kisi_detay.js' %}"></script>
     <script type="module">
-        import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/kisi/kisi_detay.js' %}";
         document.addEventListener('DOMContentLoaded', () => {
             initDetayEkleForm();
             initEditDetayForm();
