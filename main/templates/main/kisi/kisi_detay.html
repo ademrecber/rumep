@@ -1,3 +1,4 @@
+
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
@@ -15,11 +16,81 @@
                 {% endif %}
             </div>
         </div>
+
+        <!-- Detay Ekleme Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Detay Ekle</h5>
+                {% if kisi.kullanici == user %}
+                    <p class="text-muted">Kendi kişinize detay yazamazsınız.</p>
+                {% else %}
+                    <form id="detay-ekle-form" method="post" action="{% url 'kisi_detay_ekle' kisi.id %}">
+                        {% csrf_token %}
+                        {{ detay_form.as_p }}
+                        <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                        <button type="submit" class="btn btn-primary rounded-pill">Detay Ekle</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Detay Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Ek Detaylar</h5>
+                <div id="detay-list">
+                    {% for detay in kisi.detaylar.all %}
+                        <div class="detay-item mb-2" data-detay-id="{{ detay.id }}">
+                            <p>{{ detay.detay|safe }}</p>
+                            <p class="text-muted small">
+                                Ekleyen: <a href="{% url 'profile_detail' detay.kullanici.profile.username %}">{{ detay.kullanici.profile.nickname }}</a> (@{{ detay.kullanici.profile.username }}) · {{ detay.eklenme_tarihi }}
+                            </p>
+                            {% if detay.kullanici == user %}
+                                <div class="mt-2">
+                                    <button class="btn btn-primary btn-sm rounded-pill me-2 edit-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'kisi_detay_veri' detay.id %}" data-bs-toggle="modal" data-bs-target="#editDetayModal">Düzenle</button>
+                                    <button class="btn btn-danger btn-sm rounded-pill delete-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'kisi_detay_sil' detay.id %}">Sil</button>
+                                </div>
+                            {% endif %}
+                            <hr>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Detay Düzenleme Modalı -->
+        <div class="modal fade" id="editDetayModal" tabindex="-1" aria-labelledby="editDetayModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editDetayModalLabel">Detay Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-detay-form" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="detay" class="form-label">Detay</label>
+                                <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
+                            </div>
+                            <div id="edit-detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                            <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block extra_scripts %}
-    <script>
+    <script type="module" src="{% static 'main/js/modules/kisi/kisi_detay.js' %}"></script>
+    <script type="module">
+        import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/kisi/kisi_detay.js' %}";
         document.addEventListener('DOMContentLoaded', () => {
+            initDetayEkleForm();
+            initEditDetayForm();
             const deleteBtn = document.querySelector('.delete-kisi-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', async () => {

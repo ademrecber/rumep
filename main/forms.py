@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay
+from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay
 import bleach
 import re
 
@@ -134,6 +134,20 @@ class KisiForm(forms.ModelForm):
         if not biyografi.strip():
             raise forms.ValidationError('Biyografi alanı zorunludur.')
         return biyografi
+    
+class KisiDetayForm(forms.ModelForm):
+    class Meta:
+        model = KisiDetay
+        fields = ['detay']
+        widgets = {
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ek detay girin', 'rows': 4, 'required': True}),
+        }
+
+    def clean_detay(self):
+        detay = self.cleaned_data.get('detay')
+        if not detay.strip():
+            raise forms.ValidationError('Detay alanı zorunludur.')
+        return bleach.clean(detay, tags=['p', 'br', 'strong', 'em', 'ul', 'ol', 'li'], strip=True)  
 
 class AlbumForm(forms.ModelForm):
     yil = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Albüm yılı (isteğe bağlı)'}))

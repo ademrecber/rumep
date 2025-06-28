@@ -1,3 +1,4 @@
+
 import { getCsrfToken } from '../../like.js';
 
 export function initKisiForm() {
@@ -43,13 +44,13 @@ export function initKisiForm() {
             biyografiHidden.value = quill.root.innerHTML;
         });
 
-        // AI Biyografi Düzeltme
+        // AI Metin İşleme
         if (aiButton && aiToast && confirmButton) {
-            console.log('AI biyografi düzeltme elementleri bulundu:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
+            console.log('AI metin işleme elementleri bulundu:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
             aiButton.addEventListener('click', () => {
-                console.log('Sihir değneği tıklandı, biyografi:', quill.root.innerHTML);
+                console.log('Sihir değneği tıklandı, metin:', quill.root.innerHTML);
                 if (!quill.root.innerHTML.trim() || quill.root.innerHTML === '<p><br></p>') {
-                    console.warn('Biyografi boş, düzeltme iptal edildi.');
+                    console.warn('Metin boş, işleme iptal edildi.');
                     const errorToast = document.createElement('div');
                     errorToast.className = 'toast';
                     errorToast.innerHTML = `
@@ -58,7 +59,7 @@ export function initKisiForm() {
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
-                            Lütfen önce bir biyografi yazın.
+                            Lütfen önce bir metin yazın.
                         </div>
                     `;
                     document.querySelector('.toast-container').appendChild(errorToast);
@@ -69,21 +70,21 @@ export function initKisiForm() {
             });
 
             confirmButton.addEventListener('click', async () => {
-                console.log('Biyografi düzeltme onaylandı, AJAX isteği gönderiliyor...');
+                console.log('Metin işleme onaylandı, AJAX isteği gönderiliyor...');
                 const csrfToken = getCsrfToken();
                 if (!csrfToken) {
                     console.error('CSRF token bulunamadı.');
                     return;
                 }
                 try {
-                    const response = await fetch('/enhance-biography/', {
+                    const response = await fetch('/enhance/', {
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': csrfToken,
                             'X-Requested-With': 'XMLHttpRequest',
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
-                        body: `text=${encodeURIComponent(quill.root.innerHTML)}`
+                        body: `text=${encodeURIComponent(quill.root.innerHTML)}&language=ku`
                     });
                     console.log('AJAX yanıtı alındı:', response.status);
                     const data = await response.json();
@@ -92,12 +93,12 @@ export function initKisiForm() {
                         throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Bilinmeyen hata'}`);
                     }
                     if (data.success) {
-                        console.log('Biyografi düzeltildi:', data.enhanced_text);
+                        console.log('Metin işlendi:', data.enhanced_text);
                         quill.root.innerHTML = data.enhanced_text;
                         biyografiHidden.value = data.enhanced_text;
                         bootstrap.Toast.getInstance(aiToast).hide();
                     } else {
-                        console.error('Biyografi düzeltme hatası:', data.error);
+                        console.error('Metin işleme hatası:', data.error);
                         const errorToast = document.createElement('div');
                         errorToast.className = 'toast';
                         errorToast.innerHTML = `
@@ -113,7 +114,7 @@ export function initKisiForm() {
                         bootstrap.Toast.getOrCreateInstance(errorToast).show();
                     }
                 } catch (error) {
-                    console.error('Biyografi düzeltme hatası:', error);
+                    console.error('Metin işleme hatası:', error);
                     const errorToast = document.createElement('div');
                     errorToast.className = 'toast';
                     errorToast.innerHTML = `
@@ -122,7 +123,7 @@ export function initKisiForm() {
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
-                            Biyografi düzeltme başarısız: ${error.message}
+                            Metin işleme başarısız: ${error.message}
                         </div>
                     `;
                     document.querySelector('.toast-container').appendChild(errorToast);
@@ -130,7 +131,7 @@ export function initKisiForm() {
                 }
             });
         } else {
-            console.error('AI biyografi düzeltme için gerekli elementler bulunamadı:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
+            console.error('AI metin işleme için gerekli elementler bulunamadı:', { aiButton: !!aiButton, aiToast: !!aiToast, confirmButton: !!confirmButton });
         }
     } else {
         console.error('Quill.js yüklenemedi, düzenleyici başlatılamadı.');

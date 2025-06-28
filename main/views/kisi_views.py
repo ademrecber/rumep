@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ValidationError
-from ..models import Kisi, Kategori
-from ..forms import KisiForm
+from ..models import Kisi, Kategori, KisiDetay
+from ..forms import KisiForm, KisiDetayForm
 import bleach
 import logging
 import re
@@ -136,7 +136,14 @@ def kisi_liste_yukle(request):
 
 def kisi_detay(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
-    return render(request, 'main/kisi/kisi_detay.html', {'kisi': kisi, 'user': request.user})
+    detaylar = KisiDetay.objects.filter(kisi=kisi).order_by('-eklenme_tarihi')
+    detay_form = KisiDetayForm()
+    return render(request, 'main/kisi/kisi_detay.html', {
+        'kisi': kisi,
+        'detaylar': detaylar,
+        'detay_form': detay_form,
+        'user': request.user
+    })
 
 @login_required
 @csrf_protect
@@ -148,3 +155,65 @@ def kisi_sil(request, kisi_id):
     logger.info(f"Kişi silindi: {kisi.ad}, Kullanıcı: {request.user.username}")
     return JsonResponse({'success': True})
 
+@login_required
+@csrf_protect
+def kisi_detay_ekle(request, kisi_id):
+    kisi = get_object_or_404(Kisi, id=kisi_id)
+    if kisi.kullanici == request.user:
+        return JsonResponse({'success': False, 'error': 'Kendi kişinize ek detay ekleyemezsiniz.'}, status=403)
+    if request.method == 'POST':
+        form = KisiDetayForm(request.POST)
+        if form.is_valid():
+            detay = form.save(commit=False)
+            detay.kisi = kisi
+            detay.kullanici = request.user
+            try:
+                detay.save()
+                logger.info(f"Detay eklendi: Kişi {kisi.ad}, Kullanıcı: {request.user.username}")
+                return JsonResponse({'success': True})
+            except ValidationError as e:
+                return JsonResponse({'success': False, 'errors': {field: errors[0] for field, errors in e.message_dict.items()}})
+        return JsonResponse({'success': False, 'errors': {field: errors[0]['message'] for field, errors in form.errors.get_json_data().items()}})
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
+
+@login_required
+@csrf_protect
+def kisi_detay_sil(request, detay_id):
+    detay = get_object_or_404(KisiDetay, id=detay_id)
+    if detay.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Bu detayı silme yetkiniz yok.'}, status=403)
+    if request.method == 'POST':
+        detay.delete()
+        logger.info(f"Detay silindi: Kişi {detay.kisi.ad}, Kullanıcı: {request.user.username}")
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
+
+@login_required
+@csrf_protect
+def kisi_detay_duzenle(request, detay_id):
+    detay = get_object_or_404(KisiDetay, id=detay_id)
+    if detay.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Bu detayı düzenleme yetkiniz yok.'}, status=403)
+    if request.method == 'POST':
+        form = KisiDetayForm(request.POST, instance=detay)
+        if form.is_valid():
+            detay = form.save(commit=False)
+            try:
+                detay.save()
+                logger.info(f"Detay düzenlendi: Kişi {detay.kisi.ad}, Kullanıcı: {request.user.username}")
+                return JsonResponse({'success': True})
+            except ValidationError as e:
+                return JsonResponse({'success': False, 'errors': {field: errors[0] for field, errors in e.message_dict.items()}})
+        return JsonResponse({'success': False, 'errors': {field: errors[0]['message'] for field, errors in form.errors.get_json_data().items()}})
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
+
+@login_required
+@csrf_protect
+def kisi_detay_veri(request, detay_id):
+    detay = get_object_or_404(KisiDetay, id=detay_id)
+    if detay.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Bu detayı düzenleme yetkiniz yok.'}, status=403)
+    return JsonResponse({
+        'success': True,
+        'detay': detay.detay
+    })

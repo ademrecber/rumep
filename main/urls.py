@@ -67,6 +67,11 @@ urlpatterns = [
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
     path('kisi/detay/<int:kisi_id>/', views.kisi_detay, name='kisi_detay'),
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
+    
+    path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
+    path('kisi/detay-sil/<int:detay_id>/', views.kisi_detay_sil, name='kisi_detay_sil'),
+    path('kisi/detay-duzenle/<int:detay_id>/', views.kisi_detay_duzenle, name='kisi_detay_duzenle'),
+    path('kisi/detay-veri/<int:detay_id>/', views.kisi_detay_veri, name='kisi_detay_veri'),
   
     
     # Account management URLs

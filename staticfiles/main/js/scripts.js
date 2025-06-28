@@ -13,8 +13,10 @@ import { loadMorePopularPosts } from './load-more-popular.js';
 import { initEmojiPicker } from './emoji.js';
 import { initGoogleSignIn, initProfileCompletion } from './auth.js';
 import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
+import { initDetayEkleForm, initEditDetayForm, initDetaySil } from './modules/kisi/kisi_detay.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
 import { initAiEnhance } from './ai.js'; // Yeni import
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -69,6 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
             initKisiForm();
             console.log("initKisiForm tamamlandı");
         }
+        // Yalnızca kişi detay sayfasında initDetayEkleForm, initEditDetayForm ve initDetaySil başlat
+        if (window.location.pathname.includes('/kisi/detay/')) {
+            initDetayEkleForm();
+            initEditDetayForm();
+            initDetaySil();
+            console.log("initDetayEkleForm, initEditDetayForm, initDetaySil tamamlandı");
+}
 
         // Yalnızca kişi listesi sayfasında initKisiLoader başlat
         if (window.location.pathname.includes('/kisi/liste/')) {
