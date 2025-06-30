@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 23:00+0300\n"
+"POT-Creation-Date: 2025-06-30 23:35+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -47,6 +47,7 @@ msgid "Atasözü ve Deyimler"
 msgstr "Pêşgotin û Îdîom"
 
 #: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
+#: .\main\templates\main\profile_detail.html:5
 msgid "Profil"
 msgstr "Profîl"
 
@@ -67,11 +68,124 @@ msgstr "Vegere"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
 
+#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\profile.html:69
+msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
+
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Jê Bibe"
+
+#: .\main\templates\main\post_detail.html:31
+msgid "Yer işaretine eklemek"
+msgstr "Zêde bike ji nîşaneyên cihê"
+
+#: .\main\templates\main\post_detail.html:32
+msgid "Yer işaretinden kaldırmak"
+msgstr "Ji nîşaneyên cihê rake"
+
+#: .\main\templates\main\post_detail.html:36
+#: .\main\templates\main\profile.html:171
+msgid "Yer İşaretinden Kaldır"
+msgstr "Ji Nîşaneyên Cihê Rake"
+
+#: .\main\templates\main\post_detail.html:36
+msgid "Yer İşaretine Ekle"
+msgstr "Zêde Bike ji Nîşaneyên Cihê"
+
+#: .\main\templates\main\post_detail.html:41
+msgid "Bağlantıyı Kopyala"
+msgstr "Girêdanê Kopî Bike"
+
+#: .\main\templates\main\post_detail.html:57
+#: .\main\templates\main\profile.html:45
+msgid "Beğeni"
+msgstr "Hezkirin"
+
+#: .\main\templates\main\post_detail.html:58
+#: .\main\templates\main\profile.html:48
+#: .\main\templates\main\profile_detail.html:31
+msgid "Yorum"
+msgstr "Şîrove"
+
+#: .\main\templates\main\post_detail.html:85
+msgid "Bu metni değerlendir"
+msgstr "Vê nivîsê nirxandine"
+
+#: .\main\templates\main\post_detail.html:87
+msgid "Son Eleştiriler"
+msgstr "Nirxandinên Dawî"
+
+#: .\main\templates\main\post_detail.html:101
+msgid "Eleştirinizi yazın..."
+msgstr "Nirxandina xwe binivîse..."
+
+#: .\main\templates\main\post_detail.html:107
+#: .\main\templates\main\post_detail.html:177
+msgid "Gönder"
+msgstr "Bişîne"
+
+#: .\main\templates\main\post_detail.html:108
+#: .\main\templates\main\post_detail.html:178
+msgid "İptal"
+msgstr "Betal Bike"
+
+#: .\main\templates\main\post_detail.html:119
+msgid "Emoji Seç"
+msgstr "Emojî Hilbijêre"
+
+#: .\main\templates\main\post_detail.html:134
+msgid "Eleştiri Detayı"
+msgstr "Hûrguliyên Nirxandinê"
+
+#: .\main\templates\main\post_detail.html:145
+msgid "Ortalama Puan"
+msgstr "Pûana Navîn"
+
+#: .\main\templates\main\post_detail.html:146
+msgid "Sizin Puanınız"
+msgstr "Pûana We"
+
+#: .\main\templates\main\post_detail.html:150
+msgid "Eleştiriyi Sil"
+msgstr "Nirxandinê Jê Bibe"
+
+#: .\main\templates\main\post_detail.html:154
+msgid "Kapat"
+msgstr "Bigire"
+
+#: .\main\templates\main\post_detail.html:165
+msgid "Puan Ver"
+msgstr "Pûan Bide"
+
+#: .\main\templates\main\post_detail.html:169
+msgid "Bu eleştiriye kaç puan verirsiniz?"
+msgstr "Hûn ji bo vê nirxandinê çend pûanan didin?"
+
+#: .\main\templates\main\post_detail.html:191
+msgid "Yorumunuzu yazın..."
+msgstr "Şîroveya xwe binivîse..."
+
+#: .\main\templates\main\post_detail.html:196
+msgid "Yorum Yap"
+msgstr "Şîrove Bike"
+
+#: .\main\templates\main\post_detail.html:209
+msgid "Bilgi"
+msgstr "Agahî"
+
+#: .\main\templates\main\post_detail.html:213
+msgid "Bağlantı kopyalandı!"
+msgstr "Girêdan hat kopîkirin!"
+
 #: .\main\templates\main\profile.html:17
+#: .\main\templates\main\profile_detail.html:13
 msgid "E-posta"
 msgstr "E-posta"
 
 #: .\main\templates\main\profile.html:26
+#: .\main\templates\main\profile_detail.html:21
 msgid "Toplam Post"
 msgstr "Tevahî Post"
 
@@ -93,18 +207,14 @@ msgstr "Derkeve"
 
 #: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
 #: .\main\templates\main\profile.html:146
+#: .\main\templates\main\profile_detail.html:28
+#: .\main\templates\main\profile_detail.html:69
+#: .\main\templates\main\profile_detail.html:86
 msgid "Post"
 msgstr "Post"
 
-#: .\main\templates\main\profile.html:45
-msgid "Beğeni"
-msgstr "Hezkirin"
-
-#: .\main\templates\main\profile.html:48
-msgid "Yorum"
-msgstr "Şîrove"
-
 #: .\main\templates\main\profile.html:51
+#: .\main\templates\main\profile_detail.html:34
 msgid "Değerlendirme"
 msgstr "Nirxandin"
 
@@ -115,12 +225,10 @@ msgstr "Nîşaneyên Cihê"
 #: .\main\templates\main\profile.html:67 .\main\templates\main\profile.html:91
 #: .\main\templates\main\profile.html:137
 #: .\main\templates\main\profile.html:160
+#: .\main\templates\main\profile_detail.html:47
+#: .\main\templates\main\profile_detail.html:83
 msgid "ID"
 msgstr "Nasname"
-
-#: .\main\templates\main\profile.html:69
-msgid "Bu postu silmek istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
 
 #: .\main\templates\main\profile.html:82
 msgid "Henüz post paylaşmadınız."
@@ -147,6 +255,7 @@ msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
 msgstr "Ma hûn ji bo jêbirina vê nirxandinê bawer in?"
 
 #: .\main\templates\main\profile.html:147
+#: .\main\templates\main\profile_detail.html:87
 msgid "Puan"
 msgstr "Pûan"
 
@@ -157,10 +266,6 @@ msgstr "Hêj nirxandin nehat kirin."
 #: .\main\templates\main\profile.html:168
 msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
 msgstr "Ma hûn ji bo rakirina vê nîşaneyê cihê bawer in?"
-
-#: .\main\templates\main\profile.html:171
-msgid "Yer İşaretinden Kaldır"
-msgstr "Ji Nîşaneyên Cihê Rake"
 
 #: .\main\templates\main\profile.html:184
 msgid "Henüz yer işareti eklemediniz."
@@ -237,8 +342,12 @@ msgid "Hesabı Dondur"
 msgstr "Hesabê Bicemidîne"
 
 #: .\main\templates\main\profile.html:298
-msgid "Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
-msgstr "Dema hûn hesabê xwe bicemidînin, naverokên we nayên dîtin lê nayên jêbirin. Hûn dikarin her dem dîsa çalak bikin."
+msgid ""
+"Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak "
+"silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
+msgstr ""
+"Dema hûn hesabê xwe bicemidînin, naverokên we nayên dîtin lê nayên jêbirin. "
+"Hûn dikarin her dem dîsa çalak bikin."
 
 #: .\main\templates\main\profile.html:300
 msgid "Hesabınızı dondurmak istediğinizden emin misiniz?"
@@ -254,19 +363,46 @@ msgid "Hesabı Sil"
 msgstr "Hesabê Jê Bibe"
 
 #: .\main\templates\main\profile.html:315
-msgid "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir."
-msgstr "Dema hûn hesabê xwe jê bibin, ger hûn di nav 30 rojan de dîsa têkevin, hemû daneyên we bi domdarî têne jêbirin."
+msgid ""
+"Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm "
+"verileriniz kalıcı olarak silinecektir."
+msgstr ""
+"Dema hûn hesabê xwe jê bibin, ger hûn di nav 30 rojan de dîsa têkevin, hemû "
+"daneyên we bi domdarî têne jêbirin."
 
 #: .\main\templates\main\profile.html:317
-msgid "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır."
-msgstr "Ma hûn ji bo jêbirina hesabê xwe bawer in? Ev pêvajo piştî 30 rojan tê qedandin."
+msgid ""
+"Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra "
+"tamamlanacaktır."
+msgstr ""
+"Ma hûn ji bo jêbirina hesabê xwe bawer in? Ev pêvajo piştî 30 rojan tê "
+"qedandin."
 
 #: .\main\templates\main\profile.html:325
 msgid "Silme İşlemini İptal Et"
 msgstr "Jêbirina Pêvajoyê Betal Bike"
 
-# # search.html çevirileri
+#: .\main\templates\main\profile_detail.html:16
+msgid "Instagram"
+msgstr "Instagram"
 
+#: .\main\templates\main\profile_detail.html:19
+msgid "Twitter"
+msgstr "Twitter"
+
+#: .\main\templates\main\profile_detail.html:57
+msgid "Bu kullanıcı henüz post paylaşmadı veya postlar gizli."
+msgstr "Ev bikarhêner hêj post parve nekiriye an jî post veşartî ne."
+
+#: .\main\templates\main\profile_detail.html:74
+msgid "Bu kullanıcı henüz yorum yapmadı veya yorumlar gizli."
+msgstr "Ev bikarhêner hêj şîrove nekiriye an jî şîrove veşartî ne."
+
+#: .\main\templates\main\profile_detail.html:92
+msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
+msgstr "Ev bikarhêner hêj nirxandin nekiriye an jî nirxandin veşartî ne."
+
+# # search.html çevirileri
 #: .\main\templates\main\search.html:6
 msgid "için Sonuçlar"
 msgstr "Encam ji bo"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 23:02+0300\n"
+"POT-Creation-Date: 2025-06-30 23:40+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -48,6 +48,7 @@ msgid "Atasözü ve Deyimler"
 msgstr "Proverbes et expressions"
 
 #: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
+#: .\main\templates\main\profile_detail.html:5
 msgid "Profil"
 msgstr "Profil"
 
@@ -68,11 +69,124 @@ msgstr "Retour"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top contributeurs"
 
+#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\profile.html:69
+msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
+
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Supprimer"
+
+#: .\main\templates\main\post_detail.html:31
+msgid "Yer işaretine eklemek"
+msgstr "Ajouter aux favoris"
+
+#: .\main\templates\main\post_detail.html:32
+msgid "Yer işaretinden kaldırmak"
+msgstr "Retirer des favoris"
+
+#: .\main\templates\main\post_detail.html:36
+#: .\main\templates\main\profile.html:171
+msgid "Yer İşaretinden Kaldır"
+msgstr "Retirer des favoris"
+
+#: .\main\templates\main\post_detail.html:36
+msgid "Yer İşaretine Ekle"
+msgstr "Ajouter aux favoris"
+
+#: .\main\templates\main\post_detail.html:41
+msgid "Bağlantıyı Kopyala"
+msgstr "Copier le lien"
+
+#: .\main\templates\main\post_detail.html:57
+#: .\main\templates\main\profile.html:45
+msgid "Beğeni"
+msgstr "J'aime"
+
+#: .\main\templates\main\post_detail.html:58
+#: .\main\templates\main\profile.html:48
+#: .\main\templates\main\profile_detail.html:31
+msgid "Yorum"
+msgstr "Commentaire"
+
+#: .\main\templates\main\post_detail.html:85
+msgid "Bu metni değerlendir"
+msgstr "Évaluer ce texte"
+
+#: .\main\templates\main\post_detail.html:87
+msgid "Son Eleştiriler"
+msgstr "Derniers avis"
+
+#: .\main\templates\main\post_detail.html:101
+msgid "Eleştirinizi yazın..."
+msgstr "Écrivez votre avis..."
+
+#: .\main\templates\main\post_detail.html:107
+#: .\main\templates\main\post_detail.html:177
+msgid "Gönder"
+msgstr "Envoyer"
+
+#: .\main\templates\main\post_detail.html:108
+#: .\main\templates\main\post_detail.html:178
+msgid "İptal"
+msgstr "Annuler"
+
+#: .\main\templates\main\post_detail.html:119
+msgid "Emoji Seç"
+msgstr "Choisir un emoji"
+
+#: .\main\templates\main\post_detail.html:134
+msgid "Eleştiri Detayı"
+msgstr "Détails de l'avis"
+
+#: .\main\templates\main\post_detail.html:145
+msgid "Ortalama Puan"
+msgstr "Note moyenne"
+
+#: .\main\templates\main\post_detail.html:146
+msgid "Sizin Puanınız"
+msgstr "Votre note"
+
+#: .\main\templates\main\post_detail.html:150
+msgid "Eleştiriyi Sil"
+msgstr "Supprimer l'avis"
+
+#: .\main\templates\main\post_detail.html:154
+msgid "Kapat"
+msgstr "Fermer"
+
+#: .\main\templates\main\post_detail.html:165
+msgid "Puan Ver"
+msgstr "Noter"
+
+#: .\main\templates\main\post_detail.html:169
+msgid "Bu eleştiriye kaç puan verirsiniz?"
+msgstr "Combien de points donnez-vous à cet avis ?"
+
+#: .\main\templates\main\post_detail.html:191
+msgid "Yorumunuzu yazın..."
+msgstr "Écrivez votre commentaire..."
+
+#: .\main\templates\main\post_detail.html:196
+msgid "Yorum Yap"
+msgstr "Commenter"
+
+#: .\main\templates\main\post_detail.html:209
+msgid "Bilgi"
+msgstr "Information"
+
+#: .\main\templates\main\post_detail.html:213
+msgid "Bağlantı kopyalandı!"
+msgstr "Lien copié !"
+
 #: .\main\templates\main\profile.html:17
+#: .\main\templates\main\profile_detail.html:13
 msgid "E-posta"
 msgstr "E-mail"
 
 #: .\main\templates\main\profile.html:26
+#: .\main\templates\main\profile_detail.html:21
 msgid "Toplam Post"
 msgstr "Total des publications"
 
@@ -94,18 +208,14 @@ msgstr "Se déconnecter"
 
 #: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
 #: .\main\templates\main\profile.html:146
+#: .\main\templates\main\profile_detail.html:28
+#: .\main\templates\main\profile_detail.html:69
+#: .\main\templates\main\profile_detail.html:86
 msgid "Post"
 msgstr "Publication"
 
-#: .\main\templates\main\profile.html:45
-msgid "Beğeni"
-msgstr "J'aime"
-
-#: .\main\templates\main\profile.html:48
-msgid "Yorum"
-msgstr "Commentaire"
-
 #: .\main\templates\main\profile.html:51
+#: .\main\templates\main\profile_detail.html:34
 msgid "Değerlendirme"
 msgstr "Avis"
 
@@ -116,12 +226,10 @@ msgstr "Favoris"
 #: .\main\templates\main\profile.html:67 .\main\templates\main\profile.html:91
 #: .\main\templates\main\profile.html:137
 #: .\main\templates\main\profile.html:160
+#: .\main\templates\main\profile_detail.html:47
+#: .\main\templates\main\profile_detail.html:83
 msgid "ID"
 msgstr "ID"
-
-#: .\main\templates\main\profile.html:69
-msgid "Bu postu silmek istediğinizden emin misiniz?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
 
 #: .\main\templates\main\profile.html:82
 msgid "Henüz post paylaşmadınız."
@@ -148,6 +256,7 @@ msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet avis ?"
 
 #: .\main\templates\main\profile.html:147
+#: .\main\templates\main\profile_detail.html:87
 msgid "Puan"
 msgstr "Note"
 
@@ -158,10 +267,6 @@ msgstr "Vous n'avez pas encore fait d'avis."
 #: .\main\templates\main\profile.html:168
 msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
 msgstr "Êtes-vous sûr de vouloir retirer ce favori ?"
-
-#: .\main\templates\main\profile.html:171
-msgid "Yer İşaretinden Kaldır"
-msgstr "Retirer des favoris"
 
 #: .\main\templates\main\profile.html:184
 msgid "Henüz yer işareti eklemediniz."
@@ -238,8 +343,12 @@ msgid "Hesabı Dondur"
 msgstr "Geler le compte"
 
 #: .\main\templates\main\profile.html:298
-msgid "Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
-msgstr "Lorsque vous gelez votre compte, vos contenus deviendront invisibles mais ne seront pas supprimés. Vous pouvez le réactiver à tout moment."
+msgid ""
+"Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak "
+"silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
+msgstr ""
+"Lorsque vous gelez votre compte, vos contenus deviendront invisibles mais ne "
+"seront pas supprimés. Vous pouvez le réactiver à tout moment."
 
 #: .\main\templates\main\profile.html:300
 msgid "Hesabınızı dondurmak istediğinizden emin misiniz?"
@@ -255,16 +364,47 @@ msgid "Hesabı Sil"
 msgstr "Supprimer le compte"
 
 #: .\main\templates\main\profile.html:315
-msgid "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir."
-msgstr "Si vous supprimez votre compte, toutes vos données seront définitivement supprimées après 30 jours si vous ne vous reconnectez pas."
+msgid ""
+"Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm "
+"verileriniz kalıcı olarak silinecektir."
+msgstr ""
+"Si vous supprimez votre compte, toutes vos données seront définitivement "
+"supprimées après 30 jours si vous ne vous reconnectez pas."
 
 #: .\main\templates\main\profile.html:317
-msgid "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır."
-msgstr "Êtes-vous sûr de vouloir supprimer votre compte ? Ce processus sera finalisé après 30 jours."
+msgid ""
+"Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra "
+"tamamlanacaktır."
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer votre compte ? Ce processus sera finalisé "
+"après 30 jours."
 
 #: .\main\templates\main\profile.html:325
 msgid "Silme İşlemini İptal Et"
 msgstr "Annuler la suppression"
+
+#: .\main\templates\main\profile_detail.html:16
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\main\templates\main\profile_detail.html:19
+msgid "Twitter"
+msgstr "Twitter"
+
+#: .\main\templates\main\profile_detail.html:57
+msgid "Bu kullanıcı henüz post paylaşmadı veya postlar gizli."
+msgstr ""
+"Cet utilisateur n'a pas encore partagé de publications ou les publications "
+"sont masquées."
+
+#: .\main\templates\main\profile_detail.html:74
+msgid "Bu kullanıcı henüz yorum yapmadı veya yorumlar gizli."
+msgstr ""
+"Cet utilisateur n'a pas encore commenté ou les commentaires sont masqués."
+
+#: .\main\templates\main\profile_detail.html:92
+msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
+msgstr "Cet utilisateur n'a pas encore fait d'avis ou les avis sont masqués."
 
 # # search.html çevirileri
 #: .\main\templates\main\search.html:6

@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
+{% load i18n %}
 {% block title %}{{ post.title|default:'Başlıksız' }}{% endblock %}
 {% block content %}
     <meta name="critique-url" content="{% url 'list_critiques' %}?post_id={{ post.id }}">
@@ -19,22 +20,25 @@
                         <ul class="dropdown-menu">
                             {% if post.user == user %}
                                 <li>
-                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                    {% trans "Bu postu silmek istediğinizden emin misiniz?" as delete_post_confirm %}
+                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('{{ delete_post_confirm|escapejs }}');">
                                         {% csrf_token %}
-                                        <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                        <button type="submit" class="dropdown-item text-danger">{% trans "Sil" %}</button>
                                     </form>
                                 </li>
                             {% endif %}
                             <li>
-                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if bookmarked %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                {% trans "Yer işaretine eklemek" as bookmark_add_confirm %}
+                                {% trans "Yer işaretinden kaldırmak" as bookmark_remove_confirm %}
+                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if bookmarked %}{{ bookmark_remove_confirm|escapejs }}{% else %}{{ bookmark_add_confirm|escapejs }}{% endif %}');" data-post-id="{{ post.id }}">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item">
-                                        {% if bookmarked %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                        {% if bookmarked %}{% trans "Yer İşaretinden Kaldır" %}{% else %}{% trans "Yer İşaretine Ekle" %}{% endif %}
                                     </button>
                                 </form>
                             </li>
                             <li>
-                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
+                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">{% trans "Bağlantıyı Kopyala" %}</button>
                             </li>
                         </ul>
                     </div>
@@ -50,8 +54,8 @@
                     <div class="social-embed">{{ post.embed_code|safe }}</div>
                 {% endif %}
                 <div class="post-meta text-muted mt-2">
-                    <span>Beğeni: {{ like_count }}</span> | 
-                    <span>Yorum: {{ comment_count }}</span> | 
+                    <span>{% trans "Beğeni" %}: {{ like_count }}</span> | 
+                    <span>{% trans "Yorum" %}: {{ comment_count }}</span> | 
                     <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
                 </div>
                 <div class="post-actions mt-2">
@@ -78,9 +82,9 @@
         <!-- Mobil için eleştiri butonu ve liste -->
         <div class="card mb-3 d-md-none">
             <div class="card-body">
-                <button class="btn btn-primary rounded-pill mb-3" id="mobile-toggle-critique-btn">Bu metni değerlendir</button>
+                <button class="btn btn-primary rounded-pill mb-3" id="mobile-toggle-critique-btn">{% trans "Bu metni değerlendir" %}</button>
                 <button class="btn btn-link text-primary p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#mobile-critique-list" aria-expanded="false" aria-controls="mobile-critique-list">
-                    Son Eleştiriler <i class="bi bi-chevron-down"></i>
+                    {% trans "Son Eleştiriler" %} <i class="bi bi-chevron-down"></i>
                 </button>
                 <div class="collapse" id="mobile-critique-list" style="max-height: 300px; overflow-y: auto;">
                     <!-- Dinamik olarak critique_loader.js tarafından dolduruluyor -->
@@ -94,14 +98,14 @@
                     {% csrf_token %}
                     <input type="hidden" name="critique_submit" value="1">
                     <div class="input-group">
-                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="Eleştirinizi yazın..." maxlength="5000" required></textarea>
+                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="{% trans "Eleştirinizi yazın..." %}" maxlength="5000" required></textarea>
                         <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
                             <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
                         </button>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
-                        <button type="submit" class="btn btn-primary rounded-pill">Gönder</button>
-                        <button type="button" class="btn btn-primary rounded-pill" id="cancel-critique-btn">İptal</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Gönder" %}</button>
+                        <button type="button" class="btn btn-primary rounded-pill" id="cancel-critique-btn">{% trans "İptal" %}</button>
                     </div>
                 </form>
             </div>
@@ -112,7 +116,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="emojiModalLabel">Emoji Seç</h5>
+                        <h5 class="modal-title" id="emojiModalLabel">{% trans "Emoji Seç" %}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -127,7 +131,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="critiqueModalLabel">Eleştiri Detayı</h5>
+                        <h5 class="modal-title" id="critiqueModalLabel">{% trans "Eleştiri Detayı" %}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -138,16 +142,16 @@
                         </p>
                         <p class="text-muted small" id="modal-date"></p>
                         <p id="modal-text"></p>
-                        <p id="modal-rating" class="text-muted small">Ortalama Puan: <span id="modal-rating-value"></span></p>
-                        <p id="modal-user-rating" class="text-muted small">Sizin Puanınız: <span id="modal-user-rating-value"></span></p>
+                        <p id="modal-rating" class="text-muted small">{% trans "Ortalama Puan" %}: <span id="modal-rating-value"></span></p>
+                        <p id="modal-user-rating" class="text-muted small">{% trans "Sizin Puanınız" %}: <span id="modal-user-rating-value"></span></p>
                         <div id="rating-buttons" class="mt-2"></div>
                         <form id="delete-critique-form" method="post" style="display: none;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm mt-2">Eleştiriyi Sil</button>
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">{% trans "Eleştiriyi Sil" %}</button>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">{% trans "Kapat" %}</button>
                     </div>
                 </div>
             </div>
@@ -158,11 +162,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="voteCritiqueModalLabel">Puan Ver</h5>
+                        <h5 class="modal-title" id="voteCritiqueModalLabel">{% trans "Puan Ver" %}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Bu eleştiriye kaç puan verirsiniz?</p>
+                        <p>{% trans "Bu eleştiriye kaç puan verirsiniz?" %}</p>
                         <div id="star-rating" class="d-flex flex-wrap">
                             {% for i in "12345678910" %}
                                 <i class="bi bi-star-fill text-warning star-rating-item mx-1" data-value="{{ i }}" style="cursor: pointer; font-size: 1.5rem;"></i>
@@ -170,8 +174,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary rounded-pill" id="submit-vote-critique" disabled>Gönder</button>
-                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">İptal</button>
+                        <button type="button" class="btn btn-primary rounded-pill" id="submit-vote-critique" disabled>{% trans "Gönder" %}</button>
+                        <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">{% trans "İptal" %}</button>
                     </div>
                 </div>
             </div>
@@ -184,12 +188,12 @@
                     {% csrf_token %}
                     <input type="hidden" name="comment_submit" value="1">
                     <div class="input-group">
-                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="Yorumunuzu yazın..." maxlength="5000" required></textarea>
+                        <textarea name="text" class="form-control border-0 auto-grow" placeholder="{% trans "Yorumunuzu yazın..." %}" maxlength="5000" required></textarea>
                         <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
                             <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
                         </button>
                     </div>
-                    <button type="submit" class="btn btn-primary rounded-pill mt-2">Yorum Yap</button>
+                    <button type="submit" class="btn btn-primary rounded-pill mt-2">{% trans "Yorum Yap" %}</button>
                 </form>
             </div>
         </div>
@@ -202,11 +206,11 @@
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <strong class="me-auto">Bilgi</strong>
+                    <strong class="me-auto">{% trans "Bilgi" %}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
-                    Bağlantı kopyalandı!
+                    {% trans "Bağlantı kopyalandı!" %}
                 </div>
             </div>
         </div>
