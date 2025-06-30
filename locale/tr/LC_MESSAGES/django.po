@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 22:04+0300\n"
+"POT-Creation-Date: 2025-06-29 20:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,93 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: .\main\templates\main\base.html:121
+
+#: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
+#: .\main\templates\main\tabs.html:9
 msgid "Ana Sayfa"
 msgstr ""
 
-#: .\main\templates\main\base.html:124
+#: .\main\templates\main\base.html:126
 msgid "Popüler"
 msgstr ""
 
-#: .\main\templates\main\base.html:127
+#: .\main\templates\main\base.html:129
 msgid "Popüler Değerlendirmeler"
 msgstr ""
 
-#: .\main\templates\main\base.html:130
+#: .\main\templates\main\base.html:132
 msgid "Sözlük"
 msgstr ""
 
-#: .\main\templates\main\base.html:133
+#: .\main\templates\main\base.html:135
 msgid "Kişiler"
 msgstr ""
 
-#: .\main\templates\main\base.html:136
+#: .\main\templates\main\base.html:138
 msgid "Şarkı Sözleri"
 msgstr ""
 
-#: .\main\templates\main\base.html:139
+#: .\main\templates\main\base.html:141
 msgid "Atasözü ve Deyimler"
 msgstr ""
 
-#: .\main\templates\main\base.html:142
+#: .\main\templates\main\base.html:144
 msgid "Profil"
 msgstr ""
 
-#: .\main\templates\main\base.html:159 .\main\templates\main\base.html:186
+#: .\main\templates\main\base.html:161 .\main\templates\main\base.html:188
 msgid "Ara..."
 msgstr ""
 
-#: .\main\templates\main\base.html:160 .\main\templates\main\base.html:187
+#: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
+#: .\main\templates\main\search.html:3
 msgid "Arama"
 msgstr ""
 
-#: .\main\templates\main\base.html:172
+#: .\main\templates\main\base.html:174
 msgid "Geri dön"
 msgstr ""
 
-#: .\main\templates\main\base.html:199
+#: .\main\templates\main\base.html:201
 msgid "En Çok Katkı Sağlayanlar"
+msgstr ""
+
+#: .\main\templates\main\search.html:6
+msgid "için Sonuçlar"
+msgstr ""
+
+#: .\main\templates\main\search.html:9
+msgid "Kullanıcılar"
+msgstr ""
+
+#: .\main\templates\main\search.html:20
+msgid "Kullanıcı bulunamadı."
+msgstr ""
+
+#: .\main\templates\main\search.html:25
+msgid "ID’ler"
+msgstr ""
+
+#: .\main\templates\main\search.html:36 .\main\templates\main\search.html:56
+msgid "Devamını oku"
+msgstr ""
+
+#: .\main\templates\main\search.html:40
+msgid "ID bulunamadı."
+msgstr ""
+
+#: .\main\templates\main\search.html:45
+msgid "Postlar"
+msgstr ""
+
+#: .\main\templates\main\search.html:60
+msgid "Post bulunamadı."
+msgstr ""
+
+#: .\main\templates\main\search.html:65
+msgid "Hiçbir sonuç bulunamadı."
+msgstr ""
+
+#: .\main\templates\main\tabs.html:12
+msgid "Katkılar"
 msgstr ""

@@ -106,12 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGES = [
-    ('tr', 'Türkçe'),
-    ('ku', 'Kürtçe'),
+    ('ku', 'Kurdî (Kurmanci)'),
     ('en', 'English'),
+    ('tr', 'Türkçe'),
+    ('de', 'Deutsch'),
+    ('fr', 'Français'),
 ]
 
-LANGUAGE_CODE = 'tr'
+LANGUAGE_CODE = 'ku'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True

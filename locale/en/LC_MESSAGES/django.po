@@ -3,64 +3,307 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 22:04+0300\n"
-"PO-Revision-Date: 2025-06-05 22:05+0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-06-30 23:00+0300\n"
+"PO-Revision-Date: 2025-06-29 20:47+0300\n"
+"Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\main\templates\main\base.html:121
+# base.html çevirileri
+#: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
+#: .\main\templates\main\tabs.html:9
 msgid "Ana Sayfa"
 msgstr "Home"
 
-#: .\main\templates\main\base.html:124
+#: .\main\templates\main\base.html:126
 msgid "Popüler"
 msgstr "Popular"
 
-#: .\main\templates\main\base.html:127
+#: .\main\templates\main\base.html:129
 msgid "Popüler Değerlendirmeler"
 msgstr "Popular Reviews"
 
-#: .\main\templates\main\base.html:130
+#: .\main\templates\main\base.html:132
 msgid "Sözlük"
 msgstr "Dictionary"
 
-#: .\main\templates\main\base.html:133
+#: .\main\templates\main\base.html:135
 msgid "Kişiler"
 msgstr "People"
 
-#: .\main\templates\main\base.html:136
+#: .\main\templates\main\base.html:138
 msgid "Şarkı Sözleri"
-msgstr "Song Lyrics"
+msgstr "Lyrics"
 
-#: .\main\templates\main\base.html:139
+#: .\main\templates\main\base.html:141
 msgid "Atasözü ve Deyimler"
 msgstr "Proverbs and Idioms"
 
-#: .\main\templates\main\base.html:142
+#: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
 msgid "Profil"
 msgstr "Profile"
 
-#: .\main\templates\main\base.html:159 .\main\templates\main\base.html:186
+#: .\main\templates\main\base.html:161 .\main\templates\main\base.html:188
 msgid "Ara..."
 msgstr "Search..."
 
-#: .\main\templates\main\base.html:160 .\main\templates\main\base.html:187
+#: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
+#: .\main\templates\main\search.html:3
 msgid "Arama"
 msgstr "Search"
 
-#: .\main\templates\main\base.html:172
+#: .\main\templates\main\base.html:174
 msgid "Geri dön"
-msgstr "Go Back"
+msgstr "Go back"
 
-#: .\main\templates\main\base.html:199
+#: .\main\templates\main\base.html:201
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top Contributors"
+
+#: .\main\templates\main\profile.html:17
+msgid "E-posta"
+msgstr "Email"
+
+#: .\main\templates\main\profile.html:26
+msgid "Toplam Post"
+msgstr "Total Posts"
+
+#: .\main\templates\main\profile.html:28 .\main\templates\main\profile.html:194
+msgid "Profili Düzenle"
+msgstr "Edit Profile"
+
+#: .\main\templates\main\profile.html:29 .\main\templates\main\profile.html:241
+msgid "Görünürlük Ayarları"
+msgstr "Visibility Settings"
+
+#: .\main\templates\main\profile.html:30 .\main\templates\main\profile.html:273
+msgid "Hesap Yönetimi"
+msgstr "Account Management"
+
+#: .\main\templates\main\profile.html:33
+msgid "Çıkış Yap"
+msgstr "Log Out"
+
+#: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
+#: .\main\templates\main\profile.html:146
+msgid "Post"
+msgstr "Post"
+
+#: .\main\templates\main\profile.html:45
+msgid "Beğeni"
+msgstr "Like"
+
+#: .\main\templates\main\profile.html:48
+msgid "Yorum"
+msgstr "Comment"
+
+#: .\main\templates\main\profile.html:51
+msgid "Değerlendirme"
+msgstr "Review"
+
+#: .\main\templates\main\profile.html:54
+msgid "Yer İşaretleri"
+msgstr "Bookmarks"
+
+#: .\main\templates\main\profile.html:67 .\main\templates\main\profile.html:91
+#: .\main\templates\main\profile.html:137
+#: .\main\templates\main\profile.html:160
+msgid "ID"
+msgstr "ID"
+
+#: .\main\templates\main\profile.html:69
+msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgstr "Are you sure you want to delete this post?"
+
+#: .\main\templates\main\profile.html:82
+msgid "Henüz post paylaşmadınız."
+msgstr "You haven't shared any posts yet."
+
+#: .\main\templates\main\profile.html:93
+msgid "Bu beğeniyi kaldırmak istediğinizden emin misiniz?"
+msgstr "Are you sure you want to unlike this post?"
+
+#: .\main\templates\main\profile.html:106
+msgid "Henüz bir post beğenmediniz."
+msgstr "You haven't liked any posts yet."
+
+#: .\main\templates\main\profile.html:117
+msgid "Bu yorumu silmek istediğinizden emin misiniz?"
+msgstr "Are you sure you want to delete this comment?"
+
+#: .\main\templates\main\profile.html:128
+msgid "Henüz yorum yapmadınız."
+msgstr "You haven't commented yet."
+
+#: .\main\templates\main\profile.html:139
+msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
+msgstr "Are you sure you want to delete this review?"
+
+#: .\main\templates\main\profile.html:147
+msgid "Puan"
+msgstr "Score"
+
+#: .\main\templates\main\profile.html:151
+msgid "Henüz değerlendirme yapmadınız."
+msgstr "You haven't made any reviews yet."
+
+#: .\main\templates\main\profile.html:168
+msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgstr "Are you sure you want to remove this bookmark?"
+
+#: .\main\templates\main\profile.html:171
+msgid "Yer İşaretinden Kaldır"
+msgstr "Remove from Bookmarks"
+
+#: .\main\templates\main\profile.html:184
+msgid "Henüz yer işareti eklemediniz."
+msgstr "You haven't added any bookmarks yet."
+
+#: .\main\templates\main\profile.html:204
+msgid "Takma Ad"
+msgstr "Nickname"
+
+#: .\main\templates\main\profile.html:208
+msgid "Kullanıcı Adı"
+msgstr "Username"
+
+#: .\main\templates\main\profile.html:212
+msgid "Instagram (Opsiyonel)"
+msgstr "Instagram (Optional)"
+
+#: .\main\templates\main\profile.html:216
+msgid "Twitter (Opsiyonel)"
+msgstr "Twitter (Optional)"
+
+#: .\main\templates\main\profile.html:220
+msgid "Dil Tercihi"
+msgstr "Language Preference"
+
+#: .\main\templates\main\profile.html:229
+#: .\main\templates\main\profile.html:261
+msgid "Kaydet"
+msgstr "Save"
+
+#: .\main\templates\main\profile.html:250
+msgid "Postlar Görünür"
+msgstr "Posts Visible"
+
+#: .\main\templates\main\profile.html:254
+msgid "Değerlendirmeler Görünür"
+msgstr "Reviews Visible"
+
+#: .\main\templates\main\profile.html:258
+msgid "Yorumlar Görünür"
+msgstr "Comments Visible"
+
+#: .\main\templates\main\profile.html:281
+msgid "Hesap Durumu"
+msgstr "Account Status"
+
+#: .\main\templates\main\profile.html:282
+msgid "Mevcut durum"
+msgstr "Current Status"
+
+#: .\main\templates\main\profile.html:284
+msgid "Aktif"
+msgstr "Active"
+
+#: .\main\templates\main\profile.html:286
+msgid "Dondurulmuş"
+msgstr "Frozen"
+
+#: .\main\templates\main\profile.html:288
+msgid "Silinme Planlandı"
+msgstr "Deletion Scheduled"
+
+#: .\main\templates\main\profile.html:289
+msgid "Silinme tarihi"
+msgstr "Deletion Date"
+
+#: .\main\templates\main\profile.html:291
+msgid "Bilinmeyen Durum"
+msgstr "Unknown Status"
+
+#: .\main\templates\main\profile.html:297
+#: .\main\templates\main\profile.html:303
+msgid "Hesabı Dondur"
+msgstr "Freeze Account"
+
+#: .\main\templates\main\profile.html:298
+msgid "Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
+msgstr "When you freeze your account, your content will become invisible but will not be deleted. You can reactivate it at any time."
+
+#: .\main\templates\main\profile.html:300
+msgid "Hesabınızı dondurmak istediğinizden emin misiniz?"
+msgstr "Are you sure you want to freeze your account?"
+
+#: .\main\templates\main\profile.html:308
+msgid "Hesabı Aktifleştir"
+msgstr "Activate Account"
+
+#: .\main\templates\main\profile.html:314
+#: .\main\templates\main\profile.html:320
+msgid "Hesabı Sil"
+msgstr "Delete Account"
+
+#: .\main\templates\main\profile.html:315
+msgid "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir."
+msgstr "If you delete your account, all your data will be permanently deleted after 30 days if you do not log in again."
+
+#: .\main\templates\main\profile.html:317
+msgid "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır."
+msgstr "Are you sure you want to delete your account? This process will be completed after 30 days."
+
+#: .\main\templates\main\profile.html:325
+msgid "Silme İşlemini İptal Et"
+msgstr "Cancel Deletion"
+
+# # search.html çevirileri
+#: .\main\templates\main\search.html:6
+msgid "için Sonuçlar"
+msgstr "Results for"
+
+#: .\main\templates\main\search.html:9
+msgid "Kullanıcılar"
+msgstr "Users"
+
+#: .\main\templates\main\search.html:20
+msgid "Kullanıcı bulunamadı."
+msgstr "No users found."
+
+#: .\main\templates\main\search.html:25
+msgid "ID’ler"
+msgstr "IDs"
+
+#: .\main\templates\main\search.html:36 .\main\templates\main\search.html:56
+msgid "Devamını oku"
+msgstr "Read more"
+
+#: .\main\templates\main\search.html:40
+msgid "ID bulunamadı."
+msgstr "No ID found."
+
+#: .\main\templates\main\search.html:45
+msgid "Postlar"
+msgstr "Posts"
+
+#: .\main\templates\main\search.html:60
+msgid "Post bulunamadı."
+msgstr "No posts found."
+
+#: .\main\templates\main\search.html:65
+msgid "Hiçbir sonuç bulunamadı."
+msgstr "No results found."
+
+# tabs.html çevirileri
+#: .\main\templates\main\tabs.html:12
+msgid "Katkılar"
+msgstr "Contributions"

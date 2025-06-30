@@ -1,7 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}Profil - {{ profile.nickname }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Profil" %} - {{ profile.nickname }}{% endblock %}
 {% block content %}
 <div class="container twitter-container py-4">
     <!-- Profil Bilgileri -->
@@ -13,7 +14,7 @@
                 </div>
                 <div>
                     <h3 class="mb-0">{{ profile.nickname }} <small class="text-muted fs-6">@{{ profile.username }}</small></h3>
-                    <p class="text-muted mb-0">E-posta: {{ user.email }}</p>
+                    <p class="text-muted mb-0">{% trans "E-posta" %}: {{ user.email }}</p>
                 </div>
             </div>
             {% if profile.instagram_username %}
@@ -22,14 +23,14 @@
             {% if profile.twitter_username %}
                 <p class="text-muted mb-1"><i class="bi bi-twitter me-2"></i><a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank" class="text-decoration-none">@{{ profile.twitter_username }}</a></p>
             {% endif %}
-            <p class="text-muted mb-3"><i class="bi bi-file-post me-2"></i>Toplam Post: {{ posts_count }}</p>
+            <p class="text-muted mb-3"><i class="bi bi-file-post me-2"></i>{% trans "Toplam Post" %}: {{ posts_count }}</p>
             <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profili Düzenle</button>
-                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 visibility-btn" data-bs-toggle="modal" data-bs-target="#visibilityModal">Görünürlük Ayarları</button>
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#accountManagementModal">Hesap Yönetimi</button>
+                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">{% trans "Profili Düzenle" %}</button>
+                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 visibility-btn" data-bs-toggle="modal" data-bs-target="#visibilityModal">{% trans "Görünürlük Ayarları" %}</button>
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#accountManagementModal">{% trans "Hesap Yönetimi" %}</button>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Çıkış Yap</button>
+                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3">{% trans "Çıkış Yap" %}</button>
                 </form>
             </div>
         </div>
@@ -38,19 +39,19 @@
     <!-- Sekmeler -->
     <ul class="nav nav-tabs modern-tabs mb-4 scrollable-tabs">
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile' %}?tab=posts">Post</a>
+            <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile' %}?tab=posts">{% trans "Post" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'likes' %}active{% endif %}" href="{% url 'profile' %}?tab=likes">Beğeni</a>
+            <a class="nav-link {% if tab == 'likes' %}active{% endif %}" href="{% url 'profile' %}?tab=likes">{% trans "Beğeni" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile' %}?tab=comments">Yorum</a>
+            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile' %}?tab=comments">{% trans "Yorum" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile' %}?tab=critiques">Değerlendirme</a>
+            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile' %}?tab=critiques">{% trans "Değerlendirme" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">Yer İşaretleri</a>
+            <a class="nav-link {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">{% trans "Yer İşaretleri" %}</a>
         </li>
     </ul>
 
@@ -63,9 +64,10 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <p class="mb-0">
                                 <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
+                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · {% trans "ID" %}: {{ post.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_post' post.id %}?tab=posts" class="d-inline" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                            {% trans "Bu postu silmek istediğinizden emin misiniz?" as delete_post_confirm %}
+                            <form method="post" action="{% url 'profile_delete_post' post.id %}?tab=posts" class="d-inline" onsubmit="return confirm('{{ delete_post_confirm|escapejs }}');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
@@ -77,7 +79,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz post paylaşmadınız.</p>
+                <p class="text-muted">{% trans "Henüz post paylaşmadınız." %}</p>
             {% endfor %}
         {% elif tab == 'likes' %}
             {% for post in liked_posts %}
@@ -86,9 +88,10 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <p class="mb-0">
                                 <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
+                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · {% trans "ID" %}: {{ post.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'unlike_post' post.id %}?tab=likes" class="bookmark-form d-inline" onsubmit="return confirm('Bu beğeniyi kaldırmak istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                            {% trans "Bu beğeniyi kaldırmak istediğinizden emin misiniz?" as unlike_confirm %}
+                            <form method="post" action="{% url 'unlike_post' post.id %}?tab=likes" class="bookmark-form d-inline" onsubmit="return confirm('{{ unlike_confirm|escapejs }}');" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-heartbreak"></i></button>
                             </form>
@@ -100,7 +103,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz bir post beğenmediniz.</p>
+                <p class="text-muted">{% trans "Henüz bir post beğenmediniz." %}</p>
             {% endfor %}
         {% elif tab == 'comments' %}
             {% for comment in comments %}
@@ -111,17 +114,18 @@
                                 <strong>{{ comment.user.profile.nickname }}</strong> 
                                 <span class="text-muted"><a href="{% url 'profile_detail' comment.user.profile.username %}" class="text-muted text-decoration-none">@{{ comment.user.profile.username }}</a> · {{ comment.created_at }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_comment' comment.id %}?tab=comments" class="d-inline" onsubmit="return confirm('Bu yorumu silmek istediğinizden emin misiniz?');">
+                            {% trans "Bu yorumu silmek istediğinizden emin misiniz?" as delete_comment_confirm %}
+                            <form method="post" action="{% url 'profile_delete_comment' comment.id %}?tab=comments" class="d-inline" onsubmit="return confirm('{{ delete_comment_confirm|escapejs }}');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
                         </div>
                         <p class="mb-1"><a href="{% url 'post_detail' comment.post.id %}" class="text-dark text-decoration-none">{{ comment.text|render_emojis|safe|linebreaks }}</a></p>
-                        <p class="text-muted small">Post: <a href="{% url 'post_detail' comment.post.id %}" class="text-muted">{{ comment.post.title|default:comment.post.text|truncatechars:50 }}</a></p>
+                        <p class="text-muted small">{% trans "Post" %}: <a href="{% url 'post_detail' comment.post.id %}" class="text-muted">{{ comment.post.title|default:comment.post.text|truncatechars:50 }}</a></p>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz yorum yapmadınız.</p>
+                <p class="text-muted">{% trans "Henüz yorum yapmadınız." %}</p>
             {% endfor %}
         {% elif tab == 'critiques' %}
             {% for critique in critiques %}
@@ -130,20 +134,21 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <p class="mb-0">
                                 <strong>{{ critique.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' critique.user.profile.username %}" class="text-muted text-decoration-none">@{{ critique.user.profile.username }}</a> · {{ critique.created_at }} · ID: {{ critique.short_id }}</span>
+                                <span class="text-muted"><a href="{% url 'profile_detail' critique.user.profile.username %}" class="text-muted text-decoration-none">@{{ critique.user.profile.username }}</a> · {{ critique.created_at }} · {% trans "ID" %}: {{ critique.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_critique' critique.id %}?tab=critiques" class="d-inline" onsubmit="return confirm('Bu eleştiriyi silmek istediğinizden emin misiniz?');">
+                            {% trans "Bu eleştiriyi silmek istediğinizden emin misiniz?" as delete_critique_confirm %}
+                            <form method="post" action="{% url 'profile_delete_critique' post.id %}?tab=critiques" class="d-inline" onsubmit="return confirm('{{ delete_critique_confirm|escapejs }}');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
                         </div>
                         <p class="mb-1"><a href="{% url 'post_detail' critique.post.id %}" class="text-dark text-decoration-none">{{ critique.text|render_emojis|safe|linebreaks }}</a></p>
-                        <p class="text-muted small">Post: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
-                        <p class="text-muted small">Puan: {{ critique.rating|floatformat:1 }}</p>
+                        <p class="text-muted small">{% trans "Post" %}: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
+                        <p class="text-muted small">{% trans "Puan" %}: {{ critique.rating|floatformat:1 }}</p>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz değerlendirme yapmadınız.</p>
+                <p class="text-muted">{% trans "Henüz değerlendirme yapmadınız." %}</p>
             {% endfor %}
         {% elif tab == 'bookmarks' %}
             {% for post in bookmarked_posts %}
@@ -152,7 +157,7 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <p class="mb-0">
                                 <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
+                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · {% trans "ID" %}: {{ post.short_id }}</span>
                             </p>
                             <div class="dropdown">
                                 <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -160,9 +165,10 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <form method="post" action="{% url 'remove_bookmark' post.id %}?tab=bookmarks" class="bookmark-form m-0" onsubmit="return confirm('Bu yer işaretini kaldırmak istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                        {% trans "Bu yer işaretini kaldırmak istediğinizden emin misiniz?" as remove_bookmark_confirm %}
+                                        <form method="post" action="{% url 'remove_bookmark' post.id %}?tab=bookmarks" class="bookmark-form m-0" onsubmit="return confirm('{{ remove_bookmark_confirm|escapejs }}');">
                                             {% csrf_token %}
-                                            <button type="submit" class="dropdown-item">Yer İşaretinden Kaldır</button>
+                                            <button type="submit" class="dropdown-item">{% trans "Yer İşaretinden Kaldır" %}</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -175,7 +181,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz yer işareti eklemediniz.</p>
+                <p class="text-muted">{% trans "Henüz yer işareti eklemediniz." %}</p>
             {% endfor %}
         {% endif %}
     </div>
@@ -185,7 +191,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Profili Düzenle</h5>
+                    <h5 class="modal-title" id="editProfileModalLabel">{% trans "Profili Düzenle" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -195,30 +201,32 @@
                     <form method="post" action="{% url 'update_profile' %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="nickname" class="form-label">Takma Ad</label>
+                            <label for="nickname" class="form-label">{% trans "Takma Ad" %}</label>
                             <input type="text" class="form-control" id="nickname" name="nickname" value="{{ profile.nickname }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Kullanıcı Adı</label>
+                            <label for="username" class="form-label">{% trans "Kullanıcı Adı" %}</label>
                             <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="instagram_username" class="form-label">Instagram (Opsiyonel)</label>
+                            <label for="instagram_username" class="form-label">{% trans "Instagram (Opsiyonel)" %}</label>
                             <input type="text" class="form-control" id="instagram_username" name="instagram_username" value="{{ profile.instagram_username|default_if_none:'' }}">
                         </div>
                         <div class="mb-3">
-                            <label for="twitter_username" class="form-label">Twitter (Opsiyonel)</label>
+                            <label for="twitter_username" class="form-label">{% trans "Twitter (Opsiyonel)" %}</label>
                             <input type="text" class="form-control" id="twitter_username" name="twitter_username" value="{{ profile.twitter_username|default_if_none:'' }}">
                         </div>
                         <div class="mb-3">
-                            <label for="preferred_language" class="form-label">Dil Tercihi</label>
+                            <label for="preferred_language" class="form-label">{% trans "Dil Tercihi" %}</label>
                             <select class="form-control" id="preferred_language" name="preferred_language">
-                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>Türkçe</option>
-                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>Kürtçe</option>
+                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>Kurdî (Kurmanci)</option>
                                 <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>English</option>
+                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>Türkçe</option>
+                                <option value="de" {% if profile.preferred_language == 'de' %}selected{% endif %}>Deutsch</option>
+                                <option value="fr" {% if profile.preferred_language == 'fr' %}selected{% endif %}>Français</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Kaydet" %}</button>
                     </form>
                 </div>
             </div>
@@ -230,7 +238,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="visibilityModalLabel">Görünürlük Ayarları</h5>
+                    <h5 class="modal-title" id="visibilityModalLabel">{% trans "Görünürlük Ayarları" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -239,18 +247,18 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="postsVisible" name="posts_visible" {% if profile.posts_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="postsVisible">Postlar Görünür</label>
+                                <label class="form-check-label" for="postsVisible">{% trans "Postlar Görünür" %}</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="critiquesVisible" name="critiques_visible" {% if profile.critiques_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="critiquesVisible">Değerlendirmeler Görünür</label>
+                                <label class="form-check-label" for="critiquesVisible">{% trans "Değerlendirmeler Görünür" %}</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="commentsVisible" name="comments_visible" {% if profile.comments_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="commentsVisible">Yorumlar Görünür</label>
+                                <label class="form-check-label" for="commentsVisible">{% trans "Yorumlar Görünür" %}</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Kaydet" %}</button>
                     </form>
                 </div>
             </div>
@@ -262,7 +270,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="accountManagementModalLabel">Hesap Yönetimi</h5>
+                    <h5 class="modal-title" id="accountManagementModalLabel">{% trans "Hesap Yönetimi" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -270,49 +278,51 @@
                         Debug: account_status = {{ profile.account_status }}
                     </div>
                     <div class="mb-4">
-                        <h6>Hesap Durumu</h6>
-                        <p>Mevcut durum: 
+                        <h6>{% trans "Hesap Durumu" %}</h6>
+                        <p>{% trans "Mevcut durum" %}: 
                             {% if profile.account_status == 'active' %}
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success">{% trans "Aktif" %}</span>
                             {% elif profile.account_status == 'frozen' %}
-                                <span class="badge bg-warning">Dondurulmuş</span>
+                                <span class="badge bg-warning">{% trans "Dondurulmuş" %}</span>
                             {% elif profile.account_status == 'deletion_scheduled' %}
-                                <span class="badge bg-danger">Silinme Planlandı</span>
-                                <small class="d-block mt-1">Silinme tarihi: {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
+                                <span class="badge bg-danger">{% trans "Silinme Planlandı" %}</span>
+                                <small class="d-block mt-1">{% trans "Silinme tarihi" %}: {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
                             {% else %}
-                                <span class="badge bg-secondary">Bilinmeyen Durum</span>
+                                <span class="badge bg-secondary">{% trans "Bilinmeyen Durum" %}</span>
                             {% endif %}
                         </p>
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabı Dondur</h6>
-                        <p class="small text-muted">Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz.</p>
+                        <h6>{% trans "Hesabı Dondur" %}</h6>
+                        <p class="small text-muted">{% trans "Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz." %}</p>
                         {% if profile.account_status == 'active' %}
-                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('Hesabınızı dondurmak istediğinizden emin misiniz?');">
+                            {% trans "Hesabınızı dondurmak istediğinizden emin misiniz?" as freeze_account_confirm %}
+                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('{{ freeze_account_confirm|escapejs }}');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">Hesabı Dondur</button>
+                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">{% trans "Hesabı Dondur" %}</button>
                             </form>
                         {% elif profile.account_status == 'frozen' %}
                             <form method="post" action="{% url 'unfreeze_account' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Hesabı Aktifleştir</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">{% trans "Hesabı Aktifleştir" %}</button>
                             </form>
                         {% endif %}
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabı Sil</h6>
-                        <p class="small text-muted">Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir.</p>
+                        <h6>{% trans "Hesabı Sil" %}</h6>
+                        <p class="small text-muted">{% trans "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir." %}</p>
                         {% if profile.account_status != 'deletion_scheduled' %}
-                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır.');">
+                            {% trans "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır." as delete_account_confirm %}
+                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('{{ delete_account_confirm|escapejs }}');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">Hesabı Sil</button>
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">{% trans "Hesabı Sil" %}</button>
                             </form>
                         {% else %}
                             <form method="post" action="{% url 'cancel_account_deletion' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Silme İşlemini İptal Et</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">{% trans "Silme İşlemini İptal Et" %}</button>
                             </form>
                         {% endif %}
                     </div>

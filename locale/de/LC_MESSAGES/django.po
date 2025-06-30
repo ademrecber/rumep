@@ -7,303 +7,300 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 23:00+0300\n"
-"PO-Revision-Date: 2025-06-05 22:05+0300\n"
+"POT-Creation-Date: 2025-06-30 23:01+0300\n"
+"PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
-"Language-Team: Kurdish <ku@li.org>\n"
-"Language: ku\n"
+"Language-Team: German <de@li.org>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# base.html çevirileri
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
 #: .\main\templates\main\tabs.html:9
 msgid "Ana Sayfa"
-msgstr "Serûpel"
+msgstr "Startseite"
 
 #: .\main\templates\main\base.html:126
 msgid "Popüler"
-msgstr "Populer"
+msgstr "Beliebt"
 
 #: .\main\templates\main\base.html:129
 msgid "Popüler Değerlendirmeler"
-msgstr "Nirxandinên Populer"
+msgstr "Beliebte Bewertungen"
 
 #: .\main\templates\main\base.html:132
 msgid "Sözlük"
-msgstr "Ferheng"
+msgstr "Wörterbuch"
 
 #: .\main\templates\main\base.html:135
 msgid "Kişiler"
-msgstr "Kes"
+msgstr "Personen"
 
 #: .\main\templates\main\base.html:138
 msgid "Şarkı Sözleri"
-msgstr "Gotinên Stranan"
+msgstr "Songtexte"
 
 #: .\main\templates\main\base.html:141
 msgid "Atasözü ve Deyimler"
-msgstr "Pêşgotin û Îdîom"
+msgstr "Sprichwörter und Redewendungen"
 
 #: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
 msgid "Profil"
-msgstr "Profîl"
+msgstr "Profil"
 
 #: .\main\templates\main\base.html:161 .\main\templates\main\base.html:188
 msgid "Ara..."
-msgstr "Lêgerîn..."
+msgstr "Suche..."
 
 #: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
 #: .\main\templates\main\search.html:3
 msgid "Arama"
-msgstr "Lêgerîn"
+msgstr "Suche"
 
 #: .\main\templates\main\base.html:174
 msgid "Geri dön"
-msgstr "Vegere"
+msgstr "Zurück"
 
 #: .\main\templates\main\base.html:201
 msgid "En Çok Katkı Sağlayanlar"
-msgstr "Yên Herî Zêde Beşdarî Kirin"
+msgstr "Top-Mitwirkende"
 
 #: .\main\templates\main\profile.html:17
 msgid "E-posta"
-msgstr "E-posta"
+msgstr "E-Mail"
 
 #: .\main\templates\main\profile.html:26
 msgid "Toplam Post"
-msgstr "Tevahî Post"
+msgstr "Gesamte Beiträge"
 
 #: .\main\templates\main\profile.html:28 .\main\templates\main\profile.html:194
 msgid "Profili Düzenle"
-msgstr "Profîlê Biguherîne"
+msgstr "Profil bearbeiten"
 
 #: .\main\templates\main\profile.html:29 .\main\templates\main\profile.html:241
 msgid "Görünürlük Ayarları"
-msgstr "Mîhengên Dîtinê"
+msgstr "Sichtbarkeitseinstellungen"
 
 #: .\main\templates\main\profile.html:30 .\main\templates\main\profile.html:273
 msgid "Hesap Yönetimi"
-msgstr "Rêveberiya Hesabê"
+msgstr "Kontoverwaltung"
 
 #: .\main\templates\main\profile.html:33
 msgid "Çıkış Yap"
-msgstr "Derkeve"
+msgstr "Abmelden"
 
 #: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
 #: .\main\templates\main\profile.html:146
 msgid "Post"
-msgstr "Post"
+msgstr "Beitrag"
 
 #: .\main\templates\main\profile.html:45
 msgid "Beğeni"
-msgstr "Hezkirin"
+msgstr "Gefällt mir"
 
 #: .\main\templates\main\profile.html:48
 msgid "Yorum"
-msgstr "Şîrove"
+msgstr "Kommentar"
 
 #: .\main\templates\main\profile.html:51
 msgid "Değerlendirme"
-msgstr "Nirxandin"
+msgstr "Bewertung"
 
 #: .\main\templates\main\profile.html:54
 msgid "Yer İşaretleri"
-msgstr "Nîşaneyên Cihê"
+msgstr "Lesezeichen"
 
 #: .\main\templates\main\profile.html:67 .\main\templates\main\profile.html:91
 #: .\main\templates\main\profile.html:137
 #: .\main\templates\main\profile.html:160
 msgid "ID"
-msgstr "Nasname"
+msgstr "ID"
 
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
+msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
 
 #: .\main\templates\main\profile.html:82
 msgid "Henüz post paylaşmadınız."
-msgstr "Hêj post nehatine parvekirin."
+msgstr "Sie haben noch keine Beiträge geteilt."
 
 #: .\main\templates\main\profile.html:93
 msgid "Bu beğeniyi kaldırmak istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo rakirina vê hezkirinê bawer in?"
+msgstr "Sind Sie sicher, dass Sie dieses Gefällt mir entfernen möchten?"
 
 #: .\main\templates\main\profile.html:106
 msgid "Henüz bir post beğenmediniz."
-msgstr "Hêj postek nehat hezkirin."
+msgstr "Sie haben noch keinen Beitrag geliked."
 
 #: .\main\templates\main\profile.html:117
 msgid "Bu yorumu silmek istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
+msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 
 #: .\main\templates\main\profile.html:128
 msgid "Henüz yorum yapmadınız."
-msgstr "Hêj şîrove nehat kirin."
+msgstr "Sie haben noch keine Kommentare gemacht."
 
 #: .\main\templates\main\profile.html:139
 msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo jêbirina vê nirxandinê bawer in?"
+msgstr "Sind Sie sicher, dass Sie diese Bewertung löschen möchten?"
 
 #: .\main\templates\main\profile.html:147
 msgid "Puan"
-msgstr "Pûan"
+msgstr "Punktzahl"
 
 #: .\main\templates\main\profile.html:151
 msgid "Henüz değerlendirme yapmadınız."
-msgstr "Hêj nirxandin nehat kirin."
+msgstr "Sie haben noch keine Bewertungen gemacht."
 
 #: .\main\templates\main\profile.html:168
 msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo rakirina vê nîşaneyê cihê bawer in?"
+msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen entfernen möchten?"
 
 #: .\main\templates\main\profile.html:171
 msgid "Yer İşaretinden Kaldır"
-msgstr "Ji Nîşaneyên Cihê Rake"
+msgstr "Aus Lesezeichen entfernen"
 
 #: .\main\templates\main\profile.html:184
 msgid "Henüz yer işareti eklemediniz."
-msgstr "Hêj nîşaneyên cihê nehatine zêdekirin."
+msgstr "Sie haben noch keine Lesezeichen hinzugefügt."
 
 #: .\main\templates\main\profile.html:204
 msgid "Takma Ad"
-msgstr "Navê Kêfxweş"
+msgstr "Spitzname"
 
 #: .\main\templates\main\profile.html:208
 msgid "Kullanıcı Adı"
-msgstr "Navê Bikarhêner"
+msgstr "Benutzername"
 
 #: .\main\templates\main\profile.html:212
 msgid "Instagram (Opsiyonel)"
-msgstr "Instagram (Bijarte)"
+msgstr "Instagram (Optional)"
 
 #: .\main\templates\main\profile.html:216
 msgid "Twitter (Opsiyonel)"
-msgstr "Twitter (Bijarte)"
+msgstr "Twitter (Optional)"
 
 #: .\main\templates\main\profile.html:220
 msgid "Dil Tercihi"
-msgstr "Vebijarka Ziman"
+msgstr "Sprachpräferenz"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
 msgid "Kaydet"
-msgstr "Tomar bike"
+msgstr "Speichern"
 
 #: .\main\templates\main\profile.html:250
 msgid "Postlar Görünür"
-msgstr "Post Dîtbar in"
+msgstr "Beiträge sichtbar"
 
 #: .\main\templates\main\profile.html:254
 msgid "Değerlendirmeler Görünür"
-msgstr "Nirxandin Dîtbar in"
+msgstr "Bewertungen sichtbar"
 
 #: .\main\templates\main\profile.html:258
 msgid "Yorumlar Görünür"
-msgstr "Şîrove Dîtbar in"
+msgstr "Kommentare sichtbar"
 
 #: .\main\templates\main\profile.html:281
 msgid "Hesap Durumu"
-msgstr "Rewşa Hesabê"
+msgstr "Kontostatus"
 
 #: .\main\templates\main\profile.html:282
 msgid "Mevcut durum"
-msgstr "Rewşa Niha"
+msgstr "Aktueller Status"
 
 #: .\main\templates\main\profile.html:284
 msgid "Aktif"
-msgstr "Çalak"
+msgstr "Aktiv"
 
 #: .\main\templates\main\profile.html:286
 msgid "Dondurulmuş"
-msgstr "Cemidî"
+msgstr "Eingefroren"
 
 #: .\main\templates\main\profile.html:288
 msgid "Silinme Planlandı"
-msgstr "Jêbirin Hatiye Plankirin"
+msgstr "Löschung geplant"
 
 #: .\main\templates\main\profile.html:289
 msgid "Silinme tarihi"
-msgstr "Dîroka Jêbirinê"
+msgstr "Löschdatum"
 
 #: .\main\templates\main\profile.html:291
 msgid "Bilinmeyen Durum"
-msgstr "Rewşa Nenaskirî"
+msgstr "Unbekannter Status"
 
 #: .\main\templates\main\profile.html:297
 #: .\main\templates\main\profile.html:303
 msgid "Hesabı Dondur"
-msgstr "Hesabê Bicemidîne"
+msgstr "Konto einfrieren"
 
 #: .\main\templates\main\profile.html:298
 msgid "Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz."
-msgstr "Dema hûn hesabê xwe bicemidînin, naverokên we nayên dîtin lê nayên jêbirin. Hûn dikarin her dem dîsa çalak bikin."
+msgstr "Wenn Sie Ihr Konto einfrieren, werden Ihre Inhalte unsichtbar, aber nicht gelöscht. Sie können es jederzeit wieder aktivieren."
 
 #: .\main\templates\main\profile.html:300
 msgid "Hesabınızı dondurmak istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo cemidandina hesabê xwe bawer in?"
+msgstr "Sind Sie sicher, dass Sie Ihr Konto einfrieren möchten?"
 
 #: .\main\templates\main\profile.html:308
 msgid "Hesabı Aktifleştir"
-msgstr "Hesabê Çalak Bike"
+msgstr "Konto aktivieren"
 
 #: .\main\templates\main\profile.html:314
 #: .\main\templates\main\profile.html:320
 msgid "Hesabı Sil"
-msgstr "Hesabê Jê Bibe"
+msgstr "Konto löschen"
 
 #: .\main\templates\main\profile.html:315
 msgid "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir."
-msgstr "Dema hûn hesabê xwe jê bibin, ger hûn di nav 30 rojan de dîsa têkevin, hemû daneyên we bi domdarî têne jêbirin."
+msgstr "Wenn Sie Ihr Konto löschen, werden alle Ihre Daten nach 30 Tagen endgültig gelöscht, wenn Sie sich nicht erneut anmelden."
 
 #: .\main\templates\main\profile.html:317
 msgid "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır."
-msgstr "Ma hûn ji bo jêbirina hesabê xwe bawer in? Ev pêvajo piştî 30 rojan tê qedandin."
+msgstr "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang wird nach 30 Tagen abgeschlossen."
 
 #: .\main\templates\main\profile.html:325
 msgid "Silme İşlemini İptal Et"
-msgstr "Jêbirina Pêvajoyê Betal Bike"
-
-# # search.html çevirileri
+msgstr "Löschung abbrechen"
 
 #: .\main\templates\main\search.html:6
 msgid "için Sonuçlar"
-msgstr "Encam ji bo"
+msgstr "Ergebnisse für"
 
 #: .\main\templates\main\search.html:9
 msgid "Kullanıcılar"
-msgstr "Bikarhêner"
+msgstr "Benutzer"
 
 #: .\main\templates\main\search.html:20
 msgid "Kullanıcı bulunamadı."
-msgstr "Bikarhêner nehat dîtin."
+msgstr "Kein Benutzer gefunden."
 
 #: .\main\templates\main\search.html:25
 msgid "ID’ler"
-msgstr "Nasname"
+msgstr "IDs"
 
 #: .\main\templates\main\search.html:36 .\main\templates\main\search.html:56
 msgid "Devamını oku"
-msgstr "Zêdetir bixwîne"
+msgstr "Weiterlesen"
 
 #: .\main\templates\main\search.html:40
 msgid "ID bulunamadı."
-msgstr "Nasname nehat dîtin."
+msgstr "Kein ID gefunden."
 
 #: .\main\templates\main\search.html:45
 msgid "Postlar"
-msgstr "Post"
+msgstr "Beiträge"
 
 #: .\main\templates\main\search.html:60
 msgid "Post bulunamadı."
-msgstr "Post nehat dîtin."
+msgstr "Kein Beitrag gefunden."
 
 #: .\main\templates\main\search.html:65
 msgid "Hiçbir sonuç bulunamadı."
-msgstr "Tu encam nehat dîtin."
+msgstr "Kein Ergebnis gefunden."
 
-# tabs.html çevirileri
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
-msgstr "Beşdarî"
+msgstr "Beiträge"
