@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 23:16+0300\n"
+"POT-Creation-Date: 2025-07-04 00:28+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -71,44 +71,48 @@ msgstr "Retour"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top contributeurs"
 
-#: .\main\templates\main\login.html:6
+#: .\main\templates\main\login.html:9
 msgid "Rumep - Giriş Yap veya Kaydol"
 msgstr "Rumep - Se connecter ou s'inscrire"
 
-#: .\main\templates\main\login.html:53
+#: .\main\templates\main\login.html:54
 msgid "Hoş Geldiniz"
 msgstr "Bienvenue"
 
-#: .\main\templates\main\login.html:54
+#: .\main\templates\main\login.html:55
 msgid "Devam etmek için lütfen giriş yapın"
 msgstr "Veuillez vous connecter pour continuer"
 
-#: .\main\templates\main\login.html:55
+#: .\main\templates\main\login.html:56
 msgid "Dil Değiştir"
 msgstr "Changer de langue"
 
-#: .\main\templates\main\login.html:68
+#: .\main\templates\main\login.html:69
 msgid "Google ile Giriş Yap"
 msgstr "Se connecter avec Google"
 
-#: .\main\templates\main\login.html:71
-msgid "Giriş yaparak, Kullanım Koşullarını ve Gizlilik Politikasını kabul etmiş olursunuz."
-msgstr "En vous connectant, vous acceptez les Conditions d'utilisation et la Politique de confidentialité."
+#: .\main\templates\main\login.html:72
+msgid ""
+"Giriş yaparak, Kullanım Koşullarını ve Gizlilik Politikasını kabul etmiş "
+"olursunuz."
+msgstr ""
+"En vous connectant, vous acceptez les Conditions d'utilisation et la "
+"Politique de confidentialité."
 
-#: .\main\templates\main\login.html:77
+#: .\main\templates\main\login.html:79
 #, python-brace-format
 msgid "Rumep © {year} Tüm hakları saklıdır."
 msgstr "Rumep © {year} Tous droits réservés."
 
-#: .\main\templates\main\login.html:87
+#: .\main\templates\main\login.html:89
 msgid "Dil Seçimi"
 msgstr "Sélection de la langue"
 
-#: .\main\templates\main\login.html:94 .\main\templates\main\profile.html:220
+#: .\main\templates\main\login.html:96 .\main\templates\main\profile.html:220
 msgid "Dil Tercihi"
 msgstr "Préférence de langue"
 
-#: .\main\templates\main\login.html:103 .\main\templates\main\login.html:104
+#: .\main\templates\main\login.html:105 .\main\templates\main\login.html:106
 msgid "Değişiklikleri Kaydet"
 msgstr "Enregistrer les modifications"
 

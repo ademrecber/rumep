@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 23:15+0300\n"
+"POT-Creation-Date: 2025-07-04 00:28+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -70,44 +70,47 @@ msgstr "Vegere"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
 
-#: .\main\templates\main\login.html:6
+#: .\main\templates\main\login.html:9
 msgid "Rumep - Giriş Yap veya Kaydol"
 msgstr "Rumep - Têkeve an Qeyd Bike"
 
-#: .\main\templates\main\login.html:53
+#: .\main\templates\main\login.html:54
 msgid "Hoş Geldiniz"
 msgstr "Bi xêr Hatî"
 
-#: .\main\templates\main\login.html:54
+#: .\main\templates\main\login.html:55
 msgid "Devam etmek için lütfen giriş yapın"
 msgstr "Ji bo berdewamkirinê ji kerema xwe têkevin"
 
-#: .\main\templates\main\login.html:55
+#: .\main\templates\main\login.html:56
 msgid "Dil Değiştir"
 msgstr "Ziman Biguherîne"
 
-#: .\main\templates\main\login.html:68
+#: .\main\templates\main\login.html:69
 msgid "Google ile Giriş Yap"
 msgstr "Bi Google re Têkeve"
 
-#: .\main\templates\main\login.html:71
-msgid "Giriş yaparak, Kullanım Koşullarını ve Gizlilik Politikasını kabul etmiş olursunuz."
-msgstr "Bi têketinê, hûn Şertên Bikaranînê û Polîtîkaya Nepenîtiyê qebûl dikin."
+#: .\main\templates\main\login.html:72
+msgid ""
+"Giriş yaparak, Kullanım Koşullarını ve Gizlilik Politikasını kabul etmiş "
+"olursunuz."
+msgstr ""
+"Bi têketinê, hûn Şertên Bikaranînê û Polîtîkaya Nepenîtiyê qebûl dikin."
 
-#: .\main\templates\main\login.html:77
+#: .\main\templates\main\login.html:79
 #, python-brace-format
 msgid "Rumep © {year} Tüm hakları saklıdır."
 msgstr "Rumep © {year} Hemû maf parastî ne."
 
-#: .\main\templates\main\login.html:87
+#: .\main\templates\main\login.html:89
 msgid "Dil Seçimi"
 msgstr "Hilbijartina Ziman"
 
-#: .\main\templates\main\login.html:94 .\main\templates\main\profile.html:220
+#: .\main\templates\main\login.html:96 .\main\templates\main\profile.html:220
 msgid "Dil Tercihi"
 msgstr "Vebijarka Ziman"
 
-#: .\main\templates\main\login.html:103 .\main\templates\main\login.html:104
+#: .\main\templates\main\login.html:105 .\main\templates\main\login.html:106
 msgid "Değişiklikleri Kaydet"
 msgstr "Guhertinan Tomar Bike"
 
