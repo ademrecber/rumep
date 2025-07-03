@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 23:40+0300\n"
+"POT-Creation-Date: 2025-07-03 23:16+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -28,6 +28,8 @@ msgid "Popüler"
 msgstr "Populaire"
 
 #: .\main\templates\main\base.html:129
+#: .\main\templates\main\popular_critiques.html:5
+#: .\main\templates\main\popular_critiques.html:8
 msgid "Popüler Değerlendirmeler"
 msgstr "Avis populaires"
 
@@ -69,14 +71,193 @@ msgstr "Retour"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top contributeurs"
 
+#: .\main\templates\main\login.html:6
+msgid "Rumep - Giriş Yap veya Kaydol"
+msgstr "Rumep - Se connecter ou s'inscrire"
+
+#: .\main\templates\main\login.html:53
+msgid "Hoş Geldiniz"
+msgstr "Bienvenue"
+
+#: .\main\templates\main\login.html:54
+msgid "Devam etmek için lütfen giriş yapın"
+msgstr "Veuillez vous connecter pour continuer"
+
+#: .\main\templates\main\login.html:55
+msgid "Dil Değiştir"
+msgstr "Changer de langue"
+
+#: .\main\templates\main\login.html:68
+msgid "Google ile Giriş Yap"
+msgstr "Se connecter avec Google"
+
+#: .\main\templates\main\login.html:71
+msgid "Giriş yaparak, Kullanım Koşullarını ve Gizlilik Politikasını kabul etmiş olursunuz."
+msgstr "En vous connectant, vous acceptez les Conditions d'utilisation et la Politique de confidentialité."
+
+#: .\main\templates\main\login.html:77
+#, python-brace-format
+msgid "Rumep © {year} Tüm hakları saklıdır."
+msgstr "Rumep © {year} Tous droits réservés."
+
+#: .\main\templates\main\login.html:87
+msgid "Dil Seçimi"
+msgstr "Sélection de la langue"
+
+#: .\main\templates\main\login.html:94 .\main\templates\main\profile.html:220
+msgid "Dil Tercihi"
+msgstr "Préférence de langue"
+
+#: .\main\templates\main\login.html:103 .\main\templates\main\login.html:104
+msgid "Değişiklikleri Kaydet"
+msgstr "Enregistrer les modifications"
+
+#: .\main\templates\main\popular_critiques.html:11
+msgid "Bugün"
+msgstr "Aujourd'hui"
+
+#: .\main\templates\main\popular_critiques.html:14
+msgid "Dün"
+msgstr "Hier"
+
+#: .\main\templates\main\popular_critiques.html:17
+msgid "Haftalık"
+msgstr "Hebdomadaire"
+
+#: .\main\templates\main\popular_critiques.html:20
+msgid "Tüm Zamanlar"
+msgstr "Tous les temps"
+
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Supprimer"
+
+#: .\main\templates\main\popular_critiques.html:44
+#: .\main\templates\main\popular_critiques.html:55
+#: .\main\templates\main\popular_critiques.html:134
+#: .\main\templates\main\post_detail.html:41
+msgid "Bağlantıyı Kopyala"
+msgstr "Copier le lien"
+
+#: .\main\templates\main\popular_critiques.html:60
+#: .\main\templates\main\popular_critiques.html:128
+msgid "Puanınız"
+msgstr "Votre note"
+
+#: .\main\templates\main\popular_critiques.html:62
+#: .\main\templates\main\popular_critiques.html:92
+#: .\main\templates\main\post_detail.html:165
+msgid "Puan Ver"
+msgstr "Noter"
+
+#: .\main\templates\main\popular_critiques.html:70
+msgid "Devamını gör"
+msgstr "Voir plus"
+
+#: .\main\templates\main\popular_critiques.html:72
+msgid "Daha az gör"
+msgstr "Voir moins"
+
+#: .\main\templates\main\popular_critiques.html:77
+#: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
+#: .\main\templates\main\profile.html:146
+#: .\main\templates\main\profile_detail.html:28
+#: .\main\templates\main\profile_detail.html:69
+#: .\main\templates\main\profile_detail.html:86
+msgid "Post"
+msgstr "Publication"
+
+#: .\main\templates\main\popular_critiques.html:78
+#: .\main\templates\main\popular_critiques.html:127
+#: .\main\templates\main\post_detail.html:145
+msgid "Ortalama Puan"
+msgstr "Note moyenne"
+
+#: .\main\templates\main\popular_critiques.html:82
+msgid "Henüz değerlendirme yok."
+msgstr "Aucun avis pour le moment."
+
+#: .\main\templates\main\popular_critiques.html:96
+#: .\main\templates\main\post_detail.html:169
+msgid "Bu eleştiriye kaç puan verirsiniz?"
+msgstr "Combien de points donnez-vous à cet avis ?"
+
+#: .\main\templates\main\popular_critiques.html:104
+#: .\main\templates\main\post_detail.html:107
+#: .\main\templates\main\post_detail.html:177
+msgid "Gönder"
+msgstr "Envoyer"
+
+#: .\main\templates\main\popular_critiques.html:105
+#: .\main\templates\main\post_detail.html:108
+#: .\main\templates\main\post_detail.html:178
+msgid "İptal"
+msgstr "Annuler"
+
+#: .\main\templates\main\popular_critiques.html:116
+#: .\main\templates\main\post_detail.html:134
+msgid "Eleştiri Detayı"
+msgstr "Détails de l'avis"
+
+#: .\main\templates\main\popular_critiques.html:132
+#: .\main\templates\main\post_detail.html:150
+msgid "Eleştiriyi Sil"
+msgstr "Supprimer l'avis"
+
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+msgid "Kapat"
+msgstr "Fermer"
+
+#: .\main\templates\main\popular_critiques.html:147
+#: .\main\templates\main\post_detail.html:209
+msgid "Bilgi"
+msgstr "Information"
+
+#: .\main\templates\main\popular_critiques.html:151
+#: .\main\templates\main\post_detail.html:213
+msgid "Bağlantı kopyalandı!"
+msgstr "Lien copié !"
+
+#: .\main\templates\main\popular_critiques.html:161
+msgid "Popüler değerlendirmeler sayfası yüklendi"
+msgstr "Page des avis populaires chargée"
+
+#: .\main\templates\main\popular_critiques.html:175
+msgid "Henüz puan vermediniz"
+msgstr "Vous n'avez pas encore noté"
+
+#: .\main\templates\main\popular_critiques.html:177
+msgid "Kendi eleştirinize puan veremezsiniz."
+msgstr "Vous ne pouvez pas noter votre propre avis."
+
+#: .\main\templates\main\popular_critiques.html:194
+#: .\main\templates\main\popular_critiques.html:246
+msgid "Eleştiri başarıyla silindi!"
+msgstr "Avis supprimé avec succès !"
+
+#: .\main\templates\main\popular_critiques.html:198
+#: .\main\templates\main\popular_critiques.html:201
+#: .\main\templates\main\popular_critiques.html:249
+#: .\main\templates\main\popular_critiques.html:252
+msgid "Silme hatası:"
+msgstr "Erreur de suppression :"
+
+#: .\main\templates\main\popular_critiques.html:205
+msgid "Modal açıldı, eleştiri ID:"
+msgstr "Modal ouvert, ID de l'avis :"
+
+#: .\main\templates\main\popular_critiques.html:322
+#: .\main\templates\main\popular_critiques.html:325
+msgid "Puanlama hatası:"
+msgstr "Erreur de notation :"
+
 #: .\main\templates\main\post_detail.html:23
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
-
-#: .\main\templates\main\post_detail.html:26
-msgid "Sil"
-msgstr "Supprimer"
 
 #: .\main\templates\main\post_detail.html:31
 msgid "Yer işaretine eklemek"
@@ -94,10 +275,6 @@ msgstr "Retirer des favoris"
 #: .\main\templates\main\post_detail.html:36
 msgid "Yer İşaretine Ekle"
 msgstr "Ajouter aux favoris"
-
-#: .\main\templates\main\post_detail.html:41
-msgid "Bağlantıyı Kopyala"
-msgstr "Copier le lien"
 
 #: .\main\templates\main\post_detail.html:57
 #: .\main\templates\main\profile.html:45
@@ -122,47 +299,13 @@ msgstr "Derniers avis"
 msgid "Eleştirinizi yazın..."
 msgstr "Écrivez votre avis..."
 
-#: .\main\templates\main\post_detail.html:107
-#: .\main\templates\main\post_detail.html:177
-msgid "Gönder"
-msgstr "Envoyer"
-
-#: .\main\templates\main\post_detail.html:108
-#: .\main\templates\main\post_detail.html:178
-msgid "İptal"
-msgstr "Annuler"
-
 #: .\main\templates\main\post_detail.html:119
 msgid "Emoji Seç"
 msgstr "Choisir un emoji"
 
-#: .\main\templates\main\post_detail.html:134
-msgid "Eleştiri Detayı"
-msgstr "Détails de l'avis"
-
-#: .\main\templates\main\post_detail.html:145
-msgid "Ortalama Puan"
-msgstr "Note moyenne"
-
 #: .\main\templates\main\post_detail.html:146
 msgid "Sizin Puanınız"
 msgstr "Votre note"
-
-#: .\main\templates\main\post_detail.html:150
-msgid "Eleştiriyi Sil"
-msgstr "Supprimer l'avis"
-
-#: .\main\templates\main\post_detail.html:154
-msgid "Kapat"
-msgstr "Fermer"
-
-#: .\main\templates\main\post_detail.html:165
-msgid "Puan Ver"
-msgstr "Noter"
-
-#: .\main\templates\main\post_detail.html:169
-msgid "Bu eleştiriye kaç puan verirsiniz?"
-msgstr "Combien de points donnez-vous à cet avis ?"
 
 #: .\main\templates\main\post_detail.html:191
 msgid "Yorumunuzu yazın..."
@@ -171,14 +314,6 @@ msgstr "Écrivez votre commentaire..."
 #: .\main\templates\main\post_detail.html:196
 msgid "Yorum Yap"
 msgstr "Commenter"
-
-#: .\main\templates\main\post_detail.html:209
-msgid "Bilgi"
-msgstr "Information"
-
-#: .\main\templates\main\post_detail.html:213
-msgid "Bağlantı kopyalandı!"
-msgstr "Lien copié !"
 
 #: .\main\templates\main\profile.html:17
 #: .\main\templates\main\profile_detail.html:13
@@ -205,14 +340,6 @@ msgstr "Gestion du compte"
 #: .\main\templates\main\profile.html:33
 msgid "Çıkış Yap"
 msgstr "Se déconnecter"
-
-#: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
-#: .\main\templates\main\profile.html:146
-#: .\main\templates\main\profile_detail.html:28
-#: .\main\templates\main\profile_detail.html:69
-#: .\main\templates\main\profile_detail.html:86
-msgid "Post"
-msgstr "Publication"
 
 #: .\main\templates\main\profile.html:51
 #: .\main\templates\main\profile_detail.html:34
@@ -287,10 +414,6 @@ msgstr "Instagram (Facultatif)"
 #: .\main\templates\main\profile.html:216
 msgid "Twitter (Opsiyonel)"
 msgstr "Twitter (Facultatif)"
-
-#: .\main\templates\main\profile.html:220
-msgid "Dil Tercihi"
-msgstr "Préférence de langue"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
