@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 {% load i18n %}
 {% load static %}
-<html lang="{% get_current_language %}">
+{% get_current_language as dil %}
+<html lang="{{ dil }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +102,7 @@
                             </select>
                         </div>
                         {% trans "Değişiklikleri Kaydet" as save_language %}
-                        <button type="submit" class="btn btn-primary rounded-pill" onsubmit="return confirm('{{ save_language|escapejs }}');">{% trans "Değişiklikleri Kaydet" %}</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Değişiklikleri Kaydet" %}</button>
                     </form>
                 </div>
             </div>
