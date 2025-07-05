@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 19:16+0300\n"
+"POT-Creation-Date: 2025-07-05 23:04+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -71,6 +71,46 @@ msgstr "Retour"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top contributeurs"
 
+#: .\main\templates\main\complete_profile.html:9
+msgid "Rumep - Profilini Tamamla"
+msgstr "Rumep - Complétez votre profil"
+
+#: .\main\templates\main\complete_profile.html:50
+msgid "Profilini Tamamla"
+msgstr "Complétez votre profil"
+
+#: .\main\templates\main\complete_profile.html:51
+msgid "Rumep'te nasıl görünmek istediğini seç"
+msgstr "Choisissez comment vous souhaitez apparaître sur Rumep"
+
+#: .\main\templates\main\complete_profile.html:64
+#: .\main\templates\main\complete_profile.html:65
+#: .\main\templates\main\profile.html:204
+msgid "Takma Ad"
+msgstr "Pseudonyme"
+
+#: .\main\templates\main\complete_profile.html:66
+msgid "Diğer kullanıcıların göreceği isim"
+msgstr "Nom visible pour les autres utilisateurs"
+
+#: .\main\templates\main\complete_profile.html:71
+#: .\main\templates\main\complete_profile.html:72
+#: .\main\templates\main\profile.html:208
+msgid "Kullanıcı Adı"
+msgstr "Nom d'utilisateur"
+
+#: .\main\templates\main\complete_profile.html:73
+msgid "Benzersiz kullanıcı adın (harf, rakam ve alt çizgi kullanabilirsin)"
+msgstr "Votre nom d'utilisateur unique (lettres, chiffres et tirets bas sont autorisés)"
+
+#: .\main\templates\main\complete_profile.html:77
+msgid "Profili Tamamla"
+msgstr "Compléter le profil"
+
+#: .\main\templates\main\complete_profile.html:84
+msgid "Bu bilgileri daha sonra profilinden değiştirebilirsin."
+msgstr "Vous pouvez modifier ces informations plus tard depuis votre profil."
+
 #: .\main\templates\main\home.html:10
 msgid "Başlık"
 msgstr "Titre"
@@ -119,8 +159,7 @@ msgstr "Information"
 msgid "Bağlantı kopyalandı!"
 msgstr "Lien copié !"
 
-#: .\main\templates\main\home.html:89
-#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\home.html:89 .\main\templates\main\post_detail.html:23
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
@@ -132,13 +171,11 @@ msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
 msgid "Sil"
 msgstr "Supprimer"
 
-#: .\main\templates\main\home.html:97
-#: .\main\templates\main\post_detail.html:31
+#: .\main\templates\main\home.html:97 .\main\templates\main\post_detail.html:31
 msgid "Yer işaretine eklemek"
 msgstr "Ajouter aux favoris"
 
-#: .\main\templates\main\home.html:98
-#: .\main\templates\main\post_detail.html:32
+#: .\main\templates\main\home.html:98 .\main\templates\main\post_detail.html:32
 msgid "Yer işaretinden kaldırmak"
 msgstr "Retirer des favoris"
 
@@ -464,14 +501,6 @@ msgstr "Êtes-vous sûr de vouloir retirer ce favori ?"
 #: .\main\templates\main\profile.html:184
 msgid "Henüz yer işareti eklemediniz."
 msgstr "Vous n'avez pas encore ajouté de favoris."
-
-#: .\main\templates\main\profile.html:204
-msgid "Takma Ad"
-msgstr "Pseudonyme"
-
-#: .\main\templates\main\profile.html:208
-msgid "Kullanıcı Adı"
-msgstr "Nom d'utilisateur"
 
 #: .\main\templates\main\profile.html:212
 msgid "Instagram (Opsiyonel)"

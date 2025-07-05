@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 19:14+0300\n"
+"POT-Creation-Date: 2025-07-05 23:04+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -70,6 +70,46 @@ msgstr "Vegere"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
 
+#: .\main\templates\main\complete_profile.html:9
+msgid "Rumep - Profilini Tamamla"
+msgstr "Rumep - Profîla xwe Temam Bike"
+
+#: .\main\templates\main\complete_profile.html:50
+msgid "Profilini Tamamla"
+msgstr "Profîla xwe Temam Bike"
+
+#: .\main\templates\main\complete_profile.html:51
+msgid "Rumep'te nasıl görünmek istediğini seç"
+msgstr "Hilbijêre ka hûn çawa dixwazin li ser Rumepê xuya bikin"
+
+#: .\main\templates\main\complete_profile.html:64
+#: .\main\templates\main\complete_profile.html:65
+#: .\main\templates\main\profile.html:204
+msgid "Takma Ad"
+msgstr "Navê Kêfxweş"
+
+#: .\main\templates\main\complete_profile.html:66
+msgid "Diğer kullanıcıların göreceği isim"
+msgstr "Navê ku bikarhênerên din dê bibînin"
+
+#: .\main\templates\main\complete_profile.html:71
+#: .\main\templates\main\complete_profile.html:72
+#: .\main\templates\main\profile.html:208
+msgid "Kullanıcı Adı"
+msgstr "Navê Bikarhêner"
+
+#: .\main\templates\main\complete_profile.html:73
+msgid "Benzersiz kullanıcı adın (harf, rakam ve alt çizgi kullanabilirsin)"
+msgstr "Navê bikarhênerê te yê yekta (herf, jimare û binxet dikarin bên bikaranîn)"
+
+#: .\main\templates\main\complete_profile.html:77
+msgid "Profili Tamamla"
+msgstr "Profîla xwe Temam Bike"
+
+#: .\main\templates\main\complete_profile.html:84
+msgid "Bu bilgileri daha sonra profilinden değiştirebilirsin."
+msgstr "Hûn dikarin van agahiyan paşê ji profîla xwe biguherînin."
+
 #: .\main\templates\main\home.html:10
 msgid "Başlık"
 msgstr "Sernav"
@@ -118,8 +158,7 @@ msgstr "Agahî"
 msgid "Bağlantı kopyalandı!"
 msgstr "Girêdan hat kopîkirin!"
 
-#: .\main\templates\main\home.html:89
-#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\home.html:89 .\main\templates\main\post_detail.html:23
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
@@ -131,13 +170,11 @@ msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
 msgid "Sil"
 msgstr "Jê Bibe"
 
-#: .\main\templates\main\home.html:97
-#: .\main\templates\main\post_detail.html:31
+#: .\main\templates\main\home.html:97 .\main\templates\main\post_detail.html:31
 msgid "Yer işaretine eklemek"
 msgstr "Zêde bike ji nîşaneyên cihê"
 
-#: .\main\templates\main\home.html:98
-#: .\main\templates\main\post_detail.html:32
+#: .\main\templates\main\home.html:98 .\main\templates\main\post_detail.html:32
 msgid "Yer işaretinden kaldırmak"
 msgstr "Ji nîşaneyên cihê rake"
 
@@ -462,14 +499,6 @@ msgstr "Ma hûn ji bo rakirina vê nîşaneyê cihê bawer in?"
 #: .\main\templates\main\profile.html:184
 msgid "Henüz yer işareti eklemediniz."
 msgstr "Hêj nîşaneyên cihê nehatine zêdekirin."
-
-#: .\main\templates\main\profile.html:204
-msgid "Takma Ad"
-msgstr "Navê Kêfxweş"
-
-#: .\main\templates\main\profile.html:208
-msgid "Kullanıcı Adı"
-msgstr "Navê Bikarhêner"
 
 #: .\main\templates\main\profile.html:212
 msgid "Instagram (Opsiyonel)"
