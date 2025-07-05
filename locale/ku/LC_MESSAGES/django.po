@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 00:28+0300\n"
+"POT-Creation-Date: 2025-07-05 19:14+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -70,6 +70,131 @@ msgstr "Vegere"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
 
+#: .\main\templates\main\home.html:10
+msgid "Başlık"
+msgstr "Sernav"
+
+#: .\main\templates\main\home.html:14
+msgid "Metin"
+msgstr "Nivîs"
+
+#: .\main\templates\main\home.html:20
+msgid "Link (isteğe bağlı)"
+msgstr "Girêdan (bijarte)"
+
+#: .\main\templates\main\home.html:26
+msgid "Paylaş"
+msgstr "Parve bike"
+
+#: .\main\templates\main\home.html:36
+msgid "Emojiler"
+msgstr "Emojî"
+
+#: .\main\templates\main\home.html:49
+msgid "Metni Geliştir"
+msgstr "Nivîsê Pêşde Bibe"
+
+#: .\main\templates\main\home.html:53
+msgid "Metni geliştirme ister misiniz?"
+msgstr "Ma hûn dixwazin nivîsê pêşde bibin?"
+
+#: .\main\templates\main\home.html:55
+msgid "Evet"
+msgstr "Erê"
+
+#: .\main\templates\main\home.html:56
+msgid "Hayır"
+msgstr "Na"
+
+#: .\main\templates\main\home.html:65
+#: .\main\templates\main\popular_critiques.html:147
+#: .\main\templates\main\post_detail.html:209
+msgid "Bilgi"
+msgstr "Agahî"
+
+#: .\main\templates\main\home.html:69
+#: .\main\templates\main\popular_critiques.html:151
+#: .\main\templates\main\post_detail.html:213
+msgid "Bağlantı kopyalandı!"
+msgstr "Girêdan hat kopîkirin!"
+
+#: .\main\templates\main\home.html:89
+#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\profile.html:69
+msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
+
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Jê Bibe"
+
+#: .\main\templates\main\home.html:97
+#: .\main\templates\main\post_detail.html:31
+msgid "Yer işaretine eklemek"
+msgstr "Zêde bike ji nîşaneyên cihê"
+
+#: .\main\templates\main\home.html:98
+#: .\main\templates\main\post_detail.html:32
+msgid "Yer işaretinden kaldırmak"
+msgstr "Ji nîşaneyên cihê rake"
+
+#: .\main\templates\main\home.html:102
+#: .\main\templates\main\post_detail.html:36
+#: .\main\templates\main\profile.html:171
+msgid "Yer İşaretinden Kaldır"
+msgstr "Ji Nîşaneyên Cihê Rake"
+
+#: .\main\templates\main\home.html:102
+#: .\main\templates\main\post_detail.html:36
+msgid "Yer İşaretine Ekle"
+msgstr "Zêde Bike ji Nîşaneyên Cihê"
+
+#: .\main\templates\main\home.html:107
+#: .\main\templates\main\popular_critiques.html:44
+#: .\main\templates\main\popular_critiques.html:55
+#: .\main\templates\main\popular_critiques.html:134
+#: .\main\templates\main\post_detail.html:41
+msgid "Bağlantıyı Kopyala"
+msgstr "Girêdanê Kopî Bike"
+
+#: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular_critiques.html:70
+msgid "Devamını gör"
+msgstr "Zêdetir Bibîne"
+
+#: .\main\templates\main\home.html:118
+#: .\main\templates\main\popular_critiques.html:72
+msgid "Daha az gör"
+msgstr "Kêmtir Bibîne"
+
+#: .\main\templates\main\home.html:130
+#: .\main\templates\main\post_detail.html:57
+#: .\main\templates\main\profile.html:45
+msgid "Beğeni"
+msgstr "Hezkirin"
+
+#: .\main\templates\main\home.html:131
+#: .\main\templates\main\post_detail.html:58
+#: .\main\templates\main\profile.html:48
+#: .\main\templates\main\profile_detail.html:31
+msgid "Yorum"
+msgstr "Şîrove"
+
+#: .\main\templates\main\home.html:157
+msgid "Henüz eleştiri yok."
+msgstr "Hêj nirxandin tune."
+
+#: .\main\templates\main\home.html:160
+msgid "Yükleniyor..."
+msgstr "Tê barkirin..."
+
+#: .\main\templates\main\home.html:161
+msgid "Daha Fazla Yükle"
+msgstr "Zêdetir Bar Bike"
+
 #: .\main\templates\main\login.html:9
 msgid "Rumep - Giriş Yap veya Kaydol"
 msgstr "Rumep - Têkeve an Qeyd Bike"
@@ -98,8 +223,9 @@ msgstr ""
 "Bi têketinê, hûn Şertên Bikaranînê û Polîtîkaya Nepenîtiyê qebûl dikin."
 
 #: .\main\templates\main\login.html:79
-#, python-brace-format
-msgid "Rumep © {year} Tüm hakları saklıdır."
+#, fuzzy, python-format
+#| msgid "Rumep © {year} Tüm hakları saklıdır."
+msgid "Rumep © %(year)s Tüm hakları saklıdır."
 msgstr "Rumep © {year} Hemû maf parastî ne."
 
 #: .\main\templates\main\login.html:89
@@ -130,19 +256,6 @@ msgstr "Hefteyî"
 msgid "Tüm Zamanlar"
 msgstr "Hemû Dem"
 
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-msgid "Sil"
-msgstr "Jê Bibe"
-
-#: .\main\templates\main\popular_critiques.html:44
-#: .\main\templates\main\popular_critiques.html:55
-#: .\main\templates\main\popular_critiques.html:134
-#: .\main\templates\main\post_detail.html:41
-msgid "Bağlantıyı Kopyala"
-msgstr "Girêdanê Kopî Bike"
-
 #: .\main\templates\main\popular_critiques.html:60
 #: .\main\templates\main\popular_critiques.html:128
 msgid "Puanınız"
@@ -153,14 +266,6 @@ msgstr "Pûana We"
 #: .\main\templates\main\post_detail.html:165
 msgid "Puan Ver"
 msgstr "Pûan Bide"
-
-#: .\main\templates\main\popular_critiques.html:70
-msgid "Devamını gör"
-msgstr "Zêdetir Bibîne"
-
-#: .\main\templates\main\popular_critiques.html:72
-msgid "Daha az gör"
-msgstr "Kêmtir Bibîne"
 
 #: .\main\templates\main\popular_critiques.html:77
 #: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
@@ -213,16 +318,6 @@ msgstr "Nirxandinê Jê Bibe"
 msgid "Kapat"
 msgstr "Bigire"
 
-#: .\main\templates\main\popular_critiques.html:147
-#: .\main\templates\main\post_detail.html:209
-msgid "Bilgi"
-msgstr "Agahî"
-
-#: .\main\templates\main\popular_critiques.html:151
-#: .\main\templates\main\post_detail.html:213
-msgid "Bağlantı kopyalandı!"
-msgstr "Girêdan hat kopîkirin!"
-
 #: .\main\templates\main\popular_critiques.html:161
 msgid "Popüler değerlendirmeler sayfası yüklendi"
 msgstr "Rûpela nirxandinên populer hat barkirin"
@@ -255,39 +350,6 @@ msgstr "Modal vebû, nasnameya nirxandinê:"
 #: .\main\templates\main\popular_critiques.html:325
 msgid "Puanlama hatası:"
 msgstr "Çewtiya pûankirinê:"
-
-#: .\main\templates\main\post_detail.html:23
-#: .\main\templates\main\profile.html:69
-msgid "Bu postu silmek istediğinizden emin misiniz?"
-msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
-
-#: .\main\templates\main\post_detail.html:31
-msgid "Yer işaretine eklemek"
-msgstr "Zêde bike ji nîşaneyên cihê"
-
-#: .\main\templates\main\post_detail.html:32
-msgid "Yer işaretinden kaldırmak"
-msgstr "Ji nîşaneyên cihê rake"
-
-#: .\main\templates\main\post_detail.html:36
-#: .\main\templates\main\profile.html:171
-msgid "Yer İşaretinden Kaldır"
-msgstr "Ji Nîşaneyên Cihê Rake"
-
-#: .\main\templates\main\post_detail.html:36
-msgid "Yer İşaretine Ekle"
-msgstr "Zêde Bike ji Nîşaneyên Cihê"
-
-#: .\main\templates\main\post_detail.html:57
-#: .\main\templates\main\profile.html:45
-msgid "Beğeni"
-msgstr "Hezkirin"
-
-#: .\main\templates\main\post_detail.html:58
-#: .\main\templates\main\profile.html:48
-#: .\main\templates\main\profile_detail.html:31
-msgid "Yorum"
-msgstr "Şîrove"
 
 #: .\main\templates\main\post_detail.html:85
 msgid "Bu metni değerlendir"

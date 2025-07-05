@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 00:28+0300\n"
+"POT-Creation-Date: 2025-07-05 19:16+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -71,6 +71,131 @@ msgstr "Retour"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top contributeurs"
 
+#: .\main\templates\main\home.html:10
+msgid "Başlık"
+msgstr "Titre"
+
+#: .\main\templates\main\home.html:14
+msgid "Metin"
+msgstr "Texte"
+
+#: .\main\templates\main\home.html:20
+msgid "Link (isteğe bağlı)"
+msgstr "Lien (facultatif)"
+
+#: .\main\templates\main\home.html:26
+msgid "Paylaş"
+msgstr "Partager"
+
+#: .\main\templates\main\home.html:36
+msgid "Emojiler"
+msgstr "Emojis"
+
+#: .\main\templates\main\home.html:49
+msgid "Metni Geliştir"
+msgstr "Améliorer le texte"
+
+#: .\main\templates\main\home.html:53
+msgid "Metni geliştirme ister misiniz?"
+msgstr "Voulez-vous améliorer le texte ?"
+
+#: .\main\templates\main\home.html:55
+msgid "Evet"
+msgstr "Oui"
+
+#: .\main\templates\main\home.html:56
+msgid "Hayır"
+msgstr "Non"
+
+#: .\main\templates\main\home.html:65
+#: .\main\templates\main\popular_critiques.html:147
+#: .\main\templates\main\post_detail.html:209
+msgid "Bilgi"
+msgstr "Information"
+
+#: .\main\templates\main\home.html:69
+#: .\main\templates\main\popular_critiques.html:151
+#: .\main\templates\main\post_detail.html:213
+msgid "Bağlantı kopyalandı!"
+msgstr "Lien copié !"
+
+#: .\main\templates\main\home.html:89
+#: .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\profile.html:69
+msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
+
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Supprimer"
+
+#: .\main\templates\main\home.html:97
+#: .\main\templates\main\post_detail.html:31
+msgid "Yer işaretine eklemek"
+msgstr "Ajouter aux favoris"
+
+#: .\main\templates\main\home.html:98
+#: .\main\templates\main\post_detail.html:32
+msgid "Yer işaretinden kaldırmak"
+msgstr "Retirer des favoris"
+
+#: .\main\templates\main\home.html:102
+#: .\main\templates\main\post_detail.html:36
+#: .\main\templates\main\profile.html:171
+msgid "Yer İşaretinden Kaldır"
+msgstr "Retirer des favoris"
+
+#: .\main\templates\main\home.html:102
+#: .\main\templates\main\post_detail.html:36
+msgid "Yer İşaretine Ekle"
+msgstr "Ajouter aux favoris"
+
+#: .\main\templates\main\home.html:107
+#: .\main\templates\main\popular_critiques.html:44
+#: .\main\templates\main\popular_critiques.html:55
+#: .\main\templates\main\popular_critiques.html:134
+#: .\main\templates\main\post_detail.html:41
+msgid "Bağlantıyı Kopyala"
+msgstr "Copier le lien"
+
+#: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular_critiques.html:70
+msgid "Devamını gör"
+msgstr "Voir plus"
+
+#: .\main\templates\main\home.html:118
+#: .\main\templates\main\popular_critiques.html:72
+msgid "Daha az gör"
+msgstr "Voir moins"
+
+#: .\main\templates\main\home.html:130
+#: .\main\templates\main\post_detail.html:57
+#: .\main\templates\main\profile.html:45
+msgid "Beğeni"
+msgstr "J'aime"
+
+#: .\main\templates\main\home.html:131
+#: .\main\templates\main\post_detail.html:58
+#: .\main\templates\main\profile.html:48
+#: .\main\templates\main\profile_detail.html:31
+msgid "Yorum"
+msgstr "Commentaire"
+
+#: .\main\templates\main\home.html:157
+msgid "Henüz eleştiri yok."
+msgstr "Aucun avis pour le moment."
+
+#: .\main\templates\main\home.html:160
+msgid "Yükleniyor..."
+msgstr "Chargement..."
+
+#: .\main\templates\main\home.html:161
+msgid "Daha Fazla Yükle"
+msgstr "Charger plus"
+
 #: .\main\templates\main\login.html:9
 msgid "Rumep - Giriş Yap veya Kaydol"
 msgstr "Rumep - Se connecter ou s'inscrire"
@@ -100,8 +225,9 @@ msgstr ""
 "Politique de confidentialité."
 
 #: .\main\templates\main\login.html:79
-#, python-brace-format
-msgid "Rumep © {year} Tüm hakları saklıdır."
+#, fuzzy, python-format
+#| msgid "Rumep © {year} Tüm hakları saklıdır."
+msgid "Rumep © %(year)s Tüm hakları saklıdır."
 msgstr "Rumep © {year} Tous droits réservés."
 
 #: .\main\templates\main\login.html:89
@@ -132,19 +258,6 @@ msgstr "Hebdomadaire"
 msgid "Tüm Zamanlar"
 msgstr "Tous les temps"
 
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-msgid "Sil"
-msgstr "Supprimer"
-
-#: .\main\templates\main\popular_critiques.html:44
-#: .\main\templates\main\popular_critiques.html:55
-#: .\main\templates\main\popular_critiques.html:134
-#: .\main\templates\main\post_detail.html:41
-msgid "Bağlantıyı Kopyala"
-msgstr "Copier le lien"
-
 #: .\main\templates\main\popular_critiques.html:60
 #: .\main\templates\main\popular_critiques.html:128
 msgid "Puanınız"
@@ -155,14 +268,6 @@ msgstr "Votre note"
 #: .\main\templates\main\post_detail.html:165
 msgid "Puan Ver"
 msgstr "Noter"
-
-#: .\main\templates\main\popular_critiques.html:70
-msgid "Devamını gör"
-msgstr "Voir plus"
-
-#: .\main\templates\main\popular_critiques.html:72
-msgid "Daha az gör"
-msgstr "Voir moins"
 
 #: .\main\templates\main\popular_critiques.html:77
 #: .\main\templates\main\profile.html:42 .\main\templates\main\profile.html:124
@@ -215,16 +320,6 @@ msgstr "Supprimer l'avis"
 msgid "Kapat"
 msgstr "Fermer"
 
-#: .\main\templates\main\popular_critiques.html:147
-#: .\main\templates\main\post_detail.html:209
-msgid "Bilgi"
-msgstr "Information"
-
-#: .\main\templates\main\popular_critiques.html:151
-#: .\main\templates\main\post_detail.html:213
-msgid "Bağlantı kopyalandı!"
-msgstr "Lien copié !"
-
 #: .\main\templates\main\popular_critiques.html:161
 msgid "Popüler değerlendirmeler sayfası yüklendi"
 msgstr "Page des avis populaires chargée"
@@ -257,39 +352,6 @@ msgstr "Modal ouvert, ID de l'avis :"
 #: .\main\templates\main\popular_critiques.html:325
 msgid "Puanlama hatası:"
 msgstr "Erreur de notation :"
-
-#: .\main\templates\main\post_detail.html:23
-#: .\main\templates\main\profile.html:69
-msgid "Bu postu silmek istediğinizden emin misiniz?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette publication ?"
-
-#: .\main\templates\main\post_detail.html:31
-msgid "Yer işaretine eklemek"
-msgstr "Ajouter aux favoris"
-
-#: .\main\templates\main\post_detail.html:32
-msgid "Yer işaretinden kaldırmak"
-msgstr "Retirer des favoris"
-
-#: .\main\templates\main\post_detail.html:36
-#: .\main\templates\main\profile.html:171
-msgid "Yer İşaretinden Kaldır"
-msgstr "Retirer des favoris"
-
-#: .\main\templates\main\post_detail.html:36
-msgid "Yer İşaretine Ekle"
-msgstr "Ajouter aux favoris"
-
-#: .\main\templates\main\post_detail.html:57
-#: .\main\templates\main\profile.html:45
-msgid "Beğeni"
-msgstr "J'aime"
-
-#: .\main\templates\main\post_detail.html:58
-#: .\main\templates\main\profile.html:48
-#: .\main\templates\main\profile_detail.html:31
-msgid "Yorum"
-msgstr "Commentaire"
 
 #: .\main\templates\main\post_detail.html:85
 msgid "Bu metni değerlendir"
