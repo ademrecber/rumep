@@ -76,7 +76,7 @@
             
             <div class="text-center mt-4">
                 {% now "Y" as current_year %}
-                <p class="text-muted">{% trans "Rumep © {year} Tüm hakları saklıdır."|format(year=current_year) %}</p>
+                 <p class="text-muted">{% blocktrans with year=current_year %}Rumep © {{ year }} Tüm hakları saklıdır.{% endblocktrans %}</p>
             </div>
         </div>
     </div>
