@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 23:04+0300\n"
+"POT-Creation-Date: 2025-07-05 23:23+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
@@ -16,6 +16,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\main\templates\main\404.html:4
+msgid "Sayfa Bulunamadı - Rumep"
+msgstr "Page Not Found - Rumep"
+
+#: .\main\templates\main\404.html:7
+msgid "404 - Sayfa Bulunamadı"
+msgstr "404 - Page Not Found"
+
+#: .\main\templates\main\404.html:10
+msgid "Üzgünüz, aradığınız sayfa mevcut değil veya kaldırılmış olabilir."
+msgstr "Sorry, the page you are looking for does not exist or has been removed."
+
+#: .\main\templates\main\404.html:11
+msgid "Ana Sayfaya Dön"
+msgstr "Return to Homepage"
 
 # base.html çevirileri
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
@@ -70,6 +86,57 @@ msgstr "Go back"
 #: .\main\templates\main\base.html:201
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top Contributors"
+
+#: .\main\templates\main\comment_tree.html:18
+#: .\main\templates\main\profile.html:117
+msgid "Bu yorumu silmek istediğinizden emin misiniz?"
+msgstr "Are you sure you want to delete this comment?"
+
+#: .\main\templates\main\comment_tree.html:21
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Delete"
+
+#: .\main\templates\main\comment_tree.html:31
+#: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular_critiques.html:70
+msgid "Devamını gör"
+msgstr "Show more"
+
+#: .\main\templates\main\comment_tree.html:33
+#: .\main\templates\main\home.html:118
+#: .\main\templates\main\popular_critiques.html:72
+msgid "Daha az gör"
+msgstr "Show less"
+
+#: .\main\templates\main\comment_tree.html:40
+msgid "Yanıtla"
+msgstr "Reply"
+
+#: .\main\templates\main\comment_tree.html:52
+msgid "Skor"
+msgstr "Score"
+
+#: .\main\templates\main\comment_tree.html:59
+msgid "Yanıtınız..."
+msgstr "Your reply..."
+
+#: .\main\templates\main\comment_tree.html:64
+#: .\main\templates\main\popular_critiques.html:104
+#: .\main\templates\main\post_detail.html:107
+#: .\main\templates\main\post_detail.html:177
+msgid "Gönder"
+msgstr "Submit"
+
+#: .\main\templates\main\comment_tree.html:65
+#: .\main\templates\main\popular_critiques.html:105
+#: .\main\templates\main\post_detail.html:108
+#: .\main\templates\main\post_detail.html:178
+msgid "İptal"
+msgstr "Cancel"
 
 #: .\main\templates\main\complete_profile.html:9
 msgid "Rumep - Profilini Tamamla"
@@ -164,13 +231,6 @@ msgstr "Link copied!"
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Are you sure you want to delete this post?"
 
-#: .\main\templates\main\home.html:92
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-msgid "Sil"
-msgstr "Delete"
-
 #: .\main\templates\main\home.html:97 .\main\templates\main\post_detail.html:31
 msgid "Yer işaretine eklemek"
 msgstr "Add to Bookmarks"
@@ -197,16 +257,6 @@ msgstr "Add to Bookmarks"
 #: .\main\templates\main\post_detail.html:41
 msgid "Bağlantıyı Kopyala"
 msgstr "Copy Link"
-
-#: .\main\templates\main\home.html:116
-#: .\main\templates\main\popular_critiques.html:70
-msgid "Devamını gör"
-msgstr "Show more"
-
-#: .\main\templates\main\home.html:118
-#: .\main\templates\main\popular_critiques.html:72
-msgid "Daha az gör"
-msgstr "Show less"
 
 #: .\main\templates\main\home.html:130
 #: .\main\templates\main\post_detail.html:57
@@ -327,18 +377,6 @@ msgstr "No reviews yet."
 #: .\main\templates\main\post_detail.html:169
 msgid "Bu eleştiriye kaç puan verirsiniz?"
 msgstr "How many points would you give this review?"
-
-#: .\main\templates\main\popular_critiques.html:104
-#: .\main\templates\main\post_detail.html:107
-#: .\main\templates\main\post_detail.html:177
-msgid "Gönder"
-msgstr "Submit"
-
-#: .\main\templates\main\popular_critiques.html:105
-#: .\main\templates\main\post_detail.html:108
-#: .\main\templates\main\post_detail.html:178
-msgid "İptal"
-msgstr "Cancel"
 
 #: .\main\templates\main\popular_critiques.html:116
 #: .\main\templates\main\post_detail.html:134
@@ -470,10 +508,6 @@ msgstr "Are you sure you want to unlike this post?"
 #: .\main\templates\main\profile.html:106
 msgid "Henüz bir post beğenmediniz."
 msgstr "You haven't liked any posts yet."
-
-#: .\main\templates\main\profile.html:117
-msgid "Bu yorumu silmek istediğinizden emin misiniz?"
-msgstr "Are you sure you want to delete this comment?"
 
 #: .\main\templates\main\profile.html:128
 msgid "Henüz yorum yapmadınız."

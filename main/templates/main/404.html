@@ -1,13 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Sayfa Bulunamadı - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Sayfa Bulunamadı - Rumep" %}{% endblock %}
 {% block content %}
     <div class="container twitter-container">
-        <h3>404 - Sayfa Bulunamadı</h3>
+        <h3>{% trans "404 - Sayfa Bulunamadı" %}</h3>
         <div class="card mb-3">
             <div class="card-body">
-                <p class="text-muted">Üzgünüz, aradığınız sayfa mevcut değil veya kaldırılmış olabilir.</p>
-                <a href="{% url 'home' %}" class="btn btn-primary rounded-pill">Ana Sayfaya Dön</a>
+                <p class="text-muted">{% trans "Üzgünüz, aradığınız sayfa mevcut değil veya kaldırılmış olabilir." %}</p>
+                <a href="{% url 'home' %}" class="btn btn-primary rounded-pill">{% trans "Ana Sayfaya Dön" %}</a>
             </div>
         </div>
     </div>

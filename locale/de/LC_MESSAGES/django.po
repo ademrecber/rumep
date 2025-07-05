@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 23:04+0300\n"
+"POT-Creation-Date: 2025-07-05 23:23+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -16,6 +16,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\main\templates\main\404.html:4
+msgid "Sayfa Bulunamadı - Rumep"
+msgstr "Seite nicht gefunden - Rumep"
+
+#: .\main\templates\main\404.html:7
+msgid "404 - Sayfa Bulunamadı"
+msgstr "404 - Seite nicht gefunden"
+
+#: .\main\templates\main\404.html:10
+msgid "Üzgünüz, aradığınız sayfa mevcut değil veya kaldırılmış olabilir."
+msgstr "Es tut uns leid, die gesuchte Seite existiert nicht oder wurde entfernt."
+
+#: .\main\templates\main\404.html:11
+msgid "Ana Sayfaya Dön"
+msgstr "Zurück zur Startseite"
 
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
 #: .\main\templates\main\tabs.html:9
@@ -70,6 +86,57 @@ msgstr "Zurück"
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top-Mitwirkende"
 
+#: .\main\templates\main\comment_tree.html:18
+#: .\main\templates\main\profile.html:117
+msgid "Bu yorumu silmek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
+
+#: .\main\templates\main\comment_tree.html:21
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+msgid "Sil"
+msgstr "Löschen"
+
+#: .\main\templates\main\comment_tree.html:31
+#: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular_critiques.html:70
+msgid "Devamını gör"
+msgstr "Mehr anzeigen"
+
+#: .\main\templates\main\comment_tree.html:33
+#: .\main\templates\main\home.html:118
+#: .\main\templates\main\popular_critiques.html:72
+msgid "Daha az gör"
+msgstr "Weniger anzeigen"
+
+#: .\main\templates\main\comment_tree.html:40
+msgid "Yanıtla"
+msgstr "Antworten"
+
+#: .\main\templates\main\comment_tree.html:52
+msgid "Skor"
+msgstr "Punktzahl"
+
+#: .\main\templates\main\comment_tree.html:59
+msgid "Yanıtınız..."
+msgstr "Ihre Antwort..."
+
+#: .\main\templates\main\comment_tree.html:64
+#: .\main\templates\main\popular_critiques.html:104
+#: .\main\templates\main\post_detail.html:107
+#: .\main\templates\main\post_detail.html:177
+msgid "Gönder"
+msgstr "Senden"
+
+#: .\main\templates\main\comment_tree.html:65
+#: .\main\templates\main\popular_critiques.html:105
+#: .\main\templates\main\post_detail.html:108
+#: .\main\templates\main\post_detail.html:178
+msgid "İptal"
+msgstr "Abbrechen"
+
 #: .\main\templates\main\complete_profile.html:9
 msgid "Rumep - Profilini Tamamla"
 msgstr "Rumep - Profil vervollständigen"
@@ -100,7 +167,9 @@ msgstr "Benutzername"
 
 #: .\main\templates\main\complete_profile.html:73
 msgid "Benzersiz kullanıcı adın (harf, rakam ve alt çizgi kullanabilirsin)"
-msgstr "Dein eindeutiger Benutzername (Buchstaben, Zahlen und Unterstriche sind erlaubt)"
+msgstr ""
+"Dein eindeutiger Benutzername (Buchstaben, Zahlen und Unterstriche sind "
+"erlaubt)"
 
 #: .\main\templates\main\complete_profile.html:77
 msgid "Profili Tamamla"
@@ -163,13 +232,6 @@ msgstr "Link kopiert!"
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
 
-#: .\main\templates\main\home.html:92
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-msgid "Sil"
-msgstr "Löschen"
-
 #: .\main\templates\main\home.html:97 .\main\templates\main\post_detail.html:31
 msgid "Yer işaretine eklemek"
 msgstr "Zu Lesezeichen hinzufügen"
@@ -196,16 +258,6 @@ msgstr "Zu Lesezeichen hinzufügen"
 #: .\main\templates\main\post_detail.html:41
 msgid "Bağlantıyı Kopyala"
 msgstr "Link kopieren"
-
-#: .\main\templates\main\home.html:116
-#: .\main\templates\main\popular_critiques.html:70
-msgid "Devamını gör"
-msgstr "Mehr anzeigen"
-
-#: .\main\templates\main\home.html:118
-#: .\main\templates\main\popular_critiques.html:72
-msgid "Daha az gör"
-msgstr "Weniger anzeigen"
 
 #: .\main\templates\main\home.html:130
 #: .\main\templates\main\post_detail.html:57
@@ -328,18 +380,6 @@ msgstr "Noch keine Bewertungen vorhanden."
 #: .\main\templates\main\post_detail.html:169
 msgid "Bu eleştiriye kaç puan verirsiniz?"
 msgstr "Wie viele Punkte geben Sie dieser Bewertung?"
-
-#: .\main\templates\main\popular_critiques.html:104
-#: .\main\templates\main\post_detail.html:107
-#: .\main\templates\main\post_detail.html:177
-msgid "Gönder"
-msgstr "Senden"
-
-#: .\main\templates\main\popular_critiques.html:105
-#: .\main\templates\main\post_detail.html:108
-#: .\main\templates\main\post_detail.html:178
-msgid "İptal"
-msgstr "Abbrechen"
 
 #: .\main\templates\main\popular_critiques.html:116
 #: .\main\templates\main\post_detail.html:134
@@ -471,10 +511,6 @@ msgstr "Sind Sie sicher, dass Sie dieses Gefällt mir entfernen möchten?"
 #: .\main\templates\main\profile.html:106
 msgid "Henüz bir post beğenmediniz."
 msgstr "Sie haben noch keinen Beitrag geliked."
-
-#: .\main\templates\main\profile.html:117
-msgid "Bu yorumu silmek istediğinizden emin misiniz?"
-msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 
 #: .\main\templates\main\profile.html:128
 msgid "Henüz yorum yapmadınız."

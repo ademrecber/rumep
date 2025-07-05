@@ -121,11 +121,11 @@ function initComments() {
         });
     });
 
-    window.deleteComment = function(event, commentId) {
+    window.deleteComment = function(event, commentId, confirmMessage) {
         event.preventDefault();
         console.log("deleteComment çağrıldı, commentId:", commentId);
 
-        if (!confirm('Bu yorumu silmek istediğinizden emin misiniz?')) {
+        if (!confirm(confirmMessage)) {
             console.log("Silme iptal edildi");
             return false;
         }
