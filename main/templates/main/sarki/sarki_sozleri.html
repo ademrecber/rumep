@@ -1,20 +1,21 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Şarkı Sözleri - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Şarkı Sözleri - Rumep" %}{% endblock %}
 {% block content %}
 <div class="container twitter-container sarki-container">
-    <h3>Şarkı Sözleri</h3>
+    <h3>{% trans "Şarkı Sözleri" %}</h3>
     <div class="card mb-3">
         <div class="card-body">
             <!-- Arama ve Tür Filtresi -->
             <div class="mb-3">
                 <form id="sarki-arama-form" class="d-flex justify-content-between align-items-center">
                     <div class="input-group me-2">
-                        <input type="text" id="sarki-arama-input" class="form-control rounded-pill" placeholder="Şarkı adı veya sözleriyle ara..." aria-label="Arama">
+                        <input type="text" id="sarki-arama-input" class="form-control rounded-pill" placeholder="{% trans "Şarkı adı veya sözleriyle ara..." %}" aria-label="{% trans "Arama" %}">
                         <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="bi bi-search"></i></button>
                     </div>
                     <select id="tur-filtre" class="form-select rounded-pill" style="max-width: 200px;">
-                        <option value="">Tüm Türler</option>
+                        <option value="">{% trans "Tüm Türler" %}</option>
                         {% for tur in turler %}
                             <option value="{{ tur }}">{{ tur }}</option>
                         {% endfor %}
@@ -25,11 +26,11 @@
 
             <!-- Harf Filtresi ve Kişi Listesi -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5>Kişiler</h5>
-                <a href="{% url 'sarki_ekle' %}" class="btn btn-primary rounded-pill">Şarkı Sözü Ekle</a>
+                <h5>{% trans "Kişiler" %}</h5>
+                <a href="{% url 'sarki_ekle' %}" class="btn btn-primary rounded-pill">{% trans "Şarkı Sözü Ekle" %}</a>
             </div>
             <div class="d-flex flex-wrap mb-3">
-                <a href="{% url 'sarki_sozleri' %}" class="btn btn-link text-primary m-1 {% if not secili_harf %}active{% endif %}">Tümü</a>
+                <a href="{% url 'sarki_sozleri' %}" class="btn btn-link text-primary m-1 {% if not secili_harf %}active{% endif %}">{% trans "Tümü" %}</a>
                 {% for harf in harfler %}
                     <a href="?harf={{ harf }}" class="btn btn-link text-primary m-1 {% if secili_harf == harf %}active{% endif %}">{{ harf|upper }}</a>
                 {% endfor %}
@@ -44,8 +45,7 @@
                                     <a href="{% url 'sarki_album_liste' kisi.id %}" class="text-decoration-none">
                                         <strong>{{ kisi.ad }}</strong>
                                         <p class="text-muted small">
-                                            {{ kisi.album_sayisi }} albüm, 
-                                            {{ kisi.sarki_sayisi }} şarkı
+                                            {% trans "{{ album_sayisi }} albüm, {{ sarki_sayisi }} şarkı"|format(album_sayisi=kisi.album_sayisi, sarki_sayisi=kisi.sarki_sayisi) %}
                                         </p>
                                     </a>
                                 </li>
@@ -53,7 +53,7 @@
                         </ul>
                     {% endif %}
                 {% empty %}
-                    <p class="text-muted">Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı.</p>
+                    <p class="text-muted">{% trans "Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı." %}</p>
                 {% endfor %}
             </div>
         </div>

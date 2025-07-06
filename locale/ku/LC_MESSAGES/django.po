@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 20:08+0300\n"
+"POT-Creation-Date: 2025-07-06 20:18+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -53,10 +53,12 @@ msgid "Sözlük"
 msgstr "Ferheng"
 
 #: .\main\templates\main\base.html:135
+#: .\main\templates\main\sarki\sarki_sozleri.html:29
 msgid "Kişiler"
 msgstr "Kes"
 
 #: .\main\templates\main\base.html:138
+#: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
 msgstr "Gotinên Stranan"
 
@@ -74,6 +76,7 @@ msgid "Ara..."
 msgstr "Lêgerîn..."
 
 #: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
+#: .\main\templates\main\sarki\sarki_sozleri.html:14
 #: .\main\templates\main\search.html:3
 #: .\main\templates\main\sozluk\sozluk.html:48
 msgid "Arama"
@@ -669,6 +672,42 @@ msgstr "Ev bikarhêner hêj şîrove nekiriye an jî şîrove veşartî ne."
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "Ev bikarhêner hêj nirxandin nekiriye an jî nirxandin veşartî ne."
 
+#: .\main\templates\main\sarki\sarki_sozleri.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - Rumep"
+msgstr "Gotinên Stranan - Rumep"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:14
+msgid "Şarkı adı veya sözleriyle ara..."
+msgstr "Bi navê stranê an gotinan lêbigere..."
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:18
+#: .\main\templates\main\sozluk\sozluk.html:53
+msgid "Tüm Türler"
+msgstr "Hemû Cure"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:30
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü Ekle"
+msgstr "Gotinên Stranê Zêde Bike"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Hemû"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:48
+msgid "{{ album_sayisi }} albüm, {{ sarki_sayisi }} şarkı"
+msgstr "{{ album_sayisi }} albûm, {{ sarki_sayisi }} stran"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:56
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı."
+msgstr "Kesek ku gotinên stranê bi tîpa {{ harf|upper }} dest pê dike nehat dîtin."
+
 # # search.html çevirileri
 #: .\main\templates\main\search.html:6
 msgid "için Sonuçlar"
@@ -731,10 +770,6 @@ msgstr "Peyvê lêbigere (mînak, ab)"
 msgid "Kelime türü filtresi"
 msgstr "Parzûna cureya peyvê"
 
-#: .\main\templates\main\sozluk\sozluk.html:53
-msgid "Tüm Türler"
-msgstr "Hemû Cure"
-
 #: .\main\templates\main\sozluk\sozluk.html:54
 #: .\main\templates\main\sozluk\sozluk.html:151
 #: .\main\templates\main\sozluk\sozluk_kelime.html:92
@@ -774,10 +809,6 @@ msgstr "Navîgasyona alfabeyê"
 #: .\main\templates\main\sozluk\sozluk.html:76
 msgid "Tüm kelimeler"
 msgstr "Hemû peyv"
-
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Hemû"
 
 #: .\main\templates\main\sozluk\sozluk.html:82
 msgid "{{ harf|upper }} harfi ile başlayan kelimeler"

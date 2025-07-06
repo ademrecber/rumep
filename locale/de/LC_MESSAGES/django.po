@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 20:09+0300\n"
+"POT-Creation-Date: 2025-07-06 20:18+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -54,10 +54,12 @@ msgid "Sözlük"
 msgstr "Wörterbuch"
 
 #: .\main\templates\main\base.html:135
+#: .\main\templates\main\sarki\sarki_sozleri.html:29
 msgid "Kişiler"
 msgstr "Personen"
 
 #: .\main\templates\main\base.html:138
+#: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
 msgstr "Songtexte"
 
@@ -75,6 +77,7 @@ msgid "Ara..."
 msgstr "Suche..."
 
 #: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
+#: .\main\templates\main\sarki\sarki_sozleri.html:14
 #: .\main\templates\main\search.html:3
 #: .\main\templates\main\sozluk\sozluk.html:48
 msgid "Arama"
@@ -678,6 +681,42 @@ msgstr ""
 "Dieser Benutzer hat noch keine Bewertungen gemacht oder die Bewertungen sind "
 "ausgeblendet."
 
+#: .\main\templates\main\sarki\sarki_sozleri.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - Rumep"
+msgstr "Songtexte - Rumep"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:14
+msgid "Şarkı adı veya sözleriyle ara..."
+msgstr "Nach Songtitel oder Text suchen..."
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:18
+#: .\main\templates\main\sozluk\sozluk.html:53
+msgid "Tüm Türler"
+msgstr "Alle Arten"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:30
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü Ekle"
+msgstr "Songtext hinzufügen"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Alle"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:48
+msgid "{{ album_sayisi }} albüm, {{ sarki_sayisi }} şarkı"
+msgstr "{{ album_sayisi }} Alben, {{ sarki_sayisi }} Songs"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:56
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı."
+msgstr "Keine Person mit Songtexten gefunden, die mit dem Buchstaben {{ harf|upper }} beginnen."
+
 #: .\main\templates\main\search.html:6
 msgid "için Sonuçlar"
 msgstr "Ergebnisse für"
@@ -739,10 +778,6 @@ msgstr "Wort suchen (z.B. ab)"
 msgid "Kelime türü filtresi"
 msgstr "Filter für Wortart"
 
-#: .\main\templates\main\sozluk\sozluk.html:53
-msgid "Tüm Türler"
-msgstr "Alle Arten"
-
 #: .\main\templates\main\sozluk\sozluk.html:54
 #: .\main\templates\main\sozluk\sozluk.html:151
 #: .\main\templates\main\sozluk\sozluk_kelime.html:92
@@ -782,10 +817,6 @@ msgstr "Alphabet-Navigation"
 #: .\main\templates\main\sozluk\sozluk.html:76
 msgid "Tüm kelimeler"
 msgstr "Alle Wörter"
-
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Alle"
 
 #: .\main\templates\main\sozluk\sozluk.html:82
 msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
