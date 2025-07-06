@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 19:57+0300\n"
+"POT-Creation-Date: 2025-07-06 20:09+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -98,6 +98,7 @@ msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sozluk\sozluk_harf.html:30
 #: .\main\templates\main\sozluk\sozluk_kelime.html:20
 #: .\main\templates\main\sozluk\sozluk_kelime.html:57
 msgid "Sil"
@@ -283,6 +284,7 @@ msgstr "Noch keine Bewertungen vorhanden."
 
 #: .\main\templates\main\home.html:160
 #: .\main\templates\main\sozluk\sozluk.html:104
+#: .\main\templates\main\sozluk\sozluk_harf.html:42
 msgid "Yükleniyor..."
 msgstr "Wird geladen..."
 
@@ -400,6 +402,7 @@ msgstr "Bewertung löschen"
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
 #: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
 #: .\main\templates\main\sozluk\sozluk_kelime.html:75
 #: .\main\templates\main\sozluk\sozluk_kelime.html:112
 msgid "Kapat"
@@ -557,6 +560,7 @@ msgstr "Twitter (Optional)"
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
 #: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_harf.html:65
 #: .\main\templates\main\sozluk\sozluk_kelime.html:99
 #: .\main\templates\main\sozluk\sozluk_kelime.html:122
 msgid "Kaydet"
@@ -796,11 +800,13 @@ msgid "Kelimeler yükleniyor..."
 msgstr "Wörter werden geladen..."
 
 #: .\main\templates\main\sozluk\sozluk.html:117
+#: .\main\templates\main\sozluk\sozluk_harf.html:50
 #: .\main\templates\main\sozluk\sozluk_kelime.html:74
 msgid "Kelime Düzenle"
 msgstr "Wort bearbeiten"
 
 #: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_harf.html:57
 #: .\main\templates\main\sozluk\sozluk_kelime.html:81
 msgid "Kelime"
 msgstr "Wort"
@@ -810,6 +816,7 @@ msgid "Lütfen bir kelime girin."
 msgstr "Bitte geben Sie ein Wort ein."
 
 #: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
 #: .\main\templates\main\sozluk\sozluk_kelime.html:13
 #: .\main\templates\main\sozluk\sozluk_kelime.html:85
 #: .\main\templates\main\sozluk\sozluk_kelime.html:118
@@ -831,6 +838,26 @@ msgstr "Art"
 msgid "Seçiniz"
 msgstr "Auswählen"
 
+#: .\main\templates\main\sozluk\sozluk_harf.html:4
+#, fuzzy
+#| msgid "Kürtçe Sözlük"
+msgid "{{ harf|upper }} Harfi - Kürtçe Sözlük"
+msgstr "Kurdisches Wörterbuch"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Bearbeiten"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:38
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan kelime bulunamadı."
+msgstr "Wörter, die mit dem Buchstaben {{ harf|upper }} beginnen"
+
 #: .\main\templates\main\sozluk\sozluk_kelime.html:4
 #, fuzzy
 #| msgid "Kürtçe Sözlük"
@@ -847,13 +874,6 @@ msgstr "Hinzugefügt von"
 #| msgid "Silinme tarihi"
 msgid "Eklenme Tarihi"
 msgstr "Hinzufügedatum"
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Bearbeiten"
 
 #: .\main\templates\main\sozluk\sozluk_kelime.html:29
 #: .\main\templates\main\sozluk\sozluk_kelime.html:37
