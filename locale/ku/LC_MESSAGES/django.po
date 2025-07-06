@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 23:23+0300\n"
+"POT-Creation-Date: 2025-07-06 19:57+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -75,6 +75,7 @@ msgstr "Lêgerîn..."
 
 #: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
 #: .\main\templates\main\search.html:3
+#: .\main\templates\main\sozluk\sozluk.html:48
 msgid "Arama"
 msgstr "Lêgerîn"
 
@@ -96,6 +97,8 @@ msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sozluk\sozluk_kelime.html:20
+#: .\main\templates\main\sozluk\sozluk_kelime.html:57
 msgid "Sil"
 msgstr "Jê Bibe"
 
@@ -134,6 +137,7 @@ msgstr "Bişîne"
 #: .\main\templates\main\popular_critiques.html:105
 #: .\main\templates\main\post_detail.html:108
 #: .\main\templates\main\post_detail.html:178
+#: .\main\templates\main\sozluk\sozluk.html:159
 msgid "İptal"
 msgstr "Betal Bike"
 
@@ -276,6 +280,7 @@ msgid "Henüz eleştiri yok."
 msgstr "Hêj nirxandin tune."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\sozluk\sozluk.html:104
 msgid "Yükleniyor..."
 msgstr "Tê barkirin..."
 
@@ -391,6 +396,9 @@ msgstr "Nirxandinê Jê Bibe"
 
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
 msgid "Kapat"
 msgstr "Bigire"
 
@@ -545,6 +553,9 @@ msgstr "Twitter (Bijarte)"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_kelime.html:99
+#: .\main\templates\main\sozluk\sozluk_kelime.html:122
 msgid "Kaydet"
 msgstr "Tomar bike"
 
@@ -690,6 +701,182 @@ msgstr "Post nehat dîtin."
 #: .\main\templates\main\search.html:65
 msgid "Hiçbir sonuç bulunamadı."
 msgstr "Tu encam nehat dîtin."
+
+#: .\main\templates\main\sozluk\sozluk.html:5
+#: .\main\templates\main\sozluk\sozluk.html:22
+msgid "Kürtçe Sözlük"
+msgstr "Ferhenga Kurdî"
+
+#: .\main\templates\main\sozluk\sozluk.html:7
+msgid "Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme"
+msgstr "Ferhenga Kurdî - Lêgerîna peyvan, zêdekirin û sererastkirin"
+
+#: .\main\templates\main\sozluk\sozluk.html:32
+msgid "Kelime Ekle"
+msgstr "Peyvê Zêde Bike"
+
+#: .\main\templates\main\sozluk\sozluk.html:41
+msgid "Kelime Ara"
+msgstr "Peyvê Lêbigere"
+
+#: .\main\templates\main\sozluk\sozluk.html:47
+msgid "Kelime ara (ör. ab)"
+msgstr "Peyvê lêbigere (mînak, ab)"
+
+#: .\main\templates\main\sozluk\sozluk.html:52
+msgid "Kelime türü filtresi"
+msgstr "Parzûna cureya peyvê"
+
+#: .\main\templates\main\sozluk\sozluk.html:53
+msgid "Tüm Türler"
+msgstr "Hemû Cure"
+
+#: .\main\templates\main\sozluk\sozluk.html:54
+#: .\main\templates\main\sozluk\sozluk.html:151
+#: .\main\templates\main\sozluk\sozluk_kelime.html:92
+msgid "İsim"
+msgstr "Nav"
+
+#: .\main\templates\main\sozluk\sozluk.html:55
+#: .\main\templates\main\sozluk\sozluk.html:152
+#: .\main\templates\main\sozluk\sozluk_kelime.html:93
+msgid "Fiil"
+msgstr "Karker"
+
+#: .\main\templates\main\sozluk\sozluk.html:56
+#: .\main\templates\main\sozluk\sozluk.html:153
+#: .\main\templates\main\sozluk\sozluk_kelime.html:94
+msgid "Sıfat"
+msgstr "Sifet"
+
+#: .\main\templates\main\sozluk\sozluk.html:57
+#: .\main\templates\main\sozluk\sozluk.html:154
+#: .\main\templates\main\sozluk\sozluk_kelime.html:95
+msgid "Zarf"
+msgstr "Zarf"
+
+#: .\main\templates\main\sozluk\sozluk.html:61
+msgid "Ara"
+msgstr "Lêbigere"
+
+#: .\main\templates\main\sozluk\sozluk.html:70
+msgid "Harfler"
+msgstr "Tîp"
+
+#: .\main\templates\main\sozluk\sozluk.html:71
+msgid "Alfabe navigasyonu"
+msgstr "Navîgasyona alfabeyê"
+
+#: .\main\templates\main\sozluk\sozluk.html:76
+msgid "Tüm kelimeler"
+msgstr "Hemû peyv"
+
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Hemû"
+
+#: .\main\templates\main\sozluk\sozluk.html:82
+msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgstr "Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin"
+
+#: .\main\templates\main\sozluk\sozluk.html:95
+msgid "Tüm Kelimeler"
+msgstr "Hemû Peyv"
+
+#: .\main\templates\main\sozluk\sozluk.html:99
+msgid "Kelimeler yükleniyor..."
+msgstr "Peyv têne barkirin..."
+
+#: .\main\templates\main\sozluk\sozluk.html:117
+#: .\main\templates\main\sozluk\sozluk_kelime.html:74
+msgid "Kelime Düzenle"
+msgstr "Peyvê Sererast Bike"
+
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Peyv"
+
+#: .\main\templates\main\sozluk\sozluk.html:133
+msgid "Lütfen bir kelime girin."
+msgstr "Ji kerema xwe peyvekê têkeve."
+
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Hûrgilî"
+
+#: .\main\templates\main\sozluk\sozluk.html:144
+msgid "Lütfen kelime detayını girin."
+msgstr "Ji kerema xwe hûrguliyên peyvê têkeve."
+
+#: .\main\templates\main\sozluk\sozluk.html:148
+#: .\main\templates\main\sozluk\sozluk_kelime.html:14
+#: .\main\templates\main\sozluk\sozluk_kelime.html:89
+msgid "Tür"
+msgstr "Cure"
+
+#: .\main\templates\main\sozluk\sozluk.html:150
+#: .\main\templates\main\sozluk\sozluk_kelime.html:91
+msgid "Seçiniz"
+msgstr "Hilbijêre"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:4
+#, fuzzy
+#| msgid "Kürtçe Sözlük"
+msgid "{{ kelime.kelime }} - Kürtçe Sözlük"
+msgstr "Ferhenga Kurdî"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Zêdekar"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:16
+#, fuzzy
+#| msgid "Silinme tarihi"
+msgid "Eklenme Tarihi"
+msgstr "Dîroka Zêdekirinê"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Sererast Bike"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Hûrguliyê Zêde Bike"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:31
+#, fuzzy
+#| msgid "Lütfen kelime detayını girin."
+msgid "Kendi kelimenize detay yazamazsınız."
+msgstr "Hûn nikarin hûrguliyê li peyva xwe zêde bikin."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Hûrguliyên Zêde"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Hêj hûrguliyên zêde nehatine zêdekirin."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Hûrguliyê Sererast Bike"
 
 # tabs.html çevirileri
 #: .\main\templates\main\tabs.html:12

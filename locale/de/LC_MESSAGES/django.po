@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 23:23+0300\n"
+"POT-Creation-Date: 2025-07-06 19:57+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -27,7 +27,8 @@ msgstr "404 - Seite nicht gefunden"
 
 #: .\main\templates\main\404.html:10
 msgid "Üzgünüz, aradığınız sayfa mevcut değil veya kaldırılmış olabilir."
-msgstr "Es tut uns leid, die gesuchte Seite existiert nicht oder wurde entfernt."
+msgstr ""
+"Es tut uns leid, die gesuchte Seite existiert nicht oder wurde entfernt."
 
 #: .\main\templates\main\404.html:11
 msgid "Ana Sayfaya Dön"
@@ -75,6 +76,7 @@ msgstr "Suche..."
 
 #: .\main\templates\main\base.html:162 .\main\templates\main\base.html:189
 #: .\main\templates\main\search.html:3
+#: .\main\templates\main\sozluk\sozluk.html:48
 msgid "Arama"
 msgstr "Suche"
 
@@ -96,6 +98,8 @@ msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sozluk\sozluk_kelime.html:20
+#: .\main\templates\main\sozluk\sozluk_kelime.html:57
 msgid "Sil"
 msgstr "Löschen"
 
@@ -134,6 +138,7 @@ msgstr "Senden"
 #: .\main\templates\main\popular_critiques.html:105
 #: .\main\templates\main\post_detail.html:108
 #: .\main\templates\main\post_detail.html:178
+#: .\main\templates\main\sozluk\sozluk.html:159
 msgid "İptal"
 msgstr "Abbrechen"
 
@@ -277,6 +282,7 @@ msgid "Henüz eleştiri yok."
 msgstr "Noch keine Bewertungen vorhanden."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\sozluk\sozluk.html:104
 msgid "Yükleniyor..."
 msgstr "Wird geladen..."
 
@@ -393,6 +399,9 @@ msgstr "Bewertung löschen"
 
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
 msgid "Kapat"
 msgstr "Schließen"
 
@@ -547,6 +556,9 @@ msgstr "Twitter (Optional)"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_kelime.html:99
+#: .\main\templates\main\sozluk\sozluk_kelime.html:122
 msgid "Kaydet"
 msgstr "Speichern"
 
@@ -697,6 +709,182 @@ msgstr "Kein Beitrag gefunden."
 #: .\main\templates\main\search.html:65
 msgid "Hiçbir sonuç bulunamadı."
 msgstr "Kein Ergebnis gefunden."
+
+#: .\main\templates\main\sozluk\sozluk.html:5
+#: .\main\templates\main\sozluk\sozluk.html:22
+msgid "Kürtçe Sözlük"
+msgstr "Kurdisches Wörterbuch"
+
+#: .\main\templates\main\sozluk\sozluk.html:7
+msgid "Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme"
+msgstr "Kurdisches Wörterbuch - Wörtersuche, Hinzufügen und Bearbeiten"
+
+#: .\main\templates\main\sozluk\sozluk.html:32
+msgid "Kelime Ekle"
+msgstr "Wort hinzufügen"
+
+#: .\main\templates\main\sozluk\sozluk.html:41
+msgid "Kelime Ara"
+msgstr "Wort suchen"
+
+#: .\main\templates\main\sozluk\sozluk.html:47
+msgid "Kelime ara (ör. ab)"
+msgstr "Wort suchen (z.B. ab)"
+
+#: .\main\templates\main\sozluk\sozluk.html:52
+msgid "Kelime türü filtresi"
+msgstr "Filter für Wortart"
+
+#: .\main\templates\main\sozluk\sozluk.html:53
+msgid "Tüm Türler"
+msgstr "Alle Arten"
+
+#: .\main\templates\main\sozluk\sozluk.html:54
+#: .\main\templates\main\sozluk\sozluk.html:151
+#: .\main\templates\main\sozluk\sozluk_kelime.html:92
+msgid "İsim"
+msgstr "Substantiv"
+
+#: .\main\templates\main\sozluk\sozluk.html:55
+#: .\main\templates\main\sozluk\sozluk.html:152
+#: .\main\templates\main\sozluk\sozluk_kelime.html:93
+msgid "Fiil"
+msgstr "Verb"
+
+#: .\main\templates\main\sozluk\sozluk.html:56
+#: .\main\templates\main\sozluk\sozluk.html:153
+#: .\main\templates\main\sozluk\sozluk_kelime.html:94
+msgid "Sıfat"
+msgstr "Adjektiv"
+
+#: .\main\templates\main\sozluk\sozluk.html:57
+#: .\main\templates\main\sozluk\sozluk.html:154
+#: .\main\templates\main\sozluk\sozluk_kelime.html:95
+msgid "Zarf"
+msgstr "Adverb"
+
+#: .\main\templates\main\sozluk\sozluk.html:61
+msgid "Ara"
+msgstr "Suche"
+
+#: .\main\templates\main\sozluk\sozluk.html:70
+msgid "Harfler"
+msgstr "Buchstaben"
+
+#: .\main\templates\main\sozluk\sozluk.html:71
+msgid "Alfabe navigasyonu"
+msgstr "Alphabet-Navigation"
+
+#: .\main\templates\main\sozluk\sozluk.html:76
+msgid "Tüm kelimeler"
+msgstr "Alle Wörter"
+
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Alle"
+
+#: .\main\templates\main\sozluk\sozluk.html:82
+msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgstr "Wörter, die mit dem Buchstaben {{ harf|upper }} beginnen"
+
+#: .\main\templates\main\sozluk\sozluk.html:95
+msgid "Tüm Kelimeler"
+msgstr "Alle Wörter"
+
+#: .\main\templates\main\sozluk\sozluk.html:99
+msgid "Kelimeler yükleniyor..."
+msgstr "Wörter werden geladen..."
+
+#: .\main\templates\main\sozluk\sozluk.html:117
+#: .\main\templates\main\sozluk\sozluk_kelime.html:74
+msgid "Kelime Düzenle"
+msgstr "Wort bearbeiten"
+
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Wort"
+
+#: .\main\templates\main\sozluk\sozluk.html:133
+msgid "Lütfen bir kelime girin."
+msgstr "Bitte geben Sie ein Wort ein."
+
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Details"
+
+#: .\main\templates\main\sozluk\sozluk.html:144
+msgid "Lütfen kelime detayını girin."
+msgstr "Bitte geben Sie die Details des Wortes ein."
+
+#: .\main\templates\main\sozluk\sozluk.html:148
+#: .\main\templates\main\sozluk\sozluk_kelime.html:14
+#: .\main\templates\main\sozluk\sozluk_kelime.html:89
+msgid "Tür"
+msgstr "Art"
+
+#: .\main\templates\main\sozluk\sozluk.html:150
+#: .\main\templates\main\sozluk\sozluk_kelime.html:91
+msgid "Seçiniz"
+msgstr "Auswählen"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:4
+#, fuzzy
+#| msgid "Kürtçe Sözlük"
+msgid "{{ kelime.kelime }} - Kürtçe Sözlük"
+msgstr "Kurdisches Wörterbuch"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Hinzugefügt von"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:16
+#, fuzzy
+#| msgid "Silinme tarihi"
+msgid "Eklenme Tarihi"
+msgstr "Hinzufügedatum"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Bearbeiten"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Details hinzufügen"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:31
+#, fuzzy
+#| msgid "Lütfen kelime detayını girin."
+msgid "Kendi kelimenize detay yazamazsınız."
+msgstr "Sie können keine Details zu Ihrem eigenen Wort hinzufügen."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Zusätzliche Details"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Noch keine zusätzlichen Details hinzugefügt."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Details bearbeiten"
 
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
