@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:24+0300\n"
+"POT-Creation-Date: 2025-07-07 23:31+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
@@ -105,6 +105,7 @@ msgstr "Are you sure you want to delete this comment?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sarki\album_liste.html:23
 #: .\main\templates\main\sarki\sarki_detay.html:32
 #: .\main\templates\main\sarki\sarki_detay.html:64
 #: .\main\templates\main\sozluk\sozluk_harf.html:30
@@ -682,6 +683,30 @@ msgstr "This user hasn't commented yet or the comments are hidden."
 #: .\main\templates\main\profile_detail.html:92
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "This user hasn't made any reviews yet or the reviews are hidden."
+
+#: .\main\templates\main\sarki\album_liste.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - {{ kisi.ad }} Albümleri"
+msgstr "Song Lyrics - {{ kisi.ad }} Albums"
+
+#: .\main\templates\main\sarki\album_liste.html:7
+#, fuzzy
+#| msgid "{{ kisi.ad }} için Albüm Ekle"
+msgid "{{ kisi.ad }} Albümleri"
+msgstr "{{ kisi.ad }} Albums"
+
+#: .\main\templates\main\sarki\album_liste.html:10
+#, fuzzy
+#| msgid "Albüm Adı"
+msgid "Albümler"
+msgstr "Albums"
+
+#: .\main\templates\main\sarki\album_liste.html:31
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz albüm eklenmemiş."
+msgstr "No albums have been added yet."
 
 #: .\main\templates\main\sarki\sarki_detay.html:4
 #, fuzzy
