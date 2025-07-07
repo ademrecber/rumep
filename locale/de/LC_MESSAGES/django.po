@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:32+0300\n"
+"POT-Creation-Date: 2025-07-07 23:39+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -693,6 +693,32 @@ msgstr ""
 "Dieser Benutzer hat noch keine Bewertungen gemacht oder die Bewertungen sind "
 "ausgeblendet."
 
+#: .\main\templates\main\sarki\album_ekle.html:4
+msgid "Albüm Ekle - {{ kisi.ad }}"
+msgstr "Album hinzufügen - {{ kisi.ad }}"
+
+#: .\main\templates\main\sarki\album_ekle.html:7
+#: .\main\templates\main\sarki\sarki_ekle.html:24
+msgid "{{ kisi.ad }} için Albüm Ekle"
+msgstr "Album für {{ kisi.ad }} hinzufügen"
+
+#: .\main\templates\main\sarki\album_ekle.html:13
+#: .\main\templates\main\sarki\sarki_ekle.html:29
+msgid "Albüm Adı"
+msgstr "Albumname"
+
+#: .\main\templates\main\sarki\album_ekle.html:17
+#: .\main\templates\main\sarki\sarki_ekle.html:33
+msgid "Albüm Yılı (İsteğe Bağlı)"
+msgstr "Albumjahr (optional)"
+
+#: .\main\templates\main\sarki\album_ekle.html:21
+#: .\main\templates\main\sarki\sarki_ekle.html:37
+#, fuzzy
+#| msgid "Kelime Ekle"
+msgid "Albüm Ekle"
+msgstr "Album hinzufügen"
+
 #: .\main\templates\main\sarki\album_liste.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -911,24 +937,6 @@ msgstr "Die gesuchte Person nicht gefunden?"
 #: .\main\templates\main\sarki\sarki_ekle.html:18
 msgid "Hemen ekle!"
 msgstr "Jetzt hinzufügen!"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:24
-msgid "{{ kisi.ad }} için Albüm Ekle"
-msgstr "Album für {{ kisi.ad }} hinzufügen"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:29
-msgid "Albüm Adı"
-msgstr "Albumname"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:33
-msgid "Albüm Yılı (İsteğe Bağlı)"
-msgstr "Albumjahr (optional)"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:37
-#, fuzzy
-#| msgid "Kelime Ekle"
-msgid "Albüm Ekle"
-msgstr "Album hinzufügen"
 
 #: .\main\templates\main\sarki\sarki_ekle.html:44
 #, fuzzy

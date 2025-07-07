@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:32+0300\n"
+"POT-Creation-Date: 2025-07-07 23:39+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -690,6 +690,32 @@ msgstr ""
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "Cet utilisateur n'a pas encore fait d'avis ou les avis sont masqués."
 
+#: .\main\templates\main\sarki\album_ekle.html:4
+msgid "Albüm Ekle - {{ kisi.ad }}"
+msgstr "Ajouter un album - {{ kisi.ad }}"
+
+#: .\main\templates\main\sarki\album_ekle.html:7
+#: .\main\templates\main\sarki\sarki_ekle.html:24
+msgid "{{ kisi.ad }} için Albüm Ekle"
+msgstr "Ajouter un album pour {{ kisi.ad }}"
+
+#: .\main\templates\main\sarki\album_ekle.html:13
+#: .\main\templates\main\sarki\sarki_ekle.html:29
+msgid "Albüm Adı"
+msgstr "Nom de l'album"
+
+#: .\main\templates\main\sarki\album_ekle.html:17
+#: .\main\templates\main\sarki\sarki_ekle.html:33
+msgid "Albüm Yılı (İsteğe Bağlı)"
+msgstr "Année de l'album (facultatif)"
+
+#: .\main\templates\main\sarki\album_ekle.html:21
+#: .\main\templates\main\sarki\sarki_ekle.html:37
+#, fuzzy
+#| msgid "Kelime Ekle"
+msgid "Albüm Ekle"
+msgstr "Ajouter un album"
+
 #: .\main\templates\main\sarki\album_liste.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -908,24 +934,6 @@ msgstr "Vous ne trouvez pas la personne recherchée ?"
 #: .\main\templates\main\sarki\sarki_ekle.html:18
 msgid "Hemen ekle!"
 msgstr "Ajoutez maintenant !"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:24
-msgid "{{ kisi.ad }} için Albüm Ekle"
-msgstr "Ajouter un album pour {{ kisi.ad }}"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:29
-msgid "Albüm Adı"
-msgstr "Nom de l'album"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:33
-msgid "Albüm Yılı (İsteğe Bağlı)"
-msgstr "Année de l'album (facultatif)"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:37
-#, fuzzy
-#| msgid "Kelime Ekle"
-msgid "Albüm Ekle"
-msgstr "Ajouter un album"
 
 #: .\main\templates\main\sarki\sarki_ekle.html:44
 #, fuzzy
