@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:08+0300\n"
+"POT-Creation-Date: 2025-07-07 23:16+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
@@ -60,6 +60,7 @@ msgid "Kişiler"
 msgstr "People"
 
 #: .\main\templates\main\base.html:138
+#: .\main\templates\main\sarki\sarki_ekle.html:62
 #: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
 msgstr "Lyrics"
@@ -672,6 +673,101 @@ msgstr "This user hasn't commented yet or the comments are hidden."
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "This user hasn't made any reviews yet or the reviews are hidden."
 
+#: .\main\templates\main\sarki\sarki_ekle.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü Ekle - Rumep"
+msgstr "Add Song Lyrics - Rumep"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:7
+#: .\main\templates\main\sarki\sarki_sozleri.html:30
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü Ekle"
+msgstr "Add Song Lyrics"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:10
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ara"
+msgstr "Search Person"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:13
+#, fuzzy
+#| msgid "Eleştirinizi yazın..."
+msgid "Kişi adını yazın..."
+msgstr "Enter person name..."
+
+#: .\main\templates\main\sarki\sarki_ekle.html:13
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi ara"
+msgstr "Search person"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:18
+msgid "Aradığınız kişi yok mu?"
+msgstr "Can't find the person you're looking for?"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:18
+msgid "Hemen ekle!"
+msgstr "Add now!"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:24
+msgid "{{ kisi.ad }} için Albüm Ekle"
+msgstr "Add Album for {{ kisi.ad }}"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:29
+msgid "Albüm Adı"
+msgstr "Album Name"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:33
+msgid "Albüm Yılı (İsteğe Bağlı)"
+msgstr "Album Year (Optional)"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:37
+#, fuzzy
+#| msgid "Kelime Ekle"
+msgid "Albüm Ekle"
+msgstr "Add Album"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:44
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "{{ kisi.ad }} için Şarkı Sözü Ekle"
+msgstr "Add Song Lyrics for {{ kisi.ad }}"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:49
+msgid "Albüm Seç"
+msgstr "Select Album"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:51
+msgid "Bir albüm seçin"
+msgstr "Choose an album"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:58
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkı Adı"
+msgstr "Song Title"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:66
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Tür (İsteğe Bağlı)"
+msgstr "Genre (Optional)"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:70
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Şarkı Linki (İsteğe Bağlı)"
+msgstr "Song Link (Optional)"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:74
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Ekle"
+msgstr "Add Song"
+
 #: .\main\templates\main\sarki\sarki_liste.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -708,12 +804,6 @@ msgstr "Search by song title or lyrics..."
 #: .\main\templates\main\sozluk\sozluk.html:53
 msgid "Tüm Türler"
 msgstr "All Genres"
-
-#: .\main\templates\main\sarki\sarki_sozleri.html:30
-#, fuzzy
-#| msgid "Şarkı Sözleri"
-msgid "Şarkı Sözü Ekle"
-msgstr "Add Song Lyrics"
 
 #: .\main\templates\main\sarki\sarki_sozleri.html:33
 #: .\main\templates\main\sozluk\sozluk.html:77
