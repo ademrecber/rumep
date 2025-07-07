@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 20:18+0300\n"
+"POT-Creation-Date: 2025-07-07 23:08+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -672,6 +672,28 @@ msgstr "Ev bikarhêner hêj şîrove nekiriye an jî şîrove veşartî ne."
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "Ev bikarhêner hêj nirxandin nekiriye an jî nirxandin veşartî ne."
 
+#: .\main\templates\main\sarki\sarki_liste.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - {{ album.ad }}"
+msgstr "Gotinên Stranan - {{ album.ad }}"
+
+#: .\main\templates\main\sarki\sarki_liste.html:7
+msgid "{{ album.ad }} Şarkıları"
+msgstr "Stranên {{ album.ad }}"
+
+#: .\main\templates\main\sarki\sarki_liste.html:10
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkılar"
+msgstr "Stran"
+
+#: .\main\templates\main\sarki\sarki_liste.html:20
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz şarkı eklenmemiş."
+msgstr "Hêj stran nehatine zêdekirin."
+
 #: .\main\templates\main\sarki\sarki_sozleri.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -706,7 +728,8 @@ msgstr "{{ album_sayisi }} albûm, {{ sarki_sayisi }} stran"
 #, fuzzy
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı."
-msgstr "Kesek ku gotinên stranê bi tîpa {{ harf|upper }} dest pê dike nehat dîtin."
+msgstr ""
+"Kesek ku gotinên stranê bi tîpa {{ harf|upper }} dest pê dike nehat dîtin."
 
 # # search.html çevirileri
 #: .\main\templates\main\search.html:6

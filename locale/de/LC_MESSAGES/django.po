@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 20:18+0300\n"
+"POT-Creation-Date: 2025-07-07 23:09+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -681,6 +681,28 @@ msgstr ""
 "Dieser Benutzer hat noch keine Bewertungen gemacht oder die Bewertungen sind "
 "ausgeblendet."
 
+#: .\main\templates\main\sarki\sarki_liste.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - {{ album.ad }}"
+msgstr "Songtexte - {{ album.ad }}"
+
+#: .\main\templates\main\sarki\sarki_liste.html:7
+msgid "{{ album.ad }} Şarkıları"
+msgstr "{{ album.ad }} Songs"
+
+#: .\main\templates\main\sarki\sarki_liste.html:10
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkılar"
+msgstr "Songs"
+
+#: .\main\templates\main\sarki\sarki_liste.html:20
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz şarkı eklenmemiş."
+msgstr "Noch kein Song hinzugefügt."
+
 #: .\main\templates\main\sarki\sarki_sozleri.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -715,7 +737,9 @@ msgstr "{{ album_sayisi }} Alben, {{ sarki_sayisi }} Songs"
 #, fuzzy
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı."
-msgstr "Keine Person mit Songtexten gefunden, die mit dem Buchstaben {{ harf|upper }} beginnen."
+msgstr ""
+"Keine Person mit Songtexten gefunden, die mit dem Buchstaben {{ harf|"
+"upper }} beginnen."
 
 #: .\main\templates\main\search.html:6
 msgid "için Sonuçlar"
