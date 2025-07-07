@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:16+0300\n"
+"POT-Creation-Date: 2025-07-07 23:24+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -58,6 +58,8 @@ msgid "Kişiler"
 msgstr "Kes"
 
 #: .\main\templates\main\base.html:138
+#: .\main\templates\main\sarki\sarki_detay.html:12
+#: .\main\templates\main\sarki\sarki_detay.html:166
 #: .\main\templates\main\sarki\sarki_ekle.html:62
 #: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
@@ -101,6 +103,8 @@ msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sarki\sarki_detay.html:32
+#: .\main\templates\main\sarki\sarki_detay.html:64
 #: .\main\templates\main\sozluk\sozluk_harf.html:30
 #: .\main\templates\main\sozluk\sozluk_kelime.html:20
 #: .\main\templates\main\sozluk\sozluk_kelime.html:57
@@ -402,6 +406,10 @@ msgstr "Nirxandinê Jê Bibe"
 
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
 #: .\main\templates\main\sozluk\sozluk.html:119
 #: .\main\templates\main\sozluk\sozluk_harf.html:51
 #: .\main\templates\main\sozluk\sozluk_kelime.html:75
@@ -560,6 +568,8 @@ msgstr "Twitter (Bijarte)"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sarki\sarki_detay.html:118
+#: .\main\templates\main\sarki\sarki_detay.html:185
 #: .\main\templates\main\sozluk\sozluk.html:161
 #: .\main\templates\main\sozluk\sozluk_harf.html:65
 #: .\main\templates\main\sozluk\sozluk_kelime.html:99
@@ -673,6 +683,162 @@ msgstr "Ev bikarhêner hêj şîrove nekiriye an jî şîrove veşartî ne."
 msgid "Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli."
 msgstr "Ev bikarhêner hêj nirxandin nekiriye an jî nirxandin veşartî ne."
 
+#: .\main\templates\main\sarki\sarki_detay.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - {{ sarki.ad }}"
+msgstr "Gotinên Stranan - {{ sarki.ad }}"
+
+#: .\main\templates\main\sarki\sarki_detay.html:13
+#, fuzzy
+#| msgid "Albüm Adı"
+msgid "Albüm"
+msgstr "Albûm"
+
+#: .\main\templates\main\sarki\sarki_detay.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Sererast Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:26
+#: .\main\templates\main\sarki\sarki_detay.html:130
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Albüm Değiştir"
+msgstr "Albûmê Biguherîne"
+
+#: .\main\templates\main\sarki\sarki_detay.html:39
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkıyı Dinle"
+msgstr "Stranê Guhdarî Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:48
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Hûrguliyên Zêde"
+
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sarki\sarki_detay.html:84
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Hûrguliyê Zêde Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Zêdekar"
+
+#: .\main\templates\main\sarki\sarki_detay.html:72
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Hêj hûrguliyên zêde nehatine zêdekirin."
+
+#: .\main\templates\main\sarki\sarki_detay.html:92
+#: .\main\templates\main\sarki\sarki_detay.html:115
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Hûrgilî"
+
+#: .\main\templates\main\sarki\sarki_detay.html:95
+#, fuzzy
+#| msgid "Ekleyen"
+msgid "Ekle"
+msgstr "Zêde Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:107
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Hûrguliyê Sererast Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:138
+#, fuzzy
+#| msgid "Albüm Seç"
+msgid "Yeni Albüm Seç"
+msgstr "Albûma Nû Hilbijêre"
+
+#: .\main\templates\main\sarki\sarki_detay.html:143
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Değiştir"
+msgstr "Biguherîne"
+
+#: .\main\templates\main\sarki\sarki_detay.html:155
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Düzenle"
+msgstr "Stranê Sererast Bike"
+
+#: .\main\templates\main\sarki\sarki_detay.html:162
+#: .\main\templates\main\sarki\sarki_ekle.html:58
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkı Adı"
+msgstr "Navê Stranê"
+
+#: .\main\templates\main\sarki\sarki_detay.html:170
+#: .\main\templates\main\sarki\sarki_ekle.html:70
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Şarkı Linki (İsteğe Bağlı)"
+msgstr "Girêdana Stranê (Bijarte)"
+
+#: .\main\templates\main\sarki\sarki_detay.html:174
+#: .\main\templates\main\sarki\sarki_ekle.html:66
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Tür (İsteğe Bağlı)"
+msgstr "Cure (Bijarte)"
+
+#: .\main\templates\main\sarki\sarki_detay.html:176
+#, fuzzy
+#| msgid "Seçiniz"
+msgid "Tür Seçiniz"
+msgstr "Cure Hilbijêre"
+
+#: .\main\templates\main\sarki\sarki_detay.html:177
+msgid "Pop"
+msgstr "Pop"
+
+#: .\main\templates\main\sarki\sarki_detay.html:178
+msgid "Klasik"
+msgstr "Klasîk"
+
+#: .\main\templates\main\sarki\sarki_detay.html:179
+msgid "Arabesk"
+msgstr "Arabesk"
+
+#: .\main\templates\main\sarki\sarki_detay.html:180
+msgid "Dengbêj"
+msgstr "Dengbêj"
+
+#: .\main\templates\main\sarki\sarki_detay.html:181
+msgid "Halk Müziği"
+msgstr "Muzîka Gelêrî"
+
+#: .\main\templates\main\sarki\sarki_detay.html:182
+msgid "Serbest"
+msgstr "Azad"
+
 #: .\main\templates\main\sarki\sarki_ekle.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -743,24 +909,6 @@ msgstr "Albûmê Hilbijêre"
 #: .\main\templates\main\sarki\sarki_ekle.html:51
 msgid "Bir albüm seçin"
 msgstr "Albûmekê hilbijêre"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:58
-#, fuzzy
-#| msgid "Katkılar"
-msgid "Şarkı Adı"
-msgstr "Navê Stranê"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:66
-#, fuzzy
-#| msgid "Link (isteğe bağlı)"
-msgid "Tür (İsteğe Bağlı)"
-msgstr "Cure (Bijarte)"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:70
-#, fuzzy
-#| msgid "Link (isteğe bağlı)"
-msgid "Şarkı Linki (İsteğe Bağlı)"
-msgstr "Girêdana Stranê (Bijarte)"
 
 #: .\main\templates\main\sarki\sarki_ekle.html:74
 #, fuzzy
@@ -951,14 +1099,6 @@ msgstr "Peyv"
 msgid "Lütfen bir kelime girin."
 msgstr "Ji kerema xwe peyvekê têkeve."
 
-#: .\main\templates\main\sozluk\sozluk.html:137
-#: .\main\templates\main\sozluk\sozluk_harf.html:61
-#: .\main\templates\main\sozluk\sozluk_kelime.html:13
-#: .\main\templates\main\sozluk\sozluk_kelime.html:85
-#: .\main\templates\main\sozluk\sozluk_kelime.html:118
-msgid "Detay"
-msgstr "Hûrgilî"
-
 #: .\main\templates\main\sozluk\sozluk.html:144
 msgid "Lütfen kelime detayını girin."
 msgstr "Ji kerema xwe hûrguliyên peyvê têkeve."
@@ -980,14 +1120,6 @@ msgstr "Hilbijêre"
 msgid "{{ harf|upper }} Harfi - Kürtçe Sözlük"
 msgstr "Ferhenga Kurdî"
 
-#: .\main\templates\main\sozluk\sozluk_harf.html:27
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Sererast Bike"
-
 #: .\main\templates\main\sozluk\sozluk_harf.html:38
 #, fuzzy
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
@@ -1000,47 +1132,17 @@ msgstr "Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin"
 msgid "{{ kelime.kelime }} - Kürtçe Sözlük"
 msgstr "Ferhenga Kurdî"
 
-#: .\main\templates\main\sozluk\sozluk_kelime.html:15
-#: .\main\templates\main\sozluk\sozluk_kelime.html:52
-msgid "Ekleyen"
-msgstr "Zêdekar"
-
 #: .\main\templates\main\sozluk\sozluk_kelime.html:16
 #, fuzzy
 #| msgid "Silinme tarihi"
 msgid "Eklenme Tarihi"
 msgstr "Dîroka Zêdekirinê"
 
-#: .\main\templates\main\sozluk\sozluk_kelime.html:29
-#: .\main\templates\main\sozluk\sozluk_kelime.html:37
-#, fuzzy
-#| msgid "Detay"
-msgid "Detay Ekle"
-msgstr "Hûrguliyê Zêde Bike"
-
 #: .\main\templates\main\sozluk\sozluk_kelime.html:31
 #, fuzzy
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kelimenize detay yazamazsınız."
 msgstr "Hûn nikarin hûrguliyê li peyva xwe zêde bikin."
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:46
-#, fuzzy
-#| msgid "Detay"
-msgid "Ek Detaylar"
-msgstr "Hûrguliyên Zêde"
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:63
-#, fuzzy
-#| msgid "Henüz yer işareti eklemediniz."
-msgid "Henüz ek detay eklenmemiş."
-msgstr "Hêj hûrguliyên zêde nehatine zêdekirin."
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:111
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Detay Düzenle"
-msgstr "Hûrguliyê Sererast Bike"
 
 # tabs.html çevirileri
 #: .\main\templates\main\tabs.html:12

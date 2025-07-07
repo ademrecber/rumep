@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:16+0300\n"
+"POT-Creation-Date: 2025-07-07 23:24+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -59,6 +59,8 @@ msgid "Kişiler"
 msgstr "Personen"
 
 #: .\main\templates\main\base.html:138
+#: .\main\templates\main\sarki\sarki_detay.html:12
+#: .\main\templates\main\sarki\sarki_detay.html:166
 #: .\main\templates\main\sarki\sarki_ekle.html:62
 #: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
@@ -102,6 +104,8 @@ msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sarki\sarki_detay.html:32
+#: .\main\templates\main\sarki\sarki_detay.html:64
 #: .\main\templates\main\sozluk\sozluk_harf.html:30
 #: .\main\templates\main\sozluk\sozluk_kelime.html:20
 #: .\main\templates\main\sozluk\sozluk_kelime.html:57
@@ -405,6 +409,10 @@ msgstr "Bewertung löschen"
 
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
 #: .\main\templates\main\sozluk\sozluk.html:119
 #: .\main\templates\main\sozluk\sozluk_harf.html:51
 #: .\main\templates\main\sozluk\sozluk_kelime.html:75
@@ -563,6 +571,8 @@ msgstr "Twitter (Optional)"
 
 #: .\main\templates\main\profile.html:229
 #: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sarki\sarki_detay.html:118
+#: .\main\templates\main\sarki\sarki_detay.html:185
 #: .\main\templates\main\sozluk\sozluk.html:161
 #: .\main\templates\main\sozluk\sozluk_harf.html:65
 #: .\main\templates\main\sozluk\sozluk_kelime.html:99
@@ -682,6 +692,162 @@ msgstr ""
 "Dieser Benutzer hat noch keine Bewertungen gemacht oder die Bewertungen sind "
 "ausgeblendet."
 
+#: .\main\templates\main\sarki\sarki_detay.html:4
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözleri - {{ sarki.ad }}"
+msgstr "Songtexte - {{ sarki.ad }}"
+
+#: .\main\templates\main\sarki\sarki_detay.html:13
+#, fuzzy
+#| msgid "Albüm Adı"
+msgid "Albüm"
+msgstr "Album"
+
+#: .\main\templates\main\sarki\sarki_detay.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Bearbeiten"
+
+#: .\main\templates\main\sarki\sarki_detay.html:26
+#: .\main\templates\main\sarki\sarki_detay.html:130
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Albüm Değiştir"
+msgstr "Album ändern"
+
+#: .\main\templates\main\sarki\sarki_detay.html:39
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkıyı Dinle"
+msgstr "Song anhören"
+
+#: .\main\templates\main\sarki\sarki_detay.html:48
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Zusätzliche Details"
+
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sarki\sarki_detay.html:84
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Details hinzufügen"
+
+#: .\main\templates\main\sarki\sarki_detay.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Hinzugefügt von"
+
+#: .\main\templates\main\sarki\sarki_detay.html:72
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Noch keine zusätzlichen Details hinzugefügt."
+
+#: .\main\templates\main\sarki\sarki_detay.html:92
+#: .\main\templates\main\sarki\sarki_detay.html:115
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Details"
+
+#: .\main\templates\main\sarki\sarki_detay.html:95
+#, fuzzy
+#| msgid "Ekleyen"
+msgid "Ekle"
+msgstr "Hinzufügen"
+
+#: .\main\templates\main\sarki\sarki_detay.html:107
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Details bearbeiten"
+
+#: .\main\templates\main\sarki\sarki_detay.html:138
+#, fuzzy
+#| msgid "Albüm Seç"
+msgid "Yeni Albüm Seç"
+msgstr "Neues Album auswählen"
+
+#: .\main\templates\main\sarki\sarki_detay.html:143
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Değiştir"
+msgstr "Ändern"
+
+#: .\main\templates\main\sarki\sarki_detay.html:155
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Düzenle"
+msgstr "Song bearbeiten"
+
+#: .\main\templates\main\sarki\sarki_detay.html:162
+#: .\main\templates\main\sarki\sarki_ekle.html:58
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkı Adı"
+msgstr "Songtitel"
+
+#: .\main\templates\main\sarki\sarki_detay.html:170
+#: .\main\templates\main\sarki\sarki_ekle.html:70
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Şarkı Linki (İsteğe Bağlı)"
+msgstr "Songlink (optional)"
+
+#: .\main\templates\main\sarki\sarki_detay.html:174
+#: .\main\templates\main\sarki\sarki_ekle.html:66
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Tür (İsteğe Bağlı)"
+msgstr "Genre (optional)"
+
+#: .\main\templates\main\sarki\sarki_detay.html:176
+#, fuzzy
+#| msgid "Seçiniz"
+msgid "Tür Seçiniz"
+msgstr "Genre auswählen"
+
+#: .\main\templates\main\sarki\sarki_detay.html:177
+msgid "Pop"
+msgstr "Pop"
+
+#: .\main\templates\main\sarki\sarki_detay.html:178
+msgid "Klasik"
+msgstr "Klassisch"
+
+#: .\main\templates\main\sarki\sarki_detay.html:179
+msgid "Arabesk"
+msgstr "Arabesk"
+
+#: .\main\templates\main\sarki\sarki_detay.html:180
+msgid "Dengbêj"
+msgstr "Dengbêj"
+
+#: .\main\templates\main\sarki\sarki_detay.html:181
+msgid "Halk Müziği"
+msgstr "Volksmusik"
+
+#: .\main\templates\main\sarki\sarki_detay.html:182
+msgid "Serbest"
+msgstr "Frei"
+
 #: .\main\templates\main\sarki\sarki_ekle.html:4
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -752,24 +918,6 @@ msgstr "Album auswählen"
 #: .\main\templates\main\sarki\sarki_ekle.html:51
 msgid "Bir albüm seçin"
 msgstr "Wählen Sie ein Album"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:58
-#, fuzzy
-#| msgid "Katkılar"
-msgid "Şarkı Adı"
-msgstr "Songtitel"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:66
-#, fuzzy
-#| msgid "Link (isteğe bağlı)"
-msgid "Tür (İsteğe Bağlı)"
-msgstr "Genre (optional)"
-
-#: .\main\templates\main\sarki\sarki_ekle.html:70
-#, fuzzy
-#| msgid "Link (isteğe bağlı)"
-msgid "Şarkı Linki (İsteğe Bağlı)"
-msgstr "Songlink (optional)"
 
 #: .\main\templates\main\sarki\sarki_ekle.html:74
 #, fuzzy
@@ -960,14 +1108,6 @@ msgstr "Wort"
 msgid "Lütfen bir kelime girin."
 msgstr "Bitte geben Sie ein Wort ein."
 
-#: .\main\templates\main\sozluk\sozluk.html:137
-#: .\main\templates\main\sozluk\sozluk_harf.html:61
-#: .\main\templates\main\sozluk\sozluk_kelime.html:13
-#: .\main\templates\main\sozluk\sozluk_kelime.html:85
-#: .\main\templates\main\sozluk\sozluk_kelime.html:118
-msgid "Detay"
-msgstr "Details"
-
 #: .\main\templates\main\sozluk\sozluk.html:144
 msgid "Lütfen kelime detayını girin."
 msgstr "Bitte geben Sie die Details des Wortes ein."
@@ -989,14 +1129,6 @@ msgstr "Auswählen"
 msgid "{{ harf|upper }} Harfi - Kürtçe Sözlük"
 msgstr "Kurdisches Wörterbuch"
 
-#: .\main\templates\main\sozluk\sozluk_harf.html:27
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Bearbeiten"
-
 #: .\main\templates\main\sozluk\sozluk_harf.html:38
 #, fuzzy
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
@@ -1009,47 +1141,17 @@ msgstr "Wörter, die mit dem Buchstaben {{ harf|upper }} beginnen"
 msgid "{{ kelime.kelime }} - Kürtçe Sözlük"
 msgstr "Kurdisches Wörterbuch"
 
-#: .\main\templates\main\sozluk\sozluk_kelime.html:15
-#: .\main\templates\main\sozluk\sozluk_kelime.html:52
-msgid "Ekleyen"
-msgstr "Hinzugefügt von"
-
 #: .\main\templates\main\sozluk\sozluk_kelime.html:16
 #, fuzzy
 #| msgid "Silinme tarihi"
 msgid "Eklenme Tarihi"
 msgstr "Hinzufügedatum"
 
-#: .\main\templates\main\sozluk\sozluk_kelime.html:29
-#: .\main\templates\main\sozluk\sozluk_kelime.html:37
-#, fuzzy
-#| msgid "Detay"
-msgid "Detay Ekle"
-msgstr "Details hinzufügen"
-
 #: .\main\templates\main\sozluk\sozluk_kelime.html:31
 #, fuzzy
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kelimenize detay yazamazsınız."
 msgstr "Sie können keine Details zu Ihrem eigenen Wort hinzufügen."
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:46
-#, fuzzy
-#| msgid "Detay"
-msgid "Ek Detaylar"
-msgstr "Zusätzliche Details"
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:63
-#, fuzzy
-#| msgid "Henüz yer işareti eklemediniz."
-msgid "Henüz ek detay eklenmemiş."
-msgstr "Noch keine zusätzlichen Details hinzugefügt."
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:111
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Detay Düzenle"
-msgstr "Details bearbeiten"
 
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
