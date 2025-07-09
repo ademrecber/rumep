@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:39+0300\n"
+"POT-Creation-Date: 2025-07-07 23:47+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -410,6 +410,7 @@ msgstr "Bewertung löschen"
 
 #: .\main\templates\main\popular_critiques.html:137
 #: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
 #: .\main\templates\main\sarki\sarki_detay.html:85
 #: .\main\templates\main\sarki\sarki_detay.html:108
 #: .\main\templates\main\sarki\sarki_detay.html:131
@@ -693,6 +694,28 @@ msgstr ""
 "Dieser Benutzer hat noch keine Bewertungen gemacht oder die Bewertungen sind "
 "ausgeblendet."
 
+#: .\main\templates\main\sarki\album_degistir_form.html:6
+#: .\main\templates\main\sarki\sarki_detay.html:26
+#: .\main\templates\main\sarki\sarki_detay.html:130
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Albüm Değiştir"
+msgstr "Album ändern"
+
+#: .\main\templates\main\sarki\album_degistir_form.html:14
+#: .\main\templates\main\sarki\sarki_detay.html:138
+#, fuzzy
+#| msgid "Albüm Seç"
+msgid "Yeni Albüm Seç"
+msgstr "Neues Album auswählen"
+
+#: .\main\templates\main\sarki\album_degistir_form.html:19
+#: .\main\templates\main\sarki\sarki_detay.html:143
+#, fuzzy
+#| msgid "Dil Değiştir"
+msgid "Değiştir"
+msgstr "Ändern"
+
 #: .\main\templates\main\sarki\album_ekle.html:4
 msgid "Albüm Ekle - {{ kisi.ad }}"
 msgstr "Album hinzufügen - {{ kisi.ad }}"
@@ -765,13 +788,6 @@ msgstr "Album"
 msgid "Düzenle"
 msgstr "Bearbeiten"
 
-#: .\main\templates\main\sarki\sarki_detay.html:26
-#: .\main\templates\main\sarki\sarki_detay.html:130
-#, fuzzy
-#| msgid "Dil Değiştir"
-msgid "Albüm Değiştir"
-msgstr "Album ändern"
-
 #: .\main\templates\main\sarki\sarki_detay.html:39
 #, fuzzy
 #| msgid "Şarkı Sözleri"
@@ -829,18 +845,6 @@ msgstr "Hinzufügen"
 #| msgid "Kelime Düzenle"
 msgid "Detay Düzenle"
 msgstr "Details bearbeiten"
-
-#: .\main\templates\main\sarki\sarki_detay.html:138
-#, fuzzy
-#| msgid "Albüm Seç"
-msgid "Yeni Albüm Seç"
-msgstr "Neues Album auswählen"
-
-#: .\main\templates\main\sarki\sarki_detay.html:143
-#, fuzzy
-#| msgid "Dil Değiştir"
-msgid "Değiştir"
-msgstr "Ändern"
 
 #: .\main\templates\main\sarki\sarki_detay.html:155
 #, fuzzy

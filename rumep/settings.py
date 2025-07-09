@@ -113,7 +113,7 @@ LANGUAGES = [
     ('fr', 'Français'),
 ]
 
-LANGUAGE_CODE = 'ku'
+LANGUAGE_CODE = 'tr'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
