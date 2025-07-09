@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:47+0300\n"
+"POT-Creation-Date: 2025-07-09 23:32+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -344,17 +344,24 @@ msgstr "Vebijarka Ziman"
 msgid "Değişiklikleri Kaydet"
 msgstr "Guhertinan Tomar Bike"
 
+#: .\main\templates\main\popular\_tabs.html:4
 #: .\main\templates\main\popular_critiques.html:11
 msgid "Bugün"
 msgstr "Îro"
 
+#: .\main\templates\main\popular\_tabs.html:7
 #: .\main\templates\main\popular_critiques.html:14
 msgid "Dün"
 msgstr "Duh"
 
+#: .\main\templates\main\popular\_tabs.html:10
 #: .\main\templates\main\popular_critiques.html:17
 msgid "Haftalık"
 msgstr "Hefteyî"
+
+#: .\main\templates\main\popular\_tabs.html:13
+msgid "Aylık"
+msgstr "Mehane"
 
 #: .\main\templates\main\popular_critiques.html:20
 msgid "Tüm Zamanlar"

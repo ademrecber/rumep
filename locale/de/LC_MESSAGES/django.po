@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 23:47+0300\n"
+"POT-Creation-Date: 2025-07-09 23:32+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -347,17 +347,24 @@ msgstr "Sprachpräferenz"
 msgid "Değişiklikleri Kaydet"
 msgstr "Änderungen speichern"
 
+#: .\main\templates\main\popular\_tabs.html:4
 #: .\main\templates\main\popular_critiques.html:11
 msgid "Bugün"
 msgstr "Heute"
 
+#: .\main\templates\main\popular\_tabs.html:7
 #: .\main\templates\main\popular_critiques.html:14
 msgid "Dün"
 msgstr "Gestern"
 
+#: .\main\templates\main\popular\_tabs.html:10
 #: .\main\templates\main\popular_critiques.html:17
 msgid "Haftalık"
 msgstr "Wöchentlich"
+
+#: .\main\templates\main\popular\_tabs.html:13
+msgid "Aylık"
+msgstr "Monatlich"
 
 #: .\main\templates\main\popular_critiques.html:20
 msgid "Tüm Zamanlar"
