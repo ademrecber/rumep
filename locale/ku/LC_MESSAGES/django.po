@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 00:06+0300\n"
+"POT-Creation-Date: 2025-07-10 00:11+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -100,6 +100,7 @@ msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
 
 #: .\main\templates\main\comment_tree.html:21
 #: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular\popular.html:45
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
@@ -114,6 +115,8 @@ msgstr "Jê Bibe"
 
 #: .\main\templates\main\comment_tree.html:31
 #: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular\popular.html:17
+#: .\main\templates\main\popular\popular.html:69
 #: .\main\templates\main\popular_critiques.html:70
 msgid "Devamını gör"
 msgstr "Zêdetir Bibîne"
@@ -129,6 +132,8 @@ msgid "Yanıtla"
 msgstr "Bersiv Bide"
 
 #: .\main\templates\main\comment_tree.html:52
+#: .\main\templates\main\popular\popular.html:16
+#: .\main\templates\main\popular\popular.html:105
 msgid "Skor"
 msgstr "Pûan"
 
@@ -229,18 +234,23 @@ msgid "Hayır"
 msgstr "Na"
 
 #: .\main\templates\main\home.html:65
+#: .\main\templates\main\popular\popular.html:120
 #: .\main\templates\main\popular_critiques.html:147
 #: .\main\templates\main\post_detail.html:209
 msgid "Bilgi"
 msgstr "Agahî"
 
 #: .\main\templates\main\home.html:69
+#: .\main\templates\main\popular\popular.html:124
 #: .\main\templates\main\popular_critiques.html:151
 #: .\main\templates\main\post_detail.html:213
 msgid "Bağlantı kopyalandı!"
 msgstr "Girêdan hat kopîkirin!"
 
-#: .\main\templates\main\home.html:89 .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\home.html:89
+#: .\main\templates\main\popular\popular.html:8
+#: .\main\templates\main\popular\popular.html:42
+#: .\main\templates\main\post_detail.html:23
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
@@ -254,17 +264,23 @@ msgid "Yer işaretinden kaldırmak"
 msgstr "Ji nîşaneyên cihê rake"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\popular\popular.html:11
+#: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
 #: .\main\templates\main\profile.html:171
 msgid "Yer İşaretinden Kaldır"
 msgstr "Ji Nîşaneyên Cihê Rake"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\popular\popular.html:12
+#: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
 msgid "Yer İşaretine Ekle"
 msgstr "Zêde Bike ji Nîşaneyên Cihê"
 
 #: .\main\templates\main\home.html:107
+#: .\main\templates\main\popular\popular.html:13
+#: .\main\templates\main\popular\popular.html:60
 #: .\main\templates\main\popular_critiques.html:44
 #: .\main\templates\main\popular_critiques.html:55
 #: .\main\templates\main\popular_critiques.html:134
@@ -273,12 +289,16 @@ msgid "Bağlantıyı Kopyala"
 msgstr "Girêdanê Kopî Bike"
 
 #: .\main\templates\main\home.html:130
+#: .\main\templates\main\popular\popular.html:14
+#: .\main\templates\main\popular\popular.html:82
 #: .\main\templates\main\post_detail.html:57
 #: .\main\templates\main\profile.html:45
 msgid "Beğeni"
 msgstr "Hezkirin"
 
 #: .\main\templates\main\home.html:131
+#: .\main\templates\main\popular\popular.html:15
+#: .\main\templates\main\popular\popular.html:83
 #: .\main\templates\main\post_detail.html:58
 #: .\main\templates\main\profile.html:48
 #: .\main\templates\main\profile_detail.html:31
@@ -290,12 +310,14 @@ msgid "Henüz eleştiri yok."
 msgstr "Hêj nirxandin tune."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\popular\popular.html:113
 #: .\main\templates\main\sozluk\sozluk.html:104
 #: .\main\templates\main\sozluk\sozluk_harf.html:42
 msgid "Yükleniyor..."
 msgstr "Tê barkirin..."
 
 #: .\main\templates\main\home.html:161
+#: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Zêdetir Bar Bike"
 
@@ -363,6 +385,74 @@ msgstr "Hefteyî"
 msgid "Aylık"
 msgstr "Mehane"
 
+#: .\main\templates\main\popular\popular.html:5
+#: .\main\templates\main\popular\popular.html:24
+msgid "{{ period|title }} En Popüler"
+msgstr "{{ period|title }} Herî Populer"
+
+#: .\main\templates\main\popular\popular.html:9
+#: .\main\templates\main\popular\popular.html:50
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretine eklemek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo zêdekirina vê nîşaneyê cihê bawer in?"
+
+#: .\main\templates\main\popular\popular.html:10
+#: .\main\templates\main\popular\popular.html:51
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretinden kaldırmak istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo rakirina vê nîşaneyê cihê bawer in?"
+
+#: .\main\templates\main\popular\popular.html:20
+#, fuzzy
+#| msgid "Popüler"
+msgid "Bugün En Popüler"
+msgstr "Îro Herî Populer"
+
+#: .\main\templates\main\popular\popular.html:21
+#, fuzzy
+#| msgid "Popüler"
+msgid "Dün En Popüler"
+msgstr "Duh Herî Populer"
+
+#: .\main\templates\main\popular\popular.html:22
+#, fuzzy
+#| msgid "Haftalık"
+msgid "Haftalık En Popüler"
+msgstr "Hefteyî Herî Populer"
+
+#: .\main\templates\main\popular\popular.html:23
+#, fuzzy
+#| msgid "Popüler"
+msgid "Aylık En Popüler"
+msgstr "Mehane Herî Populer"
+
+#: .\main\templates\main\popular\popular.html:110
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz popüler eleştiri yok."
+msgstr "Hêj nirxandinên populer tune."
+
+#: .\main\templates\main\popular\popular.html:115
+msgid "Postlar yüklenirken hata oluştu:"
+msgstr "Di dema barkirina postên de çewtiyek çêbû:"
+
+#: .\main\templates\main\popular\popular.html:121
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
+msgid "Kapat"
+msgstr "Bigire"
+
 #: .\main\templates\main\popular_critiques.html:20
 msgid "Tüm Zamanlar"
 msgstr "Hemû Dem"
@@ -411,20 +501,6 @@ msgstr "Hûrguliyên Nirxandinê"
 #: .\main\templates\main\post_detail.html:150
 msgid "Eleştiriyi Sil"
 msgstr "Nirxandinê Jê Bibe"
-
-#: .\main\templates\main\popular_critiques.html:137
-#: .\main\templates\main\post_detail.html:154
-#: .\main\templates\main\sarki\album_degistir_form.html:7
-#: .\main\templates\main\sarki\sarki_detay.html:85
-#: .\main\templates\main\sarki\sarki_detay.html:108
-#: .\main\templates\main\sarki\sarki_detay.html:131
-#: .\main\templates\main\sarki\sarki_detay.html:156
-#: .\main\templates\main\sozluk\sozluk.html:119
-#: .\main\templates\main\sozluk\sozluk_harf.html:51
-#: .\main\templates\main\sozluk\sozluk_kelime.html:75
-#: .\main\templates\main\sozluk\sozluk_kelime.html:112
-msgid "Kapat"
-msgstr "Bigire"
 
 #: .\main\templates\main\popular_critiques.html:161
 msgid "Popüler değerlendirmeler sayfası yüklendi"
@@ -1192,8 +1268,3 @@ msgstr "Hûn nikarin hûrguliyê li peyva xwe zêde bikin."
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
 msgstr "Beşdarî"
-
-#, fuzzy
-#~| msgid "Henüz eleştiri yok."
-#~ msgid "Henüz popüler eleştiri yok."
-#~ msgstr "Hêj nirxandin tune."

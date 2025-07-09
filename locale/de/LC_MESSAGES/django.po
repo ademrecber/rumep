@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 00:06+0300\n"
+"POT-Creation-Date: 2025-07-10 00:12+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -101,6 +101,7 @@ msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 
 #: .\main\templates\main\comment_tree.html:21
 #: .\main\templates\main\home.html:92
+#: .\main\templates\main\popular\popular.html:45
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
 #: .\main\templates\main\post_detail.html:26
@@ -115,6 +116,8 @@ msgstr "Löschen"
 
 #: .\main\templates\main\comment_tree.html:31
 #: .\main\templates\main\home.html:116
+#: .\main\templates\main\popular\popular.html:17
+#: .\main\templates\main\popular\popular.html:69
 #: .\main\templates\main\popular_critiques.html:70
 msgid "Devamını gör"
 msgstr "Mehr anzeigen"
@@ -130,6 +133,8 @@ msgid "Yanıtla"
 msgstr "Antworten"
 
 #: .\main\templates\main\comment_tree.html:52
+#: .\main\templates\main\popular\popular.html:16
+#: .\main\templates\main\popular\popular.html:105
 msgid "Skor"
 msgstr "Punktzahl"
 
@@ -231,18 +236,23 @@ msgid "Hayır"
 msgstr "Nein"
 
 #: .\main\templates\main\home.html:65
+#: .\main\templates\main\popular\popular.html:120
 #: .\main\templates\main\popular_critiques.html:147
 #: .\main\templates\main\post_detail.html:209
 msgid "Bilgi"
 msgstr "Information"
 
 #: .\main\templates\main\home.html:69
+#: .\main\templates\main\popular\popular.html:124
 #: .\main\templates\main\popular_critiques.html:151
 #: .\main\templates\main\post_detail.html:213
 msgid "Bağlantı kopyalandı!"
 msgstr "Link kopiert!"
 
-#: .\main\templates\main\home.html:89 .\main\templates\main\post_detail.html:23
+#: .\main\templates\main\home.html:89
+#: .\main\templates\main\popular\popular.html:8
+#: .\main\templates\main\popular\popular.html:42
+#: .\main\templates\main\post_detail.html:23
 #: .\main\templates\main\profile.html:69
 msgid "Bu postu silmek istediğinizden emin misiniz?"
 msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
@@ -256,17 +266,23 @@ msgid "Yer işaretinden kaldırmak"
 msgstr "Aus Lesezeichen entfernen"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\popular\popular.html:11
+#: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
 #: .\main\templates\main\profile.html:171
 msgid "Yer İşaretinden Kaldır"
 msgstr "Aus Lesezeichen entfernen"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\popular\popular.html:12
+#: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
 msgid "Yer İşaretine Ekle"
 msgstr "Zu Lesezeichen hinzufügen"
 
 #: .\main\templates\main\home.html:107
+#: .\main\templates\main\popular\popular.html:13
+#: .\main\templates\main\popular\popular.html:60
 #: .\main\templates\main\popular_critiques.html:44
 #: .\main\templates\main\popular_critiques.html:55
 #: .\main\templates\main\popular_critiques.html:134
@@ -275,12 +291,16 @@ msgid "Bağlantıyı Kopyala"
 msgstr "Link kopieren"
 
 #: .\main\templates\main\home.html:130
+#: .\main\templates\main\popular\popular.html:14
+#: .\main\templates\main\popular\popular.html:82
 #: .\main\templates\main\post_detail.html:57
 #: .\main\templates\main\profile.html:45
 msgid "Beğeni"
 msgstr "Gefällt mir"
 
 #: .\main\templates\main\home.html:131
+#: .\main\templates\main\popular\popular.html:15
+#: .\main\templates\main\popular\popular.html:83
 #: .\main\templates\main\post_detail.html:58
 #: .\main\templates\main\profile.html:48
 #: .\main\templates\main\profile_detail.html:31
@@ -292,12 +312,14 @@ msgid "Henüz eleştiri yok."
 msgstr "Noch keine Bewertungen vorhanden."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\popular\popular.html:113
 #: .\main\templates\main\sozluk\sozluk.html:104
 #: .\main\templates\main\sozluk\sozluk_harf.html:42
 msgid "Yükleniyor..."
 msgstr "Wird geladen..."
 
 #: .\main\templates\main\home.html:161
+#: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Mehr laden"
 
@@ -366,6 +388,74 @@ msgstr "Wöchentlich"
 msgid "Aylık"
 msgstr "Monatlich"
 
+#: .\main\templates\main\popular\popular.html:5
+#: .\main\templates\main\popular\popular.html:24
+msgid "{{ period|title }} En Popüler"
+msgstr "{{ period|title }} Am populärsten"
+
+#: .\main\templates\main\popular\popular.html:9
+#: .\main\templates\main\popular\popular.html:50
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretine eklemek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen hinzufügen möchten?"
+
+#: .\main\templates\main\popular\popular.html:10
+#: .\main\templates\main\popular\popular.html:51
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretinden kaldırmak istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen entfernen möchten?"
+
+#: .\main\templates\main\popular\popular.html:20
+#, fuzzy
+#| msgid "Popüler"
+msgid "Bugün En Popüler"
+msgstr "Heute am populärsten"
+
+#: .\main\templates\main\popular\popular.html:21
+#, fuzzy
+#| msgid "Popüler"
+msgid "Dün En Popüler"
+msgstr "Gestern am populärsten"
+
+#: .\main\templates\main\popular\popular.html:22
+#, fuzzy
+#| msgid "Haftalık"
+msgid "Haftalık En Popüler"
+msgstr "Wöchentlich am populärsten"
+
+#: .\main\templates\main\popular\popular.html:23
+#, fuzzy
+#| msgid "Popüler"
+msgid "Aylık En Popüler"
+msgstr "Monatlich am populärsten"
+
+#: .\main\templates\main\popular\popular.html:110
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz popüler eleştiri yok."
+msgstr "Noch keine populären Bewertungen vorhanden."
+
+#: .\main\templates\main\popular\popular.html:115
+msgid "Postlar yüklenirken hata oluştu:"
+msgstr "Beim Laden der Beiträge ist ein Fehler aufgetreten:"
+
+#: .\main\templates\main\popular\popular.html:121
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
+msgid "Kapat"
+msgstr "Schließen"
+
 #: .\main\templates\main\popular_critiques.html:20
 msgid "Tüm Zamanlar"
 msgstr "Alle Zeiten"
@@ -414,20 +504,6 @@ msgstr "Bewertungsdetails"
 #: .\main\templates\main\post_detail.html:150
 msgid "Eleştiriyi Sil"
 msgstr "Bewertung löschen"
-
-#: .\main\templates\main\popular_critiques.html:137
-#: .\main\templates\main\post_detail.html:154
-#: .\main\templates\main\sarki\album_degistir_form.html:7
-#: .\main\templates\main\sarki\sarki_detay.html:85
-#: .\main\templates\main\sarki\sarki_detay.html:108
-#: .\main\templates\main\sarki\sarki_detay.html:131
-#: .\main\templates\main\sarki\sarki_detay.html:156
-#: .\main\templates\main\sozluk\sozluk.html:119
-#: .\main\templates\main\sozluk\sozluk_harf.html:51
-#: .\main\templates\main\sozluk\sozluk_kelime.html:75
-#: .\main\templates\main\sozluk\sozluk_kelime.html:112
-msgid "Kapat"
-msgstr "Schließen"
 
 #: .\main\templates\main\popular_critiques.html:161
 msgid "Popüler değerlendirmeler sayfası yüklendi"
@@ -1200,8 +1276,3 @@ msgstr "Sie können keine Details zu Ihrem eigenen Wort hinzufügen."
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
 msgstr "Beiträge"
-
-#, fuzzy
-#~| msgid "Henüz eleştiri yok."
-#~ msgid "Henüz popüler eleştiri yok."
-#~ msgstr "Noch keine Bewertungen vorhanden."
