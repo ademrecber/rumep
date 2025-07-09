@@ -48,6 +48,7 @@ async function loadMorePopularPosts() {
 
         if (data.posts && Array.isArray(data.posts)) {
             const fragment = document.createDocumentFragment();
+            const postList = document.getElementById('post-list');
             data.posts.forEach(post => {
                 const liked = post.liked ? 'liked' : '';
                 const bookmarked = post.bookmarked ? 'bookmarked' : '';
@@ -74,20 +75,20 @@ async function loadMorePopularPosts() {
                                 <ul class="dropdown-menu">
                                     ${isOwner ? `
                                         <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm(postList.dataset.deleteConfirm);">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">${postList.dataset.deleteConfirm}</button>
                                             </form>
                                         </li>
                                     ` : ''}
                                     <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Yer işaretinden kaldırmak' : 'Yer işaretine eklemek'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
+                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? postList.dataset.bookmarkRemove : postList.dataset.bookmarkAdd}');" data-post-id="${post.id}">
                                             <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle'}</button>
+                                            <button type="submit" class="dropdown-item">${bookmarked ? postList.dataset.removeBookmark : postList.dataset.addBookmark}</button>
                                         </form>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Bağlantıyı Kopyala</button>
+                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">${postList.dataset.copyLink}</button>
                                     </li>
                                 </ul>
                             </div>
@@ -96,15 +97,15 @@ async function loadMorePopularPosts() {
                         <div class="post-text">
                             ${processedText.length > 400 || totalLines > 15 ? `
                                 <div class="text-preview"><p>${processedText.substring(0, 100)}</p></div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                <button class="btn btn-link text-primary p-0 show-more-btn">${postList.dataset.showMore}</button>
                                 <div class="full-text d-none"><p>${processedText}</p></div>
                             ` : `<p>${processedText}</p>`}
                         </div>
                         ${post.link ? `<a href="${post.link}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
                         ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
                         <div class="post-meta text-muted mt-2">
-                            <span>Beğeni: ${post.like_count}</span> | 
-                            <span>Yorum: ${post.comment_count}</span> | 
+                            <span>${postList.dataset.like}: ${post.like_count}</span> | 
+                            <span>${postList.dataset.comment}: ${post.comment_count}</span> | 
                             <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
                             <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
                         </div>
@@ -126,7 +127,7 @@ async function loadMorePopularPosts() {
                                 <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
                             </form>
                             <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">Skor: ${post.total_score.toFixed(1)}</span>` : ''}
+                            ${post.total_score ? `<span class="text-muted ms-2">${postList.dataset.score}: ${post.total_score.toFixed(1)}</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -156,7 +157,7 @@ async function loadMorePopularPosts() {
     } catch (error) {
         console.error('Hata:', error);
         if (errorMessage) {
-            errorMessage.textContent = 'Postlar yüklenirken hata oluştu: ' + error.message;
+            errorMessage.textContent = `${errorMessage.dataset.error} ${error.message}`;
             errorMessage.style.display = 'block';
         }
         if (loadMoreBtn) loadMoreBtn.style.display = 'block';
@@ -214,7 +215,7 @@ function initBookmarks() {
                     
                     const button = this.querySelector('.bookmark-btn');
                     if (button) {
-                        button.textContent = data.bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle';
+                        button.textContent = data.bookmarked ? document.getElementById('post-list').dataset.removeBookmark : document.getElementById('post-list').dataset.addBookmark;
                         button.dataset.bookmarked = data.bookmarked ? 'true' : 'false';
                         console.log("Yer işareti butonu güncellendi:", button.textContent, "Bookmarked:", data.bookmarked);
                         if (isBookmarksTab) {
