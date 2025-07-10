@@ -1,32 +1,32 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Kişiler - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Kişiler - Rumep" %}{% endblock %}
 {% block content %}
     <div class="container twitter-container">
-        <h3>Kişiler</h3>
+        <h3>{% trans "Kişiler" %}</h3>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>Kişi Listesi</h5>
-                    <a href="{% url 'kisi_ekle' %}" class="btn btn-primary rounded-pill">Kişi Ekle</a>
+                    <h5>{% trans "Kişi Listesi" %}</h5>
+                    <a href="{% url 'kisi_ekle' %}" class="btn btn-primary rounded-pill">{% trans "Kişi Ekle" %}</a>
                 </div>
                 <div class="d-flex flex-wrap mb-3">
-                    <a href="{% url 'kisi_liste' %}" class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}">Tümü</a>
+                    <a href="{% url 'kisi_liste' %}" class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}">{% trans "Tümü" %}</a>
                     {% for harf in harfler %}
                         <a href="?harf={{ harf }}" class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}">{{ harf|upper }}</a>
                     {% endfor %}
                 </div>
                 <form id="filter-form" class="mb-3">
                     <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Kişi ara..." value="{{ request.GET.q }}">
+                        <input type="text" name="q" class="form-control" placeholder="{% trans "Kişi ara..." %}" value="{{ request.GET.q }}">
                         <select name="kategori" class="form-control select2">
-                            <option value="">Tüm Kategoriler</option>
+                            <option value="">{% trans "Tüm Kategoriler" %}</option>
                             {% for kategori in kategoriler %}
                                 <option value="{{ kategori.slug }}" {% if request.GET.kategori == kategori.slug %}selected{% endif %}>{{ kategori.ad }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" class="btn btn-primary">Filtrele</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Filtrele" %}</button>
                     </div>
                 </form>
                 <div id="kisi-list">
@@ -44,7 +44,8 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="{{ kisi.id }}">Sil</button>
+                                                {% trans "Bu kişiyi silmek istediğinizden emin misiniz?" as delete_kisi_confirm %}
+                                                <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="{{ kisi.id }}" onclick="return confirm('{{ delete_kisi_confirm|escapejs }}');">{% trans "Sil" %}</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -52,10 +53,10 @@
                             </div>
                         </div>
                     {% empty %}
-                        <p class="text-muted">Bu harfle başlayan kişi bulunamadı.</p>
+                        <p class="text-muted">{% trans "Bu harfle başlayan kişi bulunamadı." %}</p>
                     {% endfor %}
                 </div>
-                <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+                <div id="loading" class="text-center mt-3" style="display: none;">{% trans "Yükleniyor..." %}</div>
                 <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
             </div>
         </div>

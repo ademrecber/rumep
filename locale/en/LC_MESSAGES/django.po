@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 21:12+0300\n"
+"POT-Creation-Date: 2025-07-10 21:18+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
@@ -55,6 +55,7 @@ msgid "Sözlük"
 msgstr "Dictionary"
 
 #: .\main\templates\main\base.html:135
+#: .\main\templates\main\kisi\kisi_liste.html:7
 #: .\main\templates\main\sarki\sarki_sozleri.html:29
 msgid "Kişiler"
 msgstr "People"
@@ -102,6 +103,7 @@ msgstr "Are you sure you want to delete this comment?"
 
 #: .\main\templates\main\comment_tree.html:21
 #: .\main\templates\main\home.html:92
+#: .\main\templates\main\kisi\kisi_liste.html:48
 #: .\main\templates\main\partials\popular_post_list.html:21
 #: .\main\templates\main\popular\popular.html:45
 #: .\main\templates\main\popular_critiques.html:40
@@ -319,6 +321,7 @@ msgid "Henüz eleştiri yok."
 msgstr "No reviews yet."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\kisi\kisi_liste.html:59
 #: .\main\templates\main\popular\popular.html:113
 #: .\main\templates\main\sozluk\sozluk.html:104
 #: .\main\templates\main\sozluk\sozluk_harf.html:42
@@ -329,6 +332,56 @@ msgstr "Loading..."
 #: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Load More"
+
+#: .\main\templates\main\kisi\kisi_liste.html:4
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişiler - Rumep"
+msgstr "People - Rumep"
+
+#: .\main\templates\main\kisi\kisi_liste.html:11
+msgid "Kişi Listesi"
+msgstr "People List"
+
+#: .\main\templates\main\kisi\kisi_liste.html:12
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ekle"
+msgstr "Add Person"
+
+#: .\main\templates\main\kisi\kisi_liste.html:15
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "All"
+
+#: .\main\templates\main\kisi\kisi_liste.html:22
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi ara..."
+msgstr "Search person..."
+
+#: .\main\templates\main\kisi\kisi_liste.html:24
+#, fuzzy
+#| msgid "Tüm Kelimeler"
+msgid "Tüm Kategoriler"
+msgstr "All Categories"
+
+#: .\main\templates\main\kisi\kisi_liste.html:29
+msgid "Filtrele"
+msgstr "Filter"
+
+#: .\main\templates\main\kisi\kisi_liste.html:47
+#, fuzzy
+#| msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
+msgid "Bu kişiyi silmek istediğinizden emin misiniz?"
+msgstr "Are you sure you want to delete this person?"
+
+#: .\main\templates\main\kisi\kisi_liste.html:56
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan kişi bulunamadı."
+msgstr "No person found starting with this letter."
 
 #: .\main\templates\main\login.html:9
 msgid "Rumep - Giriş Yap veya Kaydol"
@@ -1087,11 +1140,6 @@ msgstr "Search by song title or lyrics..."
 #: .\main\templates\main\sozluk\sozluk.html:53
 msgid "Tüm Türler"
 msgstr "All Genres"
-
-#: .\main\templates\main\sarki\sarki_sozleri.html:33
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "All"
 
 #: .\main\templates\main\sarki\sarki_sozleri.html:48
 msgid "{{ album_sayisi }} albüm, {{ sarki_sayisi }} şarkı"
