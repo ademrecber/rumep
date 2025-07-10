@@ -1,10 +1,10 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Kişi Ekle - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Kişi Ekle - Rumep" %}{% endblock %}
 {% block content %}
     <div class="container twitter-container">
-        <h3>Kişi Ekle</h3>
+        <h3>{% trans "Kişi Ekle" %}</h3>
         <div class="card mb-3">
             <div class="card-body">
                 <form id="kisi-form" method="post" action="{% url 'kisi_ekle' %}">
@@ -13,26 +13,26 @@
                     {{ form.ad }}
                     {{ form.kategoriler.label_tag }}
                     {{ form.kategoriler }}
-                    <label for="biyografi-editor">Biyografi</label>
+                    <label for="biyografi-editor">{% trans "Biyografi" %}</label>
                     <div id="biyografi-editor" class="quill-editor"></div>
                     <input type="hidden" name="biyografi" id="biyografi-hidden" required>
                     <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
                     <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
-                    <button type="submit" class="btn btn-primary rounded-pill mt-3">Kişi Ekle</button>
+                    <button type="submit" class="btn btn-primary rounded-pill mt-3">{% trans "Kişi Ekle" %}</button>
                 </form>
             </div>
         </div>
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="aiEnhanceBioToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <strong class="me-auto">Biyografiyi Geliştir</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <strong class="me-auto">{% trans "Biyografiyi Geliştir" %}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="{% trans "Kapat" %}"></button>
                 </div>
                 <div class="toast-body">
-                    Biyografiyi geliştirme ister misiniz?
+                    {% trans "Biyografiyi geliştirme ister misiniz?" %}
                     <div class="mt-2">
-                        <button type="button" class="btn btn-primary btn-sm" id="confirmEnhanceBio">Evet</button>
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="confirmEnhanceBio">{% trans "Evet" %}</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">{% trans "Hayır" %}</button>
                     </div>
                 </div>
             </div>

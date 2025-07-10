@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 21:19+0300\n"
+"POT-Creation-Date: 2025-07-10 23:41+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -233,10 +233,12 @@ msgid "Metni geliştirme ister misiniz?"
 msgstr "Voulez-vous améliorer le texte ?"
 
 #: .\main\templates\main\home.html:55
+#: .\main\templates\main\kisi\kisi_ekle.html:34
 msgid "Evet"
 msgstr "Oui"
 
 #: .\main\templates\main\home.html:56
+#: .\main\templates\main\kisi\kisi_ekle.html:35
 msgid "Hayır"
 msgstr "Non"
 
@@ -334,6 +336,52 @@ msgstr "Chargement..."
 msgid "Daha Fazla Yükle"
 msgstr "Charger plus"
 
+#: .\main\templates\main\kisi\kisi_ekle.html:4
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ekle - Rumep"
+msgstr "Personnes - Rumep"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:7
+#: .\main\templates\main\kisi\kisi_ekle.html:21
+#: .\main\templates\main\kisi\kisi_liste.html:12
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ekle"
+msgstr "Ajouter une personne"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:16
+msgid "Biyografi"
+msgstr "Biographie"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:28
+#, fuzzy
+#| msgid "Metni Geliştir"
+msgid "Biyografiyi Geliştir"
+msgstr "Améliorer la biographie"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:29
+#: .\main\templates\main\popular\popular.html:121
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
+msgid "Kapat"
+msgstr "Fermer"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:32
+#, fuzzy
+#| msgid "Metni geliştirme ister misiniz?"
+msgid "Biyografiyi geliştirme ister misiniz?"
+msgstr "Voulez-vous améliorer le texte ?"
+
 #: .\main\templates\main\kisi\kisi_liste.html:4
 #, fuzzy
 #| msgid "Kişiler"
@@ -343,12 +391,6 @@ msgstr "Personnes - Rumep"
 #: .\main\templates\main\kisi\kisi_liste.html:11
 msgid "Kişi Listesi"
 msgstr "Liste des personnes"
-
-#: .\main\templates\main\kisi\kisi_liste.html:12
-#, fuzzy
-#| msgid "Kişiler"
-msgid "Kişi Ekle"
-msgstr "Ajouter une personne"
 
 #: .\main\templates\main\kisi\kisi_liste.html:15
 #: .\main\templates\main\sarki\sarki_sozleri.html:33
@@ -508,21 +550,6 @@ msgstr "Mensuel les plus populaires"
 #: .\main\templates\main\popular\popular.html:115
 msgid "Postlar yüklenirken hata oluştu:"
 msgstr "Une erreur s'est produite lors du chargement des publications :"
-
-#: .\main\templates\main\popular\popular.html:121
-#: .\main\templates\main\popular_critiques.html:137
-#: .\main\templates\main\post_detail.html:154
-#: .\main\templates\main\sarki\album_degistir_form.html:7
-#: .\main\templates\main\sarki\sarki_detay.html:85
-#: .\main\templates\main\sarki\sarki_detay.html:108
-#: .\main\templates\main\sarki\sarki_detay.html:131
-#: .\main\templates\main\sarki\sarki_detay.html:156
-#: .\main\templates\main\sozluk\sozluk.html:119
-#: .\main\templates\main\sozluk\sozluk_harf.html:51
-#: .\main\templates\main\sozluk\sozluk_kelime.html:75
-#: .\main\templates\main\sozluk\sozluk_kelime.html:112
-msgid "Kapat"
-msgstr "Fermer"
 
 #: .\main\templates\main\popular_critiques.html:20
 msgid "Tüm Zamanlar"
