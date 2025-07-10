@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 23:41+0300\n"
+"POT-Creation-Date: 2025-07-11 00:00+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -102,6 +102,8 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
 
 #: .\main\templates\main\comment_tree.html:21
 #: .\main\templates\main\home.html:92
+#: .\main\templates\main\kisi\kisi_detay.html:19
+#: .\main\templates\main\kisi\kisi_detay.html:55
 #: .\main\templates\main\kisi\kisi_liste.html:48
 #: .\main\templates\main\partials\popular_post_list.html:21
 #: .\main\templates\main\popular\popular.html:45
@@ -336,30 +338,114 @@ msgstr "Chargement..."
 msgid "Daha Fazla Yükle"
 msgstr "Charger plus"
 
-#: .\main\templates\main\kisi\kisi_ekle.html:4
+#: .\main\templates\main\kisi\kisi_detay.html:4
 #, fuzzy
-#| msgid "Kişiler"
-msgid "Kişi Ekle - Rumep"
-msgstr "Personnes - Rumep"
+#| msgid "{{ kisi.ad }} için Albüm Ekle"
+msgid "{{ kisi.ad }} - Rumep"
+msgstr "Albums de {{ kisi.ad }}"
 
-#: .\main\templates\main\kisi\kisi_ekle.html:7
-#: .\main\templates\main\kisi\kisi_ekle.html:21
-#: .\main\templates\main\kisi\kisi_liste.html:12
+#: .\main\templates\main\kisi\kisi_detay.html:7
+#: .\main\templates\main\kisi\kisi_liste.html:47
 #, fuzzy
-#| msgid "Kişiler"
-msgid "Kişi Ekle"
-msgstr "Ajouter une personne"
+#| msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
+msgid "Bu kişiyi silmek istediğinizden emin misiniz?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette personne ?"
 
+#: .\main\templates\main\kisi\kisi_detay.html:8
+#, fuzzy
+#| msgid "Eleştiri başarıyla silindi!"
+msgid "Kişi başarıyla silindi!"
+msgstr "Avis supprimé avec succès !"
+
+#: .\main\templates\main\kisi\kisi_detay.html:9
+#, fuzzy
+#| msgid "Postlar yüklenirken hata oluştu:"
+msgid "Kişi silinirken hata oluştu."
+msgstr "Une erreur s'est produite lors du chargement des publications :"
+
+#: .\main\templates\main\kisi\kisi_detay.html:10
+msgid "Bir hata oluştu, lütfen tekrar deneyin."
+msgstr "Une erreur s'est produite, veuillez réessayer."
+
+#: .\main\templates\main\kisi\kisi_detay.html:14
 #: .\main\templates\main\kisi\kisi_ekle.html:16
 msgid "Biyografi"
 msgstr "Biographie"
 
-#: .\main\templates\main\kisi\kisi_ekle.html:28
+#: .\main\templates\main\kisi\kisi_detay.html:15
 #, fuzzy
-#| msgid "Metni Geliştir"
-msgid "Biyografiyi Geliştir"
-msgstr "Améliorer la biographie"
+#| msgid "Tüm Kelimeler"
+msgid "Kategoriler"
+msgstr "Toutes les catégories"
 
+#: .\main\templates\main\kisi\kisi_detay.html:16
+#: .\main\templates\main\kisi\kisi_detay.html:50
+#: .\main\templates\main\sarki\sarki_detay.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Ajouté par"
+
+#: .\main\templates\main\kisi\kisi_detay.html:17
+#: .\main\templates\main\sozluk\sozluk_kelime.html:16
+#, fuzzy
+#| msgid "Silinme tarihi"
+msgid "Eklenme Tarihi"
+msgstr "Date d'ajout"
+
+#: .\main\templates\main\kisi\kisi_detay.html:27
+#: .\main\templates\main\kisi\kisi_detay.html:35
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sarki\sarki_detay.html:84
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Ajouter des détails"
+
+#: .\main\templates\main\kisi\kisi_detay.html:29
+#, fuzzy
+#| msgid "Lütfen kelime detayını girin."
+msgid "Kendi kişinize detay yazamazsınız."
+msgstr "Vous ne pouvez pas ajouter de détails à votre propre mot."
+
+#: .\main\templates\main\kisi\kisi_detay.html:44
+#: .\main\templates\main\sarki\sarki_detay.html:48
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Détails supplémentaires"
+
+#: .\main\templates\main\kisi\kisi_detay.html:54
+#: .\main\templates\main\sarki\sarki_detay.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Modifier"
+
+#: .\main\templates\main\kisi\kisi_detay.html:61
+#: .\main\templates\main\sarki\sarki_detay.html:72
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Aucun détail supplémentaire n'a été ajouté."
+
+#: .\main\templates\main\kisi\kisi_detay.html:72
+#: .\main\templates\main\sarki\sarki_detay.html:107
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Modifier les détails"
+
+#: .\main\templates\main\kisi\kisi_detay.html:73
 #: .\main\templates\main\kisi\kisi_ekle.html:29
 #: .\main\templates\main\popular\popular.html:121
 #: .\main\templates\main\popular_critiques.html:137
@@ -375,6 +461,49 @@ msgstr "Améliorer la biographie"
 #: .\main\templates\main\sozluk\sozluk_kelime.html:112
 msgid "Kapat"
 msgstr "Fermer"
+
+#: .\main\templates\main\kisi\kisi_detay.html:79
+#: .\main\templates\main\sarki\sarki_detay.html:92
+#: .\main\templates\main\sarki\sarki_detay.html:115
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Détails"
+
+#: .\main\templates\main\kisi\kisi_detay.html:83
+#: .\main\templates\main\profile.html:229
+#: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sarki\sarki_detay.html:118
+#: .\main\templates\main\sarki\sarki_detay.html:185
+#: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_harf.html:65
+#: .\main\templates\main\sozluk\sozluk_kelime.html:99
+#: .\main\templates\main\sozluk\sozluk_kelime.html:122
+msgid "Kaydet"
+msgstr "Enregistrer"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:4
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ekle - Rumep"
+msgstr "Personnes - Rumep"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:7
+#: .\main\templates\main\kisi\kisi_ekle.html:21
+#: .\main\templates\main\kisi\kisi_liste.html:12
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi Ekle"
+msgstr "Ajouter une personne"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:28
+#, fuzzy
+#| msgid "Metni Geliştir"
+msgid "Biyografiyi Geliştir"
+msgstr "Améliorer la biographie"
 
 #: .\main\templates\main\kisi\kisi_ekle.html:32
 #, fuzzy
@@ -413,12 +542,6 @@ msgstr "Toutes les catégories"
 #: .\main\templates\main\kisi\kisi_liste.html:29
 msgid "Filtrele"
 msgstr "Filtrer"
-
-#: .\main\templates\main\kisi\kisi_liste.html:47
-#, fuzzy
-#| msgid "Bu eleştiriyi silmek istediğinizden emin misiniz?"
-msgid "Bu kişiyi silmek istediğinizden emin misiniz?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette personne ?"
 
 #: .\main\templates\main\kisi\kisi_liste.html:56
 #, fuzzy
@@ -749,17 +872,6 @@ msgstr "Instagram (Facultatif)"
 msgid "Twitter (Opsiyonel)"
 msgstr "Twitter (Facultatif)"
 
-#: .\main\templates\main\profile.html:229
-#: .\main\templates\main\profile.html:261
-#: .\main\templates\main\sarki\sarki_detay.html:118
-#: .\main\templates\main\sarki\sarki_detay.html:185
-#: .\main\templates\main\sozluk\sozluk.html:161
-#: .\main\templates\main\sozluk\sozluk_harf.html:65
-#: .\main\templates\main\sozluk\sozluk_kelime.html:99
-#: .\main\templates\main\sozluk\sozluk_kelime.html:122
-msgid "Kaydet"
-msgstr "Enregistrer"
-
 #: .\main\templates\main\profile.html:250
 msgid "Postlar Görünür"
 msgstr "Publications visibles"
@@ -953,73 +1065,17 @@ msgstr "Paroles de chansons - {{ sarki.ad }}"
 msgid "Albüm"
 msgstr "Album"
 
-#: .\main\templates\main\sarki\sarki_detay.html:20
-#: .\main\templates\main\sarki\sarki_detay.html:61
-#: .\main\templates\main\sozluk\sozluk_harf.html:27
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Modifier"
-
 #: .\main\templates\main\sarki\sarki_detay.html:39
 #, fuzzy
 #| msgid "Şarkı Sözleri"
 msgid "Şarkıyı Dinle"
 msgstr "Écouter la chanson"
 
-#: .\main\templates\main\sarki\sarki_detay.html:48
-#: .\main\templates\main\sozluk\sozluk_kelime.html:46
-#, fuzzy
-#| msgid "Detay"
-msgid "Ek Detaylar"
-msgstr "Détails supplémentaires"
-
-#: .\main\templates\main\sarki\sarki_detay.html:49
-#: .\main\templates\main\sarki\sarki_detay.html:84
-#: .\main\templates\main\sozluk\sozluk_kelime.html:29
-#: .\main\templates\main\sozluk\sozluk_kelime.html:37
-#, fuzzy
-#| msgid "Detay"
-msgid "Detay Ekle"
-msgstr "Ajouter des détails"
-
-#: .\main\templates\main\sarki\sarki_detay.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:15
-#: .\main\templates\main\sozluk\sozluk_kelime.html:52
-msgid "Ekleyen"
-msgstr "Ajouté par"
-
-#: .\main\templates\main\sarki\sarki_detay.html:72
-#: .\main\templates\main\sozluk\sozluk_kelime.html:63
-#, fuzzy
-#| msgid "Henüz yer işareti eklemediniz."
-msgid "Henüz ek detay eklenmemiş."
-msgstr "Aucun détail supplémentaire n'a été ajouté."
-
-#: .\main\templates\main\sarki\sarki_detay.html:92
-#: .\main\templates\main\sarki\sarki_detay.html:115
-#: .\main\templates\main\sozluk\sozluk.html:137
-#: .\main\templates\main\sozluk\sozluk_harf.html:61
-#: .\main\templates\main\sozluk\sozluk_kelime.html:13
-#: .\main\templates\main\sozluk\sozluk_kelime.html:85
-#: .\main\templates\main\sozluk\sozluk_kelime.html:118
-msgid "Detay"
-msgstr "Détails"
-
 #: .\main\templates\main\sarki\sarki_detay.html:95
 #, fuzzy
 #| msgid "Ekleyen"
 msgid "Ekle"
 msgstr "Ajouter"
-
-#: .\main\templates\main\sarki\sarki_detay.html:107
-#: .\main\templates\main\sozluk\sozluk_kelime.html:111
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Detay Düzenle"
-msgstr "Modifier les détails"
 
 #: .\main\templates\main\sarki\sarki_detay.html:155
 #, fuzzy
@@ -1348,12 +1404,6 @@ msgstr "Mots commençant par la lettre {{ harf|upper }}"
 #| msgid "Kürtçe Sözlük"
 msgid "{{ kelime.kelime }} - Kürtçe Sözlük"
 msgstr "Dictionnaire kurde"
-
-#: .\main\templates\main\sozluk\sozluk_kelime.html:16
-#, fuzzy
-#| msgid "Silinme tarihi"
-msgid "Eklenme Tarihi"
-msgstr "Date d'ajout"
 
 #: .\main\templates\main\sozluk\sozluk_kelime.html:31
 #, fuzzy
