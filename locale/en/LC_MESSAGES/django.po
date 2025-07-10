@@ -392,7 +392,7 @@ msgstr "Are you sure you want to remove this from bookmarks?"
 
 #: .\main\templates\main\partials\popular_post_list.html:50
 msgid "Görüntüleme"
-msgstr ""
+msgstr "Views"
 
 #: .\main\templates\main\partials\popular_post_list.html:75
 #: .\main\templates\main\popular\popular.html:110
