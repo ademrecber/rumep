@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 00:12+0300\n"
+"POT-Creation-Date: 2025-07-10 21:12+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -101,6 +101,7 @@ msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
 
 #: .\main\templates\main\comment_tree.html:21
 #: .\main\templates\main\home.html:92
+#: .\main\templates\main\partials\popular_post_list.html:21
 #: .\main\templates\main\popular\popular.html:45
 #: .\main\templates\main\popular_critiques.html:40
 #: .\main\templates\main\popular_critiques.html:41
@@ -116,6 +117,7 @@ msgstr "Löschen"
 
 #: .\main\templates\main\comment_tree.html:31
 #: .\main\templates\main\home.html:116
+#: .\main\templates\main\partials\popular_post_list.html:41
 #: .\main\templates\main\popular\popular.html:17
 #: .\main\templates\main\popular\popular.html:69
 #: .\main\templates\main\popular_critiques.html:70
@@ -133,6 +135,7 @@ msgid "Yanıtla"
 msgstr "Antworten"
 
 #: .\main\templates\main\comment_tree.html:52
+#: .\main\templates\main\partials\popular_post_list.html:70
 #: .\main\templates\main\popular\popular.html:16
 #: .\main\templates\main\popular\popular.html:105
 msgid "Skor"
@@ -250,6 +253,7 @@ msgid "Bağlantı kopyalandı!"
 msgstr "Link kopiert!"
 
 #: .\main\templates\main\home.html:89
+#: .\main\templates\main\partials\popular_post_list.html:18
 #: .\main\templates\main\popular\popular.html:8
 #: .\main\templates\main\popular\popular.html:42
 #: .\main\templates\main\post_detail.html:23
@@ -266,6 +270,7 @@ msgid "Yer işaretinden kaldırmak"
 msgstr "Aus Lesezeichen entfernen"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\partials\popular_post_list.html:31
 #: .\main\templates\main\popular\popular.html:11
 #: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
@@ -274,6 +279,7 @@ msgid "Yer İşaretinden Kaldır"
 msgstr "Aus Lesezeichen entfernen"
 
 #: .\main\templates\main\home.html:102
+#: .\main\templates\main\partials\popular_post_list.html:31
 #: .\main\templates\main\popular\popular.html:12
 #: .\main\templates\main\popular\popular.html:55
 #: .\main\templates\main\post_detail.html:36
@@ -291,6 +297,7 @@ msgid "Bağlantıyı Kopyala"
 msgstr "Link kopieren"
 
 #: .\main\templates\main\home.html:130
+#: .\main\templates\main\partials\popular_post_list.html:48
 #: .\main\templates\main\popular\popular.html:14
 #: .\main\templates\main\popular\popular.html:82
 #: .\main\templates\main\post_detail.html:57
@@ -299,6 +306,7 @@ msgid "Beğeni"
 msgstr "Gefällt mir"
 
 #: .\main\templates\main\home.html:131
+#: .\main\templates\main\partials\popular_post_list.html:49
 #: .\main\templates\main\popular\popular.html:15
 #: .\main\templates\main\popular\popular.html:83
 #: .\main\templates\main\post_detail.html:58
@@ -369,6 +377,33 @@ msgstr "Sprachpräferenz"
 msgid "Değişiklikleri Kaydet"
 msgstr "Änderungen speichern"
 
+#: .\main\templates\main\partials\popular_post_list.html:26
+#: .\main\templates\main\popular\popular.html:9
+#: .\main\templates\main\popular\popular.html:50
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretine eklemek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen hinzufügen möchten?"
+
+#: .\main\templates\main\partials\popular_post_list.html:27
+#: .\main\templates\main\popular\popular.html:10
+#: .\main\templates\main\popular\popular.html:51
+#, fuzzy
+#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
+msgid "Yer işaretinden kaldırmak istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen entfernen möchten?"
+
+#: .\main\templates\main\partials\popular_post_list.html:50
+msgid "Görüntüleme"
+msgstr "Aufrufe"
+
+#: .\main\templates\main\partials\popular_post_list.html:75
+#: .\main\templates\main\popular\popular.html:110
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz popüler eleştiri yok."
+msgstr "Noch keine populären Bewertungen vorhanden."
+
 #: .\main\templates\main\popular\_tabs.html:4
 #: .\main\templates\main\popular_critiques.html:11
 msgid "Bugün"
@@ -393,20 +428,6 @@ msgstr "Monatlich"
 msgid "{{ period|title }} En Popüler"
 msgstr "{{ period|title }} Am populärsten"
 
-#: .\main\templates\main\popular\popular.html:9
-#: .\main\templates\main\popular\popular.html:50
-#, fuzzy
-#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
-msgid "Yer işaretine eklemek istediğinizden emin misiniz?"
-msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen hinzufügen möchten?"
-
-#: .\main\templates\main\popular\popular.html:10
-#: .\main\templates\main\popular\popular.html:51
-#, fuzzy
-#| msgid "Bu yer işaretini kaldırmak istediğinizden emin misiniz?"
-msgid "Yer işaretinden kaldırmak istediğinizden emin misiniz?"
-msgstr "Sind Sie sicher, dass Sie dieses Lesezeichen entfernen möchten?"
-
 #: .\main\templates\main\popular\popular.html:20
 #, fuzzy
 #| msgid "Popüler"
@@ -430,12 +451,6 @@ msgstr "Wöchentlich am populärsten"
 #| msgid "Popüler"
 msgid "Aylık En Popüler"
 msgstr "Monatlich am populärsten"
-
-#: .\main\templates\main\popular\popular.html:110
-#, fuzzy
-#| msgid "Henüz eleştiri yok."
-msgid "Henüz popüler eleştiri yok."
-msgstr "Noch keine populären Bewertungen vorhanden."
 
 #: .\main\templates\main\popular\popular.html:115
 msgid "Postlar yüklenirken hata oluştu:"
