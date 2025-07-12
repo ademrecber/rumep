@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:08+0300\n"
+"POT-Creation-Date: 2025-07-12 22:15+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -58,6 +58,7 @@ msgid "Deyimler"
 msgstr "Bêje"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:14
 #: .\main\templates\main\sarki\sarki_detay.html:95
 #, fuzzy
 #| msgid "Ekleyen"
@@ -101,6 +102,18 @@ msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan atasözü bulunamadı."
 msgstr "Kesek bi vê tîpê dest pê dike nehat dîtin."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:4
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü veya Deyim Ekle - Rumep"
+msgstr "Pêşgotin û Îdîom"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:7
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü veya Deyim Ekle"
+msgstr "Pêşgotin û Îdîom"
 
 # base.html çevirileri
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4

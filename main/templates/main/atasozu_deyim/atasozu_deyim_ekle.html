@@ -1,16 +1,17 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Atasözü veya Deyim Ekle - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Atasözü veya Deyim Ekle - Rumep" %}{% endblock %}
 {% block content %}
 <div class="container twitter-container atasozu-deyim-container">
-    <h3>Atasözü veya Deyim Ekle</h3>
+    <h3>{% trans "Atasözü veya Deyim Ekle" %}</h3>
     <div class="card mb-3">
         <div class="card-body">
             <form id="atasozu-deyim-ekle-form" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
-                <button type="submit" class="btn btn-primary rounded-pill">Ekle</button>
+                <button type="submit" class="btn btn-primary rounded-pill">{% trans "Ekle" %}</button>
             </form>
         </div>
     </div>

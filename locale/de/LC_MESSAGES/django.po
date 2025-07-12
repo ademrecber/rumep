@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:09+0300\n"
+"POT-Creation-Date: 2025-07-12 22:16+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -60,6 +60,7 @@ msgid "Deyimler"
 msgstr "Redewendung"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:14
 #: .\main\templates\main\sarki\sarki_detay.html:95
 #, fuzzy
 #| msgid "Ekleyen"
@@ -103,6 +104,18 @@ msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan atasözü bulunamadı."
 msgstr "Keine Person mit diesem Buchstaben gefunden."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:4
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü veya Deyim Ekle - Rumep"
+msgstr "Sprichwörter und Redewendungen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:7
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü veya Deyim Ekle"
+msgstr "Sprichwörter und Redewendungen"
 
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
 #: .\main\templates\main\tabs.html:9
