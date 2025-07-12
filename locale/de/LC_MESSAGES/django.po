@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:04+0300\n"
+"POT-Creation-Date: 2025-07-12 22:09+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -33,6 +33,76 @@ msgstr ""
 #: .\main\templates\main\404.html:11
 msgid "Ana Sayfaya Dön"
 msgstr "Zurück zur Startseite"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:4
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü ve Deyimler - Rumep"
+msgstr "Sprichwörter und Redewendungen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:7
+#: .\main\templates\main\base.html:141
+msgid "Atasözü ve Deyimler"
+msgstr "Sprichwörter und Redewendungen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:12
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:19
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözleri"
+msgstr "Sprichwort"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:15
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:19
+#, fuzzy
+#| msgid "Deyim"
+msgid "Deyimler"
+msgstr "Redewendung"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:95
+#, fuzzy
+#| msgid "Ekleyen"
+msgid "Ekle"
+msgstr "Hinzufügen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:43
+#, fuzzy
+#| msgid "Filtrele"
+msgid "Ara ve Filtrele"
+msgstr "Filtern"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:49
+#: .\main\templates\main\katki\katki_list.html:10
+#: .\main\templates\main\kisi\kisi_liste.html:15
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Alle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:68
+#, fuzzy
+#| msgid "Bu yorumu silmek istediğinizden emin misiniz?"
+msgid "Bu deyimi silmek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:80
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan deyim bulunamadı."
+msgstr "Wörter, die mit dem Buchstaben {{ harf|upper }} beginnen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:95
+#, fuzzy
+#| msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgid "Bu atasözünü silmek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:107
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan atasözü bulunamadı."
+msgstr "Keine Person mit diesem Buchstaben gefunden."
 
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
 #: .\main\templates\main\tabs.html:9
@@ -67,10 +137,6 @@ msgstr "Personen"
 #: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
 msgstr "Songtexte"
-
-#: .\main\templates\main\base.html:141
-msgid "Atasözü ve Deyimler"
-msgstr "Sprichwörter und Redewendungen"
 
 #: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
 #: .\main\templates\main\profile_detail.html:5
@@ -354,13 +420,6 @@ msgstr "Noch keine Beiträge vorhanden."
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
 msgstr "Beiträge"
-
-#: .\main\templates\main\katki\katki_list.html:10
-#: .\main\templates\main\kisi\kisi_liste.html:15
-#: .\main\templates\main\sarki\sarki_sozleri.html:33
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Alle"
 
 #: .\main\templates\main\katki\katki_list.html:11
 #, fuzzy
@@ -1155,12 +1214,6 @@ msgstr "Album"
 #| msgid "Şarkı Sözleri"
 msgid "Şarkıyı Dinle"
 msgstr "Song anhören"
-
-#: .\main\templates\main\sarki\sarki_detay.html:95
-#, fuzzy
-#| msgid "Ekleyen"
-msgid "Ekle"
-msgstr "Hinzufügen"
 
 #: .\main\templates\main\sarki\sarki_detay.html:155
 #, fuzzy

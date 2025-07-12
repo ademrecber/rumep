@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:04+0300\n"
+"POT-Creation-Date: 2025-07-12 22:08+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -31,6 +31,76 @@ msgstr "Bibore, rûpela ku hûn lê digerin tune ye an jî hat rakirin."
 #: .\main\templates\main\404.html:11
 msgid "Ana Sayfaya Dön"
 msgstr "Vegere Rûpela Sereke"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:4
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü ve Deyimler - Rumep"
+msgstr "Pêşgotin û Îdîom"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:7
+#: .\main\templates\main\base.html:141
+msgid "Atasözü ve Deyimler"
+msgstr "Pêşgotin û Îdîom"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:12
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:19
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözleri"
+msgstr "Gotina Pêşiyan"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:15
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:19
+#, fuzzy
+#| msgid "Deyim"
+msgid "Deyimler"
+msgstr "Bêje"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:95
+#, fuzzy
+#| msgid "Ekleyen"
+msgid "Ekle"
+msgstr "Zêde Bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:43
+#, fuzzy
+#| msgid "Filtrele"
+msgid "Ara ve Filtrele"
+msgstr "Parzûn Bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:49
+#: .\main\templates\main\katki\katki_list.html:10
+#: .\main\templates\main\kisi\kisi_liste.html:15
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Hemû"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:68
+#, fuzzy
+#| msgid "Bu yorumu silmek istediğinizden emin misiniz?"
+msgid "Bu deyimi silmek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:80
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan deyim bulunamadı."
+msgstr "Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:95
+#, fuzzy
+#| msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgid "Bu atasözünü silmek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:107
+#, fuzzy
+#| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
+msgid "Bu harfle başlayan atasözü bulunamadı."
+msgstr "Kesek bi vê tîpê dest pê dike nehat dîtin."
 
 # base.html çevirileri
 #: .\main\templates\main\base.html:123 .\main\templates\main\tabs.html:4
@@ -66,10 +136,6 @@ msgstr "Kes"
 #: .\main\templates\main\sarki\sarki_sozleri.html:7
 msgid "Şarkı Sözleri"
 msgstr "Gotinên Stranan"
-
-#: .\main\templates\main\base.html:141
-msgid "Atasözü ve Deyimler"
-msgstr "Pêşgotin û Îdîom"
 
 #: .\main\templates\main\base.html:144 .\main\templates\main\profile.html:5
 #: .\main\templates\main\profile_detail.html:5
@@ -353,13 +419,6 @@ msgstr "Hêj tevkariyên tune."
 #: .\main\templates\main\tabs.html:12
 msgid "Katkılar"
 msgstr "Beşdarî"
-
-#: .\main\templates\main\katki\katki_list.html:10
-#: .\main\templates\main\kisi\kisi_liste.html:15
-#: .\main\templates\main\sarki\sarki_sozleri.html:33
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Hemû"
 
 #: .\main\templates\main\katki\katki_list.html:11
 #, fuzzy
@@ -1147,12 +1206,6 @@ msgstr "Albûm"
 #| msgid "Şarkı Sözleri"
 msgid "Şarkıyı Dinle"
 msgstr "Stranê Guhdarî Bike"
-
-#: .\main\templates\main\sarki\sarki_detay.html:95
-#, fuzzy
-#| msgid "Ekleyen"
-msgid "Ekle"
-msgstr "Zêde Bike"
 
 #: .\main\templates\main\sarki\sarki_detay.html:155
 #, fuzzy
