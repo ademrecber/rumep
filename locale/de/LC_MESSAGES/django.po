@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:16+0300\n"
+"POT-Creation-Date: 2025-07-12 22:19+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -60,6 +60,7 @@ msgid "Deyimler"
 msgstr "Redewendung"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:89
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:14
 #: .\main\templates\main\sarki\sarki_detay.html:95
 #, fuzzy
@@ -104,6 +105,190 @@ msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan atasözü bulunamadı."
 msgstr "Keine Person mit diesem Buchstaben gefunden."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:4
+#, fuzzy
+#| msgid "{{ kisi.ad }} için Albüm Ekle"
+msgid "{{ item.kelime }} - Rumep"
+msgstr "{{ kisi.ad }} Alben"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\katki\katki_list.html:14
+#: .\main\templates\main\katki\katki_list.html:58
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü"
+msgstr "Sprichwort"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\katki\katki_list.html:15
+#: .\main\templates\main\katki\katki_list.html:66
+msgid "Deyim"
+msgstr "Redewendung"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:14
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:15
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:54
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\kisi\kisi_detay.html:54
+#: .\main\templates\main\sarki\sarki_detay.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Bearbeiten"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:17
+#, fuzzy
+#| msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgid "Bu {{ tur }} silmek istediğinizden emin misiniz?"
+msgstr "Sind Sie sicher, dass Sie diesen Beitrag löschen möchten?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:21
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:57
+#: .\main\templates\main\comment_tree.html:21
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\kisi\kisi_detay.html:19
+#: .\main\templates\main\kisi\kisi_detay.html:55
+#: .\main\templates\main\kisi\kisi_liste.html:48
+#: .\main\templates\main\partials\popular_post_list.html:21
+#: .\main\templates\main\popular\popular.html:45
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sarki\album_liste.html:23
+#: .\main\templates\main\sarki\sarki_detay.html:32
+#: .\main\templates\main\sarki\sarki_detay.html:64
+#: .\main\templates\main\sozluk\sozluk_harf.html:30
+#: .\main\templates\main\sozluk\sozluk_kelime.html:20
+#: .\main\templates\main\sozluk\sozluk_kelime.html:57
+msgid "Sil"
+msgstr "Löschen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:27
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:137
+msgid "Anlam"
+msgstr "Bedeutung"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:29
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:141
+msgid "Örnek"
+msgstr "Beispiel"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:31
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:50
+#: .\main\templates\main\kisi\kisi_detay.html:16
+#: .\main\templates\main\kisi\kisi_detay.html:50
+#: .\main\templates\main\sarki\sarki_detay.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Hinzugefügt von"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:31
+msgid "Tarih"
+msgstr "Datum"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:39
+#: .\main\templates\main\kisi\kisi_detay.html:44
+#: .\main\templates\main\sarki\sarki_detay.html:48
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Zusätzliche Details"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:41
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:77
+#: .\main\templates\main\kisi\kisi_detay.html:27
+#: .\main\templates\main\kisi\kisi_detay.html:35
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sarki\sarki_detay.html:84
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Details hinzufügen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:65
+#: .\main\templates\main\kisi\kisi_detay.html:61
+#: .\main\templates\main\sarki\sarki_detay.html:72
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Noch keine zusätzlichen Details hinzugefügt."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:78
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:102
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:125
+#: .\main\templates\main\kisi\kisi_detay.html:73
+#: .\main\templates\main\kisi\kisi_ekle.html:29
+#: .\main\templates\main\popular\popular.html:121
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
+msgid "Kapat"
+msgstr "Schließen"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:86
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:109
+#: .\main\templates\main\kisi\kisi_detay.html:79
+#: .\main\templates\main\sarki\sarki_detay.html:92
+#: .\main\templates\main\sarki\sarki_detay.html:115
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Details"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:101
+#: .\main\templates\main\kisi\kisi_detay.html:72
+#: .\main\templates\main\sarki\sarki_detay.html:107
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Details bearbeiten"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:112
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:144
+#: .\main\templates\main\kisi\kisi_detay.html:83
+#: .\main\templates\main\profile.html:229
+#: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sarki\sarki_detay.html:118
+#: .\main\templates\main\sarki\sarki_detay.html:185
+#: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_harf.html:65
+#: .\main\templates\main\sozluk\sozluk_kelime.html:99
+#: .\main\templates\main\sozluk\sozluk_kelime.html:122
+msgid "Kaydet"
+msgstr "Speichern"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:133
+#: .\main\templates\main\katki\katki_list.html:50
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_harf.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Wort"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:4
 #, fuzzy
@@ -181,25 +366,6 @@ msgstr "Top-Mitwirkende"
 #: .\main\templates\main\profile.html:117
 msgid "Bu yorumu silmek istediğinizden emin misiniz?"
 msgstr "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
-
-#: .\main\templates\main\comment_tree.html:21
-#: .\main\templates\main\home.html:92
-#: .\main\templates\main\kisi\kisi_detay.html:19
-#: .\main\templates\main\kisi\kisi_detay.html:55
-#: .\main\templates\main\kisi\kisi_liste.html:48
-#: .\main\templates\main\partials\popular_post_list.html:21
-#: .\main\templates\main\popular\popular.html:45
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-#: .\main\templates\main\sarki\album_liste.html:23
-#: .\main\templates\main\sarki\sarki_detay.html:32
-#: .\main\templates\main\sarki\sarki_detay.html:64
-#: .\main\templates\main\sozluk\sozluk_harf.html:30
-#: .\main\templates\main\sozluk\sozluk_kelime.html:20
-#: .\main\templates\main\sozluk\sozluk_kelime.html:57
-msgid "Sil"
-msgstr "Löschen"
 
 #: .\main\templates\main\comment_tree.html:31
 #: .\main\templates\main\home.html:116
@@ -447,18 +613,6 @@ msgstr "Songtext hinzufügen"
 msgid "Kişi"
 msgstr "Personen"
 
-#: .\main\templates\main\katki\katki_list.html:14
-#: .\main\templates\main\katki\katki_list.html:58
-#, fuzzy
-#| msgid "Atasözü ve Deyimler"
-msgid "Atasözü"
-msgstr "Sprichwort"
-
-#: .\main\templates\main\katki\katki_list.html:15
-#: .\main\templates\main\katki\katki_list.html:66
-msgid "Deyim"
-msgstr "Redewendung"
-
 #: .\main\templates\main\katki\katki_list.html:30
 msgid "Bu kullanıcı yeni bir şarkı sözü ekledi"
 msgstr "Dieser Benutzer hat einen neuen Songtext hinzugefügt"
@@ -476,13 +630,6 @@ msgstr "Dieser Benutzer hat eine neue Person hinzugefügt"
 #: .\main\templates\main\katki\katki_list.html:46
 msgid "Bu kullanıcı yeni bir sözlük kelimesi ekledi"
 msgstr "Dieser Benutzer hat ein neues Wörterbuchwort hinzugefügt"
-
-#: .\main\templates\main\katki\katki_list.html:50
-#: .\main\templates\main\sozluk\sozluk.html:125
-#: .\main\templates\main\sozluk\sozluk_harf.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:81
-msgid "Kelime"
-msgstr "Wort"
 
 #: .\main\templates\main\katki\katki_list.html:54
 msgid "Bu kullanıcı yeni bir atasözü ekledi"
@@ -538,14 +685,6 @@ msgstr "Biografie"
 msgid "Kategoriler"
 msgstr "Alle Kategorien"
 
-#: .\main\templates\main\kisi\kisi_detay.html:16
-#: .\main\templates\main\kisi\kisi_detay.html:50
-#: .\main\templates\main\sarki\sarki_detay.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:15
-#: .\main\templates\main\sozluk\sozluk_kelime.html:52
-msgid "Ekleyen"
-msgstr "Hinzugefügt von"
-
 #: .\main\templates\main\kisi\kisi_detay.html:17
 #: .\main\templates\main\sozluk\sozluk_kelime.html:16
 #, fuzzy
@@ -553,97 +692,11 @@ msgstr "Hinzugefügt von"
 msgid "Eklenme Tarihi"
 msgstr "Hinzufügedatum"
 
-#: .\main\templates\main\kisi\kisi_detay.html:27
-#: .\main\templates\main\kisi\kisi_detay.html:35
-#: .\main\templates\main\sarki\sarki_detay.html:49
-#: .\main\templates\main\sarki\sarki_detay.html:84
-#: .\main\templates\main\sozluk\sozluk_kelime.html:29
-#: .\main\templates\main\sozluk\sozluk_kelime.html:37
-#, fuzzy
-#| msgid "Detay"
-msgid "Detay Ekle"
-msgstr "Details hinzufügen"
-
 #: .\main\templates\main\kisi\kisi_detay.html:29
 #, fuzzy
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kişinize detay yazamazsınız."
 msgstr "Sie können keine Details zu Ihrem eigenen Wort hinzufügen."
-
-#: .\main\templates\main\kisi\kisi_detay.html:44
-#: .\main\templates\main\sarki\sarki_detay.html:48
-#: .\main\templates\main\sozluk\sozluk_kelime.html:46
-#, fuzzy
-#| msgid "Detay"
-msgid "Ek Detaylar"
-msgstr "Zusätzliche Details"
-
-#: .\main\templates\main\kisi\kisi_detay.html:54
-#: .\main\templates\main\sarki\sarki_detay.html:20
-#: .\main\templates\main\sarki\sarki_detay.html:61
-#: .\main\templates\main\sozluk\sozluk_harf.html:27
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Bearbeiten"
-
-#: .\main\templates\main\kisi\kisi_detay.html:61
-#: .\main\templates\main\sarki\sarki_detay.html:72
-#: .\main\templates\main\sozluk\sozluk_kelime.html:63
-#, fuzzy
-#| msgid "Henüz yer işareti eklemediniz."
-msgid "Henüz ek detay eklenmemiş."
-msgstr "Noch keine zusätzlichen Details hinzugefügt."
-
-#: .\main\templates\main\kisi\kisi_detay.html:72
-#: .\main\templates\main\sarki\sarki_detay.html:107
-#: .\main\templates\main\sozluk\sozluk_kelime.html:111
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Detay Düzenle"
-msgstr "Details bearbeiten"
-
-#: .\main\templates\main\kisi\kisi_detay.html:73
-#: .\main\templates\main\kisi\kisi_ekle.html:29
-#: .\main\templates\main\popular\popular.html:121
-#: .\main\templates\main\popular_critiques.html:137
-#: .\main\templates\main\post_detail.html:154
-#: .\main\templates\main\sarki\album_degistir_form.html:7
-#: .\main\templates\main\sarki\sarki_detay.html:85
-#: .\main\templates\main\sarki\sarki_detay.html:108
-#: .\main\templates\main\sarki\sarki_detay.html:131
-#: .\main\templates\main\sarki\sarki_detay.html:156
-#: .\main\templates\main\sozluk\sozluk.html:119
-#: .\main\templates\main\sozluk\sozluk_harf.html:51
-#: .\main\templates\main\sozluk\sozluk_kelime.html:75
-#: .\main\templates\main\sozluk\sozluk_kelime.html:112
-msgid "Kapat"
-msgstr "Schließen"
-
-#: .\main\templates\main\kisi\kisi_detay.html:79
-#: .\main\templates\main\sarki\sarki_detay.html:92
-#: .\main\templates\main\sarki\sarki_detay.html:115
-#: .\main\templates\main\sozluk\sozluk.html:137
-#: .\main\templates\main\sozluk\sozluk_harf.html:61
-#: .\main\templates\main\sozluk\sozluk_kelime.html:13
-#: .\main\templates\main\sozluk\sozluk_kelime.html:85
-#: .\main\templates\main\sozluk\sozluk_kelime.html:118
-msgid "Detay"
-msgstr "Details"
-
-#: .\main\templates\main\kisi\kisi_detay.html:83
-#: .\main\templates\main\profile.html:229
-#: .\main\templates\main\profile.html:261
-#: .\main\templates\main\sarki\sarki_detay.html:118
-#: .\main\templates\main\sarki\sarki_detay.html:185
-#: .\main\templates\main\sozluk\sozluk.html:161
-#: .\main\templates\main\sozluk\sozluk_harf.html:65
-#: .\main\templates\main\sozluk\sozluk_kelime.html:99
-#: .\main\templates\main\sozluk\sozluk_kelime.html:122
-msgid "Kaydet"
-msgstr "Speichern"
 
 #: .\main\templates\main\kisi\kisi_ekle.html:4
 #, fuzzy

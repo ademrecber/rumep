@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 22:15+0300\n"
+"POT-Creation-Date: 2025-07-12 22:19+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -58,6 +58,7 @@ msgid "Deyimler"
 msgstr "Bêje"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:89
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:14
 #: .\main\templates\main\sarki\sarki_detay.html:95
 #, fuzzy
@@ -102,6 +103,190 @@ msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
 #| msgid "{{ harf|upper }} harfi ile başlayan kelimeler"
 msgid "Bu harfle başlayan atasözü bulunamadı."
 msgstr "Kesek bi vê tîpê dest pê dike nehat dîtin."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:4
+#, fuzzy
+#| msgid "{{ kisi.ad }} için Albüm Ekle"
+msgid "{{ item.kelime }} - Rumep"
+msgstr "Albûmên {{ kisi.ad }}"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\katki\katki_list.html:14
+#: .\main\templates\main\katki\katki_list.html:58
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü"
+msgstr "Gotina Pêşiyan"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\katki\katki_list.html:15
+#: .\main\templates\main\katki\katki_list.html:66
+msgid "Deyim"
+msgstr "Bêje"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:14
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:15
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:54
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\kisi\kisi_detay.html:54
+#: .\main\templates\main\sarki\sarki_detay.html:20
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:19
+#: .\main\templates\main\sozluk\sozluk_kelime.html:56
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Düzenle"
+msgstr "Sererast Bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:17
+#, fuzzy
+#| msgid "Bu postu silmek istediğinizden emin misiniz?"
+msgid "Bu {{ tur }} silmek istediğinizden emin misiniz?"
+msgstr "Ma hûn ji bo jêbirina vê postê bawer in?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:21
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:57
+#: .\main\templates\main\comment_tree.html:21
+#: .\main\templates\main\home.html:92
+#: .\main\templates\main\kisi\kisi_detay.html:19
+#: .\main\templates\main\kisi\kisi_detay.html:55
+#: .\main\templates\main\kisi\kisi_liste.html:48
+#: .\main\templates\main\partials\popular_post_list.html:21
+#: .\main\templates\main\popular\popular.html:45
+#: .\main\templates\main\popular_critiques.html:40
+#: .\main\templates\main\popular_critiques.html:41
+#: .\main\templates\main\post_detail.html:26
+#: .\main\templates\main\sarki\album_liste.html:23
+#: .\main\templates\main\sarki\sarki_detay.html:32
+#: .\main\templates\main\sarki\sarki_detay.html:64
+#: .\main\templates\main\sozluk\sozluk_harf.html:30
+#: .\main\templates\main\sozluk\sozluk_kelime.html:20
+#: .\main\templates\main\sozluk\sozluk_kelime.html:57
+msgid "Sil"
+msgstr "Jê Bibe"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:27
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:137
+msgid "Anlam"
+msgstr "Wate"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:29
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:141
+msgid "Örnek"
+msgstr "Mînak"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:31
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:50
+#: .\main\templates\main\kisi\kisi_detay.html:16
+#: .\main\templates\main\kisi\kisi_detay.html:50
+#: .\main\templates\main\sarki\sarki_detay.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:15
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Ekleyen"
+msgstr "Zêdekar"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:31
+msgid "Tarih"
+msgstr "Dîrok"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:39
+#: .\main\templates\main\kisi\kisi_detay.html:44
+#: .\main\templates\main\sarki\sarki_detay.html:48
+#: .\main\templates\main\sozluk\sozluk_kelime.html:46
+#, fuzzy
+#| msgid "Detay"
+msgid "Ek Detaylar"
+msgstr "Hûrguliyên Zêde"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:41
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:77
+#: .\main\templates\main\kisi\kisi_detay.html:27
+#: .\main\templates\main\kisi\kisi_detay.html:35
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sarki\sarki_detay.html:84
+#: .\main\templates\main\sozluk\sozluk_kelime.html:29
+#: .\main\templates\main\sozluk\sozluk_kelime.html:37
+#, fuzzy
+#| msgid "Detay"
+msgid "Detay Ekle"
+msgstr "Hûrguliyê Zêde Bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:65
+#: .\main\templates\main\kisi\kisi_detay.html:61
+#: .\main\templates\main\sarki\sarki_detay.html:72
+#: .\main\templates\main\sozluk\sozluk_kelime.html:63
+#, fuzzy
+#| msgid "Henüz yer işareti eklemediniz."
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Hêj hûrguliyên zêde nehatine zêdekirin."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:78
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:102
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:125
+#: .\main\templates\main\kisi\kisi_detay.html:73
+#: .\main\templates\main\kisi\kisi_ekle.html:29
+#: .\main\templates\main\popular\popular.html:121
+#: .\main\templates\main\popular_critiques.html:137
+#: .\main\templates\main\post_detail.html:154
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sarki\sarki_detay.html:85
+#: .\main\templates\main\sarki\sarki_detay.html:108
+#: .\main\templates\main\sarki\sarki_detay.html:131
+#: .\main\templates\main\sarki\sarki_detay.html:156
+#: .\main\templates\main\sozluk\sozluk.html:119
+#: .\main\templates\main\sozluk\sozluk_harf.html:51
+#: .\main\templates\main\sozluk\sozluk_kelime.html:75
+#: .\main\templates\main\sozluk\sozluk_kelime.html:112
+msgid "Kapat"
+msgstr "Bigire"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:86
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:109
+#: .\main\templates\main\kisi\kisi_detay.html:79
+#: .\main\templates\main\sarki\sarki_detay.html:92
+#: .\main\templates\main\sarki\sarki_detay.html:115
+#: .\main\templates\main\sozluk\sozluk.html:137
+#: .\main\templates\main\sozluk\sozluk_harf.html:61
+#: .\main\templates\main\sozluk\sozluk_kelime.html:13
+#: .\main\templates\main\sozluk\sozluk_kelime.html:85
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Detay"
+msgstr "Hûrgilî"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:101
+#: .\main\templates\main\kisi\kisi_detay.html:72
+#: .\main\templates\main\sarki\sarki_detay.html:107
+#: .\main\templates\main\sozluk\sozluk_kelime.html:111
+#, fuzzy
+#| msgid "Kelime Düzenle"
+msgid "Detay Düzenle"
+msgstr "Hûrguliyê Sererast Bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:112
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:144
+#: .\main\templates\main\kisi\kisi_detay.html:83
+#: .\main\templates\main\profile.html:229
+#: .\main\templates\main\profile.html:261
+#: .\main\templates\main\sarki\sarki_detay.html:118
+#: .\main\templates\main\sarki\sarki_detay.html:185
+#: .\main\templates\main\sozluk\sozluk.html:161
+#: .\main\templates\main\sozluk\sozluk_harf.html:65
+#: .\main\templates\main\sozluk\sozluk_kelime.html:99
+#: .\main\templates\main\sozluk\sozluk_kelime.html:122
+msgid "Kaydet"
+msgstr "Tomar bike"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:133
+#: .\main\templates\main\katki\katki_list.html:50
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_harf.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Peyv"
 
 #: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:4
 #, fuzzy
@@ -180,25 +365,6 @@ msgstr "Yên Herî Zêde Beşdarî Kirin"
 #: .\main\templates\main\profile.html:117
 msgid "Bu yorumu silmek istediğinizden emin misiniz?"
 msgstr "Ma hûn ji bo jêbirina vê şîroveyê bawer in?"
-
-#: .\main\templates\main\comment_tree.html:21
-#: .\main\templates\main\home.html:92
-#: .\main\templates\main\kisi\kisi_detay.html:19
-#: .\main\templates\main\kisi\kisi_detay.html:55
-#: .\main\templates\main\kisi\kisi_liste.html:48
-#: .\main\templates\main\partials\popular_post_list.html:21
-#: .\main\templates\main\popular\popular.html:45
-#: .\main\templates\main\popular_critiques.html:40
-#: .\main\templates\main\popular_critiques.html:41
-#: .\main\templates\main\post_detail.html:26
-#: .\main\templates\main\sarki\album_liste.html:23
-#: .\main\templates\main\sarki\sarki_detay.html:32
-#: .\main\templates\main\sarki\sarki_detay.html:64
-#: .\main\templates\main\sozluk\sozluk_harf.html:30
-#: .\main\templates\main\sozluk\sozluk_kelime.html:20
-#: .\main\templates\main\sozluk\sozluk_kelime.html:57
-msgid "Sil"
-msgstr "Jê Bibe"
 
 #: .\main\templates\main\comment_tree.html:31
 #: .\main\templates\main\home.html:116
@@ -446,18 +612,6 @@ msgstr "Gotinên Stranê Zêde Bike"
 msgid "Kişi"
 msgstr "Kes"
 
-#: .\main\templates\main\katki\katki_list.html:14
-#: .\main\templates\main\katki\katki_list.html:58
-#, fuzzy
-#| msgid "Atasözü ve Deyimler"
-msgid "Atasözü"
-msgstr "Gotina Pêşiyan"
-
-#: .\main\templates\main\katki\katki_list.html:15
-#: .\main\templates\main\katki\katki_list.html:66
-msgid "Deyim"
-msgstr "Bêje"
-
 #: .\main\templates\main\katki\katki_list.html:30
 msgid "Bu kullanıcı yeni bir şarkı sözü ekledi"
 msgstr "Vî bikarhênerî gotinên stranê yên nû zêde kir"
@@ -475,13 +629,6 @@ msgstr "Vî bikarhênerî kesekî nû zêde kir"
 #: .\main\templates\main\katki\katki_list.html:46
 msgid "Bu kullanıcı yeni bir sözlük kelimesi ekledi"
 msgstr "Vî bikarhênerî peyvek ferhengê ya nû zêde kir"
-
-#: .\main\templates\main\katki\katki_list.html:50
-#: .\main\templates\main\sozluk\sozluk.html:125
-#: .\main\templates\main\sozluk\sozluk_harf.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:81
-msgid "Kelime"
-msgstr "Peyv"
 
 #: .\main\templates\main\katki\katki_list.html:54
 msgid "Bu kullanıcı yeni bir atasözü ekledi"
@@ -537,14 +684,6 @@ msgstr "Jînenîgarî"
 msgid "Kategoriler"
 msgstr "Hemû Kategorî"
 
-#: .\main\templates\main\kisi\kisi_detay.html:16
-#: .\main\templates\main\kisi\kisi_detay.html:50
-#: .\main\templates\main\sarki\sarki_detay.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:15
-#: .\main\templates\main\sozluk\sozluk_kelime.html:52
-msgid "Ekleyen"
-msgstr "Zêdekar"
-
 #: .\main\templates\main\kisi\kisi_detay.html:17
 #: .\main\templates\main\sozluk\sozluk_kelime.html:16
 #, fuzzy
@@ -552,97 +691,11 @@ msgstr "Zêdekar"
 msgid "Eklenme Tarihi"
 msgstr "Dîroka Zêdekirinê"
 
-#: .\main\templates\main\kisi\kisi_detay.html:27
-#: .\main\templates\main\kisi\kisi_detay.html:35
-#: .\main\templates\main\sarki\sarki_detay.html:49
-#: .\main\templates\main\sarki\sarki_detay.html:84
-#: .\main\templates\main\sozluk\sozluk_kelime.html:29
-#: .\main\templates\main\sozluk\sozluk_kelime.html:37
-#, fuzzy
-#| msgid "Detay"
-msgid "Detay Ekle"
-msgstr "Hûrguliyê Zêde Bike"
-
 #: .\main\templates\main\kisi\kisi_detay.html:29
 #, fuzzy
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kişinize detay yazamazsınız."
 msgstr "Hûn nikarin hûrguliyê li peyva xwe zêde bikin."
-
-#: .\main\templates\main\kisi\kisi_detay.html:44
-#: .\main\templates\main\sarki\sarki_detay.html:48
-#: .\main\templates\main\sozluk\sozluk_kelime.html:46
-#, fuzzy
-#| msgid "Detay"
-msgid "Ek Detaylar"
-msgstr "Hûrguliyên Zêde"
-
-#: .\main\templates\main\kisi\kisi_detay.html:54
-#: .\main\templates\main\sarki\sarki_detay.html:20
-#: .\main\templates\main\sarki\sarki_detay.html:61
-#: .\main\templates\main\sozluk\sozluk_harf.html:27
-#: .\main\templates\main\sozluk\sozluk_kelime.html:19
-#: .\main\templates\main\sozluk\sozluk_kelime.html:56
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Düzenle"
-msgstr "Sererast Bike"
-
-#: .\main\templates\main\kisi\kisi_detay.html:61
-#: .\main\templates\main\sarki\sarki_detay.html:72
-#: .\main\templates\main\sozluk\sozluk_kelime.html:63
-#, fuzzy
-#| msgid "Henüz yer işareti eklemediniz."
-msgid "Henüz ek detay eklenmemiş."
-msgstr "Hêj hûrguliyên zêde nehatine zêdekirin."
-
-#: .\main\templates\main\kisi\kisi_detay.html:72
-#: .\main\templates\main\sarki\sarki_detay.html:107
-#: .\main\templates\main\sozluk\sozluk_kelime.html:111
-#, fuzzy
-#| msgid "Kelime Düzenle"
-msgid "Detay Düzenle"
-msgstr "Hûrguliyê Sererast Bike"
-
-#: .\main\templates\main\kisi\kisi_detay.html:73
-#: .\main\templates\main\kisi\kisi_ekle.html:29
-#: .\main\templates\main\popular\popular.html:121
-#: .\main\templates\main\popular_critiques.html:137
-#: .\main\templates\main\post_detail.html:154
-#: .\main\templates\main\sarki\album_degistir_form.html:7
-#: .\main\templates\main\sarki\sarki_detay.html:85
-#: .\main\templates\main\sarki\sarki_detay.html:108
-#: .\main\templates\main\sarki\sarki_detay.html:131
-#: .\main\templates\main\sarki\sarki_detay.html:156
-#: .\main\templates\main\sozluk\sozluk.html:119
-#: .\main\templates\main\sozluk\sozluk_harf.html:51
-#: .\main\templates\main\sozluk\sozluk_kelime.html:75
-#: .\main\templates\main\sozluk\sozluk_kelime.html:112
-msgid "Kapat"
-msgstr "Bigire"
-
-#: .\main\templates\main\kisi\kisi_detay.html:79
-#: .\main\templates\main\sarki\sarki_detay.html:92
-#: .\main\templates\main\sarki\sarki_detay.html:115
-#: .\main\templates\main\sozluk\sozluk.html:137
-#: .\main\templates\main\sozluk\sozluk_harf.html:61
-#: .\main\templates\main\sozluk\sozluk_kelime.html:13
-#: .\main\templates\main\sozluk\sozluk_kelime.html:85
-#: .\main\templates\main\sozluk\sozluk_kelime.html:118
-msgid "Detay"
-msgstr "Hûrgilî"
-
-#: .\main\templates\main\kisi\kisi_detay.html:83
-#: .\main\templates\main\profile.html:229
-#: .\main\templates\main\profile.html:261
-#: .\main\templates\main\sarki\sarki_detay.html:118
-#: .\main\templates\main\sarki\sarki_detay.html:185
-#: .\main\templates\main\sozluk\sozluk.html:161
-#: .\main\templates\main\sozluk\sozluk_harf.html:65
-#: .\main\templates\main\sozluk\sozluk_kelime.html:99
-#: .\main\templates\main\sozluk\sozluk_kelime.html:122
-msgid "Kaydet"
-msgstr "Tomar bike"
 
 #: .\main\templates\main\kisi\kisi_ekle.html:4
 #, fuzzy
