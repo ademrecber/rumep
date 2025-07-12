@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 21:53+0300\n"
+"POT-Creation-Date: 2025-07-12 22:04+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -92,6 +92,7 @@ msgid "Geri dön"
 msgstr "Vegere"
 
 #: .\main\templates\main\base.html:201
+#: .\main\templates\main\katki\katki_liderler.html:6
 #: .\main\templates\main\katki\katki_list.html:86
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
@@ -326,6 +327,7 @@ msgid "Henüz eleştiri yok."
 msgstr "Hêj nirxandin tune."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\katki\katki_liderler.html:24
 #: .\main\templates\main\katki\katki_list.html:77
 #: .\main\templates\main\kisi\kisi_liste.html:59
 #: .\main\templates\main\popular\popular.html:113
@@ -339,6 +341,12 @@ msgstr "Tê barkirin..."
 #: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Zêdetir Bar Bike"
+
+#: .\main\templates\main\katki\katki_liderler.html:21
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz katkı sağlayan yok."
+msgstr "Hêj tevkariyên tune."
 
 # tabs.html çevirileri
 #: .\main\templates\main\katki\katki_list.html:8

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-12 21:53+0300\n"
+"POT-Creation-Date: 2025-07-12 22:04+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: English <en@li.org>\n"
@@ -94,6 +94,7 @@ msgid "Geri dön"
 msgstr "Go back"
 
 #: .\main\templates\main\base.html:201
+#: .\main\templates\main\katki\katki_liderler.html:6
 #: .\main\templates\main\katki\katki_list.html:86
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top Contributors"
@@ -327,6 +328,7 @@ msgid "Henüz eleştiri yok."
 msgstr "No reviews yet."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\katki\katki_liderler.html:24
 #: .\main\templates\main\katki\katki_list.html:77
 #: .\main\templates\main\kisi\kisi_liste.html:59
 #: .\main\templates\main\popular\popular.html:113
@@ -340,6 +342,12 @@ msgstr "Loading..."
 #: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Load More"
+
+#: .\main\templates\main\katki\katki_liderler.html:21
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz katkı sağlayan yok."
+msgstr "No contributions yet."
 
 # tabs.html çevirileri
 #: .\main\templates\main\katki\katki_list.html:8
