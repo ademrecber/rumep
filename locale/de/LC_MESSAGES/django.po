@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 23:59+0300\n"
+"POT-Creation-Date: 2025-07-12 21:53+0300\n"
 "PO-Revision-Date: 2025-06-29 20:47+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -50,6 +50,7 @@ msgid "Popüler Değerlendirmeler"
 msgstr "Beliebte Bewertungen"
 
 #: .\main\templates\main\base.html:132
+#: .\main\templates\main\katki\katki_list.html:13
 msgid "Sözlük"
 msgstr "Wörterbuch"
 
@@ -92,6 +93,7 @@ msgid "Geri dön"
 msgstr "Zurück"
 
 #: .\main\templates\main\base.html:201
+#: .\main\templates\main\katki\katki_list.html:86
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top-Mitwirkende"
 
@@ -326,6 +328,7 @@ msgid "Henüz eleştiri yok."
 msgstr "Noch keine Bewertungen vorhanden."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\katki\katki_list.html:77
 #: .\main\templates\main\kisi\kisi_liste.html:59
 #: .\main\templates\main\popular\popular.html:113
 #: .\main\templates\main\sozluk\sozluk.html:104
@@ -334,9 +337,86 @@ msgid "Yükleniyor..."
 msgstr "Wird geladen..."
 
 #: .\main\templates\main\home.html:161
+#: .\main\templates\main\katki\katki_list.html:78
 #: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Mehr laden"
+
+#: .\main\templates\main\katki\katki_list.html:8
+#: .\main\templates\main\tabs.html:12
+msgid "Katkılar"
+msgstr "Beiträge"
+
+#: .\main\templates\main\katki\katki_list.html:10
+#: .\main\templates\main\kisi\kisi_liste.html:15
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Alle"
+
+#: .\main\templates\main\katki\katki_list.html:11
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü"
+msgstr "Songtext hinzufügen"
+
+#: .\main\templates\main\katki\katki_list.html:12
+#: .\main\templates\main\katki\katki_list.html:42
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi"
+msgstr "Personen"
+
+#: .\main\templates\main\katki\katki_list.html:14
+#: .\main\templates\main\katki\katki_list.html:58
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü"
+msgstr "Sprichwort"
+
+#: .\main\templates\main\katki\katki_list.html:15
+#: .\main\templates\main\katki\katki_list.html:66
+msgid "Deyim"
+msgstr "Redewendung"
+
+#: .\main\templates\main\katki\katki_list.html:30
+msgid "Bu kullanıcı yeni bir şarkı sözü ekledi"
+msgstr "Dieser Benutzer hat einen neuen Songtext hinzugefügt"
+
+#: .\main\templates\main\katki\katki_list.html:34
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkı"
+msgstr "Song"
+
+#: .\main\templates\main\katki\katki_list.html:38
+msgid "Bu kullanıcı yeni bir kişi ekledi"
+msgstr "Dieser Benutzer hat eine neue Person hinzugefügt"
+
+#: .\main\templates\main\katki\katki_list.html:46
+msgid "Bu kullanıcı yeni bir sözlük kelimesi ekledi"
+msgstr "Dieser Benutzer hat ein neues Wörterbuchwort hinzugefügt"
+
+#: .\main\templates\main\katki\katki_list.html:50
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_harf.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Wort"
+
+#: .\main\templates\main\katki\katki_list.html:54
+msgid "Bu kullanıcı yeni bir atasözü ekledi"
+msgstr "Dieser Benutzer hat ein neues Sprichwort hinzugefügt"
+
+#: .\main\templates\main\katki\katki_list.html:62
+msgid "Bu kullanıcı yeni bir deyim ekledi"
+msgstr "Dieser Benutzer hat eine neue Redewendung hinzugefügt"
+
+#: .\main\templates\main\katki\katki_list.html:74
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz katkı yok."
+msgstr "Noch keine Beiträge vorhanden."
 
 #: .\main\templates\main\kisi\kisi_detay.html:4
 #, fuzzy
@@ -520,12 +600,6 @@ msgstr "Personen - Rumep"
 #: .\main\templates\main\kisi\kisi_liste.html:11
 msgid "Kişi Listesi"
 msgstr "Personenliste"
-
-#: .\main\templates\main\kisi\kisi_liste.html:15
-#: .\main\templates\main\sarki\sarki_sozleri.html:33
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Alle"
 
 #: .\main\templates\main\kisi\kisi_liste.html:22
 #, fuzzy
@@ -1364,12 +1438,6 @@ msgstr "Wörter werden geladen..."
 msgid "Kelime Düzenle"
 msgstr "Wort bearbeiten"
 
-#: .\main\templates\main\sozluk\sozluk.html:125
-#: .\main\templates\main\sozluk\sozluk_harf.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:81
-msgid "Kelime"
-msgstr "Wort"
-
 #: .\main\templates\main\sozluk\sozluk.html:133
 msgid "Lütfen bir kelime girin."
 msgstr "Bitte geben Sie ein Wort ein."
@@ -1412,7 +1480,3 @@ msgstr "Kurdisches Wörterbuch"
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kelimenize detay yazamazsınız."
 msgstr "Sie können keine Details zu Ihrem eigenen Wort hinzufügen."
-
-#: .\main\templates\main\tabs.html:12
-msgid "Katkılar"
-msgstr "Beiträge"

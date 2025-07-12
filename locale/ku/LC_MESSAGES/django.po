@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 23:59+0300\n"
+"POT-Creation-Date: 2025-07-12 21:53+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: Adem R <adem@example.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -49,6 +49,7 @@ msgid "Popüler Değerlendirmeler"
 msgstr "Nirxandinên Populer"
 
 #: .\main\templates\main\base.html:132
+#: .\main\templates\main\katki\katki_list.html:13
 msgid "Sözlük"
 msgstr "Ferheng"
 
@@ -91,6 +92,7 @@ msgid "Geri dön"
 msgstr "Vegere"
 
 #: .\main\templates\main\base.html:201
+#: .\main\templates\main\katki\katki_list.html:86
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"
 
@@ -324,6 +326,7 @@ msgid "Henüz eleştiri yok."
 msgstr "Hêj nirxandin tune."
 
 #: .\main\templates\main\home.html:160
+#: .\main\templates\main\katki\katki_list.html:77
 #: .\main\templates\main\kisi\kisi_liste.html:59
 #: .\main\templates\main\popular\popular.html:113
 #: .\main\templates\main\sozluk\sozluk.html:104
@@ -332,9 +335,87 @@ msgid "Yükleniyor..."
 msgstr "Tê barkirin..."
 
 #: .\main\templates\main\home.html:161
+#: .\main\templates\main\katki\katki_list.html:78
 #: .\main\templates\main\popular\popular.html:114
 msgid "Daha Fazla Yükle"
 msgstr "Zêdetir Bar Bike"
+
+# tabs.html çevirileri
+#: .\main\templates\main\katki\katki_list.html:8
+#: .\main\templates\main\tabs.html:12
+msgid "Katkılar"
+msgstr "Beşdarî"
+
+#: .\main\templates\main\katki\katki_list.html:10
+#: .\main\templates\main\kisi\kisi_liste.html:15
+#: .\main\templates\main\sarki\sarki_sozleri.html:33
+#: .\main\templates\main\sozluk\sozluk.html:77
+msgid "Tümü"
+msgstr "Hemû"
+
+#: .\main\templates\main\katki\katki_list.html:11
+#, fuzzy
+#| msgid "Şarkı Sözleri"
+msgid "Şarkı Sözü"
+msgstr "Gotinên Stranê Zêde Bike"
+
+#: .\main\templates\main\katki\katki_list.html:12
+#: .\main\templates\main\katki\katki_list.html:42
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi"
+msgstr "Kes"
+
+#: .\main\templates\main\katki\katki_list.html:14
+#: .\main\templates\main\katki\katki_list.html:58
+#, fuzzy
+#| msgid "Atasözü ve Deyimler"
+msgid "Atasözü"
+msgstr "Gotina Pêşiyan"
+
+#: .\main\templates\main\katki\katki_list.html:15
+#: .\main\templates\main\katki\katki_list.html:66
+msgid "Deyim"
+msgstr "Bêje"
+
+#: .\main\templates\main\katki\katki_list.html:30
+msgid "Bu kullanıcı yeni bir şarkı sözü ekledi"
+msgstr "Vî bikarhênerî gotinên stranê yên nû zêde kir"
+
+#: .\main\templates\main\katki\katki_list.html:34
+#, fuzzy
+#| msgid "Katkılar"
+msgid "Şarkı"
+msgstr "Stran"
+
+#: .\main\templates\main\katki\katki_list.html:38
+msgid "Bu kullanıcı yeni bir kişi ekledi"
+msgstr "Vî bikarhênerî kesekî nû zêde kir"
+
+#: .\main\templates\main\katki\katki_list.html:46
+msgid "Bu kullanıcı yeni bir sözlük kelimesi ekledi"
+msgstr "Vî bikarhênerî peyvek ferhengê ya nû zêde kir"
+
+#: .\main\templates\main\katki\katki_list.html:50
+#: .\main\templates\main\sozluk\sozluk.html:125
+#: .\main\templates\main\sozluk\sozluk_harf.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:81
+msgid "Kelime"
+msgstr "Peyv"
+
+#: .\main\templates\main\katki\katki_list.html:54
+msgid "Bu kullanıcı yeni bir atasözü ekledi"
+msgstr "Vî bikarhênerî gotineke pêşiyan ya nû zêde kir"
+
+#: .\main\templates\main\katki\katki_list.html:62
+msgid "Bu kullanıcı yeni bir deyim ekledi"
+msgstr "Vî bikarhênerî bêjeyek nû zêde kir"
+
+#: .\main\templates\main\katki\katki_list.html:74
+#, fuzzy
+#| msgid "Henüz eleştiri yok."
+msgid "Henüz katkı yok."
+msgstr "Hêj tevkariyên tune."
 
 #: .\main\templates\main\kisi\kisi_detay.html:4
 #, fuzzy
@@ -518,12 +599,6 @@ msgstr "Kes - Rumep"
 #: .\main\templates\main\kisi\kisi_liste.html:11
 msgid "Kişi Listesi"
 msgstr "Lîsteya Kesan"
-
-#: .\main\templates\main\kisi\kisi_liste.html:15
-#: .\main\templates\main\sarki\sarki_sozleri.html:33
-#: .\main\templates\main\sozluk\sozluk.html:77
-msgid "Tümü"
-msgstr "Hemû"
 
 #: .\main\templates\main\kisi\kisi_liste.html:22
 #, fuzzy
@@ -1355,12 +1430,6 @@ msgstr "Peyv têne barkirin..."
 msgid "Kelime Düzenle"
 msgstr "Peyvê Sererast Bike"
 
-#: .\main\templates\main\sozluk\sozluk.html:125
-#: .\main\templates\main\sozluk\sozluk_harf.html:57
-#: .\main\templates\main\sozluk\sozluk_kelime.html:81
-msgid "Kelime"
-msgstr "Peyv"
-
 #: .\main\templates\main\sozluk\sozluk.html:133
 msgid "Lütfen bir kelime girin."
 msgstr "Ji kerema xwe peyvekê têkeve."
@@ -1403,8 +1472,3 @@ msgstr "Ferhenga Kurdî"
 #| msgid "Lütfen kelime detayını girin."
 msgid "Kendi kelimenize detay yazamazsınız."
 msgstr "Hûn nikarin hûrguliyê li peyva xwe zêde bikin."
-
-# tabs.html çevirileri
-#: .\main\templates\main\tabs.html:12
-msgid "Katkılar"
-msgstr "Beşdarî"
