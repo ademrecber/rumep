@@ -171,7 +171,8 @@ KATKI_PUANLARI = {
     'atasozu': 2,
     'deyim': 2,
     'kisi_detay': 5,  # Yeni ekledik
-    
+    'yer_adi': 10,
+    'yer_adi_detay': 5,
 }
 
 # Humanize ayarları

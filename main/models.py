@@ -455,7 +455,9 @@ class Katki(models.Model):
             ('kisi', 'Kişi'),
             ('sozluk', 'Sözlük'),
             ('atasozu', 'Atasözü'),
-            ('deyim', 'Deyim')
+            ('deyim', 'Deyim'),
+            ('yer_adi', 'Yer Adı'),
+            ('yer_adi_detay', 'Yer Adı Detayı'),
         ]
     )
     icerik_id = models.PositiveIntegerField()
@@ -511,3 +513,93 @@ class AIProviderConfig(models.Model):
               AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
           super().save(*args, **kwargs)
   
+class YerAdi(models.Model):
+    ad = models.CharField(max_length=100, db_index=True)
+    detay = models.TextField(max_length=5000, blank=True)
+    kategori = models.CharField(
+        max_length=20,
+        choices=[
+            ('il', 'İl'),
+            ('ilce', 'İlçe'),
+            ('kasaba', 'Kasaba'),
+            ('belde', 'Belde'),
+            ('koy', 'Köy'),
+        ],
+        verbose_name='Kategori'
+    )
+    bolge = models.CharField(
+        max_length=20,
+        choices=[
+            ('bakur', 'Bakur'),
+            ('basur', 'Başûr'),
+            ('rojava', 'Rojava'),
+            ('rojhilat', 'Rojhilat'),
+        ],
+        verbose_name='Kürdistan Bölgesi'
+    )
+    enlem = models.FloatField(null=True, blank=True, verbose_name='Enlem')
+    boylam = models.FloatField(null=True, blank=True, verbose_name='Boylam')
+    kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    eklenme_tarihi = models.DateTimeField(default=timezone.now)
+    guncelleme_tarihi = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['ad']
+        verbose_name = 'Yer Adı'
+        verbose_name_plural = 'Yer Adları'
+
+    def clean(self):
+        if not self.ad.strip():
+            raise ValidationError({'ad': 'Yer adı alanı zorunludur.'})
+        if not re.match(r'^[a-zçêîşû\s]+$', self.ad.lower()):
+            raise ValidationError({'ad': 'Yer adı sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'})
+
+    def save(self, *args, **kwargs):
+        self.ad = self.ad.upper()
+        self.full_clean()
+        super().save(*args, **kwargs)
+        from django.conf import settings
+        Katki.objects.create(
+            user=self.kullanici,
+            tur='yer_adi',
+            icerik_id=self.id,
+            puan=settings.KATKI_PUANLARI.get('yer_adi', 10)
+        )
+        self.kullanici.profile.katki_puani += settings.KATKI_PUANLARI.get('yer_adi', 10)
+        self.kullanici.profile.save()
+
+    def __str__(self):
+        return self.ad
+
+class YerAdiDetay(models.Model):
+    yer_adi = models.ForeignKey(YerAdi, on_delete=models.CASCADE, related_name='detaylar')
+    kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    detay = models.TextField(max_length=5000, validators=[MinLengthValidator(10)])
+    eklenme_tarihi = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-eklenme_tarihi']
+        verbose_name = 'Yer Adı Detayı'
+        verbose_name_plural = 'Yer Adı Detayları'
+
+    def clean(self):
+        if not self.detay.strip():
+            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+        if self.yer_adi.kullanici == self.kullanici:
+            raise ValidationError('Yer adını ekleyen kullanıcı ekstra detay ekleyemez.')
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+        from django.conf import settings
+        Katki.objects.create(
+            user=self.kullanici,
+            tur='yer_adi_detay',
+            icerik_id=self.id,
+            puan=settings.KATKI_PUANLARI.get('yer_adi_detay', 5)
+        )
+        self.kullanici.profile.katki_puani += settings.KATKI_PUANLARI.get('yer_adi_detay', 5)
+        self.kullanici.profile.save()
+
+    def __str__(self):
+        return f"{self.yer_adi.ad} - {self.detay[:50]}"
