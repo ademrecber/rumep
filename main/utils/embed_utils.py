@@ -21,12 +21,22 @@ def generate_embed_code(url):
         # Twitter/X için istemci tarafında embed
         if 'twitter.com' in hostname or 'x.com' in hostname:
             logger.debug(f"Twitter/X için istemci tarafı embed: {url}")
-            return f'<blockquote class="twitter-tweet"><a href="{url}"></a></blockquote>'
+            return f'<blockquote class="twitter-tweet"><img src="/static/logos/x.svg" alt="X Logo" style="width: 24px; height: 24px; margin-right: 5px;"><a href="{url}"></a></blockquote>'
 
         # Instagram için istemci tarafında embed
         elif 'instagram.com' in hostname:
             logger.debug(f"Instagram için istemci tarafı embed: {url}")
-            return f'<blockquote class="instagram-media" data-instgrm-permalink="{url}" data-instgrm-version="14"></blockquote>'
+            return f'<blockquote class="instagram-media" data-instgrm-permalink="{url}" data-instgrm-version="14"><img src="/static/logos/instagram.svg" alt="Instagram Logo" style="width: 24px; height: 24px; margin-right: 5px;"></blockquote>'
+        
+        # Telegram için istemci tarafında embed
+        elif 't.me' in hostname or 'telegram.me' in hostname:
+            logger.debug(f"Telegram için istemci tarafı embed: {url}")
+            return f'<blockquote class="telegram-media"><img src="/static/logos/telegram.svg" alt="Telegram Logo" style="width: 24px; height: 24px; margin-right: 5px;"><a href="{url}"></a></blockquote>'
+        
+        # Facebook için istemci tarafında embed
+        elif 'facebook.com' in hostname:
+            logger.debug(f"Facebook için istemci tarafı embed: {url}")
+            return f'<blockquote class="facebook-media"><img src="/static/logos/facebook.svg" alt="Facebook Logo" style="width: 24px; height: 24px; margin-right: 5px;"><a href="{url}"></a></blockquote>'
         
         # YouTube için özel embed
         elif 'youtube.com' in hostname or 'youtu.be' in hostname:
