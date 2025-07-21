@@ -7,6 +7,21 @@
     
     <!-- Kürdistan Haritası -->
     <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+    
+    <!-- Yer Adları Verisi -->
+    <script id="yer-adlari-data" type="application/json">
+        [
+            {% for yer_adi in yer_adlari %}
+                {
+                    "id": {{ yer_adi.id }},
+                    "ad": "{{ yer_adi.ad|escapejs }}",
+                    "kategori": "{{ yer_adi.kategori|escapejs }}",
+                    "enlem": {{ yer_adi.enlem|default:"null" }},
+                    "boylam": {{ yer_adi.boylam|default:"null" }}
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]
+    </script>
 
     <!-- A-Z Harf Filtreleri -->
     <div class="mb-3">
@@ -61,6 +76,7 @@
 </div>
 
 <!-- Google Maps API -->
-<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
 <script src="{% static 'main/js/modules/yer_adlari/map.js' %}"></script>
+<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
