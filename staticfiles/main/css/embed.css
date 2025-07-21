@@ -9,7 +9,11 @@
     overflow: hidden;
 }
 
-.social-embed iframe {
+.social-embed iframe,
+.social-embed blockquote.twitter-tweet,
+.social-embed blockquote.instagram-media,
+.social-embed blockquote.telegram-media,
+.social-embed blockquote.facebook-media {
     width: 100%;
     max-height: 500px;
     border: none;
@@ -18,7 +22,11 @@
 
 /* Responsive iframe boyutları */
 @media (max-width: 768px) {
-    .social-embed iframe {
+    .social-embed iframe,
+    .social-embed blockquote.twitter-tweet,
+    .social-embed blockquote.instagram-media,
+    .social-embed blockquote.telegram-media,
+    .social-embed blockquote.facebook-media {
         max-height: 300px;
     }
 }

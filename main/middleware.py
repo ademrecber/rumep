@@ -17,7 +17,7 @@ class SecurityMiddleware:
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; "
             "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; "
             "img-src 'self' data: https:; "
-            "connect-src 'self'; "
+            "connect-src 'self' https://maps.googleapis.com; "
             "frame-src 'self' https://platform.twitter.com https://www.instagram.com; "
             "object-src 'none';"
         )

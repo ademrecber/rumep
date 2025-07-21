@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateButtonText = () => {
             const isDarkTheme = document.documentElement.classList.contains('dark-theme');
             themeToggleBtn.innerHTML = isDarkTheme ? 
-                '<i class="bi bi-sun me-2"></i> Açık Tema' : 
-                '<i class="bi bi-moon me-2"></i> Koyu Tema';
+                '<i class="bi bi-sun me-2"></i> Light' : 
+                '<i class="bi bi-moon me-2"></i> Dark';
         };
         
         updateButtonText();

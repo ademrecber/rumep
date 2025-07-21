@@ -6,6 +6,7 @@ from ..models import YerAdi, YerAdiDetay
 from ..forms import YerAdiForm, YerAdiDetayForm
 from .base import profile_required
 import bleach
+from django.conf import settings
 
 @login_required
 @profile_required
@@ -42,7 +43,7 @@ def yer_adi_ekle(request):
                     yer_adi.save()
                     return redirect('yer_adi_detay', yer_adi_id=yer_adi.id)
                 else:
-                    return render(request, 'main/yer_adlari/ekle.html', {
+                    return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
                         'form': form,
                         'duplicate_warning': True,
                     })
@@ -51,14 +52,19 @@ def yer_adi_ekle(request):
                 yer_adi.kullanici = request.user
                 yer_adi.save()
                 return redirect('yer_adi_detay', yer_adi_id=yer_adi.id)
+        else:
+            return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
+                'form': form,
+                'duplicate_warning': form.errors.get('ad', {}).get('duplicate'),
+            })
     else:
         form = YerAdiForm()
     
     context = {
         'form': form,
-        'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',  # Google Maps API anahtarını buraya ekle
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
     }
-    return render(request, 'main/yer_adlari/ekle.html', context)
+    return render(request, 'main/yer_adlari/yer_adi_ekle.html', context)
 
 @login_required
 @profile_required
@@ -86,7 +92,7 @@ def yer_adi_detay(request, yer_adi_id):
         'is_owner': yer_adi.kullanici == request.user,
         'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',  # Google Maps API anahtarını buraya ekle
     }
-    return render(request, 'main/yer_adlari/detay.html', context)
+    return render(request, 'main/yer_adlari/yer_adi_detay.html', context)
 
 @login_required
 @profile_required
@@ -104,7 +110,7 @@ def yer_adi_duzenle(request, yer_adi_id):
                     yer_adi = form.save()
                     return redirect('yer_adi_detay', yer_adi_id=yer_adi.id)
                 else:
-                    return render(request, 'main/yer_adlari/ekle.html', {
+                    return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
                         'form': form,
                         'duplicate_warning': True,
                         'is_edit': True,
@@ -112,6 +118,12 @@ def yer_adi_duzenle(request, yer_adi_id):
             else:
                 yer_adi = form.save()
                 return redirect('yer_adi_detay', yer_adi_id=yer_adi.id)
+        else:
+            return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
+                'form': form,
+                'duplicate_warning': form.errors.get('ad', {}).get('duplicate'),
+                'is_edit': True,
+            })
     else:
         form = YerAdiForm(instance=yer_adi)
     
@@ -119,9 +131,9 @@ def yer_adi_duzenle(request, yer_adi_id):
         'form': form,
         'yer_adi': yer_adi,
         'is_edit': True,
-        'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',  # Google Maps API anahtarını buraya ekle
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
     }
-    return render(request, 'main/yer_adlari/ekle.html', context)
+    return render(request, 'main/yer_adlari/yer_adi_ekle.html', context)
 
 @login_required
 @profile_required
@@ -155,7 +167,7 @@ def yer_adi_detay_duzenle(request, detay_id):
         'yer_adi': detay.yer_adi,
         'is_edit': True,
     }
-    return render(request, 'main/yer_adlari/detay.html', context)
+    return render(request, 'main/yer_adlari/yer_adi_detay.html', context)
 
 @login_required
 @profile_required
