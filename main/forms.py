@@ -1,7 +1,10 @@
 from django import forms
-from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay
+from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay, YerAdi, YerAdiDetay
 import bleach
 import re
+from django.utils.translation import gettext_lazy as _
+
+
 
 def clean_form_text(text, allowed_tags=['p', 'b', 'i']):
     """Ortak metin temizleme fonksiyonu."""
@@ -435,3 +438,51 @@ class AtasozuDeyimDuzenleForm(forms.Form):
         if ornek:
             return clean_form_text(ornek)
         return ornek
+    
+
+class YerAdiForm(forms.ModelForm):
+    class Meta:
+        model = YerAdi
+        fields = ['ad', 'detay', 'kategori', 'bolge', 'enlem', 'boylam']
+        widgets = {
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Yer adını girin', 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Yer hakkında detay girin', 'rows': 4}),
+            'kategori': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'bolge': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'enlem': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enlem (ör. 37.7749)', 'step': 'any'}),
+            'boylam': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Boylam (ör. 40.7128)', 'step': 'any'}),
+        }
+
+    def clean_ad(self):
+        ad = self.cleaned_data.get('ad')
+        if not ad.strip():
+            raise forms.ValidationError('Yer adı alanı zorunludur.')
+        if not re.match(r'^[a-zçêîşû\s]+$', ad.lower()):
+            raise forms.ValidationError('Yer adı sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).')
+        ad_upper = ad.upper()
+        if YerAdi.objects.filter(ad__iexact=ad_upper).exclude(pk=self.instance.pk if self.instance else None).exists():
+            if not self.data.get('confirm_duplicate'):
+                raise forms.ValidationError('Bu yer adı zaten mevcut, eklemeye devam etmek istiyor musunuz?', code='duplicate')
+        return ad_upper
+
+    def clean(self):
+        cleaned_data = super().clean()
+        enlem = cleaned_data.get('enlem')
+        boylam = cleaned_data.get('boylam')
+        if (enlem is not None and boylam is None) or (enlem is None and boylam is not None):
+            raise forms.ValidationError('Enlem ve boylam birlikte girilmelidir.')
+        return cleaned_data
+
+class YerAdiDetayForm(forms.ModelForm):
+    class Meta:
+        model = YerAdiDetay
+        fields = ['detay']
+        widgets = {
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ek detay girin', 'rows': 4, 'required': True}),
+        }
+
+    def clean_detay(self):
+        detay = self.cleaned_data.get('detay')
+        if not detay.strip():
+            raise forms.ValidationError('Detay alanı zorunludur.')
+        return detay

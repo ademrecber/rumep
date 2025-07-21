@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Yer Adları</h1>
+    
+    <!-- Kürdistan Haritası -->
+    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+
+    <!-- A-Z Harf Filtreleri -->
+    <div class="mb-3">
+        <label for="harf-filter" class="form-label">Harfe Göre Filtrele:</label>
+        <div class="btn-group d-flex flex-wrap">
+            {% for harf in harfler %}
+                <a href="?harf={{ harf }}" class="btn btn-outline-primary {% if secili_harf == harf %}active{% endif %}">{{ harf }}</a>
+            {% endfor %}
+            <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-outline-primary {% if not secili_harf %}active{% endif %}">Tümü</a>
+        </div>
+    </div>
+
+    <!-- Kategori Filtreleri -->
+    <div class="mb-3">
+        <label for="kategori-filter" class="form-label">Kategoriye Göre Filtrele:</label>
+        <select id="kategori-filter" class="form-select" onchange="location.href='?kategori='+this.value">
+            <option value="">Tümü</option>
+            {% for kategori in kategoriler %}
+                <option value="{{ kategori }}" {% if secili_kategori == kategori %}selected{% endif %}>
+                    {{ kategori|capfirst }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Yer Adları Listesi -->
+    <div class="row">
+        {% for yer_adi in yer_adlari %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'yer_adi_detay' yer_adi.id %}">{{ yer_adi.ad }}</a>
+                            <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small>
+                        </h5>
+                        <p class="card-text">{{ yer_adi.detay|truncatechars:100 }}</p>
+                        <p class="card-text"><small class="text-muted">{{ yer_adi.bolge|capfirst }} - {{ yer_adi.eklenme_tarihi|date:"Y-m-d" }}</small></p>
+                        {% if yer_adi.kullanici == user %}
+                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-sm btn-primary">Düzenle</a>
+                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>Henüz yer adı eklenmemiş.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>
+<script src="{% static 'main/js/modules/yer_adlari/map.js' %}"></script>
+{% endblock %}

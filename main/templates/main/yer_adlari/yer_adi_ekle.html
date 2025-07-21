@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{% if is_edit %}Yer Adı Düzenle{% else %}Yer Adı Ekle{% endif %}</h1>
+    
+    <!-- Google Maps Haritası -->
+    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+    
+    <form method="post" id="yer-adi-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if duplicate_warning %}
+            <div class="alert alert-warning">
+                Bu yer adı zaten mevcut. Eklemeye devam etmek istiyor musunuz?
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('confirm-duplicate').value='true'; document.getElementById('yer-adi-form').submit();">Evet</button>
+                <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-secondary btn-sm">Hayır</a>
+                <input type="hidden" name="confirm_duplicate" id="confirm-duplicate" value="false">
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{% if is_edit %}Kaydet{% else %}Ekle{% endif %}</button>
+    </form>
+</div>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>
+<script src="{% static 'main/js/modules/yer_adlari/map.js' %}"></script>
+{% endblock %}

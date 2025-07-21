@@ -5,6 +5,7 @@ from .views import post_views
 from .views import account_views
 from .views import home_views
 from .views import ai_views
+from .views import yer_adlari_views
 
 
 handler404 = 'main.views.custom_404'
@@ -126,5 +127,13 @@ urlpatterns = [
 
     # AI URL’leri
     path('enhance/', ai_views.process_text, name='enhance'),
+
+    path('yer-adlari/', yer_adlari_views.yer_adlari_anasayfa, name='yer_adlari_anasayfa'),
+    path('yer-adi/ekle/', yer_adlari_views.yer_adi_ekle, name='yer_adi_ekle'),
+    path('yer-adi/<int:yer_adi_id>/', yer_adlari_views.yer_adi_detay, name='yer_adi_detay'),
+    path('yer-adi/<int:yer_adi_id>/duzenle/', yer_adlari_views.yer_adi_duzenle, name='yer_adi_duzenle'),
+    path('yer-adi/<int:yer_adi_id>/sil/', yer_adlari_views.yer_adi_sil, name='yer_adi_sil'),
+    path('yer-adi-detay/<int:detay_id>/duzenle/', yer_adlari_views.yer_adi_detay_duzenle, name='yer_adi_detay_duzenle'),
+    path('yer-adi-detay/<int:detay_id>/sil/', yer_adlari_views.yer_adi_detay_sil, name='yer_adi_detay_sil'),
 
 ]   

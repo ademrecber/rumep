@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ yer_adi.ad }} <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small></h1>
+    <p><strong>Bölge:</strong> {{ yer_adi.bolge|capfirst }}</p>
+    {% if yer_adi.enlem and yer_adi.boylam %}
+        <p><strong>Koordinatlar:</strong> {{ yer_adi.enlem }}, {{ yer_adi.boylam }}</p>
+    {% endif %}
+    <p>{{ yer_adi.detay|default:"Detay eklenmemiş." }}</p>
+    
+    <!-- Harita -->
+    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+    
+    {% if is_owner %}
+        <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-primary mb-3">Düzenle</a>
+        <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mb-3">Sil</button>
+        </form>
+    {% endif %}
+    
+    <h3>Ek Detaylar</h3>
+    {% for detay in detaylar %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p class="card-text">{{ detay.detay }}</p>
+                <p class="card-text"><small class="text-muted">Ekleyen: {{ detay.kullanici.username }} - {{ detay.eklenme_tarihi|date:"Y-m-d" }}</small></p>
+                {% if detay.kullanici == user %}
+                    <a href="{% url 'yer_adi_detay_duzenle' detay.id %}" class="btn btn-sm btn-primary">Düzenle</a>
+                    <form method="post" action="{% url 'yer_adi_detay_sil' detay.id %}" class="d-inline" onsubmit="return confirm('Bu detayı silmek istediğinizden emin misiniz?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Henüz ek detay eklenmemiş.</p>
+    {% endfor %}
+    
+    {% if not is_owner %}
+        <h4>Yeni Detay Ekle</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Detay Ekle</button>
+        </form>
+    {% endif %}
+</div>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async defer></script>
+<script src="{% static 'main/js/modules/yer_adlari/map.js' %}"></script>
+{% endblock %}
