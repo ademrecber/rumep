@@ -5,6 +5,9 @@
 <div class="container mt-4">
     <h1>{{ yer_adi.ad }} <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small></h1>
     <p><strong>Bölge:</strong> {{ yer_adi.bolge|capfirst }}</p>
+    {% if yer_adi.parent %}
+        <p><strong>Bağlı Olduğu Yer:</strong> <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}">{{ yer_adi.parent.ad }} ({{ yer_adi.parent.kategori|capfirst }})</a></p>
+    {% endif %}
     {% if yer_adi.enlem and yer_adi.boylam %}
         <p><strong>Koordinatlar:</strong> {{ yer_adi.enlem }}, {{ yer_adi.boylam }}</p>
     {% endif %}

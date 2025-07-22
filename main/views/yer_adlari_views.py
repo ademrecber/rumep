@@ -56,6 +56,7 @@ def yer_adi_ekle(request):
             return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
                 'form': form,
                 'duplicate_warning': form.errors.get('ad', {}).get('duplicate'),
+                'errors': form.errors,
             })
     else:
         form = YerAdiForm()
@@ -122,6 +123,7 @@ def yer_adi_duzenle(request, yer_adi_id):
             return render(request, 'main/yer_adlari/yer_adi_ekle.html', {
                 'form': form,
                 'duplicate_warning': form.errors.get('ad', {}).get('duplicate'),
+                'errors': form.errors,
                 'is_edit': True,
             })
     else:
