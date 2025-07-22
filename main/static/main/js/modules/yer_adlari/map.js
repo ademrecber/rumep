@@ -1,7 +1,8 @@
 (function() {
     window.initMap = function() {
+        console.log('initMap çağrıldı'); // Hata ayıklama
         const mapOptions = {
-            center: { lat: 37.5, lng: 41.0 }, // Kürdistan bölgesi merkezi
+            center: { lat: 37.5, lng: 41.0 },
             zoom: 6,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
