@@ -493,3 +493,17 @@ class YerAdiForm(forms.ModelForm):
             if kategori in ['kasaba', 'belde', 'koy'] and parent.kategori not in ['il', 'ilce']:
                 raise forms.ValidationError({'parent': 'Kasaba, belde veya köy sadece il veya ilçeye bağlı olabilir.'})
         return cleaned_data
+
+class YerAdiDetayForm(forms.ModelForm):
+    class Meta:
+        model = YerAdiDetay
+        fields = ['detay']
+        widgets = {
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ek detay girin', 'rows': 4, 'required': True}),
+        }
+
+    def clean_detay(self):
+        detay = self.cleaned_data.get('detay')
+        if not detay.strip():
+            raise forms.ValidationError('Detay alanı zorunludur.')
+        return detay
