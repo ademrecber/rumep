@@ -542,6 +542,7 @@ class YerAdi(models.Model):
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
     guncelleme_tarihi = models.DateTimeField(auto_now=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='children', verbose_name='Bağlı Olduğu Yer')
 
     class Meta:
         ordering = ['ad']
@@ -553,6 +554,15 @@ class YerAdi(models.Model):
             raise ValidationError({'ad': 'Yer adı alanı zorunludur.'})
         if not re.match(r'^[a-zçêîşû\s]+$', self.ad.lower()):
             raise ValidationError({'ad': 'Yer adı sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'})
+        if self.kategori != 'il' and not self.parent:
+            raise ValidationError({'parent': 'İl dışındaki kategoriler için bağlı olduğu yer seçilmelidir.'})
+        if self.kategori == 'il' and self.parent:
+            raise ValidationError({'parent': 'İl kategorisi için bağlı yer seçilemez.'})
+        if self.parent:
+            if self.kategori == 'ilce' and self.parent.kategori != 'il':
+                raise ValidationError({'parent': 'İlçe sadece bir ile bağlı olabilir.'})
+            if self.kategori in ['kasaba', 'belde', 'koy'] and self.parent.kategori not in ['il', 'ilce']:
+                raise ValidationError({'parent': 'Kasaba, belde veya köy sadece il veya ilçeye bağlı olabilir.'})
 
     def save(self, *args, **kwargs):
         self.ad = self.ad.upper()
