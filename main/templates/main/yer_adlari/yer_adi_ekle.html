@@ -10,7 +10,55 @@
     
     <form method="post" id="yer-adi-form">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            <label for="{{ form.ad.id_for_label }}" class="form-label">Yer Adı</label>
+            {{ form.ad }}
+            {% if form.ad.errors %}
+                <div class="alert alert-danger">{{ form.ad.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.detay.id_for_label }}" class="form-label">Detay</label>
+            {{ form.detay }}
+            {% if form.detay.errors %}
+                <div class="alert alert-danger">{{ form.detay.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.kategori.id_for_label }}" class="form-label">Kategori</label>
+            {{ form.kategori }}
+            {% if form.kategori.errors %}
+                <div class="alert alert-danger">{{ form.kategori.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.bolge.id_for_label }}" class="form-label">Kürdistan Bölgesi</label>
+            {{ form.bolge }}
+            {% if form.bolge.errors %}
+                <div class="alert alert-danger">{{ form.bolge.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.parent.id_for_label }}" class="form-label">Bağlı Olduğu Yer</label>
+            {{ form.parent }}
+            {% if form.parent.errors %}
+                <div class="alert alert-danger">{{ form.parent.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.enlem.id_for_label }}" class="form-label">Enlem</label>
+            {{ form.enlem }}
+            {% if form.enlem.errors %}
+                <div class="alert alert-danger">{{ form.enlem.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.boylam.id_for_label }}" class="form-label">Boylam</label>
+            {{ form.boylam }}
+            {% if form.boylam.errors %}
+                <div class="alert alert-danger">{{ form.boylam.errors }}</div>
+            {% endif %}
+        </div>
         {% if duplicate_warning %}
             <div class="alert alert-warning">
                 Bu yer adı zaten mevcut. Eklemeye devam etmek istiyor musunuz?

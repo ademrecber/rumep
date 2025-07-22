@@ -443,7 +443,7 @@ class AtasozuDeyimDuzenleForm(forms.Form):
 class YerAdiForm(forms.ModelForm):
     class Meta:
         model = YerAdi
-        fields = ['ad', 'detay', 'kategori', 'bolge', 'enlem', 'boylam']
+        fields = ['ad', 'detay', 'kategori', 'bolge', 'enlem', 'boylam', 'parent']
         widgets = {
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Yer adını girin', 'required': True}),
             'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Yer hakkında detay girin', 'rows': 4}),
@@ -451,7 +451,17 @@ class YerAdiForm(forms.ModelForm):
             'bolge': forms.Select(attrs={'class': 'form-control', 'required': True}),
             'enlem': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enlem (ör. 37.7749)', 'step': 'any'}),
             'boylam': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Boylam (ör. 40.7128)', 'step': 'any'}),
+            'parent': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Parent seçimini kategori ve hiyerarşiye göre sınırla
+        self.fields['parent'].queryset = YerAdi.objects.filter(kategori__in=['il', 'ilce'])
+        if self.instance and self.instance.kategori == 'il':
+            self.fields['parent'].required = False
+        elif self.instance and self.instance.kategori in ['ilce', 'kasaba', 'belde', 'koy']:
+            self.fields['parent'].required = True
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
@@ -469,20 +479,17 @@ class YerAdiForm(forms.ModelForm):
         cleaned_data = super().clean()
         enlem = cleaned_data.get('enlem')
         boylam = cleaned_data.get('boylam')
+        kategori = cleaned_data.get('kategori')
+        parent = cleaned_data.get('parent')
         if (enlem is not None and boylam is None) or (enlem is None and boylam is not None):
             raise forms.ValidationError('Enlem ve boylam birlikte girilmelidir.')
+        if kategori != 'il' and not parent:
+            raise forms.ValidationError({'parent': 'İl dışındaki kategoriler için bağlı olduğu yer seçilmelidir.'})
+        if kategori == 'il' and parent:
+            raise forms.ValidationError({'parent': 'İl kategorisi için bağlı yer seçilemez.'})
+        if parent:
+            if kategori == 'ilce' and parent.kategori != 'il':
+                raise forms.ValidationError({'parent': 'İlçe sadece bir ile bağlı olabilir.'})
+            if kategori in ['kasaba', 'belde', 'koy'] and parent.kategori not in ['il', 'ilce']:
+                raise forms.ValidationError({'parent': 'Kasaba, belde veya köy sadece il veya ilçeye bağlı olabilir.'})
         return cleaned_data
-
-class YerAdiDetayForm(forms.ModelForm):
-    class Meta:
-        model = YerAdiDetay
-        fields = ['detay']
-        widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ek detay girin', 'rows': 4, 'required': True}),
-        }
-
-    def clean_detay(self):
-        detay = self.cleaned_data.get('detay')
-        if not detay.strip():
-            raise forms.ValidationError('Detay alanı zorunludur.')
-        return detay
