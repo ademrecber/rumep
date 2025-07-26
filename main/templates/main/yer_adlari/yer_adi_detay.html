@@ -2,55 +2,255 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>{{ yer_adi.ad }} <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small></h1>
-    <p><strong>Bölge:</strong> {{ yer_adi.bolge|capfirst }}</p>
-    {% if yer_adi.parent %}
-        <p><strong>Bağlı Olduğu Yer:</strong> <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}">{{ yer_adi.parent.ad }} ({{ yer_adi.parent.kategori|capfirst }})</a></p>
-    {% endif %}
-    {% if yer_adi.enlem and yer_adi.boylam %}
-        <p><strong>Koordinatlar:</strong> {{ yer_adi.enlem }}, {{ yer_adi.boylam }}</p>
-    {% endif %}
-    <p>{{ yer_adi.detay|default:"Detay eklenmemiş." }}</p>
+<div class="container-fluid px-0">
+    <!-- Hero Section -->
+    <div class="place-hero bg-gradient-primary text-white py-5 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb text-white-50">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'yer_adlari_anasayfa' %}" class="text-white text-decoration-none">
+                                    <i class="bi bi-geo-alt me-1"></i>Yer Adları
+                                </a>
+                            </li>
+                            {% if yer_adi.parent %}
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}" class="text-white text-decoration-none">
+                                        {{ yer_adi.parent.ad }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li class="breadcrumb-item active text-white" aria-current="page">{{ yer_adi.ad }}</li>
+                        </ol>
+                    </nav>
+                    
+                    <h1 class="display-4 fw-bold mb-3">{{ yer_adi.ad }}</h1>
+                    
+                    <div class="place-badges mb-4">
+                        <span class="badge bg-light text-dark fs-6 me-2">
+                            <i class="bi bi-tag me-1"></i>{{ yer_adi.kategori|capfirst }}
+                        </span>
+                        <span class="badge bg-light text-dark fs-6 me-2">
+                            <i class="bi bi-geo me-1"></i>{{ yer_adi.bolge|capfirst }}
+                        </span>
+                        {% if yer_adi.enlem and yer_adi.boylam %}
+                            <span class="badge bg-success fs-6">
+                                <i class="bi bi-geo-alt me-1"></i>Koordinatlı
+                            </span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if is_owner %}
+                        <div class="owner-actions d-flex gap-3">
+                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-light btn-lg">
+                                <i class="bi bi-pencil me-2"></i>Düzenle
+                            </a>
+                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" 
+                                  onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-light btn-lg">
+                                    <i class="bi bi-trash me-2"></i>Sil
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="col-lg-4 text-center">
+                    <div class="place-stats bg-white bg-opacity-10 rounded-4 p-4">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <h3 class="h2 mb-1">{{ detaylar.count }}</h3>
+                                <p class="mb-0 small">Ek Detay</p>
+                            </div>
+                            <div class="col-6">
+                                <h3 class="h2 mb-1">{{ yer_adi.children.count }}</h3>
+                                <p class="mb-0 small">Alt Yer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- Harita -->
-    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
-    
-    {% if is_owner %}
-        <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-primary mb-3">Düzenle</a>
-        <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger mb-3">Sil</button>
-        </form>
-    {% endif %}
-    
-    <h3>Ek Detaylar</h3>
-    {% for detay in detaylar %}
-        <div class="card mb-2">
-            <div class="card-body">
-                <p class="card-text">{{ detay.detay }}</p>
-                <p class="card-text"><small class="text-muted">Ekleyen: {{ detay.kullanici.username }} - {{ detay.eklenme_tarihi|date:"Y-m-d" }}</small></p>
-                {% if detay.kullanici == user %}
-                    <a href="{% url 'yer_adi_detay_duzenle' detay.id %}" class="btn btn-sm btn-primary">Düzenle</a>
-                    <form method="post" action="{% url 'yer_adi_detay_sil' detay.id %}" class="d-inline" onsubmit="return confirm('Bu detayı silmek istediğinizden emin misiniz?');">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                    </form>
+    <div class="container">
+        <div class="row">
+            <!-- Ana İçerik -->
+            <div class="col-lg-8">
+                <!-- Açıklama -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="bi bi-info-circle me-2"></i>Açıklama
+                        </h5>
+                        <p class="card-text lead">{{ yer_adi.detay|default:"Bu yer adı için henüz detaylı açıklama eklenmemiş." }}</p>
+                    </div>
+                </div>
+                <!-- Harita -->
+                {% if yer_adi.enlem and yer_adi.boylam %}
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white border-0 py-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-map me-2"></i>Konum
+                                <small class="text-muted ms-2">({{ yer_adi.enlem }}, {{ yer_adi.boylam }})</small>
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="map" style="height: 400px; border-radius: 0 0 0.5rem 0.5rem;"></div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Ek Detaylar -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-journal-text me-2"></i>Ek Detaylar
+                            <span class="badge bg-primary ms-2">{{ detaylar.count }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% for detay in detaylar %}
+                            <div class="detail-item border-start border-3 border-primary ps-4 mb-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="detail-meta">
+                                        <small class="text-muted">
+                                            <i class="bi bi-person me-1"></i>{{ detay.kullanici.username }}
+                                            <i class="bi bi-calendar3 ms-3 me-1"></i>{{ detay.eklenme_tarihi|date:"d.m.Y" }}
+                                        </small>
+                                    </div>
+                                    {% if detay.kullanici == user %}
+                                        <div class="detail-actions">
+                                            <a href="{% url 'yer_adi_detay_duzenle' detay.id %}" 
+                                               class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form method="post" action="{% url 'yer_adi_detay_sil' detay.id %}" 
+                                                  class="d-inline" 
+                                                  onsubmit="return confirm('Bu detayı silmek istediğinizden emin misiniz?');">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <p class="mb-0">{{ detay.detay }}</p>
+                            </div>
+                        {% empty %}
+                            <div class="text-center py-4">
+                                <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
+                                <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Yan Panel -->
+            <div class="col-lg-4">
+                <!-- Bilgi Kartı -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Bilgiler
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Kategori</strong>
+                            <span class="badge bg-primary-subtle text-primary">
+                                {{ yer_adi.kategori|capfirst }}
+                            </span>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Bölge</strong>
+                            <span>{{ yer_adi.bolge|capfirst }}</span>
+                        </div>
+                        
+                        {% if yer_adi.parent %}
+                            <div class="info-item mb-3">
+                                <strong class="text-muted d-block mb-1">Bağlı Olduğu Yer</strong>
+                                <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}" 
+                                   class="text-decoration-none">
+                                    {{ yer_adi.parent.ad }}
+                                    <small class="text-muted">({{ yer_adi.parent.kategori|capfirst }})</small>
+                                </a>
+                            </div>
+                        {% endif %}
+                        
+                        {% if yer_adi.enlem and yer_adi.boylam %}
+                            <div class="info-item mb-3">
+                                <strong class="text-muted d-block mb-1">Koordinatlar</strong>
+                                <code class="small">{{ yer_adi.enlem }}, {{ yer_adi.boylam }}</code>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="info-item">
+                            <strong class="text-muted d-block mb-1">Eklenme Tarihi</strong>
+                            <span>{{ yer_adi.eklenme_tarihi|date:"d F Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alt Yerler -->
+                {% if yer_adi.children.exists %}
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white border-0 py-3">
+                            <h6 class="mb-0">
+                                <i class="bi bi-diagram-3 me-2"></i>Alt Yerler
+                                <span class="badge bg-secondary ms-2">{{ yer_adi.children.count }}</span>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            {% for alt_yer in yer_adi.children.all|dictsort:"ad" %}
+                                <div class="sub-place-item d-flex align-items-center mb-3">
+                                    <div class="sub-place-icon me-3">
+                                        <i class="bi bi-geo-alt text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            <a href="{% url 'yer_adi_detay' alt_yer.id %}" 
+                                               class="text-decoration-none">
+                                                {{ alt_yer.ad }}
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">{{ alt_yer.kategori|capfirst }}</small>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                <!-- Yeni Detay Ekle -->
+                {% if not is_owner %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">
+                                <i class="bi bi-plus-circle me-2"></i>Yeni Detay Ekle
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.as_p }}
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-plus-circle me-2"></i>Detay Ekle
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>
-    {% empty %}
-        <p>Henüz ek detay eklenmemiş.</p>
-    {% endfor %}
-    
-    {% if not is_owner %}
-        <h4>Yeni Detay Ekle</h4>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Detay Ekle</button>
-        </form>
-    {% endif %}
+    </div>
 </div>
 {% endblock %}
 

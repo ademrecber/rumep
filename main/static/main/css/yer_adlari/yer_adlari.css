@@ -1,18 +1,316 @@
+/* Modern Yer Adları Stilleri */
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+    opacity: 0.3;
+}
+
+.place-hero {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.place-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+    opacity: 0.3;
+}
+
+.stats-card, .place-stats {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover, .place-stats:hover {
+    transform: translateY(-5px);
+}
+
+/* Harita */
 #map {
     width: 100%;
     height: 400px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
-.btn-group .btn {
-    margin: 2px;
+#map:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-.card {
+/* Filtreler */
+.filters-section .card {
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filters-section .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.alphabet-filter .btn {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.alphabet-filter .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.alphabet-filter .btn.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border-color: #007bff;
+}
+
+/* Yer Adları Kartları */
+.place-card {
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.place-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 123, 255, 0.2);
+}
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.place-card .card-title a {
+    transition: color 0.2s ease;
+}
+
+.place-card:hover .card-title a {
+    color: #007bff !important;
+}
+
+.place-category .badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.place-actions .btn {
+    border-radius: 20px;
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.place-actions .btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Bölge Başlıkları */
+.region-section {
+    margin-bottom: 3rem;
+}
+
+.region-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    border-left: 5px solid #007bff;
+}
+
+.region-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Alt Yerler */
+.sub-places-list {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.sub-place-item {
+    background: white;
     border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef;
+    margin-bottom: 0.5rem;
 }
 
-.alert-warning {
-    margin-top: 10px;
+.sub-place-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: #007bff;
+}
+
+/* Detay Sayfası */
+.detail-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.info-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.sub-place-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section, .place-hero {
+        padding: 2rem 0;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .alphabet-filter {
+        justify-content: center;
+    }
+    
+    .alphabet-filter .btn {
+        min-width: 35px;
+        height: 35px;
+        font-size: 0.875rem;
+    }
+    
+    .place-card {
+        margin-bottom: 1rem;
+    }
+    
+    .region-header {
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .region-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 1rem;
+    }
+}
+
+/* Animasyonlar */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.place-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.place-card:nth-child(1) { animation-delay: 0.1s; }
+.place-card:nth-child(2) { animation-delay: 0.2s; }
+.place-card:nth-child(3) { animation-delay: 0.3s; }
+.place-card:nth-child(4) { animation-delay: 0.4s; }
+.place-card:nth-child(5) { animation-delay: 0.5s; }
+.place-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Gradient Backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* JavaScript Fonksiyonları için */
+.map-container {
+    transition: all 0.3s ease;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #007bff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

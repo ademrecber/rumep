@@ -2,12 +2,52 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Yer Adları</h1>
-    <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary mb-3">Yer Adı Ekle</a>
+<div class="container-fluid px-0">
+    <!-- Modern Header -->
+    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="bi bi-geo-alt-fill me-3"></i>Yer Adları
+                    </h1>
+                    <p class="lead mb-4">Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="{% url 'yer_adi_ekle' %}" class="btn btn-light btn-lg">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Yer Adı Ekle
+                        </a>
+                        <button class="btn btn-outline-light btn-lg" onclick="toggleMapView()">
+                            <i class="bi bi-map me-2"></i>Harita Görünümü
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4">
+                        <h3 class="h2 mb-2">{{ yer_adlari.count }}</h3>
+                        <p class="mb-0">Toplam Yer Adı</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- Kürdistan Haritası -->
-    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+    <div class="container">
+        <!-- Kürdistan Haritası -->
+        <div class="map-container mb-4" id="mapContainer" style="display: none;">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-white border-0 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>Harita Görünümü</h5>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="toggleMapView()">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div id="map" style="height: 500px; border-radius: 0 0 0.5rem 0.5rem;"></div>
+                </div>
+            </div>
+        </div>
     
     <!-- Yer Adları Verisi -->
     <script id="yer-adlari-data" type="application/json">
@@ -24,109 +64,145 @@
         ]
     </script>
 
-    <!-- A-Z Harf Filtreleri -->
-    <div class="mb-3">
-        <label for="harf-filter" class="form-label">Harfe Göre Filtrele:</label>
-        <div class="btn-group d-flex flex-wrap">
-            {% for harf in harfler %}
-                <a href="?harf={{ harf }}" class="btn btn-outline-primary {% if secili_harf == harf %}active{% endif %}">{{ harf }}</a>
-            {% endfor %}
-            <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-outline-primary {% if not secili_harf %}active{% endif %}">Tümü</a>
+        <!-- Modern Filtreler -->
+        <div class="filters-section mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <!-- Harf Filtreleri -->
+                        <div class="col-lg-8">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="bi bi-funnel me-2"></i>Harfe Göre Filtrele
+                            </label>
+                            <div class="alphabet-filter d-flex flex-wrap gap-1">
+                                {% for harf in harfler %}
+                                    <a href="?harf={{ harf }}" 
+                                       class="btn btn-sm {% if secili_harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
+                                        {{ harf }}
+                                    </a>
+                                {% endfor %}
+                                <a href="{% url 'yer_adlari_anasayfa' %}" 
+                                   class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
+                                    Tümü
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Kategori Filtreleri -->
+                        <div class="col-lg-4">
+                            <label for="kategori-filter" class="form-label fw-semibold mb-2">
+                                <i class="bi bi-tags me-2"></i>Kategori
+                            </label>
+                            <select id="kategori-filter" class="form-select" onchange="location.href='?kategori='+this.value">
+                                <option value="">Tüm Kategoriler</option>
+                                {% for kategori in kategoriler %}
+                                    <option value="{{ kategori }}" {% if secili_kategori == kategori %}selected{% endif %}>
+                                        {{ kategori|capfirst }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Kategori Filtreleri -->
-    <div class="mb-3">
-        <label for="kategori-filter" class="form-label">Kategoriye Göre Filtrele:</label>
-        <select id="kategori-filter" class="form-select" onchange="location.href='?kategori='+this.value">
-            <option value="">Tümü</option>
-            {% for kategori in kategoriler %}
-                <option value="{{ kategori }}" {% if secili_kategori == kategori %}selected{% endif %}>
-                    {{ kategori|capfirst }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <!-- Yer Adları Listesi -->
-    <div class="accordion" id="yer-adlari-accordion">
-        {% for bolge, bolge_yer_adlari in bolgeler.items %}
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-{{ bolge }}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ bolge }}" aria-expanded="true" aria-controls="collapse-{{ bolge }}">
-                        {{ bolge|capfirst }}
-                    </button>
-                </h2>
-                <div id="collapse-{{ bolge }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-{{ bolge }}" data-bs-parent="#yer-adlari-accordion">
-                    <div class="accordion-body">
+        <!-- Modern Yer Adları Listesi -->
+        <div class="places-grid">
+            {% for bolge, bolge_yer_adlari in bolgeler.items %}
+                <div class="region-section mb-5">
+                    <div class="region-header d-flex align-items-center mb-4">
+                        <div class="region-icon me-3">
+                            <i class="bi bi-geo-alt-fill text-primary fs-2"></i>
+                        </div>
+                        <div>
+                            <h2 class="h3 mb-1 text-primary">{{ bolge|capfirst }}</h2>
+                            <p class="text-muted mb-0">{{ bolge_yer_adlari|length }} yer adı</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4">
                         {% for yer_adi in bolge_yer_adlari %}
                             {% if yer_adi.kategori == 'il' %}
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <a href="{% url 'yer_adi_detay' yer_adi.id %}">{{ yer_adi.ad }}</a>
-                                            <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small>
-                                        </h5>
-                                        <p class="card-text">{{ yer_adi.detay|truncatechars:100 }}</p>
-                                        <p class="card-text"><small class="text-muted">{{ yer_adi.bolge|capfirst }} - {{ yer_adi.eklenme_tarihi|date:"Y-m-d" }}</small></p>
-                                        {% if yer_adi.kullanici == user %}
-                                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-sm btn-primary">Düzenle</a>
-                                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                                            </form>
-                                        {% endif %}
-                                        <!-- Alt yer adları -->
-                                        <div class="accordion" id="yer-{{ yer_adi.id }}-accordion">
-                                            {% for alt_yer in yer_adi.children.all|dictsort:"ad" %}
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="heading-{{ alt_yer.id }}">
-                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ alt_yer.id }}" aria-expanded="false" aria-controls="collapse-{{ alt_yer.id }}">
-                                                            {{ alt_yer.ad }} ({{ alt_yer.kategori|capfirst }})
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="place-card card h-100 border-0 shadow-sm hover-lift">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <div class="place-category">
+                                                    <span class="badge bg-primary-subtle text-primary rounded-pill">
+                                                        <i class="bi bi-building me-1"></i>{{ yer_adi.kategori|capfirst }}
+                                                    </span>
+                                                </div>
+                                                {% if yer_adi.enlem and yer_adi.boylam %}
+                                                    <i class="bi bi-geo-alt text-success" title="Koordinatları mevcut"></i>
+                                                {% endif %}
+                                            </div>
+                                            
+                                            <h5 class="card-title mb-2">
+                                                <a href="{% url 'yer_adi_detay' yer_adi.id %}" 
+                                                   class="text-decoration-none text-dark fw-bold">
+                                                    {{ yer_adi.ad }}
+                                                </a>
+                                            </h5>
+                                            
+                                            <p class="card-text text-muted mb-3">{{ yer_adi.detay|truncatechars:80 }}</p>
+                                            
+                                            <div class="place-meta d-flex justify-content-between align-items-center mb-3">
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar3 me-1"></i>{{ yer_adi.eklenme_tarihi|date:"d.m.Y" }}
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-person me-1"></i>{{ yer_adi.kullanici.username }}
+                                                </small>
+                                            </div>
+                                            
+                                            {% if yer_adi.kullanici == user %}
+                                                <div class="place-actions d-flex gap-2">
+                                                    <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" 
+                                                       class="btn btn-sm btn-outline-primary">
+                                                        <i class="bi bi-pencil me-1"></i>Düzenle
+                                                    </a>
+                                                    <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" 
+                                                          class="d-inline" 
+                                                          onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                            <i class="bi bi-trash me-1"></i>Sil
                                                         </button>
-                                                    </h2>
-                                                    <div id="collapse-{{ alt_yer.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ alt_yer.id }}" data-bs-parent="#yer-{{ yer_adi.id }}-accordion">
-                                                        <div class="accordion-body">
-                                                            <p>{{ alt_yer.detay|truncatechars:100 }}</p>
-                                                            <p><small class="text-muted">{{ alt_yer.bolge|capfirst }} - {{ alt_yer.eklenme_tarihi|date:"Y-m-d" }}</small></p>
-                                                            {% if alt_yer.kullanici == user %}
-                                                                <a href="{% url 'yer_adi_duzenle' alt_yer.id %}" class="btn btn-sm btn-primary">Düzenle</a>
-                                                                <form method="post" action="{% url 'yer_adi_sil' alt_yer.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-                                                                    {% csrf_token %}
-                                                                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                                                                </form>
-                                                            {% endif %}
-                                                            <!-- Alt yer adları (köyler vb.) -->
-                                                            {% if alt_yer.children.exists %}
-                                                                <div class="accordion" id="alt-yer-{{ alt_yer.id }}-accordion">
-                                                                    {% for alt_alt_yer in alt_yer.children.all|dictsort:"ad" %}
-                                                                        <div class="accordion-item">
-                                                                            <h2 class="accordion-header" id="heading-{{ alt_alt_yer.id }}">
-                                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ alt_alt_yer.id }}" aria-expanded="false" aria-controls="collapse-{{ alt_alt_yer.id }}">
-                                                                                    {{ alt_alt_yer.ad }} ({{ alt_alt_yer.kategori|capfirst }})
-                                                                                </button>
-                                                                            </h2>
-                                                                            <div id="collapse-{{ alt_alt_yer.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ alt_alt_yer.id }}" data-bs-parent="#alt-yer-{{ alt_yer.id }}-accordion">
-                                                                                <div class="accordion-body">
-                                                                                    <p>{{ alt_alt_yer.detay|truncatechars:100 }}</p>
-                                                                                    <p><small class="text-muted">{{ alt_alt_yer.bolge|capfirst }} - {{ alt_alt_yer.eklenme_tarihi|date:"Y-m-d" }}</small></p>
-                                                                                    {% if alt_alt_yer.kullanici == user %}
-                                                                                        <a href="{% url 'yer_adi_duzenle' alt_alt_yer.id %}" class="btn btn-sm btn-primary">Düzenle</a>
-                                                                                        <form method="post" action="{% url 'yer_adi_sil' alt_alt_yer.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-                                                                                            {% csrf_token %}
-                                                                                            <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                                                                                        </form>
-                                                                                    {% endif %}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    {% endfor %}
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                            
+                                            <!-- Alt yer adları -->
+                                            {% if yer_adi.children.exists %}
+                                                <div class="sub-places mt-3">
+                                                    <button class="btn btn-sm btn-outline-secondary" 
+                                                            type="button" 
+                                                            data-bs-toggle="collapse" 
+                                                            data-bs-target="#sub-places-{{ yer_adi.id }}" 
+                                                            aria-expanded="false">
+                                                        <i class="bi bi-chevron-down me-1"></i>
+                                                        Alt Yerler ({{ yer_adi.children.count }})
+                                                    </button>
+                                                    <div class="collapse mt-2" id="sub-places-{{ yer_adi.id }}">
+                                                        <div class="sub-places-list">
+                                                            {% for alt_yer in yer_adi.children.all|dictsort:"ad" %}
+                                                                <div class="sub-place-item border-start border-3 border-primary ps-3 mb-2">
+                                                                    <h6 class="mb-1">
+                                                                        <a href="{% url 'yer_adi_detay' alt_yer.id %}" class="text-decoration-none">
+                                                                            {{ alt_yer.ad }}
+                                                                        </a>
+                                                                        <span class="badge bg-secondary-subtle text-secondary ms-2">
+                                                                            {{ alt_yer.kategori|capfirst }}
+                                                                        </span>
+                                                                    </h6>
+                                                                    <p class="small text-muted mb-1">{{ alt_yer.detay|truncatechars:60 }}</p>
                                                                 </div>
-                                                            {% endif %}
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                 </div>
-                                            {% endfor %}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -134,10 +210,17 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-        {% empty %}
-            <p>Henüz yer adı eklenmemiş.</p>
-        {% endfor %}
+            {% empty %}
+                <div class="text-center py-5">
+                    <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
+                    <h3 class="text-muted">Henüz yer adı eklenmemiş</h3>
+                    <p class="text-muted mb-4">İlk yer adını ekleyerek başlayın!</p>
+                    <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Yer Adı Ekle
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -146,4 +229,45 @@
 <script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap" defer></script>
 <script src="{% static 'main/js/modules/yer_adlari/map.js' %}" defer></script>
 <link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
+<script>
+    function toggleMapView() {
+        const mapContainer = document.getElementById('mapContainer');
+        const isVisible = mapContainer.style.display !== 'none';
+        
+        if (isVisible) {
+            mapContainer.style.display = 'none';
+        } else {
+            mapContainer.style.display = 'block';
+            // Harita yeniden boyutlandırma
+            if (typeof google !== 'undefined' && window.map) {
+                setTimeout(() => {
+                    google.maps.event.trigger(window.map, 'resize');
+                }, 300);
+            }
+        }
+    }
+    
+    // Sayfa yüklendiğinde animasyonları başlat
+    document.addEventListener('DOMContentLoaded', function() {
+        // Kartları sırayla göster
+        const cards = document.querySelectorAll('.place-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+        
+        // Smooth scroll için
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
