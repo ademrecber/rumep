@@ -2,73 +2,210 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>{% if is_edit %}Yer Adı Düzenle{% else %}Yer Adı Ekle{% endif %}</h1>
-    
-    <!-- Google Maps Haritası -->
-    <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
-    
-    <form method="post" id="yer-adi-form">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="{{ form.ad.id_for_label }}" class="form-label">Yer Adı</label>
-            {{ form.ad }}
-            {% if form.ad.errors %}
-                <div class="alert alert-danger">{{ form.ad.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.detay.id_for_label }}" class="form-label">Detay</label>
-            {{ form.detay }}
-            {% if form.detay.errors %}
-                <div class="alert alert-danger">{{ form.detay.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.kategori.id_for_label }}" class="form-label">Kategori</label>
-            {{ form.kategori }}
-            {% if form.kategori.errors %}
-                <div class="alert alert-danger">{{ form.kategori.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.bolge.id_for_label }}" class="form-label">Kürdistan Bölgesi</label>
-            {{ form.bolge }}
-            {% if form.bolge.errors %}
-                <div class="alert alert-danger">{{ form.bolge.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3" id="parent-field">
-            <label for="{{ form.parent.id_for_label }}" class="form-label">Bağlı Olduğu Yer</label>
-            {{ form.parent }}
-            {% if form.parent.errors %}
-                <div class="alert alert-danger">{{ form.parent.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.enlem.id_for_label }}" class="form-label">Enlem</label>
-            {{ form.enlem }}
-            {% if form.enlem.errors %}
-                <div class="alert alert-danger">{{ form.enlem.errors }}</div>
-            {% endif %}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.boylam.id_for_label }}" class="form-label">Boylam</label>
-            {{ form.boylam }}
-            {% if form.boylam.errors %}
-                <div class="alert alert-danger">{{ form.boylam.errors }}</div>
-            {% endif %}
-        </div>
-        {% if duplicate_warning %}
-            <div class="alert alert-warning">
-                Bu yer adı zaten mevcut. Eklemeye devam etmek istiyor musunuz?
-                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('confirm-duplicate').value='true'; document.getElementById('yer-adi-form').submit();">Evet</button>
-                <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-secondary btn-sm">Hayır</a>
-                <input type="hidden" name="confirm_duplicate" id="confirm-duplicate" value="false">
+<div class="container-fluid px-0">
+    <!-- Modern Header -->
+    <div class="hero-section bg-gradient-primary text-white py-4 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb text-white-50">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'yer_adlari_anasayfa' %}" class="text-white text-decoration-none">
+                                    <i class="bi bi-geo-alt me-1"></i>Yer Adları
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">
+                                {% if is_edit %}Düzenle{% else %}Yeni Ekle{% endif %}
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="bi bi-{% if is_edit %}pencil{% else %}plus-circle{% endif %} me-3"></i>
+                        {% if is_edit %}Yer Adı Düzenle{% else %}Yeni Yer Adı Ekle{% endif %}
+                    </h1>
+                    <p class="lead mb-0">Koordinatları haritadan seçebilir veya manuel girebilirsiniz</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <button class="btn btn-light btn-lg" onclick="toggleMapView()" id="mapToggleBtn">
+                        <i class="bi bi-map me-2"></i>Harita Görünümü
+                    </button>
+                </div>
             </div>
-        {% endif %}
-        <button type="submit" class="btn btn-primary">{% if is_edit %}Kaydet{% else %}Ekle{% endif %}</button>
-    </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Google Maps Haritası -->
+        <div class="map-container mb-4" id="mapContainer" style="display: block;">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-white border-0 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>Konum Seçimi</h5>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="toggleMapView()">
+                            <i class="bi bi-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div id="map" style="height: 400px; border-radius: 0 0 0.5rem 0.5rem;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Modern Form -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-form me-2"></i>Yer Adı Bilgileri
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="yer-adi-form">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.ad.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-geo-alt me-1"></i>Yer Adı
+                                    </label>
+                                    {{ form.ad }}
+                                    {% if form.ad.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.ad.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.kategori.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-tag me-1"></i>Kategori
+                                    </label>
+                                    {{ form.kategori }}
+                                    {% if form.kategori.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.kategori.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.detay.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="bi bi-journal-text me-1"></i>Detay
+                                </label>
+                                {{ form.detay }}
+                                {% if form.detay.errors %}
+                                    <div class="alert alert-danger mt-2">{{ form.detay.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.bolge.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-globe me-1"></i>Kürdistan Bölgesi
+                                    </label>
+                                    {{ form.bolge }}
+                                    {% if form.bolge.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.bolge.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3" id="parent-field">
+                                    <label for="{{ form.parent.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-diagram-3 me-1"></i>Bağlı Olduğu Yer
+                                    </label>
+                                    {{ form.parent }}
+                                    {% if form.parent.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.parent.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.enlem.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-crosshair me-1"></i>Enlem
+                                    </label>
+                                    {{ form.enlem }}
+                                    {% if form.enlem.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.enlem.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.boylam.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-crosshair me-1"></i>Boylam
+                                    </label>
+                                    {{ form.boylam }}
+                                    {% if form.boylam.errors %}
+                                        <div class="alert alert-danger mt-2">{{ form.boylam.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            {% if duplicate_warning %}
+                                <div class="alert alert-warning d-flex align-items-center">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    <div class="flex-grow-1">
+                                        Bu yer adı zaten mevcut. Eklemeye devam etmek istiyor musunuz?
+                                    </div>
+                                    <div class="ms-3">
+                                        <button type="button" class="btn btn-warning btn-sm me-2" 
+                                                onclick="document.getElementById('confirm-duplicate').value='true'; document.getElementById('yer-adi-form').submit();">
+                                            Evet
+                                        </button>
+                                        <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-secondary btn-sm">Hayır</a>
+                                    </div>
+                                    <input type="hidden" name="confirm_duplicate" id="confirm-duplicate" value="false">
+                                </div>
+                            {% endif %}
+                            
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-{% if is_edit %}check-circle{% else %}plus-circle{% endif %} me-2"></i>
+                                    {% if is_edit %}Kaydet{% else %}Ekle{% endif %}
+                                </button>
+                                <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Yardım Paneli -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Yardım
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="help-item mb-3">
+                            <h6 class="text-primary"><i class="bi bi-map me-1"></i>Harita Kullanımı</h6>
+                            <p class="small text-muted mb-0">Haritaya tıklayarak koordinatları otomatik olarak doldurabilirsiniz.</p>
+                        </div>
+                        
+                        <div class="help-item mb-3">
+                            <h6 class="text-primary"><i class="bi bi-tag me-1"></i>Kategoriler</h6>
+                            <ul class="small text-muted mb-0">
+                                <li>İl: Büyük şehirler</li>
+                                <li>İlçe: İllere bağlı yerler</li>
+                                <li>Köy: Küçük yerleşim yerleri</li>
+                                <li>Dağ: Dağ adları</li>
+                                <li>Nehir: Su kaynakları</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="help-item">
+                            <h6 class="text-primary"><i class="bi bi-crosshair me-1"></i>Koordinatlar</h6>
+                            <p class="small text-muted mb-0">Enlem ve boylam değerlerini ondalık formatında girin (örn: 37.0625, 40.2317).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Yer Adları Verisi -->
@@ -87,7 +224,33 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<script>
+    function toggleMapView() {
+        const mapContainer = document.getElementById('mapContainer');
+        const mapToggleBtn = document.getElementById('mapToggleBtn');
+        const isVisible = mapContainer.style.display !== 'none';
+        
+        if (isVisible) {
+            mapContainer.style.display = 'none';
+            if (mapToggleBtn) {
+                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Harita Göster';
+            }
+        } else {
+            mapContainer.style.display = 'block';
+            if (mapToggleBtn) {
+                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Harita Gizle';
+            }
+            // Harita yeniden boyutlandırma
+            if (typeof google !== 'undefined' && window.map) {
+                setTimeout(() => {
+                    google.maps.event.trigger(window.map, 'resize');
+                }, 300);
+            }
+        }
+    }
+</script>
 <script src="{% static 'main/js/modules/yer_adlari/yer-adi-ekle.js' %}" defer></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap" defer></script>
 <script src="{% static 'main/js/modules/yer_adlari/map.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
