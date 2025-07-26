@@ -13,12 +13,12 @@
                     </h1>
                     <p class="lead mb-4">Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin</p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="{% url 'yer_adi_ekle' %}" class="btn btn-light btn-lg">
+                        <a href="{% url 'yer_adi_ekle' %}" class="btn btn-light btn-lg add-place-link">
                             <i class="bi bi-plus-circle me-2"></i>Yeni Yer Adı Ekle
                         </a>
-                        <button class="btn btn-outline-light btn-lg" onclick="toggleMapView()">
+                        <a href="#mapContainer" class="btn btn-outline-light btn-lg toggle-map-link">
                             <i class="bi bi-map me-2"></i>Harita Görünümü
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -36,11 +36,11 @@
         <div class="map-container mb-4" id="mapContainer" style="display: none;">
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-white border-0 py-3">
-                    <div class="d-flex justify-content-between align-items-center">
+ Nets                    <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-map me-2"></i>Harita Görünümü</h5>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="toggleMapView()">
+                        <a href="#" class="btn btn-sm btn-outline-secondary toggle-map-link">
                             <i class="bi bi-x-lg"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -49,20 +49,20 @@
             </div>
         </div>
     
-    <!-- Yer Adları Verisi -->
-    <script id="yer-adlari-data" type="application/json">
-        [
-            {% for yer_adi in yer_adlari %}
-                {
-                    "id": {{ yer_adi.id }},
-                    "ad": "{{ yer_adi.ad|escapejs }}",
-                    "kategori": "{{ yer_adi.kategori|escapejs }}",
-                    "enlem": {{ yer_adi.enlem|default:"null" }},
-                    "boylam": {{ yer_adi.boylam|default:"null" }}
-                }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ]
-    </script>
+        <!-- Yer Adları Verisi -->
+        <script id="yer-adlari-data" type="application/json">
+            [
+                {% for yer_adi in yer_adlari %}
+                    {
+                        "id": {{ yer_adi.id }},
+                        "ad": "{{ yer_adi.ad|escapejs }}",
+                        "kategori": "{{ yer_adi.kategori|escapejs }}",
+                        "enlem": {% if yer_adi.enlem %}{{ yer_adi.enlem }}{% else %}null{% endif %},
+                        "boylam": {% if yer_adi.boylam %}{{ yer_adi.boylam }}{% else %}null{% endif %}
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+        </script>
 
         <!-- Modern Filtreler -->
         <div class="filters-section mb-4">
@@ -215,7 +215,7 @@
                     <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
                     <h3 class="text-muted">Henüz yer adı eklenmemiş</h3>
                     <p class="text-muted mb-4">İlk yer adını ekleyerek başlayın!</p>
-                    <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg">
+                    <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg add-place-link">
                         <i class="bi bi-plus-circle me-2"></i>Yer Adı Ekle
                     </a>
                 </div>
@@ -227,45 +227,71 @@
 
 {% block extra_scripts %}
 <script>
-    function toggleMapView() {
-        const mapContainer = document.getElementById('mapContainer');
-        const isVisible = mapContainer.style.display !== 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('yer_adlari.js yüklendi'); // Hata ayıklama
         
-        if (isVisible) {
-            mapContainer.style.display = 'none';
-        } else {
-            mapContainer.style.display = 'block';
-            if (typeof google !== 'undefined' && window.map) {
-                setTimeout(() => {
-                    google.maps.event.trigger(window.map, 'resize');
-                }, 300);
-            }
-        }
-    }
-    
+        // Yeni Yer Adı Ekle linki için olay dinleyici
+        document.querySelectorAll('.add-place-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                console.log('Yeni Yer Adı Ekle linkine tıklandı'); // Konsol mesajı
+            });
+        });
+
+        // Harita Görünümü linki için olay dinleyici
+        document.querySelectorAll('.toggle-map-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Harita Görünümü linkine tıklandı'); // Konsol mesajı
+                const mapContainer = document.getElementById('mapContainer');
+                if (!mapContainer) {
+                    console.error('mapContainer bulunamadı');
+                    return;
+                }
+                const isVisible = mapContainer.style.display !== 'none';
+                mapContainer.style.display = isVisible ? 'none' : 'block';
+                
+                if (!isVisible && typeof google !== 'undefined' && window.map) {
+                    setTimeout(() => {
+                        google.maps.event.trigger(window.map, 'resize');
+                    }, 300);
+                }
+            });
+        });
+    });
+
+    // Google Maps başlatma
     window.initMap = function() {
+        console.log('initMap çağrıldı'); // Hata ayıklama
         const mapOptions = {
             center: { lat: 37.5, lng: 41.0 },
             zoom: 6,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         const mapElement = document.getElementById('map');
-        if (!mapElement) return;
+        if (!mapElement) {
+            console.error('map elementi bulunamadı');
+            return;
+        }
         
         window.map = new google.maps.Map(mapElement, mapOptions);
         
-        const yerAdlari = JSON.parse(document.getElementById('yer-adlari-data')?.textContent || '[]');
-        yerAdlari.forEach(yer => {
-            if (yer.enlem && yer.boylam) {
-                new google.maps.Marker({
-                    position: { lat: parseFloat(yer.enlem), lng: parseFloat(yer.boylam) },
-                    map: window.map,
-                    title: yer.ad
-                });
-            }
-        });
+        try {
+            const yerAdlari = JSON.parse(document.getElementById('yer-adlari-data')?.textContent || '[]');
+            console.log('yerAdlari:', yerAdlari); // Hata ayıklama
+            yerAdlari.forEach(yer => {
+                if (yer.enlem && yer.boylam) {
+                    new google.maps.Marker({
+                        position: { lat: parseFloat(yer.enlem), lng: parseFloat(yer.boylam) },
+                        map: window.map,
+                        title: yer.ad
+                    });
+                }
+            });
+        } catch (e) {
+            console.error('yerAdlari JSON parse hatası:', e);
+        }
     };
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap" defer></script>
 <link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
