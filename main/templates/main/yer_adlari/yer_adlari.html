@@ -235,7 +235,6 @@
             mapContainer.style.display = 'none';
         } else {
             mapContainer.style.display = 'block';
-            // Harita yeniden boyutlandırma
             if (typeof google !== 'undefined' && window.map) {
                 setTimeout(() => {
                     google.maps.event.trigger(window.map, 'resize');
@@ -243,8 +242,30 @@
             }
         }
     }
+    
+    window.initMap = function() {
+        const mapOptions = {
+            center: { lat: 37.5, lng: 41.0 },
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        const mapElement = document.getElementById('map');
+        if (!mapElement) return;
+        
+        window.map = new google.maps.Map(mapElement, mapOptions);
+        
+        const yerAdlari = JSON.parse(document.getElementById('yer-adlari-data')?.textContent || '[]');
+        yerAdlari.forEach(yer => {
+            if (yer.enlem && yer.boylam) {
+                new google.maps.Marker({
+                    position: { lat: parseFloat(yer.enlem), lng: parseFloat(yer.boylam) },
+                    map: window.map,
+                    title: yer.ad
+                });
+            }
+        });
+    };
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap" defer></script>
-<script src="{% static 'main/js/modules/yer_adlari/map.js' %}" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
 <link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
