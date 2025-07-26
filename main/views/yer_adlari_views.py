@@ -20,8 +20,17 @@ def yer_adlari_anasayfa(request):
     if kategori:
         yer_adlari = yer_adlari.filter(kategori=kategori)
     
+    # Bölgelere göre gruplandırma
+    bolgeler = {
+        'bakur': yer_adlari.filter(bolge='bakur').order_by('ad'),
+        'basur': yer_adlari.filter(bolge='basur').order_by('ad'),
+        'rojava': yer_adlari.filter(bolge='rojava').order_by('ad'),
+        'rojhilat': yer_adlari.filter(bolge='rojhilat').order_by('ad'),
+    }
+    
     context = {
         'yer_adlari': yer_adlari,
+        'bolgeler': bolgeler,
         'kategoriler': [choice[0] for choice in YerAdi.kategori.field.choices],
         'harfler': [chr(i) for i in range(65, 91)],  # A-Z
         'secili_harf': harf,

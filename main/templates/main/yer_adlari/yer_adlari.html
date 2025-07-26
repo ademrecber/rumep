@@ -49,24 +49,89 @@
     </div>
 
     <!-- Yer Adları Listesi -->
-    <div class="row">
-        {% for yer_adi in yer_adlari %}
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{% url 'yer_adi_detay' yer_adi.id %}">{{ yer_adi.ad }}</a>
-                            <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small>
-                        </h5>
-                        <p class="card-text">{{ yer_adi.detay|truncatechars:100 }}</p>
-                        <p class="card-text"><small class="text-muted">{{ yer_adi.bolge|capfirst }} - {{ yer_adi.eklenme_tarihi|date:"Y-m-d" }}</small></p>
-                        {% if yer_adi.kullanici == user %}
-                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-sm btn-primary">Düzenle</a>
-                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
-                            </form>
-                        {% endif %}
+    <div class="accordion" id="yer-adlari-accordion">
+        {% for bolge, bolge_yer_adlari in bolgeler.items %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-{{ bolge }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ bolge }}" aria-expanded="true" aria-controls="collapse-{{ bolge }}">
+                        {{ bolge|capfirst }}
+                    </button>
+                </h2>
+                <div id="collapse-{{ bolge }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-{{ bolge }}" data-bs-parent="#yer-adlari-accordion">
+                    <div class="accordion-body">
+                        {% for yer_adi in bolge_yer_adlari %}
+                            {% if yer_adi.kategori == 'il' %}
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{% url 'yer_adi_detay' yer_adi.id %}">{{ yer_adi.ad }}</a>
+                                            <small class="text-muted">({{ yer_adi.kategori|capfirst }})</small>
+                                        </h5>
+                                        <p class="card-text">{{ yer_adi.detay|truncatechars:100 }}</p>
+                                        <p class="card-text"><small class="text-muted">{{ yer_adi.bolge|capfirst }} - {{ yer_adi.eklenme_tarihi|date:"Y-m-d" }}</small></p>
+                                        {% if yer_adi.kullanici == user %}
+                                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-sm btn-primary">Düzenle</a>
+                                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                                            </form>
+                                        {% endif %}
+                                        <!-- Alt yer adları -->
+                                        <div class="accordion" id="yer-{{ yer_adi.id }}-accordion">
+                                            {% for alt_yer in yer_adi.children.all|dictsort:"ad" %}
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading-{{ alt_yer.id }}">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ alt_yer.id }}" aria-expanded="false" aria-controls="collapse-{{ alt_yer.id }}">
+                                                            {{ alt_yer.ad }} ({{ alt_yer.kategori|capfirst }})
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse-{{ alt_yer.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ alt_yer.id }}" data-bs-parent="#yer-{{ yer_adi.id }}-accordion">
+                                                        <div class="accordion-body">
+                                                            <p>{{ alt_yer.detay|truncatechars:100 }}</p>
+                                                            <p><small class="text-muted">{{ alt_yer.bolge|capfirst }} - {{ alt_yer.eklenme_tarihi|date:"Y-m-d" }}</small></p>
+                                                            {% if alt_yer.kullanici == user %}
+                                                                <a href="{% url 'yer_adi_duzenle' alt_yer.id %}" class="btn btn-sm btn-primary">Düzenle</a>
+                                                                <form method="post" action="{% url 'yer_adi_sil' alt_yer.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                                                                </form>
+                                                            {% endif %}
+                                                            <!-- Alt yer adları (köyler vb.) -->
+                                                            {% if alt_yer.children.exists %}
+                                                                <div class="accordion" id="alt-yer-{{ alt_yer.id }}-accordion">
+                                                                    {% for alt_alt_yer in alt_yer.children.all|dictsort:"ad" %}
+                                                                        <div class="accordion-item">
+                                                                            <h2 class="accordion-header" id="heading-{{ alt_alt_yer.id }}">
+                                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ alt_alt_yer.id }}" aria-expanded="false" aria-controls="collapse-{{ alt_alt_yer.id }}">
+                                                                                    {{ alt_alt_yer.ad }} ({{ alt_alt_yer.kategori|capfirst }})
+                                                                                </button>
+                                                                            </h2>
+                                                                            <div id="collapse-{{ alt_alt_yer.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ alt_alt_yer.id }}" data-bs-parent="#alt-yer-{{ alt_yer.id }}-accordion">
+                                                                                <div class="accordion-body">
+                                                                                    <p>{{ alt_alt_yer.detay|truncatechars:100 }}</p>
+                                                                                    <p><small class="text-muted">{{ alt_alt_yer.bolge|capfirst }} - {{ alt_alt_yer.eklenme_tarihi|date:"Y-m-d" }}</small></p>
+                                                                                    {% if alt_alt_yer.kullanici == user %}
+                                                                                        <a href="{% url 'yer_adi_duzenle' alt_alt_yer.id %}" class="btn btn-sm btn-primary">Düzenle</a>
+                                                                                        <form method="post" action="{% url 'yer_adi_sil' alt_alt_yer.id %}" class="d-inline" onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                                                                            {% csrf_token %}
+                                                                                            <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                                                                                        </form>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -75,7 +140,6 @@
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}
 
 {% block extra_scripts %}

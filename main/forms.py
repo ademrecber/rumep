@@ -447,21 +447,17 @@ class YerAdiForm(forms.ModelForm):
         widgets = {
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Yer adını girin', 'required': True}),
             'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Yer hakkında detay girin', 'rows': 4}),
-            'kategori': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'kategori': forms.Select(attrs={'class': 'form-control', 'required': True, 'onchange': 'toggleParentField()'}),
             'bolge': forms.Select(attrs={'class': 'form-control', 'required': True}),
             'enlem': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enlem (ör. 37.7749)', 'step': 'any'}),
             'boylam': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Boylam (ör. 40.7128)', 'step': 'any'}),
-            'parent': forms.Select(attrs={'class': 'form-control'}),
+            'parent': forms.Select(attrs={'class': 'form-control', 'id': 'id_parent'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Parent seçimini kategori ve hiyerarşiye göre sınırla
-        self.fields['parent'].queryset = YerAdi.objects.filter(kategori__in=['il', 'ilce'])
-        if self.instance and self.instance.kategori == 'il':
-            self.fields['parent'].required = False
-        elif self.instance and self.instance.kategori in ['ilce', 'kasaba', 'belde', 'koy']:
-            self.fields['parent'].required = True
+        # Parent seçimini dinamik olarak JavaScript yönetecek
+        self.fields['parent'].queryset = YerAdi.objects.all().order_by('ad')
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
