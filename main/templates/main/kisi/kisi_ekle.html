@@ -3,41 +3,148 @@
 {% load static %}
 {% block title %}Kişi Ekle - Rumep{% endblock %}
 {% block content %}
-    <div class="container twitter-container">
-        <h3>Kişi Ekle</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                <form id="kisi-form" method="post" action="{% url 'kisi_ekle' %}">
-                    {% csrf_token %}
-                    {{ form.ad.label_tag }}
-                    {{ form.ad }}
-                    {{ form.kategoriler.label_tag }}
-                    {{ form.kategoriler }}
-                    <label for="biyografi-editor">Biyografi</label>
-                    <div id="biyografi-editor" class="quill-editor"></div>
-                    <input type="hidden" name="biyografi" id="biyografi-hidden" required>
-                    <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
-                    <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
-                    <button type="submit" class="btn btn-primary rounded-pill mt-3">Kişi Ekle</button>
-                </form>
-            </div>
-        </div>
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="aiEnhanceBioToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Biyografiyi Geliştir</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="container-fluid px-0">
+    <!-- Modern Header -->
+    <div class="hero-section bg-gradient-primary text-white py-4 mb-4">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb text-white-50">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'kisi_liste' %}" class="text-white text-decoration-none">
+                                    <i class="bi bi-people me-1"></i>Kişiler
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Yeni Ekle</li>
+                        </ol>
+                    </nav>
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="bi bi-plus-circle me-3"></i>Yeni Kişi Ekle
+                    </h1>
+                    <p class="lead mb-0">Tarihi ve kültürel şahsiyetleri sözlüğümüze ekleyin</p>
                 </div>
-                <div class="toast-body">
-                    Biyografiyi geliştirme ister misiniz?
-                    <div class="mt-2">
-                        <button type="button" class="btn btn-primary btn-sm" id="confirmEnhanceBio">Evet</button>
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+                <div class="col-lg-4 text-center">
+                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4">
+                        <i class="bi bi-person-plus display-4 mb-2"></i>
+                        <p class="mb-0">Yeni Kişi</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-form me-2"></i>Kişi Bilgileri
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="kisi-form" method="post" action="{% url 'kisi_ekle' %}">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="{{ form.ad.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-person me-1"></i>Kişi Adı
+                                    </label>
+                                    {{ form.ad }}
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.kategoriler.id_for_label }}" class="form-label fw-semibold">
+                                        <i class="bi bi-tags me-1"></i>Kategoriler
+                                    </label>
+                                    {{ form.kategoriler }}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="biyografi-editor" class="form-label fw-semibold">
+                                    <i class="bi bi-journal-text me-1"></i>Biyografi
+                                    <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 ms-2" title="AI ile geliştir">
+                                        <i class="bi bi-magic"></i>
+                                    </button>
+                                </label>
+                                <div id="biyografi-editor" class="quill-editor" style="min-height: 200px;"></div>
+                                <input type="hidden" name="biyografi" id="biyografi-hidden" required>
+                            </div>
+                            
+                            <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
+                            
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-plus-circle me-2"></i>Kişi Ekle
+                                </button>
+                                <a href="{% url 'kisi_liste' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Yardım Paneli -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Yardım
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="help-item mb-3">
+                            <h6 class="text-primary"><i class="bi bi-person me-1"></i>Kişi Adı</h6>
+                            <p class="small text-muted mb-0">Kişinin tam adını girin. Örnek: Ahmet Kaya, Mela Xelil</p>
+                        </div>
+                        
+                        <div class="help-item mb-3">
+                            <h6 class="text-primary"><i class="bi bi-tags me-1"></i>Kategoriler</h6>
+                            <p class="small text-muted mb-0">Kişinin hangi alanlarda öne çıktığını belirtin. Birden fazla kategori seçebilirsiniz.</p>
+                        </div>
+                        
+                        <div class="help-item mb-3">
+                            <h6 class="text-primary"><i class="bi bi-journal-text me-1"></i>Biyografi</h6>
+                            <p class="small text-muted mb-0">Kişinin hayatı, eserleri ve önemli olaylar hakkında detaylı bilgi verin.</p>
+                        </div>
+                        
+                        <div class="help-item">
+                            <h6 class="text-primary"><i class="bi bi-magic me-1"></i>AI Desteği</h6>
+                            <p class="small text-muted mb-0">Biyografi yazarken AI desteğinden yararlanabilirsiniz.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Toast Bildirimleri -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="aiEnhanceBioToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-primary text-white">
+                <i class="bi bi-magic me-2"></i>
+                <strong class="me-auto">AI Biyografi Geliştirme</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p class="mb-2">Biyografiyi AI ile geliştirmek ister misiniz?</p>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary btn-sm" id="confirmEnhanceBio">
+                        <i class="bi bi-check me-1"></i>Evet
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">
+                        <i class="bi bi-x me-1"></i>Hayır
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block extra_scripts %}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

@@ -3,62 +3,204 @@
 {% load static %}
 {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
 {% block content %}
-    <div class="container twitter-container">
-        <h3>{{ kisi.ad }}</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                <p><strong>Biyografi:</strong> {{ kisi.biyografi|safe }}</p>
-                <p><strong>Kategoriler:</strong> {% for kat in kisi.kategoriler.all %}{{ kat.ad }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <p><strong>Ekleyen:</strong> <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}">{{ kisi.kullanici.profile.nickname }}</a> (@{{ kisi.kullanici.profile.username }})</p>
-                <p><strong>Eklenme Tarihi:</strong> {{ kisi.eklenme_tarihi }}</p>
-                {% if kisi.kullanici == user %}
-                    <button class="btn btn-danger btn-sm delete-kisi-btn" data-kisi-id="{{ kisi.id }}">Sil</button>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Detay Ekleme Formu -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>Detay Ekle</h5>
-                {% if kisi.kullanici == user %}
-                    <p class="text-muted">Kendi kişinize detay yazamazsınız.</p>
-                {% else %}
-                    <form id="detay-ekle-form" method="post" action="{% url 'kisi_detay_ekle' kisi.id %}">
-                        {% csrf_token %}
-                        {{ detay_form.as_p }}
-                        <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Detay Ekle</button>
-                    </form>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Detay Listesi -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>Ek Detaylar</h5>
-                <div id="detay-list">
-                    {% for detay in kisi.detaylar.all %}
-                        <div class="detay-item mb-2" data-detay-id="{{ detay.id }}">
-                            <p>{{ detay.detay|safe }}</p>
-                            <p class="text-muted small">
-                                Ekleyen: <a href="{% url 'profile_detail' detay.kullanici.profile.username %}">{{ detay.kullanici.profile.nickname }}</a> (@{{ detay.kullanici.profile.username }}) · {{ detay.eklenme_tarihi }}
-                            </p>
-                            {% if detay.kullanici == user %}
-                                <div class="mt-2">
-                                    <button class="btn btn-primary btn-sm rounded-pill me-2 edit-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'kisi_detay_veri' detay.id %}" data-bs-toggle="modal" data-bs-target="#editDetayModal">Düzenle</button>
-                                    <button class="btn btn-danger btn-sm rounded-pill delete-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'kisi_detay_sil' detay.id %}">Sil</button>
-                                </div>
-                            {% endif %}
-                            <hr>
+<div class="container-fluid px-0">
+    <!-- Modern Hero Section -->
+    <div class="place-hero bg-gradient-primary text-white py-5 mb-4">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb text-white-50">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'kisi_liste' %}" class="text-white text-decoration-none">
+                                    <i class="bi bi-people me-1"></i>Kişiler
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">{{ kisi.ad }}</li>
+                        </ol>
+                    </nav>
+                    
+                    <h1 class="display-4 fw-bold mb-3">{{ kisi.ad }}</h1>
+                    
+                    <div class="person-badges mb-4">
+                        {% for kategori in kisi.kategoriler.all %}
+                            <span class="badge bg-light text-dark fs-6 me-2">
+                                <i class="bi bi-tag me-1"></i>{{ kategori.ad }}
+                            </span>
+                        {% endfor %}
+                        <span class="badge bg-light text-dark fs-6">
+                            <i class="bi bi-calendar3 me-1"></i>{{ kisi.eklenme_tarihi|date:"d F Y" }}
+                        </span>
+                    </div>
+                    
+                    {% if kisi.kullanici == user %}
+                        <div class="owner-actions d-flex gap-3">
+                            <button class="btn btn-outline-light btn-lg delete-kisi-btn" data-kisi-id="{{ kisi.id }}">
+                                <i class="bi bi-trash me-2"></i>Sil
+                            </button>
                         </div>
-                    {% empty %}
-                        <p class="text-muted">Henüz ek detay eklenmemiş.</p>
-                    {% endfor %}
+                    {% endif %}
+                </div>
+                
+                <div class="col-lg-4 text-center">
+                    <div class="person-stats bg-white bg-opacity-10 rounded-4 p-4">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <h3 class="h2 mb-1">{{ kisi.detaylar.count }}</h3>
+                                <p class="mb-0 small">Ek Detay</p>
+                            </div>
+                            <div class="col-6">
+                                <h3 class="h2 mb-1">{{ kisi.kategoriler.count }}</h3>
+                                <p class="mb-0 small">Kategori</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <!-- Ana İçerik -->
+            <div class="col-lg-8">
+                <!-- Biyografi -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="bi bi-journal-text me-2"></i>Biyografi
+                        </h5>
+                        <div class="card-text lead">{{ kisi.biyografi|safe }}</div>
+                    </div>
+                </div>
+
+                <!-- Detay Ekleme Formu -->
+                {% if kisi.kullanici != user %}
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">
+                                <i class="bi bi-plus-circle me-2"></i>Yeni Detay Ekle
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="detay-ekle-form" method="post" action="{% url 'kisi_detay_ekle' kisi.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ detay_form.as_p }}
+                                </div>
+                                <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-plus-circle me-2"></i>Detay Ekle
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body text-center py-4">
+                            <i class="bi bi-info-circle display-4 text-muted mb-3"></i>
+                            <p class="text-muted">Kendi kişinize detay ekleyemezsiniz.</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Ek Detaylar -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-journal-text me-2"></i>Ek Detaylar
+                            <span class="badge bg-primary ms-2">{{ kisi.detaylar.count }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="detay-list">
+                            {% for detay in kisi.detaylar.all %}
+                                <div class="detail-item detay-item border-start border-3 border-primary ps-4 mb-4" data-detay-id="{{ detay.id }}">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="detail-meta">
+                                            <small class="text-muted">
+                                                <i class="bi bi-person me-1"></i>
+                                                <a href="{% url 'profile_detail' detay.kullanici.profile.username %}" class="text-decoration-none">
+                                                    {{ detay.kullanici.profile.nickname }}
+                                                </a>
+                                                <span class="text-muted">(@{{ detay.kullanici.profile.username }})</span>
+                                                <i class="bi bi-calendar3 ms-3 me-1"></i>{{ detay.eklenme_tarihi|date:"d.m.Y" }}
+                                            </small>
+                                        </div>
+                                        {% if detay.kullanici == user %}
+                                            <div class="detail-actions">
+                                                <button class="btn btn-sm btn-outline-primary me-1 edit-detay-btn" 
+                                                        data-detay-id="{{ detay.id }}" 
+                                                        data-url="{% url 'kisi_detay_veri' detay.id %}" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#editDetayModal">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger delete-detay-btn" 
+                                                        data-detay-id="{{ detay.id }}" 
+                                                        data-url="{% url 'kisi_detay_sil' detay.id %}">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-0">{{ detay.detay|safe }}</div>
+                                </div>
+                            {% empty %}
+                                <div class="text-center py-4">
+                                    <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
+                                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Yan Panel -->
+            <div class="col-lg-4">
+                <!-- Kişi Bilgileri -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Kişi Bilgileri
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Ad</strong>
+                            <span class="fs-5 fw-bold">{{ kisi.ad }}</span>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Kategoriler</strong>
+                            {% for kategori in kisi.kategoriler.all %}
+                                <span class="badge bg-primary-subtle text-primary me-1 mb-1">
+                                    {{ kategori.ad }}
+                                </span>
+                            {% empty %}
+                                <span class="text-muted">Kategori belirtilmemiş</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Ekleyen</strong>
+                            <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}" class="text-decoration-none">
+                                {{ kisi.kullanici.profile.nickname }}
+                                <small class="text-muted">(@{{ kisi.kullanici.profile.username }})</small>
+                            </a>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong class="text-muted d-block mb-1">Eklenme Tarihi</strong>
+                            <span>{{ kisi.eklenme_tarihi|date:"d F Y, H:i" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Detay Düzenleme Modalı -->
         <div class="modal fade" id="editDetayModal" tabindex="-1" aria-labelledby="editDetayModalLabel" aria-hidden="true">
