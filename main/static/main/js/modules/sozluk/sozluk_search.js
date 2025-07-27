@@ -111,6 +111,12 @@ export function initSozlukArama() {
                     sonucListesi.appendChild(fragment);
                     offset += 20;
                     hasMore = data.has_more;
+                    
+                    // Sonuç sayısını güncelle
+                    const resultCount = document.getElementById('result-count');
+                    if (resultCount) {
+                        resultCount.textContent = data.total_count || sonucListesi.children.length;
+                    }
 
                     bindKelimeActions();
                 }
@@ -243,6 +249,18 @@ export function initTumKelimeler(autoLoad = false) {
                 }
                 offset += 20;
                 hasMore = data.has_more && addedCount > 0;
+                
+                // Sonuç sayısını güncelle
+                const resultCount = document.getElementById('result-count');
+                if (resultCount) {
+                    resultCount.textContent = data.total_count || seenIds.size;
+                }
+                
+                // Kelime sayısını güncelle
+                const wordCount = document.getElementById('word-count');
+                if (wordCount) {
+                    wordCount.textContent = data.total_count || seenIds.size;
+                }
 
                 bindKelimeActions();
             } else {

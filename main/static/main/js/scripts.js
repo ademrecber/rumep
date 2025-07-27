@@ -16,6 +16,8 @@ import { initKisiForm, initKisiLoader } from './modules/kisi/kisi_loader.js';
 import { initDetayEkleForm, initEditDetayForm, initDetaySil } from './modules/kisi/kisi_detay.js';
 import { initKatkiLoader } from './modules/katki/katki_loader.js';
 import { initAiEnhance } from './ai.js'; // Yeni import
+import { initSozlukArama, initTumKelimeler } from './modules/sozluk/sozluk_search.js';
+import { initSozlukForm } from './modules/sozluk/sozluk_loader.js';
 
 
 
@@ -130,6 +132,29 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("initAiEnhance tamamlandı");
         } else {
             console.warn("AI enhance için gerekli elementler bulunamadı");
+        }
+
+        // Sözlük modüllerini başlat
+        if (window.location.pathname.includes('/sozluk/')) {
+            console.log("Sözlük modülleri yükleniyor...");
+            
+            // Arama fonksiyonunu başlat
+            if (document.getElementById('arama-input')) {
+                initSozlukArama();
+                console.log("initSozlukArama tamamlandı");
+            }
+            
+            // Form fonksiyonunu başlat
+            if (document.getElementById('sozluk-form')) {
+                initSozlukForm();
+                console.log("initSozlukForm tamamlandı");
+            }
+            
+            // Tüm kelimeleri yükle
+            if (document.getElementById('arama-sonuc-listesi')) {
+                initTumKelimeler(true);
+                console.log("initTumKelimeler tamamlandı");
+            }
         }
     } catch (e) {
         console.error("scripts.js genel hatası:", e.message, e.stack);
