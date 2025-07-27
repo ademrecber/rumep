@@ -51,40 +51,33 @@
         <div class="search-section mb-4">
             <div class="card border-0 shadow-lg">
                 <div class="card-body p-4">
-                    <form id="sozluk-arama-form">
-                        <div class="row g-3">
-                            <div class="col-lg-8">
-                                <label class="form-label fw-semibold mb-2">
-                                    <i class="bi bi-search me-2"></i>Kelime Ara
-                                </label>
-                                <div class="search-input-container position-relative">
-                                    <input type="text" 
-                                           id="arama-input" 
-                                           class="form-control form-control-lg" 
-                                           placeholder="Kelime ara (ör. xanî, rojava)" 
-                                           aria-label="Arama"
-                                           autocomplete="off">
-                                    <div class="search-suggestions" id="search-suggestions"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="form-label fw-semibold mb-2">
-                                    <i class="bi bi-tags me-2"></i>Kelime Türü
-                                </label>
-                                <select id="tur-filtresi" class="form-select form-select-lg">
-                                    <option value="">Tüm Türler</option>
-                                    <option value="isim">İsim</option>
-                                    <option value="fiil">Fiil</option>
-                                    <option value="sifat">Sıfat</option>
-                                    <option value="zarf">Zarf</option>
-                                </select>
+                    <div class="row g-3">
+                        <div class="col-lg-8">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="bi bi-search me-2"></i>Kelime Ara
+                            </label>
+                            <div class="search-input-container position-relative">
+                                <input type="text" 
+                                       id="arama-input" 
+                                       class="form-control form-control-lg" 
+                                       placeholder="Kelime ara (ör. xanî, rojava)" 
+                                       aria-label="Arama"
+                                       autocomplete="off">
+                                <div class="search-suggestions" id="search-suggestions"></div>
                             </div>
                         </div>
-                    </form>
-                    <div class="mt-3">
-                        <button id="tum-kelimeler-btn" class="btn btn-outline-primary">
-                            <i class="bi bi-list me-2"></i>Tüm Kelimeleri Göster
-                        </button>
+                        <div class="col-lg-4">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="bi bi-tags me-2"></i>Kelime Türü
+                            </label>
+                            <select id="tur-filtresi" class="form-select form-select-lg">
+                                <option value="">Tüm Türler</option>
+                                <option value="isim">İsim</option>
+                                <option value="fiil">Fiil</option>
+                                <option value="sifat">Sıfat</option>
+                                <option value="zarf">Zarf</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,14 +132,14 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <ul id="arama-sonuc-listesi" class="words-container list-unstyled">
+                    <div id="arama-sonuc-listesi" class="words-container">
                         <div class="loading-state text-center py-5">
                             <div class="spinner-border text-primary mb-3" role="status">
                                 <span class="visually-hidden">Yükleniyor...</span>
                             </div>
                             <p class="text-muted">Kelimeler yükleniyor...</p>
                         </div>
-                    </ul>
+                    </div>
                     <div id="loading" class="text-center mt-3 d-none">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Yükleniyor...</span>
@@ -178,16 +171,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
                     <button type="submit" form="sozluk-form" class="btn btn-primary">
-                        <i class="bi bi-plus-circle me-2"></i>Kelime Ekle
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="module" src="{% static 'main/js/scripts.js' %}"></script>
-{% endblock %}
                         <i class="bi bi-plus-circle me-1"></i>Kelime Ekle
                     </button>
                 </div>
