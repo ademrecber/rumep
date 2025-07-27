@@ -2,59 +2,150 @@
 {% load static %}
 {% block title %}Şarkı Sözleri - Rumep{% endblock %}
 {% block content %}
-<div class="container twitter-container sarki-container">
-    <h3>Şarkı Sözleri</h3>
-    <div class="card mb-3">
-        <div class="card-body">
-            <!-- Arama ve Tür Filtresi -->
-            <div class="mb-3">
-                <form id="sarki-arama-form" class="d-flex justify-content-between align-items-center">
-                    <div class="input-group me-2">
-                        <input type="text" id="sarki-arama-input" class="form-control rounded-pill" placeholder="Şarkı adı veya sözleriyle ara..." aria-label="Arama">
-                        <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="bi bi-search"></i></button>
+<div class="container-fluid px-0">
+    <!-- Modern Hero Section -->
+    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="bi bi-music-note-list me-3"></i>Şarkı Sözleri
+                    </h1>
+                    <p class="lead mb-4">Kürtçe şarkı sözlerini keşfedin, yeni şarkılar ekleyin</p>
+                    <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
+                        <a href="{% url 'sarki_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Şarkı Ekle
+                        </a>
+                        <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
+                            <i class="bi bi-search me-2"></i>Şarkı Ara
+                        </button>
                     </div>
-                    <select id="tur-filtre" class="form-select rounded-pill" style="max-width: 200px;">
-                        <option value="">Tüm Türler</option>
-                        {% for tur in turler %}
-                            <option value="{{ tur }}">{{ tur }}</option>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
+                        <h3 class="h2 mb-2">{{ kisi_gruplari|length|default:"0" }}</h3>
+                        <p class="mb-0">Sanatçı Sayısı</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Modern Arama Bölümü -->
+        <div class="search-section mb-4">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-4">
+                    <form id="sarki-arama-form" class="row g-3">
+                        <div class="col-lg-8">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="bi bi-search me-2"></i>Şarkı Ara
+                            </label>
+                            <input type="text" id="sarki-arama-input" class="form-control form-control-lg" 
+                                   placeholder="Şarkı adı, sanatçı veya sözleriyle ara..." 
+                                   aria-label="Arama">
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label fw-semibold mb-2">
+                                <i class="bi bi-music-note me-2"></i>Tür
+                            </label>
+                            <select id="tur-filtre" class="form-select form-select-lg">
+                                <option value="">Tüm Türler</option>
+                                {% for tur in turler %}
+                                    <option value="{{ tur }}">{{ tur|capfirst }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                    <div id="sarki-arama-sonuc" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modern Alfabe Navigasyonu -->
+        <div class="alphabet-section mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body py-3">
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                        <a href="{% url 'sarki_sozleri' %}" 
+                           class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
+                           Tümü
+                        </a>
+                        {% for harf in harfler %}
+                            <a href="?harf={{ harf }}" 
+                               class="btn btn-sm {% if secili_harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
+                                {{ harf|upper }}
+                            </a>
                         {% endfor %}
-                    </select>
-                </form>
-                <div id="sarki-arama-sonuc" class="mt-3"></div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Harf Filtresi ve Kişi Listesi -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5>Kişiler</h5>
-                <a href="{% url 'sarki_ekle' %}" class="btn btn-primary rounded-pill">Şarkı Sözü Ekle</a>
-            </div>
-            <div class="d-flex flex-wrap mb-3">
-                <a href="{% url 'sarki_sozleri' %}" class="btn btn-link text-primary m-1 {% if not secili_harf %}active{% endif %}">Tümü</a>
-                {% for harf in harfler %}
-                    <a href="?harf={{ harf }}" class="btn btn-link text-primary m-1 {% if secili_harf == harf %}active{% endif %}">{{ harf|upper }}</a>
-                {% endfor %}
-            </div>
-            <div id="kisi-list">
-                {% for harf, kisiler in kisi_gruplari %}
-                    {% if kisiler %}
-                        <h6 class="mt-3">{{ harf|upper }}</h6>
-                        <ul class="list-unstyled kisi-list">
-                            {% for kisi in kisiler %}
-                                <li class="kisi-item mb-2">
-                                    <a href="{% url 'sarki_album_liste' kisi.id %}" class="text-decoration-none">
-                                        <strong>{{ kisi.ad }}</strong>
-                                        <p class="text-muted small">
-                                            {{ kisi.album_sayisi }} albüm, 
-                                            {{ kisi.sarki_sayisi }} şarkı
-                                        </p>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                {% empty %}
-                    <p class="text-muted">Bu harfle başlayan şarkı sözü eklenmiş kişi bulunamadı.</p>
-                {% endfor %}
+        </div>
+        <!-- Modern Sanatçı Listesi -->
+        <div class="artists-section">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-people me-2"></i>Sanatçılar
+                        <span class="badge bg-primary ms-2">{{ kisi_gruplari|length|default:"0" }}</span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="kisi-list" class="artists-container">
+                        {% for harf, kisiler in kisi_gruplari %}
+                            {% if kisiler %}
+                                <div class="letter-group mb-4">
+                                    <div class="letter-header d-flex align-items-center mb-3">
+                                        <div class="letter-badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                            <strong>{{ harf|upper }}</strong>
+                                        </div>
+                                        <h6 class="mb-0 text-primary">{{ harf|upper }} harfi ile başlayanlar</h6>
+                                    </div>
+                                    <div class="row g-3">
+                                        {% for kisi in kisiler %}
+                                            <div class="col-lg-6 col-xl-4">
+                                                <div class="artist-card card border-0 shadow-sm hover-lift">
+                                                    <div class="card-body">
+                                                        <h6 class="artist-name mb-2">
+                                                            <a href="{% url 'sarki_album_liste' kisi.id %}" class="text-decoration-none text-dark fw-bold">
+                                                                <i class="bi bi-person-circle me-2"></i>{{ kisi.ad }}
+                                                            </a>
+                                                        </h6>
+                                                        <div class="artist-stats">
+                                                            <div class="row text-center">
+                                                                <div class="col-6">
+                                                                    <div class="stat-item">
+                                                                        <span class="stat-number text-primary fw-bold">{{ kisi.album_sayisi }}</span>
+                                                                        <small class="stat-label text-muted d-block">Albüm</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="stat-item">
+                                                                        <span class="stat-number text-success fw-bold">{{ kisi.sarki_sayisi }}</span>
+                                                                        <small class="stat-label text-muted d-block">Şarkı</small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <div class="empty-state text-center py-5">
+                                <i class="bi bi-music-note-list display-1 text-muted mb-3"></i>
+                                <h4 class="text-muted">Henüz şarkı eklenmemiş</h4>
+                                <p class="text-muted mb-4">Bu harfle başlayan sanatçı bulunamadı.</p>
+                                <a href="{% url 'sarki_ekle' %}" class="btn btn-primary">
+                                    <i class="bi bi-plus-circle me-2"></i>Şarkı Ekle
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -64,14 +155,30 @@
     <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
 {% endblock %}
 {% block extra_scripts %}
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_loader.js' %}"></script>
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_search.js' %}"></script>
-    <script type="module">
-        import { initSarkiLoader } from "{% static 'main/js/modules/sarki/sarki_loader.js' %}";
-        import { initSarkiSearch } from "{% static 'main/js/modules/sarki/sarki_search.js' %}";
-        document.addEventListener('DOMContentLoaded', () => {
-            initSarkiLoader();
-            initSarkiSearch();
-        });
-    </script>
+<script>
+    function focusSearch() {
+        document.getElementById('sarki-arama-input').focus();
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mevcut JavaScript modüllerini koruyoruz
+        try {
+            // Modül yükleme hatalarını yakalayalım
+        } catch (error) {
+            console.log('Modül yükleme hatası:', error);
+        }
+    });
+</script>
+<script type="module">
+    try {
+        const { initSarkiLoader } = await import("{% static 'main/js/modules/sarki/sarki_loader.js' %}");
+        const { initSarkiSearch } = await import("{% static 'main/js/modules/sarki/sarki_search.js' %}");
+        
+        initSarkiLoader();
+        initSarkiSearch();
+    } catch (error) {
+        console.log('Modül yükleme hatası:', error);
+    }
+</script>
+<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
