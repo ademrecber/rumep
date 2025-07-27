@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{ harf|upper }} Harfi - Kürtçe Sözlük{% endblock %}
 {% block extra_head %}
-    <meta name="csrf-token" content="{% csrf_token %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
@@ -111,13 +111,13 @@
                                                         </button>
                                                         <ul class="dropdown-menu">
                                                             <li>
-                                                                <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">
+                                                                <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_veri' kelime.id %}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">
                                                                     <i class="bi bi-pencil me-2"></i>Düzenle
                                                                 </button>
                                                             </li>
                                                             <li><hr class="dropdown-divider"></li>
                                                             <li>
-                                                                <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}">
+                                                                <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_sil' kelime.id %}">
                                                                     <i class="bi bi-trash me-2"></i>Sil
                                                                 </button>
                                                             </li>
@@ -169,6 +169,20 @@
                             <div class="mb-3">
                                 <label for="detay" class="form-label">Detay</label>
                                 <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tur" class="form-label">Tür</label>
+                                <select class="form-control" id="tur" name="tur">
+                                    <option value="">Seçiniz</option>
+                                    <option value="isim">İsim</option>
+                                    <option value="fiil">Fiil</option>
+                                    <option value="sifat">Sıfat</option>
+                                    <option value="zarf">Zarf</option>
+                                    <option value="edat">Edat</option>
+                                    <option value="baglac">Bağlaç</option>
+                                    <option value="unlem">Ünlem</option>
+                                    <option value="zamir">Zamir</option>
+                                </select>
                             </div>
                             <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
                             <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>

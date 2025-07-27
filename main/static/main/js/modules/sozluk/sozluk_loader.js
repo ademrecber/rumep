@@ -48,6 +48,12 @@ const handleError = (error, errorDiv, customMessage = '') => {
     errorDiv.innerHTML = `<p>${customMessage || 'Bir hata oluştu, lütfen tekrar deneyin.'}</p>`;
 };
 
+// Get CSRF token utility
+const getCSRFToken = () => {
+    return document.querySelector('meta[name="csrf-token"]')?.content || 
+           document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+};
+
 // Form submission handler with optimized error handling
 export async function initSozlukForm() {
     const form = document.getElementById('sozluk-form');
@@ -61,7 +67,7 @@ export async function initSozlukForm() {
 
         try {
             const formData = new FormData(form);
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            const csrfToken = getCSRFToken();
             if (!csrfToken) {
                 throw new Error('CSRF token bulunamadı. Lütfen sayfayı yenileyin.');
             }
@@ -165,12 +171,7 @@ export function initSozlukLoader(harf) {
         state.offset += 20;
         state.hasMore = data.has_more;
 
-        import("./sozluk_search.js")
-            .then(module => module.bindKelimeActions())
-            .catch(error => {
-                console.error('Action binding failed:', error);
-                handleError(error, elements.errorDiv, 'İşlem bağlama başarısız oldu.');
-            });
+        bindKelimeActions();
     };
 
     const scrollHandler = throttle(() => {
@@ -185,4 +186,152 @@ export function initSozlukLoader(harf) {
     window.addEventListener('scroll', scrollHandler, { passive: true });
 
     return () => window.removeEventListener('scroll', scrollHandler);
+}
+
+// Edit kelime form handler
+export function initEditKelimeForm() {
+    const form = document.getElementById('edit-kelime-form');
+    const errorDiv = document.getElementById('edit-form-errors');
+    
+    if (!form || !errorDiv) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorDiv.classList.add('d-none');
+        errorDiv.innerHTML = '';
+
+        try {
+            const formData = new FormData(form);
+            const csrfToken = getCSRFToken();
+            if (!csrfToken) {
+                throw new Error('CSRF token bulunamadı. Lütfen sayfayı yenileyin.');
+            }
+
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: { 
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrfToken
+                },
+                body: formData
+            });
+
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+
+            if (data.success) {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editKelimeModal'));
+                if (modal) modal.hide();
+                
+                // Reload page to show updated content
+                window.location.reload();
+            } else {
+                errorDiv.classList.remove('d-none');
+                if (data.errors) {
+                    const errorMessages = Object.values(data.errors).join('<br>');
+                    errorDiv.innerHTML = errorMessages;
+                } else {
+                    errorDiv.innerHTML = 'Kelime düzenlenirken bir hata oluştu.';
+                }
+            }
+        } catch (error) {
+            console.error('Edit form error:', error);
+            errorDiv.classList.remove('d-none');
+            errorDiv.innerHTML = 'Bir hata oluştu, lütfen tekrar deneyin.';
+        }
+    });
+}
+
+// Bind kelime actions for the harf page
+export function bindKelimeActions() {
+    const errorDiv = document.getElementById('error-message') || document.createElement('div');
+
+    document.querySelectorAll('.delete-kelime-btn').forEach(btn => {
+        btn.removeEventListener('click', handleDeleteKelime);
+        btn.addEventListener('click', handleDeleteKelime);
+    });
+
+    document.querySelectorAll('.edit-kelime-btn').forEach(btn => {
+        btn.removeEventListener('click', handleEditKelime);
+        btn.addEventListener('click', handleEditKelime);
+    });
+
+    async function handleDeleteKelime(e) {
+        const btn = e.currentTarget;
+        const url = btn.getAttribute('data-url');
+        if (!url) {
+            console.error('Silme URL'si eksik:', btn);
+            errorDiv.classList.remove('d-none');
+            errorDiv.textContent = 'Silme işlemi için gerekli URL bulunamadı.';
+            return;
+        }
+        if (!confirm('Bu kelimeyi silmek istediğinizden emin misiniz?')) return;
+        
+        try {
+            const csrfToken = getCSRFToken();
+            if (!csrfToken) {
+                throw new Error('CSRF token bulunamadı. Lütfen sayfayı yenileyin.');
+            }
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrfToken
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Remove the kelime item from DOM
+                const kelimeItem = btn.closest('.kelime-item');
+                if (kelimeItem) {
+                    kelimeItem.remove();
+                }
+                alert('Kelime başarıyla silindi!');
+            } else {
+                errorDiv.classList.remove('d-none');
+                errorDiv.textContent = data.error || 'Kelime silinirken bir hata oluştu.';
+            }
+        } catch (error) {
+            console.error('Kelime silme hatası:', error);
+            errorDiv.classList.remove('d-none');
+            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+        }
+    }
+
+    async function handleEditKelime(e) {
+        const btn = e.currentTarget;
+        const kelimeId = btn.dataset.kelimeId;
+        const url = btn.getAttribute('data-url');
+        if (!url) {
+            console.error('Düzenleme verisi URL'si eksik:', btn);
+            alert('Düzenleme işlemi için gerekli URL bulunamadı.');
+            return;
+        }
+        
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                const form = document.getElementById('edit-kelime-form');
+                form.action = `/sozluk/kelime-duzenle/${kelimeId}/`;
+                form.querySelector('#kelime').value = data.kelime || '';
+                form.querySelector('#detay').value = data.detay || '';
+                form.querySelector('#tur').value = data.tur || '';
+            } else {
+                alert('Kelime verileri yüklenemedi.');
+            }
+        } catch (error) {
+            console.error('Kelime verisi yükleme hatası:', error);
+            alert('Kelime verileri yüklenemedi.');
+        }
+    }
 }
