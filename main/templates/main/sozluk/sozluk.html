@@ -7,10 +7,12 @@
 
 {% block extra_head %}
     <meta name="csrf-token" content="{% csrf_token %}">
+    <!-- Dictionary-specific resource hints -->
     <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}" as="script">
     <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_search.js' %}" as="script">
     <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_form.js' %}">
     <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_detay.js' %}">
+    <!-- Dictionary-specific styles -->
     <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
 {% endblock %}
 
@@ -81,6 +83,8 @@
             </div>
         </div>
 
+
+
         <!-- Modern Alfabe Navigasyonu -->
         <div class="alphabet-section mb-4">
             <div class="card border-0 shadow-sm">
@@ -128,10 +132,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="arama-sonuc-listesi" class="list-group list-group-flush words-container">
-                        <p class="text-muted">
-                            <i class="bi bi-hourglass-split me-2"></i>Kelimeler yükleniyor...
-                        </p>
+                    <div id="arama-sonuc-listesi" class="words-container">
+                        <div class="loading-state text-center py-5">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                            <p class="text-muted">Kelimeler yükleniyor...</p>
+                        </div>
                     </div>
                     <div id="loading" class="text-center mt-3 d-none">
                         <div class="spinner-border text-primary" role="status">
@@ -239,71 +246,9 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script type="module">
-    // Modern JavaScript modules
-    import { initSozlukForm, initSozlukLoader } from "{% static 'main/js/modules/sozluk/sozluk_loader.js' %}";
-    import { initSozlukArama, initTumKelimeler, bindKelimeActions } from "{% static 'main/js/modules/sozluk/sozluk_search.js' %}";
-    import { initEditKelimeForm } from "{% static 'main/js/modules/sozluk/sozluk_form.js' %}";
-    import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/sozluk/sozluk_detay.js' %}";
-    
-    // Initialize all features when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('sozluk.js yüklendi'); // Hata ayıklama
-        
-        // Enable Bootstrap form validation
-        const forms = document.querySelectorAll('.needs-validation');
-        forms.forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            });
-        });
-
-        // Initialize dictionary features
-        const cleanup = {
-            loader: initSozlukLoader(''),
-            search: initSozlukArama(),
-            words: initTumKelimeler(true)
-        };
-
-        // Initialize forms
-        initSozlukForm();
-        initEditKelimeForm();
-        initDetayEkleForm();
-        initEditDetayForm();
-        bindKelimeActions();
-
-        // Kelime sayısını güncelle
-        const updateWordCount = () => {
-            fetch('/sozluk/api/word-count/')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('word-count').textContent = data.count || '-';
-                    document.getElementById('result-count').textContent = data.count || '-';
-                })
-                .catch(() => {
-                    document.getElementById('word-count').textContent = '-';
-                    document.getElementById('result-count').textContent = '-';
-                });
-        };
-        
-        updateWordCount();
-
-        // Cleanup on page unload
-        window.addEventListener('unload', () => {
-            Object.values(cleanup).forEach(fn => fn?.());
-        });
-    });
-
+<script>
     function focusSearch() {
-        const searchInput = document.getElementById('arama-input');
-        if (searchInput) {
-            searchInput.focus();
-            console.log('Kelime Ara butonuna tıklandı'); // Hata ayıklama
-        }
+        document.getElementById('arama-input').focus();
     }
     
     function toggleView(viewType) {
@@ -311,20 +256,90 @@
         const gridBtn = document.getElementById('grid-view');
         const listBtn = document.getElementById('list-view');
         
-        if (container && gridBtn && listBtn) {
-            if (viewType === 'grid') {
-                container.classList.remove('list-view');
-                container.classList.add('grid-view');
-                gridBtn.classList.add('active');
-                listBtn.classList.remove('active');
-            } else {
-                container.classList.remove('grid-view');
-                container.classList.add('list-view');
-                gridBtn.classList.remove('active');
-                listBtn.classList.add('active');
-            }
-            console.log(`Görünüm değiştirildi: ${viewType}`); // Hata ayıklama
+        if (viewType === 'grid') {
+            container.classList.remove('list-view');
+            container.classList.add('grid-view');
+            gridBtn.classList.add('active');
+            listBtn.classList.remove('active');
+        } else {
+            container.classList.remove('grid-view');
+            container.classList.add('list-view');
+            listBtn.classList.add('active');
+            gridBtn.classList.remove('active');
         }
     }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Kelime sayısını güncelle
+        const updateWordCount = () => {
+            fetch('/sozluk/api/word-count/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('word-count').textContent = data.count || '-';
+                })
+                .catch(() => {
+                    document.getElementById('word-count').textContent = '-';
+                });
+        };
+        
+        updateWordCount();
+        
+        // Arama önerileri
+        const searchInput = document.getElementById('arama-input');
+        const suggestions = document.getElementById('search-suggestions');
+        let searchTimeout;
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.trim();
+                
+                if (query.length < 2) {
+                    if (suggestions) suggestions.innerHTML = '';
+                    return;
+                }
+                
+                searchTimeout = setTimeout(() => {
+                    // Basit arama önerisi simülasyonu
+                    if (suggestions) {
+                        suggestions.innerHTML = `
+                            <div class="suggestion-item p-2 border-bottom">
+                                <small class="text-muted">"${query}" için arama yapılıyor...</small>
+                            </div>
+                        `;
+                    }
+                }, 300);
+            });
+        }
+    });
 </script>
+<script type="module">
+    // Modern JavaScript modules (mevcut kodları koruyoruz)
+    try {
+        const { initSozlukForm, initSozlukLoader } = await import("{% static 'main/js/modules/sozluk/sozluk_loader.js' %}");
+        const { initSozlukArama, initTumKelimeler, bindKelimeActions } = await import("{% static 'main/js/modules/sozluk/sozluk_search.js' %}");
+        const { initEditKelimeForm } = await import("{% static 'main/js/modules/sozluk/sozluk_form.js' %}");
+        const { initDetayEkleForm, initEditDetayForm } = await import("{% static 'main/js/modules/sozluk/sozluk_detay.js' %}");
+        
+        // Initialize all features
+        const cleanup = {
+            loader: initSozlukLoader(''),
+            search: initSozlukArama(),
+            words: initTumKelimeler(true)
+        };
+
+        initSozlukForm();
+        initEditKelimeForm();
+        initDetayEkleForm();
+        initEditDetayForm();
+        bindKelimeActions();
+
+        window.addEventListener('unload', () => {
+            Object.values(cleanup).forEach(fn => fn?.());
+        });
+    } catch (error) {
+        console.log('Modül yükleme hatası:', error);
+    }
+</script>
+<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}
