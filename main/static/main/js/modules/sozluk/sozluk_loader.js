@@ -32,11 +32,11 @@ const createKelimeTemplate = ({ id, kelime, detay, is_owner }) => `
 // Throttle function for performance optimization
 const throttle = (func, limit) => {
     let inThrottle;
-    return function (...args) {
+    return function(...args) {
         if (!inThrottle) {
             func.apply(this, args);
             inThrottle = true;
-            setTimeout(() => (inThrottle = false), limit);
+            setTimeout(() => inThrottle = false, limit);
         }
     };
 };
@@ -46,14 +46,6 @@ const handleError = (error, errorDiv, customMessage = '') => {
     console.error(error);
     errorDiv.classList.remove('d-none');
     errorDiv.innerHTML = `<p>${customMessage || 'Bir hata oluştu, lütfen tekrar deneyin.'}</p>`;
-};
-
-// Get CSRF token utility
-const getCSRFToken = () => {
-    return (
-        document.querySelector('meta[name="csrf-token"]')?.content ||
-        document.querySelector('[name=csrfmiddlewaretoken]')?.value
-    );
 };
 
 // Form submission handler with optimized error handling
@@ -69,17 +61,17 @@ export async function initSozlukForm() {
 
         try {
             const formData = new FormData(form);
-            const csrfToken = getCSRFToken();
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
             if (!csrfToken) {
                 throw new Error('CSRF token bulunamadı. Lütfen sayfayı yenileyin.');
             }
             const response = await fetch(form.action, {
                 method: 'POST',
-                headers: {
+                headers: { 
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': csrfToken,
+                    'X-CSRFToken': csrfToken
                 },
-                body: formData,
+                body: formData
             });
 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -88,7 +80,7 @@ export async function initSozlukForm() {
             if (data.success) {
                 form.reset();
                 try {
-                    const module = await import('./sozluk_search.js');
+                    const module = await import("./sozluk_search.js");
                     await module.initTumKelimeler(true);
                 } catch (importError) {
                     handleError(importError, errorDiv, 'Kelime listesi yenilenemedi.');
@@ -109,20 +101,20 @@ export function initSozlukLoader(harf) {
         offset: 20,
         hasMore: true,
         loading: false,
-        cache: new Map(),
+        cache: new Map() // Cache for loaded items
     };
 
     const elements = {
         kelimeList: document.getElementById('kelime-list'),
         loadingDiv: document.getElementById('loading'),
-        errorDiv: document.getElementById('error-message'),
+        errorDiv: document.getElementById('error-message')
     };
 
     if (!Object.values(elements).every(Boolean)) return;
 
     const loadMoreKelimeler = async () => {
         if (state.loading || !state.hasMore) return;
-
+        
         state.loading = true;
         elements.loadingDiv.style.display = 'block';
         elements.errorDiv.classList.add('d-none');
@@ -137,7 +129,7 @@ export function initSozlukLoader(harf) {
 
             const response = await fetch(`/sozluk/harf-yukle/?harf=${harf}&offset=${state.offset}`, {
                 method: 'GET',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
 
             if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
@@ -145,6 +137,7 @@ export function initSozlukLoader(harf) {
 
             state.cache.set(cacheKey, data);
             renderKelimeler(data);
+
         } catch (error) {
             handleError(error, elements.errorDiv, 'Kelimeler yüklenirken hata oluştu.');
         } finally {
@@ -153,14 +146,14 @@ export function initSozlukLoader(harf) {
         }
     };
 
-    const renderKelimeler = async (data) => {
+    const renderKelimeler = (data) => {
         if (!data.kelimeler?.length) {
             state.hasMore = false;
             return;
         }
 
         const fragment = document.createDocumentFragment();
-        data.kelimeler.forEach((kelime) => {
+        data.kelimeler.forEach(kelime => {
             const kelimeDiv = document.createElement('div');
             kelimeDiv.className = 'kelime-item mb-1';
             kelimeDiv.dataset.kelimeId = kelime.id;
@@ -172,19 +165,18 @@ export function initSozlukLoader(harf) {
         state.offset += 20;
         state.hasMore = data.has_more;
 
-        try {
-            const module = await import('./sozluk_search.js');
-            module.bindKelimeActions();
-        } catch (error) {
-            console.error('Action binding failed:', error);
-            handleError(error, elements.errorDiv, 'İşlem bağlama başarısız oldu.');
-        }
+        import("./sozluk_search.js")
+            .then(module => module.bindKelimeActions())
+            .catch(error => {
+                console.error('Action binding failed:', error);
+                handleError(error, elements.errorDiv, 'İşlem bağlama başarısız oldu.');
+            });
     };
 
     const scrollHandler = throttle(() => {
         const { scrollY, innerHeight } = window;
         const { scrollHeight } = document.documentElement;
-
+        
         if (scrollHeight - (scrollY + innerHeight) < 200 && !state.loading) {
             loadMoreKelimeler();
         }
