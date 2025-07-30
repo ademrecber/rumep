@@ -13,15 +13,41 @@
     <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_form.js' %}">
     <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_detay.js' %}">
     <!-- Dictionary-specific styles -->
+    <link rel="stylesheet" href="{% static 'main/css/modern.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="container twitter-container sozluk-container">
-        <h1 class="display-4 text-center mb-4">
-            <i class="bi bi-book-half me-3"></i>
-            Kürtçe Sözlük
-        </h1>
+<div class="container-fluid px-0">
+    <!-- Modern Hero Section -->
+    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="bi bi-book-half me-3"></i>Kürtçe Sözlük
+                    </h1>
+                    <p class="lead mb-4">Kelime arama, ekleme ve düzenleme</p>
+                    <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
+                        <button class="btn btn-light btn-lg" onclick="focusAddForm()" style="position: relative; z-index: 30;">
+                            <i class="bi bi-plus-circle me-2"></i>Yeni Kelime Ekle
+                        </button>
+                        <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
+                            <i class="bi bi-search me-2"></i>Kelime Ara
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
+                        <h3 class="h2 mb-2">{{ kelime_sayisi|default:"0" }}</h3>
+                        <p class="mb-0">Toplam Kelime</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container sozluk-container">
         
         <!-- Kelime Ekleme Formu -->
         <div class="card mb-4 shadow-lg">
@@ -182,6 +208,7 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block extra_scripts %}
@@ -225,5 +252,23 @@
                 Object.values(cleanup).forEach(fn => fn?.());
             });
         });
+        
+        // Hero section butonları için fonksiyonlar
+        window.focusAddForm = function() {
+            const addForm = document.querySelector('#sozluk-form');
+            if (addForm) {
+                addForm.scrollIntoView({ behavior: 'smooth' });
+                const firstInput = addForm.querySelector('input, textarea');
+                if (firstInput) firstInput.focus();
+            }
+        };
+        
+        window.focusSearch = function() {
+            const searchInput = document.querySelector('#arama-input');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
     </script>
 {% endblock %}

@@ -3,19 +3,50 @@
 {% block title %}{{ kelime.kelime }} - Kürtçe Sözlük{% endblock %}
 {% block extra_head %}
     <meta name="csrf-token" content="{% csrf_token %}">
+    <link rel="stylesheet" href="{% static 'main/css/modern.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="container twitter-container sozluk-container">
-        <h1 class="display-4 text-center mb-4">
-            <i class="bi bi-card-text me-3"></i>
-            {{ kelime.kelime }}
-        </h1>
-        <div class="card mb-4 shadow-lg">
-            <div class="card-body">
-                <h5 class="card-title mb-3">
+<div class="container-fluid px-0">
+    <!-- Modern Hero Section -->
+    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="bi bi-card-text me-3"></i>{{ kelime.kelime }}
+                    </h1>
+                    <p class="lead mb-4">{{ kelime.detay|striptags|truncatechars:100 }}</p>
+                    <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
+                        <a href="{% url 'sozluk_ana_sayfa' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
+                            <i class="bi bi-arrow-left me-2"></i>Tüm Kelimeler
+                        </a>
+                        {% if kelime.kullanici == user %}
+                            <button class="btn btn-outline-light btn-lg edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_veri' kelime.id %}" data-bs-toggle="modal" data-bs-target="#editKelimeModal" style="position: relative; z-index: 30;">
+                                <i class="bi bi-pencil me-2"></i>Düzenle
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
+                        <h6 class="mb-2">Tür</h6>
+                        <p class="h5 mb-0">{{ kelime.tur|default:'Belirtilmemiş' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container sozluk-container">
+        <div class="card border-0 shadow-lg mb-4">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="mb-0">
                     <i class="bi bi-info-circle me-2 text-primary"></i>
                     Kelime Bilgileri
                 </h5>
+            </div>
+            <div class="card-body p-4">
                 <p><strong>Detay:</strong> {{ kelime.detay }}</p>
                 <p><strong>Tür:</strong> {{ kelime.tur|default:'Belirtilmemiş' }}</p>
                 <p><strong>Ekleyen:</strong> <a href="{% url 'profile_detail' kelime.kullanici.profile.username %}">{{ kelime.kullanici.profile.nickname }}</a> (@{{ kelime.kullanici.profile.username }})</p>
@@ -138,6 +169,7 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 {% block extra_scripts %}
     <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}"></script>
@@ -155,7 +187,4 @@
             initEditKelimeForm();
         });
     </script>
-{% endblock %}
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
 {% endblock %}
