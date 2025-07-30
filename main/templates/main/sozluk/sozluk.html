@@ -17,329 +17,197 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid px-0">
-    <!-- Modern Hero Section -->
-    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-book me-3"></i>Kürtçe Sözlük
-                    </h1>
-                    <p class="lead mb-4">Kürtçe kelimeleri keşfedin, yeni kelimeler ekleyin ve sözlüğümüzü zenginleştirin</p>
-                    <div class="d-flex gap-3 flex-wrap">
-                        <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#addWordModal">
-                            <i class="bi bi-plus-circle me-2"></i>Yeni Kelime Ekle
-                        </button>
-                        <button class="btn btn-outline-light btn-lg" onclick="focusSearch()">
-                            <i class="bi bi-search me-2"></i>Kelime Ara
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4">
-                        <h3 class="h2 mb-2" id="word-count">-</h3>
-                        <p class="mb-0">Toplam Kelime</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <!-- Modern Arama Bölümü -->
-        <div class="search-section mb-4">
-            <div class="card border-0 shadow-lg">
-                <div class="card-body p-4">
-                    <div class="row g-3">
-                        <div class="col-lg-8">
-                            <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-search me-2"></i>Kelime Ara
-                            </label>
-                            <div class="search-input-container position-relative">
-                                <input type="text" 
-                                       id="arama-input" 
-                                       class="form-control form-control-lg" 
-                                       placeholder="Kelime ara (ör. xanî, rojava)" 
-                                       aria-label="Arama"
-                                       autocomplete="off">
-                                <div class="search-suggestions" id="search-suggestions"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-tags me-2"></i>Kelime Türü
-                            </label>
-                            <select id="tur-filtresi" class="form-select form-select-lg">
-                                <option value="">Tüm Türler</option>
-                                <option value="isim">İsim</option>
-                                <option value="fiil">Fiil</option>
-                                <option value="sifat">Sıfat</option>
-                                <option value="zarf">Zarf</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+    <div class="container twitter-container sozluk-container">
+        <h1 class="h3">Kürtçe Sözlük</h1>
+        
+        <!-- Kelime Ekleme Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <form id="sozluk-form" method="post" action="{% url 'sozluk_ana_sayfa' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
+                    <button type="submit" class="btn btn-primary rounded-pill">
+                        <i class="bi bi-plus-circle me-1"></i> Kelime Ekle
+                    </button>
+                </form>
             </div>
         </div>
 
+        <!-- Arama Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5><i class="bi bi-search me-2"></i>Kelime Ara</h5>
+                <form id="sozluk-arama-form" class="d-flex gap-2">
+                    <div class="flex-grow-1">
+                        <input type="text" 
+                               id="arama-input" 
+                               class="form-control" 
+                               placeholder="Kelime ara (ör. ab)" 
+                               aria-label="Arama"
+                               autocomplete="off">
+                    </div>
+                    <div>
+                        <select id="tur-filtresi" class="form-select" aria-label="Kelime türü filtresi">
+                            <option value="">Tüm Türler</option>
+                            <option value="isim">İsim</option>
+                            <option value="fiil">Fiil</option>
+                            <option value="sifat">Sıfat</option>
+                            <option value="zarf">Zarf</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill">
+                        <i class="bi bi-search me-1"></i> Ara
+                    </button>
+                </form>
+            </div>
+        </div>
 
-
-        <!-- Modern Alfabe Navigasyonu -->
-        <div class="alphabet-section mb-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">
-                        <i class="bi bi-grid-3x3-gap me-2"></i>Harflere Göre Gözat
-                    </h5>
-                    <nav aria-label="Alfabe navigasyonu">
-                        <div class="alphabet-grid d-flex flex-wrap gap-2">
-                            <a href="{% url 'sozluk_ana_sayfa' %}" 
-                               class="btn btn-sm {% if not request.GET.harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill alphabet-btn"
-                               aria-label="Tüm kelimeler">
-                               Tümü
+        <!-- Harf Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Harfler</h5>
+                <nav aria-label="Alfabe navigasyonu">
+                    <div class="d-flex flex-wrap gap-1">
+                        <a id="tum-kelimeler-btn"
+                           href="{% url 'sozluk_ana_sayfa' %}" 
+                           class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}"
+                           aria-label="Tüm kelimeler">
+                           Tümü
+                        </a>
+                        {% for harf in harfler %}
+                            <a href="{% url 'sozluk_harf' harf %}" 
+                               class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}"
+                               aria-label="{{ harf|upper }} harfi ile başlayan kelimeler">
+                                {{ harf|upper }}
                             </a>
-                            {% for harf in harfler %}
-                                <a href="{% url 'sozluk_harf' harf %}" 
-                                   class="btn btn-sm {% if request.GET.harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill alphabet-btn"
-                                   aria-label="{{ harf|upper }} harfi ile başlayan kelimeler">
-                                    {{ harf|upper }}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </nav>
-                </div>
+                        {% endfor %}
+                    </div>
+                </nav>
             </div>
         </div>
 
-        <!-- Modern Kelime Listesi -->
-        <div class="words-section">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white border-0 py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="bi bi-list-ul me-2"></i>Kelimeler
-                            <span class="badge bg-primary ms-2" id="result-count">-</span>
+        <!-- Kelime Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0"><i class="bi bi-book me-2"></i>Tüm Kelimeler</h5>
+                </div>
+                <div id="arama-sonuc-listesi" class="list-group list-group-flush">
+                    <p class="text-muted">
+                        <i class="bi bi-hourglass-split me-2"></i>Kelimeler yükleniyor...
+                    </p>
+                </div>
+                <div id="loading" class="text-center mt-3 d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Yükleniyor...</span>
+                    </div>
+                </div>
+                <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
+            </div>
+        </div>
+
+        <!-- Düzenleme Modalı -->
+        <div class="modal fade" id="editKelimeModal" tabindex="-1" aria-labelledby="editKelimeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editKelimeModalLabel">
+                            <i class="bi bi-pencil-square me-2"></i>Kelime Düzenle
                         </h5>
-                        <div class="view-options">
-                            <button class="btn btn-sm btn-outline-secondary" onclick="toggleView('grid')" id="grid-view">
-                                <i class="bi bi-grid-3x3"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-secondary active" onclick="toggleView('list')" id="list-view">
-                                <i class="bi bi-list"></i>
-                            </button>
-                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div id="arama-sonuc-listesi" class="words-container">
-                        <div class="loading-state text-center py-5">
-                            <div class="spinner-border text-primary mb-3" role="status">
-                                <span class="visually-hidden">Yükleniyor...</span>
+                    <div class="modal-body">
+                        <form id="edit-kelime-form" method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="kelime" class="form-label">Kelime</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="kelime" 
+                                       name="kelime" 
+                                       required
+                                       autocomplete="off">
+                                <div class="invalid-feedback">
+                                    Lütfen bir kelime girin.
+                                </div>
                             </div>
-                            <p class="text-muted">Kelimeler yükleniyor...</p>
-                        </div>
+                            <div class="mb-3">
+                                <label for="detay" class="form-label">Detay</label>
+                                <textarea class="form-control" 
+                                          id="detay" 
+                                          name="detay" 
+                                          rows="4" 
+                                          required></textarea>
+                                <div class="invalid-feedback">
+                                    Lütfen kelime detayını girin.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tur" class="form-label">Tür</label>
+                                <select class="form-select" id="tur" name="tur">
+                                    <option value="">Seçiniz</option>
+                                    <option value="isim">İsim</option>
+                                    <option value="fiil">Fiil</option>
+                                    <option value="sifat">Sıfat</option>
+                                    <option value="zarf">Zarf</option>
+                                </select>
+                            </div>
+                            <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check2 me-1"></i>Kaydet
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div id="loading" class="text-center mt-3 d-none">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Yükleniyor...</span>
-                        </div>
-                    </div>
-                    <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Kelime Ekleme Modalı -->
-    <div class="modal fade" id="addWordModal" tabindex="-1" aria-labelledby="addWordModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addWordModalLabel">
-                        <i class="bi bi-plus-circle me-2"></i>Yeni Kelime Ekle
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="sozluk-form" method="post" action="{% url 'sozluk_ana_sayfa' %}" class="needs-validation" novalidate>
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="submit" form="sozluk-form" class="btn btn-primary">
-                        <i class="bi bi-plus-circle me-1"></i>Kelime Ekle
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Düzenleme Modalı -->
-    <div class="modal fade" id="editKelimeModal" tabindex="-1" aria-labelledby="editKelimeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title" id="editKelimeModalLabel">
-                        <i class="bi bi-pencil-square me-2"></i>Kelime Düzenle
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="edit-kelime-form" method="post" class="needs-validation" novalidate>
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="kelime" class="form-label fw-semibold">
-                                <i class="bi bi-type me-1"></i>Kelime
-                            </label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="kelime" 
-                                   name="kelime" 
-                                   required
-                                   autocomplete="off">
-                            <div class="invalid-feedback">
-                                Lütfen bir kelime girin.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="detay" class="form-label fw-semibold">
-                                <i class="bi bi-journal-text me-1"></i>Detay
-                            </label>
-                            <textarea class="form-control" 
-                                      id="detay" 
-                                      name="detay" 
-                                      rows="4" 
-                                      required></textarea>
-                            <div class="invalid-feedback">
-                                Lütfen kelime detayını girin.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tur" class="form-label fw-semibold">
-                                <i class="bi bi-tag me-1"></i>Tür
-                            </label>
-                            <select class="form-select" id="tur" name="tur">
-                                <option value="">Seçiniz</option>
-                                <option value="isim">İsim</option>
-                                <option value="fiil">Fiil</option>
-                                <option value="sifat">Sıfat</option>
-                                <option value="zarf">Zarf</option>
-                            </select>
-                        </div>
-                        <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="submit" form="edit-kelime-form" class="btn btn-warning">
-                        <i class="bi bi-check2 me-1"></i>Kaydet
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-    function focusSearch() {
-        document.getElementById('arama-input').focus();
-    }
-    
-    function toggleView(viewType) {
-        const container = document.querySelector('.words-container');
-        const gridBtn = document.getElementById('grid-view');
-        const listBtn = document.getElementById('list-view');
+    <script type="module">
+        // Modern JavaScript modules
+        import { initSozlukForm, initSozlukLoader } from "{% static 'main/js/modules/sozluk/sozluk_loader.js' %}";
+        import { initSozlukArama, initTumKelimeler, bindKelimeActions } from "{% static 'main/js/modules/sozluk/sozluk_search.js' %}";
+        import { initEditKelimeForm } from "{% static 'main/js/modules/sozluk/sozluk_form.js' %}";
+        import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/sozluk/sozluk_detay.js' %}";
         
-        if (viewType === 'grid') {
-            container.classList.remove('list-view');
-            container.classList.add('grid-view');
-            gridBtn.classList.add('active');
-            listBtn.classList.remove('active');
-        } else {
-            container.classList.remove('grid-view');
-            container.classList.add('list-view');
-            listBtn.classList.add('active');
-            gridBtn.classList.remove('active');
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        // Kelime sayısını güncelle
-        const updateWordCount = () => {
-            fetch('/sozluk/api/word-count/')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('word-count').textContent = data.count || '-';
-                })
-                .catch(() => {
-                    document.getElementById('word-count').textContent = '-';
-                });
-        };
-        
-        updateWordCount();
-        
-        // Arama önerileri
-        const searchInput = document.getElementById('arama-input');
-        const suggestions = document.getElementById('search-suggestions');
-        let searchTimeout;
-        
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                const query = this.value.trim();
-                
-                if (query.length < 2) {
-                    if (suggestions) suggestions.innerHTML = '';
-                    return;
-                }
-                
-                searchTimeout = setTimeout(() => {
-                    // Basit arama önerisi simülasyonu
-                    if (suggestions) {
-                        suggestions.innerHTML = `
-                            <div class="suggestion-item p-2 border-bottom">
-                                <small class="text-muted">"${query}" için arama yapılıyor...</small>
-                            </div>
-                        `;
+        // Initialize all features when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enable Bootstrap form validation
+            const forms = document.querySelectorAll('.needs-validation');
+            forms.forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
                     }
-                }, 300);
+                    form.classList.add('was-validated');
+                });
             });
-        }
-    });
-</script>
-<script type="module">
-    // Modern JavaScript modules (mevcut kodları koruyoruz)
-    try {
-        const { initSozlukForm, initSozlukLoader } = await import("{% static 'main/js/modules/sozluk/sozluk_loader.js' %}");
-        const { initSozlukArama, initTumKelimeler, bindKelimeActions } = await import("{% static 'main/js/modules/sozluk/sozluk_search.js' %}");
-        const { initEditKelimeForm } = await import("{% static 'main/js/modules/sozluk/sozluk_form.js' %}");
-        const { initDetayEkleForm, initEditDetayForm } = await import("{% static 'main/js/modules/sozluk/sozluk_detay.js' %}");
-        
-        // Initialize all features
-        const cleanup = {
-            loader: initSozlukLoader(''),
-            search: initSozlukArama(),
-            words: initTumKelimeler(true)
-        };
 
-        initSozlukForm();
-        initEditKelimeForm();
-        initDetayEkleForm();
-        initEditDetayForm();
-        bindKelimeActions();
+            // Initialize dictionary features
+            const cleanup = {
+                loader: initSozlukLoader(''),
+                search: initSozlukArama(),
+                words: initTumKelimeler(true)
+            };
 
-        window.addEventListener('unload', () => {
-            Object.values(cleanup).forEach(fn => fn?.());
+            // Initialize forms
+            initSozlukForm();
+            initEditKelimeForm();
+            initDetayEkleForm();
+            initEditDetayForm();
+            bindKelimeActions();
+
+            // Cleanup on page unload
+            window.addEventListener('unload', () => {
+                Object.values(cleanup).forEach(fn => fn?.());
+            });
         });
-    } catch (error) {
-        console.log('Modül yükleme hatası:', error);
-    }
-</script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
+    </script>
 {% endblock %}

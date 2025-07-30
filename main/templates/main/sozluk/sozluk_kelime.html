@@ -5,233 +5,65 @@
     <meta name="csrf-token" content="{% csrf_token %}">
 {% endblock %}
 {% block content %}
-<div class="container-fluid px-0">
-    <!-- Modern Hero Section -->
-    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <nav aria-label="breadcrumb" class="mb-3">
-                        <ol class="breadcrumb text-white-50">
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'sozluk_ana_sayfa' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-book me-1"></i>Sözlük
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'sozluk_harf' kelime.kelime.0 %}" class="text-white text-decoration-none">
-                                    {{ kelime.kelime.0|upper }} Harfi
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">{{ kelime.kelime }}</li>
-                        </ol>
-                    </nav>
-                    
-                    <h1 class="display-4 fw-bold mb-3">{{ kelime.kelime }}</h1>
-                    
-                    <div class="word-badges mb-4">
-                        {% if kelime.tur %}
-                            <span class="badge bg-light text-dark fs-6 me-2">
-                                <i class="bi bi-tag me-1"></i>{{ kelime.tur|capfirst }}
-                            </span>
-                        {% endif %}
-                        <span class="badge bg-light text-dark fs-6">
-                            <i class="bi bi-calendar3 me-1"></i>{{ kelime.eklenme_tarihi|date:"d F Y" }}
-                        </span>
-                    </div>
-                    
-                    {% if kelime.kullanici == user %}
-                        <div class="owner-actions d-flex gap-3">
-                            <button class="btn btn-light btn-lg edit-kelime-btn" 
-                                    data-kelime-id="{{ kelime.id }}" 
-                                    data-url="{% url 'sozluk_kelime_veri' kelime.id %}" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#editKelimeModal">
-                                <i class="bi bi-pencil me-2"></i>Düzenle
-                            </button>
-                            <button class="btn btn-outline-light btn-lg delete-kelime-btn" 
-                                    data-kelime-id="{{ kelime.id }}" 
-                                    data-url="{% url 'sozluk_kelime_sil' kelime.id %}">
-                                <i class="bi bi-trash me-2"></i>Sil
-                            </button>
-                        </div>
-                    {% endif %}
-                </div>
-                
-                <div class="col-lg-4 text-center">
-                    <div class="word-stats bg-white bg-opacity-10 rounded-4 p-4">
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <h3 class="h2 mb-1">{{ detaylar.count }}</h3>
-                                <p class="mb-0 small">Ek Detay</p>
-                            </div>
-                            <div class="col-6">
-                                <h3 class="h2 mb-1">1</h3>
-                                <p class="mb-0 small">Kelime</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="row">
-            <!-- Ana İçerik -->
-            <div class="col-lg-8">
-                <!-- Kelime Detayı -->
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">
-                            <i class="bi bi-info-circle me-2"></i>Kelime Açıklaması
-                        </h5>
-                        <p class="card-text lead">{{ kelime.detay }}</p>
-                    </div>
-                </div>
-
-                <!-- Detay Ekleme Formu -->
-                {% if kelime.kullanici != user %}
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-header bg-success text-white">
-                            <h6 class="mb-0">
-                                <i class="bi bi-plus-circle me-2"></i>Yeni Detay Ekle
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <form id="detay-ekle-form" method="post" action="{% url 'sozluk_detay_ekle' kelime.id %}">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    {{ detay_form.as_p }}
-                                </div>
-                                <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                                <button type="submit" class="btn btn-success w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Detay Ekle
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-body text-center py-4">
-                            <i class="bi bi-info-circle display-4 text-muted mb-3"></i>
-                            <p class="text-muted">Kendi kelimenize detay ekleyemezsiniz.</p>
-                        </div>
+    <div class="container twitter-container">
+        <h3>{{ kelime.kelime }}</h3>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Detay:</strong> {{ kelime.detay }}</p>
+                <p><strong>Tür:</strong> {{ kelime.tur|default:'Belirtilmemiş' }}</p>
+                <p><strong>Ekleyen:</strong> <a href="{% url 'profile_detail' kelime.kullanici.profile.username %}">{{ kelime.kullanici.profile.nickname }}</a> (@{{ kelime.kullanici.profile.username }})</p>
+                <p><strong>Eklenme Tarihi:</strong> {{ kelime.eklenme_tarihi }}</p>
+                {% if kelime.kullanici == user %}
+                    <div class="mt-3">
+                        <button class="btn btn-primary btn-sm rounded-pill me-2 edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_veri' kelime.id %}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                        <button class="btn btn-danger btn-sm rounded-pill delete-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_sil' kelime.id %}">Sil</button>
                     </div>
                 {% endif %}
-
-                <!-- Ek Detaylar -->
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-header bg-white border-0 py-3">
-                        <h5 class="mb-0">
-                            <i class="bi bi-journal-text me-2"></i>Ek Detaylar
-                            <span class="badge bg-primary ms-2">{{ detaylar.count }}</span>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="detay-list">
-                            {% for detay in detaylar %}
-                                <div class="detail-item detay-item border-start border-3 border-primary ps-4 mb-4" data-detay-id="{{ detay.id }}">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <div class="detail-meta">
-                                            <small class="text-muted">
-                                                <i class="bi bi-person me-1"></i>
-                                                <a href="{% url 'profile_detail' detay.kullanici.profile.username %}" class="text-decoration-none">
-                                                    {{ detay.kullanici.profile.nickname }}
-                                                </a>
-                                                <span class="text-muted">(@{{ detay.kullanici.profile.username }})</span>
-                                                <i class="bi bi-calendar3 ms-3 me-1"></i>{{ detay.eklenme_tarihi|date:"d.m.Y" }}
-                                            </small>
-                                        </div>
-                                        {% if detay.kullanici == user %}
-                                            <div class="detail-actions">
-                                                <button class="btn btn-sm btn-outline-primary me-1 edit-detay-btn" 
-                                                        data-detay-id="{{ detay.id }}" 
-                                                        data-url="{% url 'sozluk_detay_veri' detay.id %}" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#editDetayModal">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger delete-detay-btn" 
-                                                        data-detay-id="{{ detay.id }}" 
-                                                        data-url="{% url 'sozluk_detay_sil' detay.id %}">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                    <p class="mb-0">{{ detay.detay }}</p>
-                                </div>
-                            {% empty %}
-                                <div class="text-center py-4">
-                                    <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
-                                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
             </div>
-            
-            <!-- Yan Panel -->
-            <div class="col-lg-4">
-                <!-- Kelime Bilgileri -->
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Kelime Bilgileri
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Kelime</strong>
-                            <span class="fs-5 fw-bold">{{ kelime.kelime }}</span>
-                        </div>
-                        
-                        <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Tür</strong>
-                            {% if kelime.tur %}
-                                <span class="badge bg-primary-subtle text-primary">
-                                    {{ kelime.tur|capfirst }}
-                                </span>
-                            {% else %}
-                                <span class="text-muted">Belirtilmemiş</span>
+        </div>
+
+        <!-- Detay Ekleme Formu -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Detay Ekle</h5>
+                {% if kelime.kullanici == user %}
+                    <p class="text-muted">Kendi kelimenize detay yazamazsınız.</p>
+                {% else %}
+                    <form id="detay-ekle-form" method="post" action="{% url 'sozluk_detay_ekle' kelime.id %}">
+                        {% csrf_token %}
+                        {{ detay_form.as_p }}
+                        <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
+                        <button type="submit" class="btn btn-primary rounded-pill">Detay Ekle</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Detay Listesi -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Ek Detaylar</h5>
+                <div id="detay-list">
+                    {% for detay in detaylar %}
+                        <div class="detay-item mb-2" data-detay-id="{{ detay.id }}">
+                            <p>{{ detay.detay }}</p>
+                            <p class="text-muted small">
+                                Ekleyen: <a href="{% url 'profile_detail' detay.kullanici.profile.username %}">{{ detay.kullanici.profile.nickname }}</a> (@{{ detay.kullanici.profile.username }}) · {{ detay.eklenme_tarihi }}
+                            </p>
+                            {% if detay.kullanici == user %}
+                                <div class="mt-2">
+                                    <button class="btn btn-primary btn-sm rounded-pill me-2 edit-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'sozluk_detay_veri' detay.id %}" data-bs-toggle="modal" data-bs-target="#editDetayModal">Düzenle</button>
+                                    <button class="btn btn-danger btn-sm rounded-pill delete-detay-btn" data-detay-id="{{ detay.id }}" data-url="{% url 'sozluk_detay_sil' detay.id %}">Sil</button>
+                                </div>
                             {% endif %}
+                            <hr>
                         </div>
-                        
-                        <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Ekleyen</strong>
-                            <a href="{% url 'profile_detail' kelime.kullanici.profile.username %}" class="text-decoration-none">
-                                {{ kelime.kullanici.profile.nickname }}
-                                <small class="text-muted">(@{{ kelime.kullanici.profile.username }})</small>
-                            </a>
-                        </div>
-                        
-                        <div class="info-item">
-                            <strong class="text-muted d-block mb-1">Eklenme Tarihi</strong>
-                            <span>{{ kelime.eklenme_tarihi|date:"d F Y, H:i" }}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Benzer Kelimeler -->
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 py-3">
-                        <h6 class="mb-0">
-                            <i class="bi bi-collection me-2"></i>Benzer Kelimeler
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted small">{{ kelime.kelime.0|upper }} harfi ile başlayan diğer kelimeler için 
-                            <a href="{% url 'sozluk_harf' kelime.kelime.0 %}" class="text-decoration-none">
-                                {{ kelime.kelime.0|upper }} harfi sayfasını ziyaret edin
-                            </a>
-                        </p>
-                    </div>
+                    {% empty %}
+                        <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
 
         <!-- Kelime Düzenleme Modalı -->
         <div class="modal fade" id="editKelimeModal" tabindex="-1" aria-labelledby="editKelimeModalLabel" aria-hidden="true">
@@ -295,21 +127,21 @@
     </div>
 {% endblock %}
 {% block extra_scripts %}
-<script type="module">
-    try {
-        const { bindKelimeActions } = await import("{% static 'main/js/modules/sozluk/sozluk_search.js' %}");
-        const { initDetayEkleForm, initEditDetayForm } = await import("{% static 'main/js/modules/sozluk/sozluk_detay.js' %}");
-        const { initEditKelimeForm } = await import("{% static 'main/js/modules/sozluk/sozluk_form.js' %}");
-        
-        bindKelimeActions();
-        initDetayEkleForm();
-        initEditDetayForm();
-        initEditKelimeForm();
-    } catch (error) {
-        console.log('Modül yükleme hatası:', error);
-    }
-</script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
+    <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_search.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_detay.js' %}"></script>
+    <script type="module" src="{% static 'main/js/modules/sozluk/sozluk_form.js' %}"></script>
+    <script type="module">
+        import { bindKelimeActions } from "{% static 'main/js/modules/sozluk/sozluk_search.js' %}";
+        import { initDetayEkleForm, initEditDetayForm } from "{% static 'main/js/modules/sozluk/sozluk_detay.js' %}";
+        import { initEditKelimeForm } from "{% static 'main/js/modules/sozluk/sozluk_form.js' %}";
+        document.addEventListener('DOMContentLoaded', () => {
+            bindKelimeActions();
+            initDetayEkleForm();
+            initEditDetayForm();
+            initEditKelimeForm();
+        });
+    </script>
 {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
