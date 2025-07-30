@@ -1,38 +1,331 @@
+/* Modern Sözlük Container */
 .sozluk-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    position: relative;
 }
 
-.sozluk-container .btn-outline-primary {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px;
+.sozluk-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+    pointer-events: none;
+}
+
+/* Modern Başlık */
+.sozluk-container h1 {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+/* Modern Kartlar */
+.sozluk-container .card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.sozluk-container .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.sozluk-container .card-body {
+    padding: 25px;
+}
+
+/* Modern Form Elemanları */
+.sozluk-container .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.sozluk-container .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    background: white;
+}
+
+.sozluk-container .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.sozluk-container .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Modern Butonlar */
+.sozluk-container .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.sozluk-container .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.sozluk-container .btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.sozluk-container .btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.sozluk-container .btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+}
+
+/* Harf Navigasyonu */
+.sozluk-container .btn-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid transparent;
+}
+
+.sozluk-container .btn-link:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: #667eea;
+    transform: translateY(-2px);
+    color: #667eea;
+}
+
+.sozluk-container .btn-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Kelime Listesi */
+.sozluk-container .kelime-item {
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.5);
+    margin-bottom: 15px;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .sozluk-container .kelime-item:hover {
-    background-color: #f8f9fa;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateX(10px);
+    border-color: rgba(102, 126, 234, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-.sozluk-container .kelime-list {
-    margin-top: 10px;
-}
-
-.sozluk-container .kelime-list h6 {
+.sozluk-container .kelime-item strong {
+    color: #667eea;
     font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.sozluk-container .kelime-item .text-muted {
+    color: #6c757d !important;
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+/* Dropdown Menü */
+.sozluk-container .dropdown-menu {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.sozluk-container .dropdown-item {
+    border-radius: 10px;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.sozluk-container .dropdown-item:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+/* Modal Tasarımı */
+.sozluk-container .modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+}
+
+.sozluk-container .modal-header {
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-radius: 20px 20px 0 0;
+}
+
+.sozluk-container .modal-title {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.sozluk-container .modal-body {
+    padding: 25px;
+}
+
+/* Alert Tasarımı */
+.sozluk-container .alert {
+    border: none;
+    border-radius: 15px;
+    padding: 15px 20px;
+}
+
+.sozluk-container .alert-danger {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(200, 35, 51, 0.1) 100%);
+    color: #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+/* Loading Spinner */
+.sozluk-container .spinner-border {
+    color: #667eea;
+}
+
+/* Detay Sayfası Özel Stiller */
+.sozluk-container .detay-item {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.sozluk-container .detay-item:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .sozluk-container {
+        padding: 20px 15px;
+    }
+    
+    .sozluk-container h1 {
+        font-size: 2rem;
+    }
+    
+    .sozluk-container .card-body {
+        padding: 20px;
+    }
+    
+    .sozluk-container .btn-link {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .sozluk-container .kelime-item {
+        padding: 15px;
+    }
+}
+
+/* Animasyonlar */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sozluk-container .card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.sozluk-container .kelime-item {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* Özel İkonlar için Stiller */
+.sozluk-container .bi {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* Form Label Stili */
+.sozluk-container .form-label {
     font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.sozluk-container .kelime-list ul {
-    padding-left: 20px;
-}
-
-.sozluk-container .kelime-list li {
+    color: #495057;
     margin-bottom: 8px;
+}
+
+/* Textarea Özel Stili */
+.sozluk-container textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Link Stili */
+.sozluk-container a:not(.btn) {
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sozluk-container a:not(.btn):hover {
+    color: #764ba2;
+    text-decoration: underline;
 }
