@@ -7,9 +7,10 @@
 
 /* Hero Section - Diğer sayfalar gibi */
 .sozluk-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
     border-radius: 0;
 }
 
@@ -53,7 +54,7 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Form Elemanları - Modern.css ile tutarlı */
+/* Form Elemanları - Mor renk paleti */
 .sozluk-container .form-control {
     border: 1px solid #e5e7eb !important;
     border-radius: 0.5rem;
@@ -64,8 +65,8 @@
 }
 
 .sozluk-container .form-control:focus {
-    border-color: #3b82f6 !important;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
     outline: none;
 }
 
@@ -79,8 +80,8 @@
 }
 
 .sozluk-container .form-select:focus {
-    border-color: #3b82f6 !important;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
 .sozluk-container .form-label {
@@ -89,10 +90,10 @@
     margin-bottom: 0.25rem;
 }
 
-/* Butonlar - Modern.css ile tutarlı */
+/* Butonlar - Mor renk paleti */
 .sozluk-container .btn-primary {
-    background-color: #3b82f6;
-    border-color: #3b82f6;
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
     border-radius: 9999px;
     padding: 0.5rem 1.5rem;
     font-weight: 500;
@@ -100,8 +101,8 @@
 }
 
 .sozluk-container .btn-primary:hover {
-    background-color: #2563eb;
-    border-color: #2563eb;
+    background-color: #7c3aed;
+    border-color: #7c3aed;
     transform: translateY(-1px);
 }
 
@@ -133,9 +134,9 @@
     transform: translateY(-1px);
 }
 
-/* Harf Navigasyonu - Modern.css ile tutarlı */
+/* Harf Navigasyonu - Mor renk paleti */
 .sozluk-container .btn-link {
-    color: #3b82f6;
+    color: #8b5cf6;
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 9999px;
@@ -145,29 +146,29 @@
 }
 
 .sozluk-container .btn-link:hover {
-    background-color: rgba(59, 130, 246, 0.1);
-    border-color: #3b82f6;
-    color: #3b82f6;
+    background-color: rgba(139, 92, 246, 0.1);
+    border-color: #8b5cf6;
+    color: #8b5cf6;
     text-decoration: none;
 }
 
 .sozluk-container .btn-link.active {
-    background-color: #3b82f6;
+    background-color: #8b5cf6;
     color: white;
-    border-color: #3b82f6;
+    border-color: #8b5cf6;
 }
 
 .sozluk-container .btn-outline-primary {
-    color: #3b82f6;
-    border-color: #3b82f6;
+    color: #8b5cf6;
+    border-color: #8b5cf6;
     border-radius: 9999px;
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
 }
 
 .sozluk-container .btn-outline-primary:hover {
-    background-color: #3b82f6;
-    border-color: #3b82f6;
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
     color: white;
 }
 
@@ -205,10 +206,10 @@
 }
 
 .sozluk-container .kelime-item a:hover {
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
-/* Dropdown Menü - Modern.css ile tutarlı */
+/* Dropdown Menü - Mor renk paleti */
 .sozluk-container .dropdown-menu {
     border: none;
     border-radius: 0.5rem;
@@ -223,7 +224,7 @@
 }
 
 .sozluk-container .dropdown-item:hover {
-    background-color: rgba(59, 130, 246, 0.1);
+    background-color: rgba(139, 92, 246, 0.1);
 }
 
 .sozluk-container .dropdown-item.text-danger {
@@ -264,18 +265,18 @@
     border-left: 4px solid #ef4444;
 }
 
-/* Loading Spinner - Modern.css ile tutarlı */
+/* Loading Spinner - Mor renk paleti */
 .sozluk-container .spinner-border {
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
-/* Detay Sayfası Özel Stiller - Modern.css ile tutarlı */
+/* Detay Sayfası Özel Stiller - Mor renk paleti */
 .sozluk-container .detay-item {
     padding: 1.25rem;
     background-color: #ffffff;
     border-radius: 1rem;
     margin-bottom: 1.25rem;
-    border-left: 4px solid #3b82f6;
+    border-left: 4px solid #8b5cf6;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -311,15 +312,15 @@
     min-height: 120px;
 }
 
-/* Link Stili - Modern.css ile tutarlı */
+/* Link Stili - Mor renk paleti */
 .sozluk-container a:not(.btn) {
-    color: #3b82f6;
+    color: #8b5cf6;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .sozluk-container a:not(.btn):hover {
-    color: #2563eb;
+    color: #7c3aed;
     text-decoration: none;
 }
 
@@ -332,7 +333,7 @@
 }
 
 .sozluk-container .card-title i {
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 /* Badge stili */
@@ -342,7 +343,7 @@
 
 /* Text primary rengi */
 .sozluk-container .text-primary {
-    color: #3b82f6 !important;
+    color: #8b5cf6 !important;
 }
 
 /* Dark mode desteği */
@@ -380,5 +381,5 @@ html.dark-theme .sozluk-container .dropdown-item {
 }
 
 html.dark-theme .sozluk-container .dropdown-item:hover {
-    background-color: rgba(59, 130, 246, 0.2);
+    background-color: rgba(139, 92, 246, 0.2);
 }
