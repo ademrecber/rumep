@@ -7,10 +7,9 @@
 
 /* Hero Section - Diğer sayfalar gibi */
 .sozluk-hero {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-    color: white;
-    padding: 3rem 0;
-    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
     border-radius: 0;
 }
 
