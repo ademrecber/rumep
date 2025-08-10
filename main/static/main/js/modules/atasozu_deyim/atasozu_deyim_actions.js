@@ -5,7 +5,7 @@ export function initAtasozuDeyimActions() {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const tur = form.getAttribute('data-tur');
-            const mesaj = `Bu ${tur === 'atasozu' ? 'atasözünü' : 'deyimi'} silmek istediğinizden emin misiniz?`;
+            const mesaj = `Ma hûn ji vê ${tur === 'atasozu' ? 'gotina pêşiyan' : 'îdîomê'} jêbirinê piştrast in?`;
             if (!confirm(mesaj)) {
                 return;
             }
@@ -23,16 +23,16 @@ export function initAtasozuDeyimActions() {
                     // Silme işlemi başarılı, liste sayfasına yönlendir
                     window.location.href = `/atasozu-deyim/?sekme=${tur}`;
                 } else {
-                    alert(data.error || 'Silme işlemi sırasında bir hata oluştu.');
+                    alert(data.error || 'Di dema jêbirinê de çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Silme hatası:', error);
-                alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                alert('Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.');
             }
         });
     });
 
-    // Detay ekleme
+    // Berfirehî ekleme
     const detayEkleButton = document.querySelector('[data-action="detay-ekle"]');
     if (detayEkleButton) {
         detayEkleButton.addEventListener('click', () => {
@@ -44,7 +44,7 @@ export function initAtasozuDeyimActions() {
         });
     }
 
-    // Detay ekleme formu gönderimi
+    // Berfirehî ekleme formu gönderimi
     const detayEkleForm = document.getElementById('detay-ekle-form');
     if (detayEkleForm) {
         detayEkleForm.addEventListener('submit', async (e) => {
@@ -66,7 +66,7 @@ export function initAtasozuDeyimActions() {
                 } else {
                     // Hata mesajını konsola yazdır
                     console.error('Detay ekleme hatası (tam yanıt):', data);
-                    let errorMessage = 'Detay eklenemedi. Hata: ';
+                    let errorMessage = 'Berfirehî nehat zêdekirin. Çewtî: ';
                     if (data.error) {
                         console.log('Hata (error):', data.error);
                         errorMessage += data.error;
@@ -80,19 +80,19 @@ export function initAtasozuDeyimActions() {
                             });
                         }
                     } else {
-                        errorMessage += 'Bilinmeyen bir hata oluştu.';
+                        errorMessage += 'Çewtiyek nenas çêbû.';
                     }
                     alert(errorMessage);
                 }
             } catch (error) {
                 // Catch bloğuna düşerse, hatayı konsola yazdır
                 console.error('Fetch hatası:', error);
-                alert('Bir hata oluştu: ' + error.message);
+                alert('Çewtîyek çêbû: ' + error.message);
             }
         });
     }
 
-    // Detay düzenleme
+    // Berfirehî düzenleme
     document.querySelectorAll('[data-action="detay-duzenle"]').forEach(button => {
         button.addEventListener('click', async () => {
             const detayId = button.getAttribute('data-detay-id');
@@ -106,16 +106,16 @@ export function initAtasozuDeyimActions() {
                     document.getElementById('detay-duzenle-text').value = data.data.detay;
                     modal.show();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Detay verisi alınamadı:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
 
-    // Detay düzenleme formu gönderimi
+    // Berfirehî düzenleme formu gönderimi
     const detayDuzenleForm = document.getElementById('detay-duzenle-form');
     if (detayDuzenleForm) {
         detayDuzenleForm.addEventListener('submit', async (e) => {
@@ -134,9 +134,9 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = 'Çewtîyek çêbû.';
                     if (data.errors) {
-                        errorMessage = 'Hatalar:\n';
+                        errorMessage = 'Çewtî:\n';
                         for (const [field, errors] of Object.entries(data.errors)) {
                             errors.forEach(error => {
                                 errorMessage += `${field}: ${error}\n`;
@@ -147,15 +147,15 @@ export function initAtasozuDeyimActions() {
                 }
             } catch (error) {
                 console.error('Detay düzenleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     }
 
-    // Detay silme
+    // Berfirehî silme
     document.querySelectorAll('[data-action="detay-sil"]').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Bu detayı silmek istediğinizden emin misiniz?')) return;
+            if (!confirm('Ma hûn ji vê berfirehiyê jêbirinê piştrast in?')) return;
             const detayId = button.getAttribute('data-detay-id');
             try {
                 const response = await fetch(`/atasozu-deyim/detay/${detayId}/sil/`, {
@@ -168,16 +168,16 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Detay silme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
 
-    // Atasözü/Deyim düzenleme
+    // Gotina Pêşiyan/Îdîom düzenleme
     document.querySelectorAll('[data-action="duzenle"]').forEach(button => {
         button.addEventListener('click', async () => {
             const tur = button.getAttribute('data-tur');
@@ -195,16 +195,16 @@ export function initAtasozuDeyimActions() {
                     document.getElementById('duzenle-ornek').value = data.form.ornek;
                     modal.show();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Düzenleme verisi alınamadı:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
 
-    // Atasözü/Deyim düzenleme formu gönderimi
+    // Gotina Pêşiyan/Îdîom düzenleme formu gönderimi
     const duzenleForm = document.getElementById('duzenle-form');
     if (duzenleForm) {
         duzenleForm.addEventListener('submit', async (e) => {
@@ -224,9 +224,9 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = 'Çewtîyek çêbû.';
                     if (data.errors) {
-                        errorMessage = 'Hatalar:\n';
+                        errorMessage = 'Çewtî:\n';
                         for (const [field, errors] of Object.entries(data.errors)) {
                             errors.forEach(error => {
                                 errorMessage += `${field}: ${error}\n`;
@@ -237,7 +237,7 @@ export function initAtasozuDeyimActions() {
                 }
             } catch (error) {
                 console.error('Düzenleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     }

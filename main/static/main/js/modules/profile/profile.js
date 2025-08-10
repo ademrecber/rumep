@@ -22,7 +22,7 @@ export function initProfile() {
                 const csrfToken = getCsrfToken();
                 if (!csrfToken) {
                     console.error('CSRF token bulunamadı');
-                    alert('Görünürlük ayarları yüklenemedi: CSRF token eksik.');
+                    alert('Mîhengên xuyabûnê nehatin barkirin: Tokena CSRF kêm e.');
                     return;
                 }
 
@@ -39,7 +39,7 @@ export function initProfile() {
                     const data = await response.json();
                     if (!response.ok) {
                         console.error(`Sunucu hatası: ${response.status}, Yanıt:`, data);
-                        alert(`Görünürlük ayarları yüklenemedi: ${data.errors || 'Sunucu hatası'}`);
+                        alert(`Mîhengên xuyabûnê nehatin barkirin: ${data.errors || 'Çewtiya serverê'}`);
                         return;
                     }
 
@@ -57,11 +57,11 @@ export function initProfile() {
                         console.log('Ayarlar yüklendi:', data);
                     } else {
                         console.error('Checkbox elementleri bulunamadı:', { postsVisible, critiquesVisible, commentsVisible });
-                        alert('Görünürlük ayarları yüklenemedi: Form elemanları eksik.');
+                        alert('Mîhengên xuyabûnê nehatin barkirin: Elementên formê kêm in.');
                     }
                 } catch (error) {
                     console.error('Ayarlar yükleme hatası:', error.message, 'Tam hata:', error);
-                    alert('Görünürlük ayarları yüklenemedi: Sunucu hatası.');
+                    alert('Mîhengên xuyabûnê nehatin barkirin: Çewtiya serverê.');
                 }
             });
         } else {
@@ -77,7 +77,7 @@ export function initProfile() {
                 const csrfToken = getCsrfToken();
                 if (!csrfToken) {
                     console.error('CSRF token bulunamadı');
-                    alert('Görünürlük ayarları kaydedilemedi: CSRF token eksik.');
+                    alert('Mîhengên xuyabûnê nehatin tomarkirin: Tokena CSRF kêm e.');
                     return;
                 }
 
@@ -110,7 +110,7 @@ export function initProfile() {
                     const data = await response.json();
                     if (!response.ok) {
                         console.error(`Sunucu hatası: ${response.status}, Yanıt:`, data);
-                        alert(`Görünürlük ayarları kaydedilemedi: ${data.errors || 'Sunucu hatası'}`);
+                        alert(`Mîhengên xuyabûnê nehatin tomarkirin: ${data.errors || 'Çewtiya serverê'}`);
                         return;
                     }
 
@@ -126,15 +126,15 @@ export function initProfile() {
                         } else {
                             console.warn('Bootstrap Modal bulunamadı');
                         }
-                        alert('Görünürlük ayarları başarıyla kaydedildi.');
+                        alert('Mîhengên xuyabûnê bi serkeftî hatin tomarkirin.');
                         console.log('Görünürlük güncellendi:', data);
                     } else {
                         console.error('Görünürlük kaydetme hatası:', data.errors || data.error || 'Hata mesajı sağlanmadı');
-                        alert(`Görünürlük ayarları kaydedilemedi: ${data.errors || data.error || 'Hata mesajı sağlanmadı'}`);
+                        alert(`Mîhengên xuyabûnê nehatin tomarkirin: ${data.errors || data.error || 'Mesaja çewtiyê nehat dayîn'}`);
                     }
                 } catch (error) {
                     console.error('Görünürlük kaydetme hatası:', error.message, 'Tam hata:', error);
-                    alert('Görünürlük ayarları kaydedilemedi: Sunucu hatası.');
+                    alert('Mîhengên xuyabûnê nehatin tomarkirin: Çewtiya serverê.');
                 }
             });
         } else {

@@ -2,7 +2,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}Profil - {{ profile.nickname }}{% endblock %}
+{% block title %}Profîl - {{ profile.nickname }}{% endblock %}
 {% block content %}
 <div class="container twitter-container">
     <!-- Profil Bilgileri -->
@@ -18,7 +18,7 @@
             {% if profile.twitter_username %}
                 <p class="text-muted mb-1">Twitter: <a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank">@{{ profile.twitter_username }}</a></p>
             {% endif %}
-            <p class="text-muted">Toplam Post: {{ posts_count }}</p>
+            <p class="text-muted">Postên Giştî: {{ posts_count }}</p>
         </div>
     </div>
 
@@ -28,10 +28,10 @@
             <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=posts">Post</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=comments">Yorum</a>
+            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=comments">Şîrove</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=critiques">Değerlendirme</a>
+            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile_detail' profile.username %}?tab=critiques">Nirxandin</a>
         </li>
     </ul>
 
@@ -54,7 +54,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <p class="text-muted">Bu kullanıcı henüz post paylaşmadı veya postlar gizli.</p>
+                <p class="text-muted">Ev bikarhêner hêj post neparvekiriye an post veşartî ne.</p>
             {% endif %}
         {% elif tab == 'comments' %}
             {% if comments %}
@@ -71,7 +71,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <p class="text-muted">Bu kullanıcı henüz yorum yapmadı veya yorumlar gizli.</p>
+                <p class="text-muted">Ev bikarhêner hêj şîrove nekiriye an şîrove veşartî ne.</p>
             {% endif %}
         {% elif tab == 'critiques' %}
             {% if critiques %}
@@ -84,12 +84,12 @@
                             </p>
                             <p class="mb-1"><a href="{% url 'post_detail' critique.post.id %}" class="text-dark text-decoration-none">{{ critique.text|render_emojis|safe|linebreaks }}</a></p>
                             <p class="text-muted small">Post: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
-                            <p class="text-muted small">Puan: {{ critique.rating|floatformat:1 }}</p>
+                            <p class="text-muted small">Pûan: {{ critique.rating|floatformat:1 }}</p>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
-                <p class="text-muted">Bu kullanıcı henüz değerlendirme yapmadı veya değerlendirmeler gizli.</p>
+                <p class="text-muted">Ev bikarhêner hêj nirxandin nekiriye an nirxandin veşartî ne.</p>
             {% endif %}
         {% endif %}
     </div>

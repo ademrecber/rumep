@@ -12,23 +12,23 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'yer_adlari_anasayfa' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-geo-alt me-1"></i>Yer Adları
+                                    <i class="bi bi-geo-alt me-1"></i>Navên Cihan
                                 </a>
                             </li>
                             <li class="breadcrumb-item active text-white" aria-current="page">
-                                {% if is_edit %}Düzenle{% else %}Yeni Ekle{% endif %}
+                                {% if is_edit %}Biguherîne{% else %}Nû Lê Zêde Bike{% endif %}
                             </li>
                         </ol>
                     </nav>
                     <h1 class="display-5 fw-bold mb-3">
                         <i class="bi bi-{% if is_edit %}pencil{% else %}plus-circle{% endif %} me-3"></i>
-                        {% if is_edit %}Yer Adı Düzenle{% else %}Yeni Yer Adı Ekle{% endif %}
+                        {% if is_edit %}Navê Cihê Biguherîne{% else %}Navê Cihê Nû Lê Zêde Bike{% endif %}
                     </h1>
-                    <p class="lead mb-0">Koordinatları haritadan seçebilir veya manuel girebilirsiniz</p>
+                    <p class="lead mb-0">Hûn dikarin koordînata ji nexşeyê hilbijêrin an bi destan têkevin</p>
                 </div>
                 <div class="col-lg-4 text-center">
                     <button class="btn btn-light btn-lg" onclick="toggleMapView()" id="mapToggleBtn">
-                        <i class="bi bi-map me-2"></i>Harita Görünümü
+                        <i class="bi bi-map me-2"></i>Nexşeya Dîtinê
                     </button>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>Konum Seçimi</h5>
+                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>Hilbijartina Cihê</h5>
                         <button class="btn btn-sm btn-outline-secondary" onclick="toggleMapView()">
                             <i class="bi bi-eye-slash"></i>
                         </button>
@@ -58,7 +58,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">
-                            <i class="bi bi-form me-2"></i>Yer Adı Bilgileri
+                            <i class="bi bi-form me-2"></i>Agahiyên Navê Cihê
                         </h5>
                     </div>
                     <div class="card-body">
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.ad.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-geo-alt me-1"></i>Yer Adı
+                                        <i class="bi bi-geo-alt me-1"></i>Navê Cihê
                                     </label>
                                     {{ form.ad }}
                                     {% if form.ad.errors %}
@@ -78,7 +78,7 @@
                                 
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.kategori.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-tag me-1"></i>Kategori
+                                        <i class="bi bi-tag me-1"></i>Kategorî
                                     </label>
                                     {{ form.kategori }}
                                     {% if form.kategori.errors %}
@@ -89,7 +89,7 @@
                             
                             <div class="mb-3">
                                 <label for="{{ form.detay.id_for_label }}" class="form-label fw-semibold">
-                                    <i class="bi bi-journal-text me-1"></i>Detay
+                                    <i class="bi bi-journal-text me-1"></i>Kîtekît
                                 </label>
                                 {{ form.detay }}
                                 {% if form.detay.errors %}
@@ -100,7 +100,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.bolge.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-globe me-1"></i>Kürdistan Bölgesi
+                                        <i class="bi bi-globe me-1"></i>Herêma Kurdistanê
                                     </label>
                                     {{ form.bolge }}
                                     {% if form.bolge.errors %}
@@ -110,7 +110,7 @@
                                 
                                 <div class="col-md-6 mb-3" id="parent-field">
                                     <label for="{{ form.parent.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-diagram-3 me-1"></i>Bağlı Olduğu Yer
+                                        <i class="bi bi-diagram-3 me-1"></i>Cihê Têkildar
                                     </label>
                                     {{ form.parent }}
                                     {% if form.parent.errors %}
@@ -145,14 +145,14 @@
                                 <div class="alert alert-warning d-flex align-items-center">
                                     <i class="bi bi-exclamation-triangle me-2"></i>
                                     <div class="flex-grow-1">
-                                        Bu yer adı zaten mevcut. Eklemeye devam etmek istiyor musunuz?
+                                        Ev navê cihê jixwe heye. Ma hûn dixwazin berdewam bikin?
                                     </div>
                                     <div class="ms-3">
                                         <button type="button" class="btn btn-warning btn-sm me-2" 
                                                 onclick="document.getElementById('confirm-duplicate').value='true'; document.getElementById('yer-adi-form').submit();">
-                                            Evet
+                                            Erê
                                         </button>
-                                        <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-secondary btn-sm">Hayır</a>
+                                        <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-secondary btn-sm">Na</a>
                                     </div>
                                     <input type="hidden" name="confirm_duplicate" id="confirm-duplicate" value="false">
                                 </div>
@@ -161,10 +161,10 @@
                             <div class="d-flex gap-3 mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="bi bi-{% if is_edit %}check-circle{% else %}plus-circle{% endif %} me-2"></i>
-                                    {% if is_edit %}Kaydet{% else %}Ekle{% endif %}
+                                    {% if is_edit %}Tomar Bike{% else %}Lê Zêde Bike{% endif %}
                                 </button>
                                 <a href="{% url 'yer_adlari_anasayfa' %}" class="btn btn-outline-secondary btn-lg">
-                                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                                    <i class="bi bi-arrow-left me-2"></i>Vegere
                                 </a>
                             </div>
                         </form>
@@ -177,29 +177,29 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-info text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Yardım
+                            <i class="bi bi-info-circle me-2"></i>Alîkarî
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="help-item mb-3">
-                            <h6 class="text-primary"><i class="bi bi-map me-1"></i>Harita Kullanımı</h6>
-                            <p class="small text-muted mb-0">Haritaya tıklayarak koordinatları otomatik olarak doldurabilirsiniz.</p>
+                            <h6 class="text-primary"><i class="bi bi-map me-1"></i>Bikaranîna Nexşeyê</h6>
+                            <p class="small text-muted mb-0">Hûn dikarin bi tikandina li ser nexşeyê koordînata bixweber dagirin.</p>
                         </div>
                         
                         <div class="help-item mb-3">
-                            <h6 class="text-primary"><i class="bi bi-tag me-1"></i>Kategoriler</h6>
+                            <h6 class="text-primary"><i class="bi bi-tag me-1"></i>Kategorî</h6>
                             <ul class="small text-muted mb-0">
-                                <li>İl: Büyük şehirler</li>
-                                <li>İlçe: İllere bağlı yerler</li>
-                                <li>Köy: Küçük yerleşim yerleri</li>
-                                <li>Dağ: Dağ adları</li>
-                                <li>Nehir: Su kaynakları</li>
+                                <li>Bajar: Bajarên mezin</li>
+                                <li>Navçe: Cihên girêdayî bajaran</li>
+                                <li>Gund: Cihên niştecîhiyê yên biçûk</li>
+                                <li>Çiya: Navên çiyan</li>
+                                <li>Çem: Çavkaniyên avê</li>
                             </ul>
                         </div>
                         
                         <div class="help-item">
-                            <h6 class="text-primary"><i class="bi bi-crosshair me-1"></i>Koordinatlar</h6>
-                            <p class="small text-muted mb-0">Enlem ve boylam değerlerini ondalık formatında girin (örn: 37.0625, 40.2317).</p>
+                            <h6 class="text-primary"><i class="bi bi-crosshair me-1"></i>Koordînat</h6>
+                            <p class="small text-muted mb-0">Nirxên enlem û boylamê di formata dehanî de binivîsin (mînak: 37.0625, 40.2317).</p>
                         </div>
                     </div>
                 </div>
@@ -233,12 +233,12 @@
         if (isVisible) {
             mapContainer.style.display = 'none';
             if (mapToggleBtn) {
-                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Harita Göster';
+                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Nexşeyê Nîşan Bide';
             }
         } else {
             mapContainer.style.display = 'block';
             if (mapToggleBtn) {
-                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Harita Gizle';
+                mapToggleBtn.innerHTML = '<i class="bi bi-map me-2"></i>Nexşeyê Veşêre';
             }
             if (typeof google !== 'undefined' && window.map) {
                 setTimeout(() => {

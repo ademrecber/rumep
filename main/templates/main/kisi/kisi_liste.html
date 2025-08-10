@@ -1,7 +1,6 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Kişiler - Rumep{% endblock %}
+{% block title %}Kes - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -10,22 +9,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-people-fill me-3"></i>Kişiler
+                        <i class="bi bi-people-fill me-3"></i>Kes
                     </h1>
-                    <p class="lead mb-4">Tarihi ve kültürel şahsiyetleri keşfedin, yeni kişiler ekleyin</p>
+                    <p class="lead mb-4">Kesayetiyên dîrokî û çandî keşf bikin, kesên nû lê zêde bikin</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'kisi_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Yeni Kişi Ekle
+                            <i class="bi bi-plus-circle me-2"></i>Kesê Nû Lê Zêde Bike
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Kişi Ara
+                            <i class="bi bi-search me-2"></i>Kes Lêbigere
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kisiler.count|default:"0" }}</h3>
-                        <p class="mb-0">Toplam Kişi</p>
+                        <p class="mb-0">Hejmara Kesan</p>
                     </div>
                 </div>
             </div>
@@ -40,18 +39,18 @@
                     <form id="filter-form" class="row g-3">
                         <div class="col-lg-6">
                             <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-search me-2"></i>Kişi Ara
+                                <i class="bi bi-search me-2"></i>Kes Lêbigere
                             </label>
                             <input type="text" name="q" class="form-control form-control-lg" 
-                                   placeholder="Kişi ara (isim, biyografi...)" 
+                                   placeholder="Kes lêbigere (nav, biyografî...)" 
                                    value="{{ request.GET.q }}" id="search-input">
                         </div>
                         <div class="col-lg-4">
                             <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-tags me-2"></i>Kategori
+                                <i class="bi bi-tags me-2"></i>Kategorî
                             </label>
                             <select name="kategori" class="form-select form-select-lg">
-                                <option value="">Tüm Kategoriler</option>
+                                <option value="">Hemû Kategorî</option>
                                 {% for kategori in kategoriler %}
                                     <option value="{{ kategori.slug }}" {% if request.GET.kategori == kategori.slug %}selected{% endif %}>
                                         {{ kategori.ad }}
@@ -61,7 +60,7 @@
                         </div>
                         <div class="col-lg-2 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary btn-lg w-100">
-                                <i class="bi bi-funnel me-2"></i>Filtrele
+                                <i class="bi bi-funnel me-2"></i>Fîltre Bike
                             </button>
                         </div>
                     </form>
@@ -76,7 +75,7 @@
                     <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <a href="{% url 'kisi_liste' %}" 
                            class="btn btn-sm {% if not request.GET.harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           Tümü
+                           Hemû
                         </a>
                         {% for harf in harfler %}
                             <a href="?harf={{ harf }}" 
@@ -94,7 +93,7 @@
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            <i class="bi bi-list-ul me-2"></i>Kişiler
+                            <i class="bi bi-list-ul me-2"></i>Kes
                             <span class="badge bg-primary ms-2">{{ kisiler.count|default:"0" }}</span>
                         </h5>
                         <div class="view-options">
@@ -147,7 +146,7 @@
                                                         <ul class="dropdown-menu">
                                                             <li>
                                                                 <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="{{ kisi.id }}">
-                                                                    <i class="bi bi-trash me-2"></i>Sil
+                                                                    <i class="bi bi-trash me-2"></i>Jêbirin
                                                                 </button>
                                                             </li>
                                                         </ul>
@@ -161,17 +160,17 @@
                         {% empty %}
                             <div class="empty-state text-center py-5">
                                 <i class="bi bi-people display-1 text-muted mb-3"></i>
-                                <h4 class="text-muted">Kişi bulunamadı</h4>
-                                <p class="text-muted mb-4">Aradığınız kriterlere uygun kişi bulunamadı.</p>
+                                <h4 class="text-muted">Kes nehat dîtin</h4>
+                                <p class="text-muted mb-4">Li gorî krîterên we kes nehat dîtin.</p>
                                 <a href="{% url 'kisi_ekle' %}" class="btn btn-primary">
-                                    <i class="bi bi-plus-circle me-2"></i>Kişi Ekle
+                                    <i class="bi bi-plus-circle me-2"></i>Kesê Lê Zêde Bike
                                 </a>
                             </div>
                         {% endfor %}
                     </div>
                     <div id="loading" class="text-center mt-3 d-none">
                         <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Yükleniyor...</span>
+                            <span class="visually-hidden">Tê barkirin...</span>
                         </div>
                     </div>
                     <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
@@ -209,7 +208,7 @@
         // Delete button functionality
         document.querySelectorAll('.delete-kisi-btn').forEach(btn => {
             btn.addEventListener('click', async function() {
-                if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
+                if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
                 
                 const kisiId = this.dataset.kisiId;
                 try {
@@ -224,11 +223,11 @@
                     if (data.success) {
                         location.reload();
                     } else {
-                        alert(data.error || 'Kişi silinirken hata oluştu.');
+                        alert(data.error || 'Di dema jêbirina kesê de çewtî çêbû.');
                     }
                 } catch (error) {
-                    console.error('Silme hatası:', error);
-                    alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                    console.error('Çewtiya jêbirinê:', error);
+                    alert('Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.');
                 }
             });
         });

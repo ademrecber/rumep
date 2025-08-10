@@ -28,8 +28,8 @@ export function initCritiqueLoader(url) {
                 critiqueList.style.maxHeight = 'min(800px, 90vh)';
                 critiqueList.style.overflowY = 'auto';
                 critiqueList.innerHTML = `
-                    <button class="btn btn-primary rounded-pill mb-3 d-none d-md-block" id="toggle-critique-btn">Bu metni değerlendir</button>
-                    <h5>Son Eleştiriler</h5>
+                    <button class="btn btn-primary rounded-pill mb-3 d-none d-md-block" id="toggle-critique-btn">Vê nivîsê binirxîne</button>
+                    <h5>Nirxandinên Dawî</h5>
                 `;
                 sidebar.appendChild(critiqueList);
             }
@@ -61,19 +61,19 @@ export function initCritiqueLoader(url) {
                                         <ul class="dropdown-menu">
                                             ${critique.is_owner ? `
                                                 <li>
-                                                    <button class="dropdown-item text-danger delete-critique-btn" data-critique-id="${critique.id}">Sil</button>
+                                                    <button class="dropdown-item text-danger delete-critique-btn" data-critique-id="${critique.id}">Jêbirin</button>
                                                 </li>
                                             ` : ''}
                                             <li>
-                                                <button class="dropdown-item copy-critique-link-btn" data-critique-id="${critique.short_id}" data-post-id="${postId}">Bağlantıyı Kopyala</button>
+                                                <button class="dropdown-item copy-critique-link-btn" data-critique-id="${critique.short_id}" data-post-id="${postId}">Girêdanê Kopî Bike</button>
                                             </li>
                                         </ul>
                                     </div>
                                     ${critique.is_owner ? '' : `
                                         ${critique.user_rating ? `
-                                            <span class="text-muted me-2 user-rating" data-critique-id="${critique.id}" style="cursor: pointer;">Puanınız: ${critique.user_rating}</span>
+                                            <span class="text-muted me-2 user-rating" data-critique-id="${critique.id}" style="cursor: pointer;">Pûana We: ${critique.user_rating}</span>
                                         ` : `
-                                            <button class="btn btn-primary btn-sm rounded-pill me-2 vote-critique-btn" data-critique-id="${critique.id}">Puan Ver</button>
+                                            <button class="btn btn-primary btn-sm rounded-pill me-2 vote-critique-btn" data-critique-id="${critique.id}">Pûan Bide</button>
                                         `}
                                     `}
                                 </div>
@@ -81,12 +81,12 @@ export function initCritiqueLoader(url) {
                             <div class="critique-text">
                                 ${critique.text.length > 500 ? `
                                     <div class="text-preview"><p>${critique.text}</p></div>
-                                    <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                    <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                                     <div class="full-text d-none"><p>${critique.text}</p></div>
-                                    <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                                    <button class="btn btn-link text-primary p-0 show-less-btn d-none">Kêmtir bibîne</button>
                                 ` : `<p>${critique.text}</p>`}
                             </div>
-                            <p class="text-muted small">Ortalama Puan: ${critique.rating.toFixed(1)}</p>
+                            <p class="text-muted small">Pûana Navîn: ${critique.rating.toFixed(1)}</p>
                         </div>
                     `;
 
@@ -102,9 +102,9 @@ export function initCritiqueLoader(url) {
                             document.getElementById('modal-text').innerHTML = critique.text; // render_emojis view'dan geliyor
                             document.getElementById('modal-rating-value').textContent = critique.rating.toFixed(1);
                             const userRatingSpan = document.getElementById('modal-user-rating-value');
-                            userRatingSpan.textContent = critique.user_rating ? critique.user_rating : 'Henüz puan vermediniz';
+                            userRatingSpan.textContent = critique.user_rating ? critique.user_rating : 'We hêj pûan nedaye';
                             const ratingButtons = document.getElementById('rating-buttons');
-                            ratingButtons.innerHTML = critique.is_owner ? '<p class="text-muted small">Kendi eleştirinize puan veremezsiniz.</p>' : '';
+                            ratingButtons.innerHTML = critique.is_owner ? '<p class="text-muted small">Hûn nikarin nirxandina xwe pûan bikin.</p>' : '';
                             const deleteForm = document.getElementById('delete-critique-form');
                             deleteForm.style.display = critique.is_owner ? 'block' : 'none';
                             if (critique.is_owner) {
@@ -126,7 +126,7 @@ export function initCritiqueLoader(url) {
                                     .then(res => res.json())
                                     .then(data => {
                                         if (data.success) {
-                                            alert('Eleştiri başarıyla silindi!');
+                                            alert('Nirxandin bi serkeftî hate jêbirin!');
                                             modal.hide();
                                             loadCritiques();
                                         } else {
@@ -150,9 +150,9 @@ export function initCritiqueLoader(url) {
                         const mobileCritiqueDiv = critiqueDiv.cloneNode(true);
                         mobileCritiqueDiv.querySelector('.critique-text').innerHTML = critique.text.length > 500 ? `
                             <div class="text-preview"><p>${critique.text}</p></div>
-                            <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                            <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                             <div class="full-text d-none"><p>${critique.text}</p></div>
-                            <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                            <button class="btn btn-link text-primary p-0 show-less-btn d-none">Kêmtir bibîne</button>
                         ` : `<p>${critique.text}</p>`;
                         // Mobil için olay dinleyicisini tekrar bağla
                         mobileCritiqueDiv.addEventListener('click', openCritiqueModal);
@@ -200,7 +200,7 @@ export function initCritiqueLoader(url) {
                         .then(res => res.json())
                         .then(data => {
                             if (data.success) {
-                                alert('Eleştiri başarıyla silindi!');
+                                alert('Nirxandin bi serkeftî hate jêbirin!');
                                 loadCritiques();
                             } else {
                                 console.error('Silme hatası:', data.error);

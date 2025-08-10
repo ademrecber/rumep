@@ -1,7 +1,6 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Kişi Ekle - Rumep{% endblock %}
+{% block title %}Kesê Lê Zêde Bike - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Header -->
@@ -13,21 +12,21 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'kisi_liste' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-people me-1"></i>Kişiler
+                                    <i class="bi bi-people me-1"></i>Kes
                                 </a>
                             </li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">Yeni Ekle</li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Nû Lê Zêde Bike</li>
                         </ol>
                     </nav>
                     <h1 class="display-5 fw-bold mb-3">
-                        <i class="bi bi-plus-circle me-3"></i>Yeni Kişi Ekle
+                        <i class="bi bi-plus-circle me-3"></i>Kesê Nû Lê Zêde Bike
                     </h1>
-                    <p class="lead mb-0">Tarihi ve kültürel şahsiyetleri sözlüğümüze ekleyin</p>
+                    <p class="lead mb-0">Kesayetiyên dîrokî û çandî li ferhengê zêde bikin</p>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4">
                         <i class="bi bi-person-plus display-4 mb-2"></i>
-                        <p class="mb-0">Yeni Kişi</p>
+                        <p class="mb-0">Kesê Nû</p>
                     </div>
                 </div>
             </div>
@@ -40,7 +39,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">
-                            <i class="bi bi-form me-2"></i>Kişi Bilgileri
+                            <i class="bi bi-form me-2"></i>Agahiyên Kesê
                         </h5>
                     </div>
                     <div class="card-body">
@@ -50,14 +49,14 @@
                             <div class="row">
                                 <div class="col-md-8 mb-3">
                                     <label for="{{ form.ad.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-person me-1"></i>Kişi Adı
+                                        <i class="bi bi-person me-1"></i>Navê Kesê
                                     </label>
                                     {{ form.ad }}
                                 </div>
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="{{ form.kategoriler.id_for_label }}" class="form-label fw-semibold">
-                                        <i class="bi bi-tags me-1"></i>Kategoriler
+                                        <i class="bi bi-tags me-1"></i>Kategorî
                                     </label>
                                     {{ form.kategoriler }}
                                 </div>
@@ -65,8 +64,8 @@
                             
                             <div class="mb-3">
                                 <label for="biyografi-editor" class="form-label fw-semibold">
-                                    <i class="bi bi-journal-text me-1"></i>Biyografi
-                                    <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 ms-2" title="AI ile geliştir">
+                                    <i class="bi bi-journal-text me-1"></i>Biyografî
+                                    <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 ms-2" title="Bi AI-ê pêşve bixin">
                                         <i class="bi bi-magic"></i>
                                     </button>
                                 </label>
@@ -78,10 +77,10 @@
                             
                             <div class="d-flex gap-3 mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-plus-circle me-2"></i>Kişi Ekle
+                                    <i class="bi bi-plus-circle me-2"></i>Kesê Lê Zêde Bike
                                 </button>
                                 <a href="{% url 'kisi_liste' %}" class="btn btn-outline-secondary btn-lg">
-                                    <i class="bi bi-arrow-left me-2"></i>Geri Dön
+                                    <i class="bi bi-arrow-left me-2"></i>Vegere
                                 </a>
                             </div>
                         </form>
@@ -94,51 +93,50 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-info text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Yardım
+                            <i class="bi bi-info-circle me-2"></i>Alîkarî
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="help-item mb-3">
-                            <h6 class="text-primary"><i class="bi bi-person me-1"></i>Kişi Adı</h6>
-                            <p class="small text-muted mb-0">Kişinin tam adını girin. Örnek: Ahmet Kaya, Mela Xelil</p>
+                            <h6 class="text-primary"><i class="bi bi-person me-1"></i>Navê Kesê</h6>
+                            <p class="small text-muted mb-0">Navê tam yê kesê binivîsin. Mînak: Ehmedê Xanî, Mele Xelîl</p>
                         </div>
                         
                         <div class="help-item mb-3">
-                            <h6 class="text-primary"><i class="bi bi-tags me-1"></i>Kategoriler</h6>
-                            <p class="small text-muted mb-0">Kişinin hangi alanlarda öne çıktığını belirtin. Birden fazla kategori seçebilirsiniz.</p>
+                            <h6 class="text-primary"><i class="bi bi-tags me-1"></i>Kategorî</h6>
+                            <p class="small text-muted mb-0">Diyar bikin ku kes di kîjan qadan de derketiye pêş. Hûn dikarin çend kategorî hilbijêrin.</p>
                         </div>
                         
                         <div class="help-item mb-3">
-                            <h6 class="text-primary"><i class="bi bi-journal-text me-1"></i>Biyografi</h6>
-                            <p class="small text-muted mb-0">Kişinin hayatı, eserleri ve önemli olaylar hakkında detaylı bilgi verin.</p>
+                            <h6 class="text-primary"><i class="bi bi-journal-text me-1"></i>Biyografî</h6>
+                            <p class="small text-muted mb-0">Derbarê jiyana kesê, berhemên wî û bûyerên girîng de agahiyên kîtekît bidin.</p>
                         </div>
                         
                         <div class="help-item">
-                            <h6 class="text-primary"><i class="bi bi-magic me-1"></i>AI Desteği</h6>
-                            <p class="small text-muted mb-0">Biyografi yazarken AI desteğinden yararlanabilirsiniz.</p>
+                            <h6 class="text-primary"><i class="bi bi-magic me-1"></i>Piştgiriya AI</h6>
+                            <p class="small text-muted mb-0">Hûn dikarin di dema nivîsandina biyografiyê de ji piştgiriya AI sûd werbigirin.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <!-- Toast Bildirimleri -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="aiEnhanceBioToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header bg-primary text-white">
                 <i class="bi bi-magic me-2"></i>
-                <strong class="me-auto">AI Biyografi Geliştirme</strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                <strong class="me-auto">Pêşvebirina Biyografiyê bi AI</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Girtin"></button>
             </div>
             <div class="toast-body">
-                <p class="mb-2">Biyografiyi AI ile geliştirmek ister misiniz?</p>
+                <p class="mb-2">Ma hûn dixwazin biyografiyê bi AI-ê pêşve bixin?</p>
                 <div class="d-flex gap-2">
                     <button type="button" class="btn btn-primary btn-sm" id="confirmEnhanceBio">
-                        <i class="bi bi-check me-1"></i>Evet
+                        <i class="bi bi-check me-1"></i>Erê
                     </button>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">
-                        <i class="bi bi-x me-1"></i>Hayır
+                        <i class="bi bi-x me-1"></i>Na
                     </button>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Şarkı Sözleri - {{ sarki.ad }}{% endblock %}
+{% block title %}Gotinên Stranan - {{ sarki.ad }}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -12,7 +12,7 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'sarki_sozleri' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-music-note-list me-1"></i>Şarkı Sözleri
+                                    <i class="bi bi-music-note-list me-1"></i>Gotinên Stranan
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
@@ -45,19 +45,19 @@
                             <button class="btn btn-light btn-lg sarki-duzenle-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-url-duzenle="{% url 'sarki_duzenle' sarki.id %}">
-                                <i class="bi bi-pencil me-2"></i>Düzenle
+                                <i class="bi bi-pencil me-2"></i>Biguherîne
                             </button>
                             <button class="btn btn-outline-light btn-lg album-degistir-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-url-degistir-veri="{% url 'sarki_album_degistir_veri' sarki.id %}" 
                                     data-url-degistir="{% url 'sarki_album_degistir' sarki.id %}">
-                                <i class="bi bi-arrow-left-right me-2"></i>Albüm Değiştir
+                                <i class="bi bi-arrow-left-right me-2"></i>Albûmê Biguherîne
                             </button>
                             <button class="btn btn-outline-light btn-lg sarki-sil-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-album-id="{{ sarki.album.id }}"
                                     data-url-sil="{% url 'sarki_sil' sarki.id %}">
-                                <i class="bi bi-trash me-2"></i>Sil
+                                <i class="bi bi-trash me-2"></i>Jêbirin
                             </button>
                         </div>
                     {% endif %}
@@ -68,11 +68,11 @@
                         <div class="row text-center">
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ detaylar.count }}</h3>
-                                <p class="mb-0 small">Ek Detay</p>
+                                <p class="mb-0 small">Kîtekîta Zêde</p>
                             </div>
                             <div class="col-6">
                                 <h3 class="h2 mb-1">1</h3>
-                                <p class="mb-0 small">Şarkı</p>
+                                <p class="mb-0 small">Stran</p>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
-                            <i class="bi bi-music-note-beamed me-2"></i>Şarkı Sözleri
+                            <i class="bi bi-music-note-beamed me-2"></i>Gotinên Stranê
                         </h5>
                         <div class="lyrics-content bg-light rounded p-4">
                             <div class="lyrics-text">{{ sarki.sozler|linebreaks }}</div>
@@ -97,7 +97,7 @@
                         {% if sarki.link %}
                             <div class="mt-3">
                                 <a href="{{ sarki.link }}" target="_blank" class="btn btn-outline-primary">
-                                    <i class="bi bi-play-circle me-2"></i>Şarkıyı Dinle
+                                    <i class="bi bi-play-circle me-2"></i>Stranê Bibihîze
                                 </a>
                             </div>
                         {% endif %}
@@ -109,11 +109,11 @@
                     <div class="card-header bg-white border-0 py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <i class="bi bi-journal-text me-2"></i>Ek Detaylar
+                                <i class="bi bi-journal-text me-2"></i>Kîtekîtên Zêde
                                 <span class="badge bg-primary ms-2">{{ detaylar.count }}</span>
                             </h5>
                             <button class="btn btn-success" data-action="detay-ekle" data-sarki-id="{{ sarki.id }}">
-                                <i class="bi bi-plus-circle me-2"></i>Detay Ekle
+                                <i class="bi bi-plus-circle me-2"></i>Kîtekît Lê Zêde Bike
                             </button>
                         </div>
                     </div>
@@ -130,10 +130,10 @@
                                         </div>
                                         {% if detay.kullanici == user %}
                                             <div class="detail-actions">
-                                                <button class="btn btn-sm btn-outline-primary me-1" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Düzenle">
+                                                <button class="btn btn-sm btn-outline-primary me-1" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Biguherîne">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-danger" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Sil">
+                                                <button class="btn btn-sm btn-outline-danger" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Jêbirin">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </div>
@@ -144,7 +144,7 @@
                             {% empty %}
                                 <div class="text-center py-4">
                                     <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
-                                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                                    <p class="text-muted">Hêj kîtekîtên zêde nehatine zêdekirin.</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -158,30 +158,30 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Şarkı Bilgileri
+                            <i class="bi bi-info-circle me-2"></i>Agahiyên Stranê
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Şarkı Adı</strong>
+                            <strong class="text-muted d-block mb-1">Navê Stranê</strong>
                             <span class="fs-5 fw-bold">{{ sarki.ad }}</span>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Sanatçı</strong>
+                            <strong class="text-muted d-block mb-1">Hunermend</strong>
                             <a href="{% url 'sarki_album_liste' sarki.album.kisi.id %}" class="text-decoration-none">
                                 {{ sarki.album.kisi.ad }}
                             </a>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Albüm</strong>
+                            <strong class="text-muted d-block mb-1">Albûm</strong>
                             <span>{{ sarki.album.ad }}</span>
                         </div>
                         
                         {% if sarki.tur %}
                             <div class="info-item mb-3">
-                                <strong class="text-muted d-block mb-1">Tür</strong>
+                                <strong class="text-muted d-block mb-1">Cure</strong>
                                 <span class="badge bg-primary-subtle text-primary">
                                     {{ sarki.tur|capfirst }}
                                 </span>
@@ -189,15 +189,15 @@
                         {% endif %}
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Ekleyen</strong>
+                            <strong class="text-muted d-block mb-1">Zêdeker</strong>
                             <span>{{ sarki.kullanici.username }}</span>
                         </div>
                         
                         {% if sarki.link %}
                             <div class="info-item">
-                                <strong class="text-muted d-block mb-2">Dinle</strong>
+                                <strong class="text-muted d-block mb-2">Bibihîze</strong>
                                 <a href="{{ sarki.link }}" target="_blank" class="btn btn-outline-primary btn-sm w-100">
-                                    <i class="bi bi-play-circle me-2"></i>Şarkıyı Dinle
+                                    <i class="bi bi-play-circle me-2"></i>Stranê Bibihîze
                                 </a>
                             </div>
                         {% endif %}
@@ -213,18 +213,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detayEkleModalLabel">Detay Ekle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="detayEkleModalLabel">Kîtekît Lê Zêde Bike</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="detay-ekle-form">
                     {% csrf_token %}
                     <input type="hidden" id="detay-ekle-sarki-id" name="sarki_id">
                     <div class="mb-3">
-                        <label for="detay-ekle-text" class="form-label">Detay</label>
+                        <label for="detay-ekle-text" class="form-label">Kîtekît</label>
                         <textarea id="detay-ekle-text" name="detay" class="form-control" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Ekle</button>
+                    <button type="submit" class="btn btn-primary">Lê Zêde Bike</button>
                 </form>
             </div>
         </div>
@@ -236,18 +236,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detayDuzenleModalLabel">Detay Düzenle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="detayDuzenleModalLabel">Kîtekîtê Biguherîne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="detay-duzenle-form">
                     {% csrf_token %}
                     <input type="hidden" id="detay-duzenle-id" name="detay_id">
                     <div class="mb-3">
-                        <label for="detay-duzenle-text" class="form-label">Detay</label>
+                        <label for="detay-duzenle-text" class="form-label">Kîtekît</label>
                         <textarea id="detay-duzenle-text" name="detay" class="form-control" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
             </div>
         </div>
@@ -259,20 +259,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="albumDegistirModalLabel">Albüm Değiştir</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="albumDegistirModalLabel">Albûmê Biguherîne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="album-degistir-form">
                     {% csrf_token %}
                     <input type="hidden" id="sarki-id" name="sarki_id">
                     <div class="mb-3">
-                        <label for="album-select" class="form-label">Yeni Albüm Seç</label>
+                        <label for="album-select" class="form-label">Albûma Nû Hilbijêre</label>
                         <select id="album-select" name="album_id" class="form-select" required>
                             <!-- Albümler JS ile doldurulacak -->
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Değiştir</button>
+                    <button type="submit" class="btn btn-primary">Biguherîne</button>
                 </form>
             </div>
         </div>
@@ -284,37 +284,37 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sarkiDuzenleModalLabel">Şarkı Düzenle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="sarkiDuzenleModalLabel">Stranê Biguherîne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="sarki-duzenle-form">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="sarki-duzenle-ad" class="form-label">Şarkı Adı</label>
+                        <label for="sarki-duzenle-ad" class="form-label">Navê Stranê</label>
                         <input type="text" id="sarki-duzenle-ad" name="ad" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="sarki-duzenle-sozler" class="form-label">Şarkı Sözleri</label>
+                        <label for="sarki-duzenle-sozler" class="form-label">Gotinên Stranê</label>
                         <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="6" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="sarki-duzenle-link" class="form-label">Şarkı Linki (İsteğe Bağlı)</label>
+                        <label for="sarki-duzenle-link" class="form-label">Girêdana Stranê (Bijarte)</label>
                         <input type="url" id="sarki-duzenle-link" name="link" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="sarki-duzenle-tur" class="form-label">Tür (İsteğe Bağlı)</label>
+                        <label for="sarki-duzenle-tur" class="form-label">Cure (Bijarte)</label>
                         <select id="sarki-duzenle-tur" name="tur" class="form-select">
-                            <option value="">Tür Seçiniz</option>
+                            <option value="">Cure Hilbijêre</option>
                             <option value="pop">Pop</option>
-                            <option value="klasik">Klasik</option>
-                            <option value="arabesk">Arabesk</option>
+                            <option value="klasik">Klasîk</option>
+                            <option value="arabesk">Erebesk</option>
                             <option value="dengbej">Dengbêj</option>
-                            <option value="halk">Halk Müziği</option>
+                            <option value="halk">Muzîka Gelêrî</option>
                             <option value="serbest">Serbest</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
             </div>
         </div>

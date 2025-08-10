@@ -23,11 +23,11 @@ export function initSarkiEditActions() {
                     document.getElementById('sarki-duzenle-tur').value = data.data.tur || '';
                     modal.show();
                 } else {
-                    alert(data.error || 'Veri alınırken bir hata oluştu.');
+                    alert(data.error || 'Di dema wergirtina daneyan de çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Şarkı verisi alınamadı:', error);
-                alert('Bir hata oluştu: ' + error.message);
+                alert('Çewtîyek çêbû: ' + error.message);
             }
         });
     });
@@ -53,12 +53,12 @@ export function initSarkiEditActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = 'Çewtîyek çêbû.';
                     if (data.error) {
                         errorMessage = data.error;
                     } else if (data.errors) {
                         const errors = JSON.parse(data.errors);
-                        errorMessage = 'Hatalar:\n';
+                        errorMessage = 'Çewtî:\n';
                         for (const [field, errorList] of Object.entries(errors)) {
                             errorList.forEach(error => {
                                 errorMessage += `${field}: ${error.message}\n`;
@@ -69,7 +69,7 @@ export function initSarkiEditActions() {
                 }
             } catch (error) {
                 console.error('Şarkı düzenleme hatası:', error);
-                alert('Bir hata oluştu: ' + error.message);
+                alert('Çewtîyek çêbû: ' + error.message);
             }
         });
     }

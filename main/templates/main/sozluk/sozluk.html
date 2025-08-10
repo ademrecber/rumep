@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Kürtçe Sözlük{% endblock %}
+{% block title %}Ferhenga Kurdî{% endblock %}
 
-{% block meta_description %}Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme{% endblock %}
+{% block meta_description %}Ferhenga Kurdî - Lêgerîna peyvan, zêdekirin û guherandin{% endblock %}
 
 {% block extra_head %}
     <meta name="csrf-token" content="{% csrf_token %}">
@@ -25,22 +25,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-book-half me-3"></i>Kürtçe Sözlük
+                        <i class="bi bi-book-half me-3"></i>Ferhenga Kurdî
                     </h1>
-                    <p class="lead mb-4">Kelime arama, ekleme ve düzenleme</p>
+                    <p class="lead mb-4">Lêgerîna peyvan, zêdekirin û guherandin</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <button class="btn btn-light btn-lg" onclick="focusAddForm()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Yeni Kelime Ekle
+                            <i class="bi bi-plus-circle me-2"></i>Peyva Nû Lê Zêde Bike
                         </button>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Kelime Ara
+                            <i class="bi bi-search me-2"></i>Peyvê Lêbigere
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kelime_sayisi|default:"0" }}</h3>
-                        <p class="mb-0">Toplam Kelime</p>
+                        <p class="mb-0">Peyvên Giştî</p>
                     </div>
                 </div>
             </div>
@@ -54,14 +54,14 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-plus-circle-fill me-2 text-primary"></i>
-                    Yeni Kelime Ekle
+                    Peyva Nû Lê Zêde Bike
                 </h5>
                 <form id="sozluk-form" method="post" action="{% url 'sozluk_ana_sayfa' %}" class="needs-validation" novalidate>
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
                     <button type="submit" class="btn btn-primary rounded-pill">
-                        <i class="bi bi-plus-circle me-1"></i> Kelime Ekle
+                        <i class="bi bi-plus-circle me-1"></i> Peyv Lê Zêde Bike
                     </button>
                 </form>
             </div>
@@ -72,28 +72,28 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-search me-2 text-primary"></i>
-                    Kelime Ara
+                    Peyvê Lêbigere
                 </h5>
                 <form id="sozluk-arama-form" class="d-flex gap-2">
                     <div class="flex-grow-1">
                         <input type="text" 
                                id="arama-input" 
                                class="form-control" 
-                               placeholder="Kelime ara (ör. ab)" 
-                               aria-label="Arama"
+                               placeholder="Peyvê lêbigere (mînak: av)" 
+                               aria-label="Lêgerîn"
                                autocomplete="off">
                     </div>
                     <div>
-                        <select id="tur-filtresi" class="form-select" aria-label="Kelime türü filtresi">
-                            <option value="">Tüm Türler</option>
-                            <option value="isim">İsim</option>
-                            <option value="fiil">Fiil</option>
-                            <option value="sifat">Sıfat</option>
+                        <select id="tur-filtresi" class="form-select" aria-label="Fîltra cureya peyvê">
+                            <option value="">Hemû Cure</option>
+                            <option value="isim">Nav</option>
+                            <option value="fiil">Lêker</option>
+                            <option value="sifat">Sifet</option>
                             <option value="zarf">Zarf</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary rounded-pill">
-                        <i class="bi bi-search me-1"></i> Ara
+                        <i class="bi bi-search me-1"></i> Lêbigere
                     </button>
                 </form>
             </div>
@@ -104,20 +104,20 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-alphabet me-2 text-primary"></i>
-                    Harfler
+                    Tîp
                 </h5>
-                <nav aria-label="Alfabe navigasyonu">
+                <nav aria-label="Navîgasyona alfabeyê">
                     <div class="d-flex flex-wrap gap-1">
                         <a id="tum-kelimeler-btn"
                            href="{% url 'sozluk_ana_sayfa' %}" 
                            class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}"
-                           aria-label="Tüm kelimeler">
-                           Tümü
+                           aria-label="Hemû peyv">
+                           Hemû
                         </a>
                         {% for harf in harfler %}
                             <a href="{% url 'sozluk_harf' harf %}" 
                                class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}"
-                               aria-label="{{ harf|upper }} harfi ile başlayan kelimeler">
+                               aria-label="Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin">
                                 {{ harf|upper }}
                             </a>
                         {% endfor %}
@@ -132,17 +132,17 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title mb-0">
                         <i class="bi bi-book me-2 text-primary"></i>
-                        Tüm Kelimeler
+                        Hemû Peyv
                     </h5>
                 </div>
                 <div id="arama-sonuc-listesi" class="list-group list-group-flush">
                     <p class="text-muted">
-                        <i class="bi bi-hourglass-split me-2"></i>Kelimeler yükleniyor...
+                        <i class="bi bi-hourglass-split me-2"></i>Peyv tên barkirin...
                     </p>
                 </div>
                 <div id="loading" class="text-center mt-3 d-none">
                     <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Yükleniyor...</span>
+                        <span class="visually-hidden">Tê barkirin...</span>
                     </div>
                 </div>
                 <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
@@ -155,15 +155,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editKelimeModalLabel">
-                            <i class="bi bi-pencil-square me-2"></i>Kelime Düzenle
+                            <i class="bi bi-pencil-square me-2"></i>Peyvê Biguherîne
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
                     </div>
                     <div class="modal-body">
                         <form id="edit-kelime-form" method="post" class="needs-validation" novalidate>
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="kelime" class="form-label">Kelime</label>
+                                <label for="kelime" class="form-label">Peyv</label>
                                 <input type="text" 
                                        class="form-control" 
                                        id="kelime" 
@@ -171,35 +171,35 @@
                                        required
                                        autocomplete="off">
                                 <div class="invalid-feedback">
-                                    Lütfen bir kelime girin.
+                                    Ji kerema xwe peyvekê binivîsin.
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="detay" class="form-label">Detay</label>
+                                <label for="detay" class="form-label">Kîtekît</label>
                                 <textarea class="form-control" 
                                           id="detay" 
                                           name="detay" 
                                           rows="4" 
                                           required></textarea>
                                 <div class="invalid-feedback">
-                                    Lütfen kelime detayını girin.
+                                    Ji kerema xwe kîtekîta peyvê binivîsin.
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="tur" class="form-label">Tür</label>
+                                <label for="tur" class="form-label">Cure</label>
                                 <select class="form-select" id="tur" name="tur">
-                                    <option value="">Seçiniz</option>
-                                    <option value="isim">İsim</option>
-                                    <option value="fiil">Fiil</option>
-                                    <option value="sifat">Sıfat</option>
+                                    <option value="">Hilbijêre</option>
+                                    <option value="isim">Nav</option>
+                                    <option value="fiil">Lêker</option>
+                                    <option value="sifat">Sifet</option>
                                     <option value="zarf">Zarf</option>
                                 </select>
                             </div>
                             <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Betal</button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-check2 me-1"></i>Kaydet
+                                    <i class="bi bi-check2 me-1"></i>Tomar Bike
                                 </button>
                             </div>
                         </form>

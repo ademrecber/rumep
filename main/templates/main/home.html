@@ -6,23 +6,23 @@
         <form method="post" id="postForm">
             {% csrf_token %}
             <div class="title-field form-group mb-2">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Başlık</label>
+                <label for="{{ form.title.id_for_label }}" class="form-label">Sernav</label>
                 {{ form.title }}
             </div>
             <div class="input-group mb-2">
-                <label for="{{ form.text.id_for_label }}" class="form-label w-100">Metin</label>
+                <label for="{{ form.text.id_for_label }}" class="form-label w-100">Nivîs</label>
                 {{ form.text }}
                 <button type="button" id="emojiButton" class="btn btn-link p-0 mt-1"><i class="bi bi-emoji-smile"></i></button>
                 <button type="button" id="aiEnhanceButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
             </div>
             <div class="link-field form-group mb-2">
-                <label for="{{ form.link.id_for_label }}" class="form-label">Link (isteğe bağlı)</label>
+                <label for="{{ form.link.id_for_label }}" class="form-label">Girêdan (bijarte)</label>
                 {{ form.link }}
             </div>
             {% if form.non_field_errors %}<div class="alert alert-danger mt-2">{{ form.non_field_errors }}</div>{% endif %}
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <span class="text-muted" id="charCount">10000</span>
-                <button type="submit" class="btn btn-primary rounded-pill">Paylaş</button>
+                <button type="submit" class="btn btn-primary rounded-pill">Parvekirin</button>
             </div>
         </form>
     </div>
@@ -32,8 +32,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="emojiModalLabel">Emojiler</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="emojiModalLabel">Emojî</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
@@ -45,14 +45,14 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="aiEnhanceToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto">Metni Geliştir</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <strong class="me-auto">Nivîsê Pêşve Bibe</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
         </div>
         <div class="toast-body">
-            Metni geliştirme ister misiniz?
+            Ma hûn dixwazin nivîsê pêşve bibin?
             <div class="mt-2">
-                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Evet</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Hayır</button>
+                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Erê</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Na</button>
             </div>
         </div>
     </div>
@@ -61,11 +61,11 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto">Bilgi</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <strong class="me-auto">Agahî</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
         </div>
         <div class="toast-body">
-            Bağlantı kopyalandı!
+            Girêdan hate kopîkirin!
         </div>
     </div>
 </div>
@@ -85,33 +85,33 @@
                         <ul class="dropdown-menu">
                             {% if post.user == user %}
                                 <li>
-                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
                                         {% csrf_token %}
-                                        <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                        <button type="submit" class="dropdown-item text-danger">Jêbirin</button>
                                     </form>
                                 </li>
                             {% endif %}
                             <li>
-                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Ji nîşankirina cîhê derxistin{% else %}Têxistina nîşankirina cîhê{% endif %} hûn piştrast in?');" data-post-id="{{ post.id }}">
                                     {% csrf_token %}
                                     <button type="submit" class="dropdown-item">
-                                        {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                        {% if request.user in post.bookmarks.all %}Ji Nîşankirina Cîhê Derxistin{% else %}Têxistina Nîşankirina Cîhê{% endif %}
                                     </button>
                                 </form>
                             </li>
                             <li>
-                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
+                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Girêdanê Kopî Bike</button>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <h5>{{ post.title|default:'Başlıksız' }}</h5>
+                <h5>{{ post.title|default:'Bêsernav' }}</h5>
                 <div class="post-text">
                     {% if post.text|length > 500 or post.text|count_lines > 15 %}
                         <div class="text-preview"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                        <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                         <div class="full-text d-none"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                        <button class="btn btn-link text-primary p-0 show-less-btn d-none">Kêmtir bibîne</button>
                     {% else %}
                         <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
                     {% endif %}
@@ -123,8 +123,8 @@
                     <div class="social-embed">{{ post.embed_code|safe }}</div>
                 {% endif %}
                 <div class="post-meta text-muted mt-2">
-                    <span>Beğeni: {{ post.like_count }}</span> | 
-                    <span>Yorum: {{ post.comments.count }}</span> | 
+                    <span>Ecibandin: {{ post.like_count }}</span> | 
+                    <span>Şîrove: {{ post.comments.count }}</span> | 
                     <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
                     <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
                 </div>
@@ -150,11 +150,11 @@
             </div>
         </div>
     {% empty %}
-        <p class="text-muted p-3">Henüz eleştiri yok.</p>
+        <p class="text-muted p-3">Hêj rexne tune.</p>
     {% endfor %}
 </div>
-<div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
-<button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Daha Fazla Yükle</button>
+<div id="loading" class="text-center mt-3" style="display: none;">Tê barkirin...</div>
+<button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Zêdetir Barkirin</button>
 <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
 
 <script type="module" src="{% static 'main/js/load-more.js' %}"></script>

@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Şarkı Sözleri - Rumep{% endblock %}
+{% block title %}Gotinên Stranan - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -9,22 +9,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-music-note-list me-3"></i>Şarkı Sözleri
+                        <i class="bi bi-music-note-list me-3"></i>Gotinên Stranan
                     </h1>
-                    <p class="lead mb-4">Kürtçe şarkı sözlerini keşfedin, yeni şarkılar ekleyin</p>
+                    <p class="lead mb-4">Gotinên stranên Kurdî keşf bikin, stranên nû lê zêde bikin</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'sarki_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Yeni Şarkı Ekle
+                            <i class="bi bi-plus-circle me-2"></i>Strana Nû Lê Zêde Bike
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Şarkı Ara
+                            <i class="bi bi-search me-2"></i>Stranê Lêbigere
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kisi_gruplari|length|default:"0" }}</h3>
-                        <p class="mb-0">Sanatçı Sayısı</p>
+                        <p class="mb-0">Hejmara Hunermendan</p>
                     </div>
                 </div>
             </div>
@@ -39,18 +39,18 @@
                     <form id="sarki-arama-form" class="row g-3">
                         <div class="col-lg-8">
                             <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-search me-2"></i>Şarkı Ara
+                                <i class="bi bi-search me-2"></i>Stranê Lêbigere
                             </label>
                             <input type="text" id="sarki-arama-input" class="form-control form-control-lg" 
-                                   placeholder="Şarkı adı, sanatçı veya sözleriyle ara..." 
-                                   aria-label="Arama">
+                                   placeholder="Navê stranê, hunermend an gotinên wê lêbigere..." 
+                                   aria-label="Lêgerîn">
                         </div>
                         <div class="col-lg-4">
                             <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-music-note me-2"></i>Tür
+                                <i class="bi bi-music-note me-2"></i>Cure
                             </label>
                             <select id="tur-filtre" class="form-select form-select-lg">
-                                <option value="">Tüm Türler</option>
+                                <option value="">Hemû Cure</option>
                                 {% for tur in turler %}
                                     <option value="{{ tur }}">{{ tur|capfirst }}</option>
                                 {% endfor %}
@@ -69,7 +69,7 @@
                     <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <a href="{% url 'sarki_sozleri' %}" 
                            class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           Tümü
+                           Hemû
                         </a>
                         {% for harf in harfler %}
                             <a href="?harf={{ harf }}" 
@@ -86,7 +86,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="mb-0">
-                        <i class="bi bi-people me-2"></i>Sanatçılar
+                        <i class="bi bi-people me-2"></i>Hunermend
                         <span class="badge bg-primary ms-2">{{ kisi_gruplari|length|default:"0" }}</span>
                     </h5>
                 </div>
@@ -99,7 +99,7 @@
                                         <div class="letter-badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                             <strong>{{ harf|upper }}</strong>
                                         </div>
-                                        <h6 class="mb-0 text-primary">{{ harf|upper }} harfi ile başlayanlar</h6>
+                                        <h6 class="mb-0 text-primary">Bi tîpa {{ harf|upper }} dest pê dikin</h6>
                                     </div>
                                     <div class="row g-3">
                                         {% for kisi in kisiler %}
@@ -116,13 +116,13 @@
                                                                 <div class="col-6">
                                                                     <div class="stat-item">
                                                                         <span class="stat-number text-primary fw-bold">{{ kisi.album_sayisi }}</span>
-                                                                        <small class="stat-label text-muted d-block">Albüm</small>
+                                                                        <small class="stat-label text-muted d-block">Albûm</small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="stat-item">
                                                                         <span class="stat-number text-success fw-bold">{{ kisi.sarki_sayisi }}</span>
-                                                                        <small class="stat-label text-muted d-block">Şarkı</small>
+                                                                        <small class="stat-label text-muted d-block">Stran</small>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -137,10 +137,10 @@
                         {% empty %}
                             <div class="empty-state text-center py-5">
                                 <i class="bi bi-music-note-list display-1 text-muted mb-3"></i>
-                                <h4 class="text-muted">Henüz şarkı eklenmemiş</h4>
-                                <p class="text-muted mb-4">Bu harfle başlayan sanatçı bulunamadı.</p>
+                                <h4 class="text-muted">Hêj stran nehatiye zêdekirin</h4>
+                                <p class="text-muted mb-4">Bi vê tîpê dest pê dikin hunermend nehat dîtin.</p>
                                 <a href="{% url 'sarki_ekle' %}" class="btn btn-primary">
-                                    <i class="bi bi-plus-circle me-2"></i>Şarkı Ekle
+                                    <i class="bi bi-plus-circle me-2"></i>Stran Lê Zêde Bike
                                 </a>
                             </div>
                         {% endfor %}
@@ -165,7 +165,7 @@
         try {
             // Modül yükleme hatalarını yakalayalım
         } catch (error) {
-            console.log('Modül yükleme hatası:', error);
+            console.log('Çewtiya barkirina modûlê:', error);
         }
     });
 </script>
@@ -177,7 +177,7 @@
         initSarkiLoader();
         initSarkiSearch();
     } catch (error) {
-        console.log('Modül yükleme hatası:', error);
+        console.log('Çewtiya barkirina modûlê:', error);
     }
 </script>
 <link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">

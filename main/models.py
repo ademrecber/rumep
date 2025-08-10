@@ -54,9 +54,9 @@ class Profile(models.Model):
     account_status = models.CharField(
         max_length=20,
         choices=[
-            ('active', 'Aktif'),
-            ('frozen', 'Dondurulmuş'),
-            ('deletion_scheduled', 'Silinme Planlandı')
+            ('active', 'Çalak'),
+            ('frozen', 'Cemidî'),
+            ('deletion_scheduled', 'Jêbirin Hat Plankirî')
         ],
         default='active'
     )
@@ -64,9 +64,9 @@ class Profile(models.Model):
     preferred_language = models.CharField(
         max_length=10,
         choices=[
-            ('tr', 'Türkçe'),
-            ('ku', 'Kürtçe'),
-            ('en', 'English'),
+            ('tr', 'Tirkî'),
+            ('ku', 'Kurdî'),
+            ('en', 'Îngilîzî'),
         ],
         default='tr',
         blank=True
@@ -136,24 +136,28 @@ class Sozluk(models.Model):
     tur = models.CharField(
         max_length=20,
         choices=[
-            ('isim', 'İsim'),
-            ('fiil', 'Fiil'),
-            ('sifat', 'Sıfat'),
-            ('zarf', 'Zarf')
+            ('isim', 'Nav'),
+            ('fiil', 'Lêker'),
+            ('sifat', 'Navdêr'),
+            ('zarf', 'Belavkar'),
+            ('beyanvan', 'Beyanvan'),
+            ('pevek', 'Pêvek'),
+            ('giredek', 'Girêdek'),
+            ('bang', 'Bang'),     
         ],
         blank=True
     )
 
     class Meta:
         ordering = ['kelime']
-        verbose_name = 'Sözlük'
-        verbose_name_plural = 'Sözlük'
+        verbose_name = 'Ferheng'
+        verbose_name_plural = 'Ferheng'
 
     def clean(self):
         if not re.match(r'^[a-zçêîşû\s]+$', self.kelime.lower()):
-            raise ValidationError({'kelime': 'Kelime sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'})
+            raise ValidationError({'kelime': 'Peyv tenê tîpên Kurdî dikare bigire (a-z, ç, ê, î, ş, û û valahî).'})
         if not self.detay.strip():
-            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+            raise ValidationError({'detay': 'Qada berfireh mecbûrî ye.'})
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
@@ -200,14 +204,14 @@ class Kisi(models.Model):
 
     class Meta:
         ordering = ['ad']
-        verbose_name = 'Kişi'
-        verbose_name_plural = 'Kişiler'
+        verbose_name = 'Kes'
+        verbose_name_plural = 'Kes'
 
     def clean(self):
         if not re.match(r'^[a-zçêîşû\s]+$', self.ad.lower()):
-            raise ValidationError({'ad': 'Ad sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'})
+            raise ValidationError({'ad': 'Nav tenê tîpên Kurdî dikare bigire (a-z, ç, ê, î, ş, û û valahî).'})
         if not self.biyografi.strip():
-            raise ValidationError({'biyografi': 'Biyografi alanı zorunludur.'})
+            raise ValidationError({'biyografi': 'Qada biyografiyê mecbûrî ye..'})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -233,12 +237,12 @@ class KisiDetay(models.Model):
 
     class Meta:
         ordering = ['-eklenme_tarihi']
-        verbose_name = 'Kişi Detay'
-        verbose_name_plural = 'Kişi Detayları'
+        verbose_name = 'Berfirehiya Kesê'
+        verbose_name_plural = 'Berfirehiyên Kesan'
 
     def clean(self):
         if not self.detay.strip():
-            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+            raise ValidationError({'detay': 'Qada berfireh mecbûrî ye'})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -260,17 +264,17 @@ class Album(models.Model):
     ad = models.CharField(max_length=100)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
-    yil = models.PositiveIntegerField(null=True, blank=True, verbose_name="Albüm Yılı")
+    yil = models.PositiveIntegerField(null=True, blank=True, verbose_name="Sala Albûmê")
 
     class Meta:
         ordering = ['ad']
-        verbose_name = 'Albüm'
-        verbose_name_plural = 'Albümler'
+        verbose_name = 'Albûm'
+        verbose_name_plural = 'Albûm'
         unique_together = ('kisi', 'ad')
 
     def clean(self):
         if not self.ad.strip():
-            raise ValidationError({'ad': 'Albüm adı zorunludur.'})
+            raise ValidationError({'ad': 'Navê albûmê mecbûrî ye.'})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -296,11 +300,26 @@ class Sarki(models.Model):
         max_length=50,
         choices=[
             ('pop', 'Pop'),
-            ('klasik', 'Klasik'),
-            ('arabesk', 'Arabesk'),
+            ('klasik', 'Klasîk'),
+            ('arabesk', 'Erebesk'),
             ('dengbej', 'Dengbêj'),
-            ('halk', 'Halk Müziği'),
-            ('serbest', 'Serbest')
+            ('halk', 'Muzîka Gelêrî'),
+            ('serbest', 'Serbest'),
+            ('rock', 'Rock'),
+            ('rap', 'Rap'),
+            ('hiphop', 'Hip Hop'),
+            ('caz', 'Caz'),
+            ('blues', 'Blues'),
+            ('metal', 'Metal'),
+            ('elektronik', 'Elektronîk'),
+            ('tekno', 'Tekno'),
+            ('rnb', 'R&B'),
+            ('reggae', 'Reggae'),
+            ('tasavvuf', 'Muzîka Dînî'),
+            ('film', 'Muzîka Fîlmê'),
+            ('çocuk', 'Muzîka Zarokan'),
+            ('enstrümantal', 'Enstrûmental'),
+            ('deneysel', 'Tecrubeyî'),
         ],
         blank=True,
         verbose_name="Tür"
@@ -308,14 +327,14 @@ class Sarki(models.Model):
 
     class Meta:
         ordering = ['ad']
-        verbose_name = 'Şarkı'
-        verbose_name_plural = 'Şarkılar'
+        verbose_name = 'Stran'
+        verbose_name_plural = 'Stranan'
 
     def clean(self):
         if not self.ad.strip():
-            raise ValidationError({'ad': 'Şarkı adı zorunludur.'})
+            raise ValidationError({'ad': 'Navê stranê mecbûrî ye'})
         if not self.sozler.strip():
-            raise ValidationError({'sozler': 'Şarkı sözleri zorunludur.'})
+            raise ValidationError({'sozler': 'Gotinên stranê mecbûrî ne'})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -341,8 +360,8 @@ class SarkiDetay(models.Model):
 
     class Meta:
         ordering = ['-eklenme_tarihi']
-        verbose_name = 'Şarkı Detayı'
-        verbose_name_plural = 'Şarkı Detayları'
+        verbose_name = 'Berfirehiya Stranê'
+        verbose_name_plural = 'Berfirehiyên Stranan'
 
     def __str__(self):
         return f"{self.sarki.ad} - {self.detay[:50]}"
@@ -356,14 +375,14 @@ class Atasozu(models.Model):
 
     class Meta:
         ordering = ['kelime']
-        verbose_name = 'Atasözü'
-        verbose_name_plural = 'Atasözleri'
+        verbose_name = 'Gotina Pêşiyan'
+        verbose_name_plural = 'Gotinên Pêşiyan'
 
     def clean(self):
         if not self.kelime.strip():
-            raise ValidationError({'kelime': 'Atasözü alanı zorunludur.'})
+            raise ValidationError({'kelime': 'Qada gotina pêşiyan mecbûrî ye."'})
         if not self.anlami.strip():
-            raise ValidationError({'anlami': 'Anlam alanı zorunludur.'})
+            raise ValidationError({'anlami': 'Qada wateyê mecbûrî ye'})
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
@@ -391,14 +410,14 @@ class Deyim(models.Model):
 
     class Meta:
         ordering = ['kelime']
-        verbose_name = 'Deyim'
-        verbose_name_plural = 'Deyimler'
+        verbose_name = 'Îdîom'
+        verbose_name_plural = 'Îdîom'
 
     def clean(self):
         if not self.kelime.strip():
-            raise ValidationError({'kelime': 'Deyim alanı zorunludur.'})
+            raise ValidationError({'kelime': 'Qada îdîomê mecbûrî ye.'})
         if not self.anlami.strip():
-            raise ValidationError({'anlami': 'Anlam alanı zorunludur.'})
+            raise ValidationError({'anlami': 'Qada wateyê mecbûrî ye.'})
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
@@ -426,16 +445,16 @@ class AtasozuDeyimDetay(models.Model):
 
     class Meta:
         ordering = ['-eklenme_tarihi']
-        verbose_name = 'Atasözü/Deyim Detayı'
-        verbose_name_plural = 'Atasözü/Deyim Detayları'
+        verbose_name = 'Berfirehiya Gotina Pêşiyan/Îdîom'
+        verbose_name_plural = 'Berfirehiyên Gotina Pêşiyan/Îdîom'
 
     def clean(self):
         if self.atasozu and self.deyim:
-            raise ValidationError('Atasözü ve deyim aynı anda tanımlanamaz.')
+            raise ValidationError('Gotina pêşiyan û îdîom nikarin bi hev re bên diyarkirin')
         if not (self.atasozu or self.deyim):
-            raise ValidationError('Atasözü veya deyimden biri tanımlanmalıdır.')
+            raise ValidationError('Gotina pêşiyan an îdîom divê yek ji wan bê diyarkirin')
         if not self.detay.strip():
-            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+            raise ValidationError({'detay': 'Qada berfireh mecbûrî ye.'})
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -443,21 +462,20 @@ class AtasozuDeyimDetay(models.Model):
 
     def __str__(self):
         if self.atasozu:
-            return f"Atasözü: {self.atasozu.kelime} - {self.detay[:50]}"
-        return f"Deyim: {self.deyim.kelime} - {self.detay[:50]}"
+            return f"Gotina Pêşiyan: {self.atasozu.kelime} - {self.detay[:50]}"
+        return f"Îdîom: {self.deyim.kelime} - {self.detay[:50]}"
 
 class Katki(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='katkilar')
     tur = models.CharField(
         max_length=20,
         choices=[
-            ('sarki', 'Şarkı Sözü'),
-            ('kisi', 'Kişi'),
-            ('sozluk', 'Sözlük'),
-            ('atasozu', 'Atasözü'),
-            ('deyim', 'Deyim'),
-            ('yer_adi', 'Yer Adı'),
-            ('yer_adi_detay', 'Yer Adı Detayı'),
+            ('sarki', 'Gotinên Stranê'),
+            ('kisi', 'Kes'),
+            ('sozluk', 'Ferheng'),
+            ('atasozu', 'Gotina Pêşiyan'),
+            ('deyim', 'Îdîom'),
+            ('yer_adi', 'Navê Cihê'),
         ]
     )
     icerik_id = models.PositiveIntegerField()
@@ -466,8 +484,8 @@ class Katki(models.Model):
 
     class Meta:
         ordering = ['-eklenme_tarihi']
-        verbose_name = 'Katkı'
-        verbose_name_plural = 'Katkılar'
+        verbose_name = 'Beşdarî'
+        verbose_name_plural = 'Beşdarîyan'
 
     def __str__(self):
         return f"{self.user.username} - {self.tur} - {self.eklenme_tarihi}"
@@ -485,27 +503,27 @@ class AIProviderConfig(models.Model):
           choices=PROVIDER_CHOICES,
           default='gemini',
           unique=True,
-          verbose_name='AI Sağlayıcısı'
+          verbose_name='Pêşkêşkara AI'
       )
-      is_active = models.BooleanField(default=False, verbose_name='Aktif')
-      api_key = models.CharField(max_length=256, blank=True, null=True, verbose_name='API Anahtarı')
-      created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma Tarihi')
-      updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme Tarihi')
+      is_active = models.BooleanField(default=False, verbose_name='Çalak')
+      api_key = models.CharField(max_length=256, blank=True, null=True, verbose_name='Miftê API')
+      created_at = models.DateTimeField(auto_now_add=True, verbose_name='Dîroka Çêkirinê')
+      updated_at = models.DateTimeField(auto_now=True, verbose_name='Dîroka Nûkirinê')
 
       class Meta:
-          verbose_name = 'AI Sağlayıcı Konfigürasyonu'
-          verbose_name_plural = 'AI Sağlayıcı Konfigürasyonları'
+          verbose_name = 'Veavakirina Pêşkêşkara AI'
+          verbose_name_plural = 'Veavakirina Pêşkêşkarên AI'
 
       def __str__(self):
-          return f"{self.get_provider_display()} - {'Aktif' if self.is_active else 'Pasif'}"
+          return f"{self.get_provider_display()} - {'Çalak' if self.is_active else 'Neçalak'}"
 
       def clean(self):
           if self.is_active:
               other_active = AIProviderConfig.objects.filter(is_active=True).exclude(pk=self.pk)
               if other_active.exists():
-                  raise ValidationError('Sadece bir AI sağlayıcısı aktif olabilir.')
+                  raise ValidationError('Tenê yek pêşkêşkara AI dikare çalak be.')
           if self.provider in ['deepseek', 'grok', 'gemini'] and not self.api_key:
-              raise ValidationError(f'{self.get_provider_display()} için API anahtarı zorunludur.')
+              raise ValidationError(f'{self.get_provider_display()} için API anahtarı zorunludur.'" → "f'Ji bo {self.get_provider_display()} miftê API mecbûrî ye.')
 
       def save(self, *args, **kwargs):
           self.full_clean()
@@ -519,13 +537,13 @@ class YerAdi(models.Model):
     kategori = models.CharField(
         max_length=20,
         choices=[
-            ('il', 'İl'),
-            ('ilce', 'İlçe'),
-            ('kasaba', 'Kasaba'),
-            ('belde', 'Belde'),
-            ('koy', 'Köy'),
+            ('il', 'Parêzgeh/Bajêr'),
+            ('ilce', 'Navçe'),
+            ('kasaba', 'Navçeyek/Qesebe'),
+            ('belde', 'Gundgeha mezin'),
+            ('koy', 'Gund'),
         ],
-        verbose_name='Kategori'
+        verbose_name='Kategorî'
     )
     bolge = models.CharField(
         max_length=20,
@@ -535,34 +553,34 @@ class YerAdi(models.Model):
             ('rojava', 'Rojava'),
             ('rojhilat', 'Rojhilat'),
         ],
-        verbose_name='Kürdistan Bölgesi'
+        verbose_name='Herêma Kurdistanê'
     )
-    enlem = models.FloatField(null=True, blank=True, verbose_name='Enlem')
-    boylam = models.FloatField(null=True, blank=True, verbose_name='Boylam')
+    enlem = models.FloatField(null=True, blank=True, verbose_name='Latîtûd')
+    boylam = models.FloatField(null=True, blank=True, verbose_name='Longîtûd')
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
     guncelleme_tarihi = models.DateTimeField(auto_now=True)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='children', verbose_name='Bağlı Olduğu Yer')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='children', verbose_name='Cihê Têkildar')
 
     class Meta:
         ordering = ['ad']
-        verbose_name = 'Yer Adı'
-        verbose_name_plural = 'Yer Adları'
+        verbose_name = 'Navê Cihê'
+        verbose_name_plural = 'Navên Cihan'
 
     def clean(self):
         if not self.ad.strip():
-            raise ValidationError({'ad': 'Yer adı alanı zorunludur.'})
+            raise ValidationError({'ad': 'Qada navê cihê mecbûrî ye.'})
         if not re.match(r'^[a-zçêîşû\s]+$', self.ad.lower()):
-            raise ValidationError({'ad': 'Yer adı sadece Kürtçe harfler içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'})
+            raise ValidationError({'ad': 'Navê cihê tenê tîpên Kurdî dikare bigire (a-z, ç, ê, î, ş, û û valahî).'})
         if self.kategori != 'il' and not self.parent:
-            raise ValidationError({'parent': 'İl dışındaki kategoriler için bağlı olduğu yer seçilmelidir.'})
+            raise ValidationError({'parent': 'Ji bo kategoriyên derveyî bajêr divê cihê têkildar bê hilbijartin'})
         if self.kategori == 'il' and self.parent:
-            raise ValidationError({'parent': 'İl kategorisi için bağlı yer seçilemez.'})
+            raise ValidationError({'parent': 'Ji bo kategoriya bajêr cihê têkildar nayê hilbijartin.'})
         if self.parent:
             if self.kategori == 'ilce' and self.parent.kategori != 'il':
-                raise ValidationError({'parent': 'İlçe sadece bir ile bağlı olabilir.'})
+                raise ValidationError({'parent': 'Navçe tenê dikare bi bajarekê ve bê girêdan'})
             if self.kategori in ['kasaba', 'belde', 'koy'] and self.parent.kategori not in ['il', 'ilce']:
-                raise ValidationError({'parent': 'Kasaba, belde veya köy sadece il veya ilçeye bağlı olabilir.'})
+                raise ValidationError({'parent': 'Navçeyek, Gundgeha mezin an gund tenê dikarin bi bajêr an navçeyê ve bên girêdan'})
 
     def save(self, *args, **kwargs):
         self.ad = self.ad.upper()
@@ -589,14 +607,14 @@ class YerAdiDetay(models.Model):
 
     class Meta:
         ordering = ['-eklenme_tarihi']
-        verbose_name = 'Yer Adı Detayı'
-        verbose_name_plural = 'Yer Adı Detayları'
+        verbose_name = 'Berfirehiya Navê Cihê'
+        verbose_name_plural = 'Berfirehiyên Navên Cihan'
 
     def clean(self):
         if not self.detay.strip():
-            raise ValidationError({'detay': 'Detay alanı zorunludur.'})
+            raise ValidationError({'detay': 'Qada berfireh mecbûrî ye.'})
         if self.yer_adi.kullanici == self.kullanici:
-            raise ValidationError('Yer adını ekleyen kullanıcı ekstra detay ekleyemez.')
+            raise ValidationError('Bikarhênerê ku navê cihê zêde kiriye nikare berfirehiyên zêde lê zêde bike.')
 
     def save(self, *args, **kwargs):
         self.full_clean()

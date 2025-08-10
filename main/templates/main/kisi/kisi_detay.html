@@ -1,4 +1,3 @@
-
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
@@ -13,7 +12,7 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'kisi_liste' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-people me-1"></i>Kişiler
+                                    <i class="bi bi-people me-1"></i>Kes
                                 </a>
                             </li>
                             <li class="breadcrumb-item active text-white" aria-current="page">{{ kisi.ad }}</li>
@@ -36,7 +35,7 @@
                     {% if kisi.kullanici == user %}
                         <div class="owner-actions d-flex gap-3">
                             <button class="btn btn-outline-light btn-lg delete-kisi-btn" data-kisi-id="{{ kisi.id }}">
-                                <i class="bi bi-trash me-2"></i>Sil
+                                <i class="bi bi-trash me-2"></i>Jêbirin
                             </button>
                         </div>
                     {% endif %}
@@ -47,11 +46,11 @@
                         <div class="row text-center">
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ kisi.detaylar.count }}</h3>
-                                <p class="mb-0 small">Ek Detay</p>
+                                <p class="mb-0 small">Kîtekîta Zêde</p>
                             </div>
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ kisi.kategoriler.count }}</h3>
-                                <p class="mb-0 small">Kategori</p>
+                                <p class="mb-0 small">Kategorî</p>
                             </div>
                         </div>
                     </div>
@@ -68,7 +67,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
-                            <i class="bi bi-journal-text me-2"></i>Biyografi
+                            <i class="bi bi-journal-text me-2"></i>Biyografî
                         </h5>
                         <div class="card-text lead">{{ kisi.biyografi|safe }}</div>
                     </div>
@@ -79,7 +78,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-success text-white">
                             <h6 class="mb-0">
-                                <i class="bi bi-plus-circle me-2"></i>Yeni Detay Ekle
+                                <i class="bi bi-plus-circle me-2"></i>Kîtekîta Nû Lê Zêde Bike
                             </h6>
                         </div>
                         <div class="card-body">
@@ -90,7 +89,7 @@
                                 </div>
                                 <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
                                 <button type="submit" class="btn btn-success w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Detay Ekle
+                                    <i class="bi bi-plus-circle me-2"></i>Kîtekît Lê Zêde Bike
                                 </button>
                             </form>
                         </div>
@@ -99,7 +98,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body text-center py-4">
                             <i class="bi bi-info-circle display-4 text-muted mb-3"></i>
-                            <p class="text-muted">Kendi kişinize detay ekleyemezsiniz.</p>
+                            <p class="text-muted">Hûn nikarin kîtekîtên kesê xwe lê zêde bikin.</p>
                         </div>
                     </div>
                 {% endif %}
@@ -108,7 +107,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white border-0 py-3">
                         <h5 class="mb-0">
-                            <i class="bi bi-journal-text me-2"></i>Ek Detaylar
+                            <i class="bi bi-journal-text me-2"></i>Kîtekîtên Zêde
                             <span class="badge bg-primary ms-2">{{ kisi.detaylar.count }}</span>
                         </h5>
                     </div>
@@ -149,7 +148,7 @@
                             {% empty %}
                                 <div class="text-center py-4">
                                     <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
-                                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                                    <p class="text-muted">Hêj kîtekîtên zêde nehatine zêdekirin.</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -163,28 +162,28 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Kişi Bilgileri
+                            <i class="bi bi-info-circle me-2"></i>Agahiyên Kesê
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Ad</strong>
+                            <strong class="text-muted d-block mb-1">Nav</strong>
                             <span class="fs-5 fw-bold">{{ kisi.ad }}</span>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Kategoriler</strong>
+                            <strong class="text-muted d-block mb-1">Kategorî</strong>
                             {% for kategori in kisi.kategoriler.all %}
                                 <span class="badge bg-primary-subtle text-primary me-1 mb-1">
                                     {{ kategori.ad }}
                                 </span>
                             {% empty %}
-                                <span class="text-muted">Kategori belirtilmemiş</span>
+                                <span class="text-muted">Kategorî nehat diyarkirin</span>
                             {% endfor %}
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Ekleyen</strong>
+                            <strong class="text-muted d-block mb-1">Zêdeker</strong>
                             <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}" class="text-decoration-none">
                                 {{ kisi.kullanici.profile.nickname }}
                                 <small class="text-muted">(@{{ kisi.kullanici.profile.username }})</small>
@@ -192,7 +191,7 @@
                         </div>
                         
                         <div class="info-item">
-                            <strong class="text-muted d-block mb-1">Eklenme Tarihi</strong>
+                            <strong class="text-muted d-block mb-1">Dîroka Zêdekirinê</strong>
                             <span>{{ kisi.eklenme_tarihi|date:"d F Y, H:i" }}</span>
                         </div>
                     </div>
@@ -207,18 +206,18 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editDetayModalLabel">Detay Düzenle</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editDetayModalLabel">Kîtekîtê Biguherîne</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
                     </div>
                     <div class="modal-body">
                         <form id="edit-detay-form" method="post">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="detay" class="form-label">Detay</label>
+                                <label for="detay" class="form-label">Kîtekît</label>
                                 <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
                             </div>
                             <div id="edit-detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                            <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                            <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
                         </form>
                     </div>
                 </div>
@@ -234,7 +233,7 @@
             const deleteBtn = document.querySelector('.delete-kisi-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', async () => {
-                    if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
+                    if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
                     try {
                         const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
                             method: 'POST',
@@ -245,14 +244,14 @@
                         });
                         const data = await response.json();
                         if (data.success) {
-                            alert('Kişi başarıyla silindi!');
+                            alert('Kes bi serkeftî hate jêbirin!');
                             window.location.href = '/kisi/liste/';
                         } else {
-                            alert(data.error || 'Kişi silinirken hata oluştu.');
+                            alert(data.error || 'Di dema jêbirina kesê de çewtî çêbû.');
                         }
                     } catch (error) {
-                        console.error('Silme hatası:', error);
-                        alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                        console.error('Çewtiya jêbirinê:', error);
+                        alert('Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.');
                     }
                 });
             }

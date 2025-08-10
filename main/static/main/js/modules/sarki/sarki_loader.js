@@ -33,11 +33,11 @@ export function initKisiAra() {
                 });
                 sonucDiv.appendChild(ul);
             } else {
-                sonucDiv.innerHTML = '<p class="text-muted">Kişi bulunamadı.</p>';
+                sonucDiv.innerHTML = '<p class="text-muted">Kes nehat dîtin.</p>';
             }
         } catch (error) {
             console.error('Kişi arama hatası:', error);
-            sonucDiv.innerHTML = '<p class="text-muted">Arama sırasında hata oluştu.</p>';
+            sonucDiv.innerHTML = '<p class="text-muted">Di dema lêgerînê de çewtîyek çêbû.</p>';
         }
     });
 }
@@ -62,16 +62,16 @@ export function initAlbumEkle() {
             const data = await response.json();
             if (data.success) {
                 form.reset();
-                alert('Albüm başarıyla eklendi!');
+                alert('Albûm bi serkeftî hate zêdekirin!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>Albüm eklenemedi. Lütfen hataları kontrol edin.</p>';
+                errorDiv.innerHTML = '<p>Albûm nehat zêdekirin. Ji kerema xwe çewtiyan kontrol bikin.</p>';
             }
         } catch (error) {
             console.error('Albüm ekleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Bir hata oluştu, lütfen tekrar deneyin.</p>';
+            errorDiv.innerHTML = '<p>Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
         }
     });
 }
@@ -89,7 +89,7 @@ export function initSarkiEkle() {
         const album = form.querySelector('#album').value;
         if (!album) {
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Lütfen bir albüm seçin.</p>';
+            errorDiv.innerHTML = '<p>Ji kerema xwe albûmekê hilbijêre.</p>';
             return;
         }
 
@@ -103,11 +103,11 @@ export function initSarkiEkle() {
             const data = await response.json();
             if (data.success) {
                 form.reset();
-                alert('Şarkı başarıyla eklendi!');
+                alert('Stran bi serkeftî hate zêdekirin!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                let errorMessage = '<p>Şarkı eklenemedi. Lütfen hataları kontrol edin:</p><ul>';
+                let errorMessage = '<p>Stran nehat zêdekirin. Ji kerema xwe çewtiyan kontrol bikin:</p><ul>';
                 const errors = JSON.parse(data.errors);
                 for (const field in errors) {
                     errors[field].forEach(error => {
@@ -120,7 +120,7 @@ export function initSarkiEkle() {
         } catch (error) {
             console.error('Şarkı ekleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Bir hata oluştu, lütfen tekrar deneyin.</p>';
+            errorDiv.innerHTML = '<p>Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
         }
     });
 }

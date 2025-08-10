@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}{{ harf|upper }} Harfi - Kürtçe Sözlük{% endblock %}
+{% block title %}{{ harf|upper }} Tîp - Ferhenga Kurdî{% endblock %}
 {% block extra_head %}
     <meta name="csrf-token" content="{% csrf_token %}">
     <link rel="stylesheet" href="{% static 'main/css/modern.css' %}">
@@ -14,22 +14,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-alphabet me-3"></i>{{ harf|upper }} Harfi
+                        <i class="bi bi-alphabet me-3"></i>{{ harf|upper }} Tîp
                     </h1>
-                    <p class="lead mb-4">{{ harf|upper }} harfi ile başlayan kelimeleri keşfedin</p>
+                    <p class="lead mb-4">Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin keşf bikin</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'sozluk_ana_sayfa' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-arrow-left me-2"></i>Tüm Kelimeler
+                            <i class="bi bi-arrow-left me-2"></i>Hemû Peyv
                         </a>
                         <a href="{% url 'sozluk_ana_sayfa' %}" class="btn btn-outline-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Kelime Ekle
+                            <i class="bi bi-plus-circle me-2"></i>Peyv Lê Zêde Bike
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kelimeler.count|default:"0" }}</h3>
-                        <p class="mb-0">{{ harf|upper }} Harfi</p>
+                        <p class="mb-0">{{ harf|upper }} Tîp</p>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="card-header bg-white border-0 py-3">
                 <h5 class="mb-0">
                     <i class="bi bi-list-ul me-2 text-primary"></i>
-                    {{ harf|upper }} Harfi ile Başlayan Kelimeler
+                    Peyvên ku bi Tîpa {{ harf|upper }} Dest Pê Dikin
                     <span class="badge bg-primary ms-2">{{ kelimeler.count|default:"0" }}</span>
                 </h5>
             </div>
@@ -60,10 +60,10 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Biguherîne</button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}">Sil</button>
+                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}">Jêbirin</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -71,11 +71,11 @@
                         </div>
                     </div>
                 {% empty %}
-                    <p class="text-muted">Bu harfle başlayan kelime bulunamadı.</p>
+                    <p class="text-muted">Bi vê tîpê dest pê dikin peyv nehat dîtin.</p>
                 {% endfor %}
             </div>
         </div>
-        <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+        <div id="loading" class="text-center mt-3" style="display: none;">Tê barkirin...</div>
         <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
 
         <!-- Düzenleme Modalı -->
@@ -83,22 +83,22 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editKelimeModalLabel">Kelime Düzenle</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="editKelimeModalLabel">Peyvê Biguherîne</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
                     </div>
                     <div class="modal-body">
                         <form id="edit-kelime-form" method="post">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="kelime" class="form-label">Kelime</label>
+                                <label for="kelime" class="form-label">Peyv</label>
                                 <input type="text" class="form-control" id="kelime" name="kelime" required>
                             </div>
                             <div class="mb-3">
-                                <label for="detay" class="form-label">Detay</label>
+                                <label for="detay" class="form-label">Kîtekît</label>
                                 <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
                             </div>
                             <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                            <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                            <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
                         </form>
                     </div>
                 </div>

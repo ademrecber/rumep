@@ -1,11 +1,11 @@
 {% extends 'main/base.html' %}
-{% block title %}Arama - {{ query }}{% endblock %}
+{% block title %}Lêgerîn - {{ query }}{% endblock %}
 {% block content %}
     <div class="container twitter-container">
-        <h3 class="mb-4">"{{ query }}" için Sonuçlar</h3>
+        <h3 class="mb-4">"{{ query }}" ji bo Encaman</h3>
         
         {% if results.users %}
-            <h4 class="border-bottom pb-2 mb-3">Kullanıcılar</h4>
+            <h4 class="border-bottom pb-2 mb-3">Bikarhêner</h4>
             {% for profile in results.users %}
                 <div class="card mb-2">
                     <div class="card-body p-3">
@@ -16,12 +16,12 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Kullanıcı bulunamadı.</p>
+                <p class="text-muted">Bikarhêner nehat dîtin.</p>
             {% endfor %}
         {% endif %}
 
         {% if results.ids %}
-            <h4 class="border-bottom pb-2 mb-3">ID’ler</h4>
+            <h4 class="border-bottom pb-2 mb-3">Nasname (ID)</h4>
             {% for post in results.ids %}
                 <div class="card mb-2">
                     <div class="card-body p-3">
@@ -32,16 +32,16 @@
                         <div class="post-text">
                             {{ post.text|linebreaks }}
                         </div>
-                        <a href="{% url 'post_detail' post.id %}" class="text-primary small">Devamını oku</a>
+                        <a href="{% url 'post_detail' post.id %}" class="text-primary small">Zêdetir bixwîne</a>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">ID bulunamadı.</p>
+                <p class="text-muted">Nasname (ID) nehat dîtin.</p>
             {% endfor %}
         {% endif %}
 
         {% if results.posts %}
-            <h4 class="border-bottom pb-2 mb-3">Postlar</h4>
+            <h4 class="border-bottom pb-2 mb-3">Post</h4>
             {% for post in results.posts %}
                 <div class="card mb-2">
                     <div class="card-body p-3">
@@ -52,16 +52,16 @@
                         <div class="post-text">
                             {{ post.text|linebreaks }}
                         </div>
-                        <a href="{% url 'post_detail' post.id %}" class="text-primary small">Devamını oku</a>
+                        <a href="{% url 'post_detail' post.id %}" class="text-primary small">Zêdetir bixwîne</a>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Post bulunamadı.</p>
+                <p class="text-muted">Post nehat dîtin.</p>
             {% endfor %}
         {% endif %}
 
         {% if not results.users and not results.ids and not results.posts %}
-            <p class="text-muted">Hiçbir sonuç bulunamadı.</p>
+            <p class="text-muted">Tu encam nehat dîtin.</p>
         {% endif %}
     </div>
 {% endblock %}

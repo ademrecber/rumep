@@ -36,11 +36,11 @@ export function initSarkiSearch() {
                 });
                 sonucDiv.appendChild(ul);
             } else {
-                sonucDiv.innerHTML = '<p class="text-muted">Şarkı bulunamadı.</p>';
+                sonucDiv.innerHTML = '<p class="text-muted">Stran nehat dîtin.</p>';
             }
         } catch (error) {
             console.error('Şarkı arama hatası:', error);
-            sonucDiv.innerHTML = '<p class="text-muted">Arama sırasında hata oluştu.</p>';
+            sonucDiv.innerHTML = '<p class="text-muted">Di dema lêgerînê de çewtîyek çêbû.</p>';
         }
     };
 

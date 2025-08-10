@@ -7,26 +7,26 @@
     <div class="card mb-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-3">
-                <h5>{% if tur == 'atasozu' %}Atasözü{% else %}Deyim{% endif %}</h5>
+                <h5>{% if tur == 'atasozu' %}Gotina Pêşiyan{% else %}Îdîom{% endif %}</h5>
                 {% if item.kullanici == user %}
                     <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-primary btn-sm me-2" data-action="duzenle" data-tur="{{ tur }}" data-id="{{ item.id }}" title="Düzenle">
-                            <i class="bi bi-pencil"></i> Düzenle
+                        <button class="btn btn-outline-primary btn-sm me-2" data-action="duzenle" data-tur="{{ tur }}" data-id="{{ item.id }}" title="Biguherîne">
+                            <i class="bi bi-pencil"></i> Biguherîne
                         </button>
                         <form method="post" action="{% url 'atasozu_deyim_sil' tur=tur id=item.id %}" class="d-inline" id="sil-form" data-tur="{{ tur }}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Sil">
-                                <i class="bi bi-trash"></i> Sil
+                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Jêbirin">
+                                <i class="bi bi-trash"></i> Jêbirin
                             </button>
                         </form>
                     </div>
                 {% endif %}
             </div>
-            <p><strong>Anlam:</strong> {{ item.anlami|linebreaks }}</p>
+            <p><strong>Wate:</strong> {{ item.anlami|linebreaks }}</p>
             {% if item.ornek %}
-                <p><strong>Örnek:</strong> {{ item.ornek|linebreaks }}</p>
+                <p><strong>Mînak:</strong> {{ item.ornek|linebreaks }}</p>
             {% endif %}
-            <p class="text-muted small">Ekleyen: {{ item.kullanici.profile.username }} | Tarih: {{ item.eklenme_tarihi|date:"d.m.Y" }}</p>
+            <p class="text-muted small">Zêdeker: {{ item.kullanici.profile.username }} | Dîrok: {{ item.eklenme_tarihi|date:"d.m.Y" }}</p>
         </div>
     </div>
 
@@ -34,9 +34,9 @@
     <div class="card mb-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5>Ek Detaylar</h5>
+                <h5>Kîtekîtên Zêde</h5>
                 {% if item.kullanici != user %}
-                    <button class="btn btn-primary rounded-pill" data-action="detay-ekle" data-tur="{{ tur }}" data-id="{{ item.id }}">Detay Ekle</button>
+                    <button class="btn btn-primary rounded-pill" data-action="detay-ekle" data-tur="{{ tur }}" data-id="{{ item.id }}">Kîtekît Lê Zêde Bike</button>
                 {% endif %}
             </div>
             <div id="detay-list">
@@ -45,14 +45,14 @@
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
                                 <p>{{ detay.detay|linebreaks }}</p>
-                                <small class="text-muted">Ekleyen: {{ detay.kullanici.profile.username }} - {{ detay.eklenme_tarihi|date:"d.m.Y H:i" }}</small>
+                                <small class="text-muted">Zêdeker: {{ detay.kullanici.profile.username }} - {{ detay.eklenme_tarihi|date:"d.m.Y H:i" }}</small>
                             </div>
                             {% if detay.kullanici == user %}
                                 <div class="d-flex align-items-center">
-                                    <button class="btn btn-link text-primary p-0 me-2" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Düzenle">
+                                    <button class="btn btn-link text-primary p-0 me-2" data-action="detay-duzenle" data-detay-id="{{ detay.id }}" title="Biguherîne">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-link text-danger p-0" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Sil">
+                                    <button class="btn btn-link text-danger p-0" data-action="detay-sil" data-detay-id="{{ detay.id }}" title="Jêbirin">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 {% empty %}
-                    <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                    <p class="text-muted">Hêj kîtekîtên zêde nehatine zêdekirin.</p>
                 {% endfor %}
             </div>
         </div>
@@ -72,8 +72,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detayEkleModalLabel">Detay Ekle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="detayEkleModalLabel">Kîtekît Lê Zêde Bike</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="detay-ekle-form">
@@ -81,10 +81,10 @@
                     <input type="hidden" id="detay-ekle-tur" name="tur">
                     <input type="hidden" id="detay-ekle-id" name="id">
                     <div class="mb-3">
-                        <label for="detay-ekle-text" class="form-label">Detay</label>
+                        <label for="detay-ekle-text" class="form-label">Kîtekît</label>
                         <textarea id="detay-ekle-text" name="detay" class="form-control" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Ekle</button>
+                    <button type="submit" class="btn btn-primary">Lê Zêde Bike</button>
                 </form>
             </div>
         </div>
@@ -96,18 +96,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detayDuzenleModalLabel">Detay Düzenle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="detayDuzenleModalLabel">Kîtekîtê Biguherîne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="detay-duzenle-form">
                     {% csrf_token %}
                     <input type="hidden" id="detay-duzenle-id" name="detay_id">
                     <div class="mb-3">
-                        <label for="detay-duzenle-text" class="form-label">Detay</label>
+                        <label for="detay-duzenle-text" class="form-label">Kîtekît</label>
                         <textarea id="detay-duzenle-text" name="detay" class="form-control" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
             </div>
         </div>
@@ -119,8 +119,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="duzenleModalLabel">{% if tur == 'atasozu' %}Atasözü{% else %}Deyim{% endif %} Düzenle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <h5 class="modal-title" id="duzenleModalLabel">{% if tur == 'atasozu' %}Gotina Pêşiyan{% else %}Îdîom{% endif %} Biguherîne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
             </div>
             <div class="modal-body">
                 <form id="duzenle-form">
@@ -128,18 +128,18 @@
                     <input type="hidden" id="duzenle-tur" name="tur" value="{{ tur }}">
                     <input type="hidden" id="duzenle-id" name="id" value="{{ item.id }}">
                     <div class="mb-3">
-                        <label for="duzenle-kelime" class="form-label">Kelime</label>
+                        <label for="duzenle-kelime" class="form-label">Peyv</label>
                         <input type="text" id="duzenle-kelime" name="kelime" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="duzenle-anlami" class="form-label">Anlam</label>
+                        <label for="duzenle-anlami" class="form-label">Wate</label>
                         <textarea id="duzenle-anlami" name="anlami" class="form-control" rows="4" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="duzenle-ornek" class="form-label">Örnek</label>
+                        <label for="duzenle-ornek" class="form-label">Mînak</label>
                         <textarea id="duzenle-ornek" name="ornek" class="form-control" rows="4"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
             </div>
         </div>

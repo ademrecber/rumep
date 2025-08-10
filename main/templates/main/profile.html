@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}Profil - {{ profile.nickname }}{% endblock %}
+{% block title %}Profîl - {{ profile.nickname }}{% endblock %}
 {% block content %}
 <div class="container twitter-container py-4">
     <!-- Profil Bilgileri -->
@@ -22,14 +22,14 @@
             {% if profile.twitter_username %}
                 <p class="text-muted mb-1"><i class="bi bi-twitter me-2"></i><a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank" class="text-decoration-none">@{{ profile.twitter_username }}</a></p>
             {% endif %}
-            <p class="text-muted mb-3"><i class="bi bi-file-post me-2"></i>Toplam Post: {{ posts_count }}</p>
+            <p class="text-muted mb-3"><i class="bi bi-file-post me-2"></i>Postên Giştî: {{ posts_count }}</p>
             <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profili Düzenle</button>
-                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 visibility-btn" data-bs-toggle="modal" data-bs-target="#visibilityModal">Görünürlük Ayarları</button>
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#accountManagementModal">Hesap Yönetimi</button>
+                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profîlê Biguherîne</button>
+                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 visibility-btn" data-bs-toggle="modal" data-bs-target="#visibilityModal">Mîhengên Xuyabûnê</button>
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#accountManagementModal">Rêveberiya Hesabê</button>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Çıkış Yap</button>
+                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Derkeve</button>
                 </form>
             </div>
         </div>
@@ -41,16 +41,16 @@
             <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile' %}?tab=posts">Post</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'likes' %}active{% endif %}" href="{% url 'profile' %}?tab=likes">Beğeni</a>
+            <a class="nav-link {% if tab == 'likes' %}active{% endif %}" href="{% url 'profile' %}?tab=likes">Ecibandin</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile' %}?tab=comments">Yorum</a>
+            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile' %}?tab=comments">Şîrove</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile' %}?tab=critiques">Değerlendirme</a>
+            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile' %}?tab=critiques">Nirxandin</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">Yer İşaretleri</a>
+            <a class="nav-link {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">Nîşankirina Cîhê</a>
         </li>
     </ul>
 
@@ -65,7 +65,7 @@
                                 <strong>{{ post.user.profile.nickname }}</strong> 
                                 <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_post' post.id %}?tab=posts" class="d-inline" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                            <form method="post" action="{% url 'profile_delete_post' post.id %}?tab=posts" class="d-inline" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz post paylaşmadınız.</p>
+                <p class="text-muted">Hêj we post neparvekiriye.</p>
             {% endfor %}
         {% elif tab == 'likes' %}
             {% for post in liked_posts %}
@@ -88,7 +88,7 @@
                                 <strong>{{ post.user.profile.nickname }}</strong> 
                                 <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'unlike_post' post.id %}?tab=likes" class="bookmark-form d-inline" onsubmit="return confirm('Bu beğeniyi kaldırmak istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                            <form method="post" action="{% url 'unlike_post' post.id %}?tab=likes" class="bookmark-form d-inline" onsubmit="return confirm('Ma hûn ji vê ecibandina rakirinê piştrast in?');" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-heartbreak"></i></button>
                             </form>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz bir post beğenmediniz.</p>
+                <p class="text-muted">Hêj we postek ecib nekiriye.</p>
             {% endfor %}
         {% elif tab == 'comments' %}
             {% for comment in comments %}
@@ -111,7 +111,7 @@
                                 <strong>{{ comment.user.profile.nickname }}</strong> 
                                 <span class="text-muted"><a href="{% url 'profile_detail' comment.user.profile.username %}" class="text-muted text-decoration-none">@{{ comment.user.profile.username }}</a> · {{ comment.created_at }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_comment' comment.id %}?tab=comments" class="d-inline" onsubmit="return confirm('Bu yorumu silmek istediğinizden emin misiniz?');">
+                            <form method="post" action="{% url 'profile_delete_comment' comment.id %}?tab=comments" class="d-inline" onsubmit="return confirm('Ma hûn ji vê şîrovê jêbirinê piştrast in?');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz yorum yapmadınız.</p>
+                <p class="text-muted">Hêj we şîrove nekiriye.</p>
             {% endfor %}
         {% elif tab == 'critiques' %}
             {% for critique in critiques %}
@@ -132,18 +132,18 @@
                                 <strong>{{ critique.user.profile.nickname }}</strong> 
                                 <span class="text-muted"><a href="{% url 'profile_detail' critique.user.profile.username %}" class="text-muted text-decoration-none">@{{ critique.user.profile.username }}</a> · {{ critique.created_at }} · ID: {{ critique.short_id }}</span>
                             </p>
-                            <form method="post" action="{% url 'profile_delete_critique' critique.id %}?tab=critiques" class="d-inline" onsubmit="return confirm('Bu eleştiriyi silmek istediğinizden emin misiniz?');">
+                            <form method="post" action="{% url 'profile_delete_critique' critique.id %}?tab=critiques" class="d-inline" onsubmit="return confirm('Ma hûn ji vê nirxandinê jêbirinê piştrast in?');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
                             </form>
                         </div>
                         <p class="mb-1"><a href="{% url 'post_detail' critique.post.id %}" class="text-dark text-decoration-none">{{ critique.text|render_emojis|safe|linebreaks }}</a></p>
                         <p class="text-muted small">Post: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
-                        <p class="text-muted small">Puan: {{ critique.rating|floatformat:1 }}</p>
+                        <p class="text-muted small">Pûan: {{ critique.rating|floatformat:1 }}</p>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz değerlendirme yapmadınız.</p>
+                <p class="text-muted">Hêj we nirxandin nekiriye.</p>
             {% endfor %}
         {% elif tab == 'bookmarks' %}
             {% for post in bookmarked_posts %}
@@ -160,9 +160,9 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <form method="post" action="{% url 'remove_bookmark' post.id %}?tab=bookmarks" class="bookmark-form m-0" onsubmit="return confirm('Bu yer işaretini kaldırmak istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                        <form method="post" action="{% url 'remove_bookmark' post.id %}?tab=bookmarks" class="bookmark-form m-0" onsubmit="return confirm('Ma hûn ji vê nîşankirina cîhê rakirinê piştrast in?');" data-post-id="{{ post.id }}">
                                             {% csrf_token %}
-                                            <button type="submit" class="dropdown-item">Yer İşaretinden Kaldır</button>
+                                            <button type="submit" class="dropdown-item">Ji Nîşankirina Cîhê Derxistin</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -175,7 +175,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz yer işareti eklemediniz.</p>
+                <p class="text-muted">Hêj we nîşankirina cîhê zêde nekiriye.</p>
             {% endfor %}
         {% endif %}
     </div>
@@ -185,7 +185,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Profili Düzenle</h5>
+                    <h5 class="modal-title" id="editProfileModalLabel">Profîlê Biguherîne</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -195,30 +195,30 @@
                     <form method="post" action="{% url 'update_profile' %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="nickname" class="form-label">Takma Ad</label>
+                            <label for="nickname" class="form-label">Navê Nasnavê</label>
                             <input type="text" class="form-control" id="nickname" name="nickname" value="{{ profile.nickname }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Kullanıcı Adı</label>
+                            <label for="username" class="form-label">Navê Bikarhêner</label>
                             <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="instagram_username" class="form-label">Instagram (Opsiyonel)</label>
+                            <label for="instagram_username" class="form-label">Instagram (Bijarte)</label>
                             <input type="text" class="form-control" id="instagram_username" name="instagram_username" value="{{ profile.instagram_username|default_if_none:'' }}">
                         </div>
                         <div class="mb-3">
-                            <label for="twitter_username" class="form-label">Twitter (Opsiyonel)</label>
+                            <label for="twitter_username" class="form-label">Twitter (Bijarte)</label>
                             <input type="text" class="form-control" id="twitter_username" name="twitter_username" value="{{ profile.twitter_username|default_if_none:'' }}">
                         </div>
                         <div class="mb-3">
-                            <label for="preferred_language" class="form-label">Dil Tercihi</label>
+                            <label for="preferred_language" class="form-label">Terciha Ziman</label>
                             <select class="form-control" id="preferred_language" name="preferred_language">
-                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>Türkçe</option>
-                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>Kürtçe</option>
-                                <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>English</option>
+                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>Tirkî</option>
+                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>Kurdî</option>
+                                <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>Îngilîzî</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
                     </form>
                 </div>
             </div>
@@ -230,7 +230,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="visibilityModalLabel">Görünürlük Ayarları</h5>
+                    <h5 class="modal-title" id="visibilityModalLabel">Mîhengên Xuyabûnê</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -239,18 +239,18 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="postsVisible" name="posts_visible" {% if profile.posts_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="postsVisible">Postlar Görünür</label>
+                                <label class="form-check-label" for="postsVisible">Post Xuya Ne</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="critiquesVisible" name="critiques_visible" {% if profile.critiques_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="critiquesVisible">Değerlendirmeler Görünür</label>
+                                <label class="form-check-label" for="critiquesVisible">Nirxandin Xuya Ne</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="commentsVisible" name="comments_visible" {% if profile.comments_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="commentsVisible">Yorumlar Görünür</label>
+                                <label class="form-check-label" for="commentsVisible">Şîrove Xuya Ne</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Kaydet</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
                     </form>
                 </div>
             </div>
@@ -262,7 +262,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="accountManagementModalLabel">Hesap Yönetimi</h5>
+                    <h5 class="modal-title" id="accountManagementModalLabel">Rêveberiya Hesabê</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -270,49 +270,49 @@
                         Debug: account_status = {{ profile.account_status }}
                     </div>
                     <div class="mb-4">
-                        <h6>Hesap Durumu</h6>
-                        <p>Mevcut durum: 
+                        <h6>Rewşa Hesabê</h6>
+                        <p>Rewşa heyî: 
                             {% if profile.account_status == 'active' %}
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success">Çalak</span>
                             {% elif profile.account_status == 'frozen' %}
-                                <span class="badge bg-warning">Dondurulmuş</span>
+                                <span class="badge bg-warning">Cemidî</span>
                             {% elif profile.account_status == 'deletion_scheduled' %}
-                                <span class="badge bg-danger">Silinme Planlandı</span>
-                                <small class="d-block mt-1">Silinme tarihi: {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
+                                <span class="badge bg-danger">Jêbirina Plankirî</span>
+                                <small class="d-block mt-1">Dîroka jêbirinê: {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
                             {% else %}
-                                <span class="badge bg-secondary">Bilinmeyen Durum</span>
+                                <span class="badge bg-secondary">Rewşek Nenas</span>
                             {% endif %}
                         </p>
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabı Dondur</h6>
-                        <p class="small text-muted">Hesabınızı dondurduğunuzda, içerikleriniz görünmez olacak ancak silinmeyecektir. İstediğiniz zaman tekrar aktifleştirebilirsiniz.</p>
+                        <h6>Hesabê Bicemidîne</h6>
+                        <p class="small text-muted">Dema ku hûn hesabê xwe bicemidînin, naverokên we xuya nabin lê nayên jêbirin. Hûn dikarin her dem dîsa çalak bikin.</p>
                         {% if profile.account_status == 'active' %}
-                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('Hesabınızı dondurmak istediğinizden emin misiniz?');">
+                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('Ma hûn ji cemidandina hesabê xwe piştrast in?');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">Hesabı Dondur</button>
+                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">Hesabê Bicemidîne</button>
                             </form>
                         {% elif profile.account_status == 'frozen' %}
                             <form method="post" action="{% url 'unfreeze_account' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Hesabı Aktifleştir</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Hesabê Çalak Bike</button>
                             </form>
                         {% endif %}
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabı Sil</h6>
-                        <p class="small text-muted">Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinecektir.</p>
+                        <h6>Hesabê Jêbibe</h6>
+                        <p class="small text-muted">Dema ku hûn hesabê xwe jêbibin, heke hûn di nav 30 rojan de dîsa têkevin, hemû daneyên we bi domdarî têne jêbirin.</p>
                         {% if profile.account_status != 'deletion_scheduled' %}
-                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanacaktır.');">
+                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('Ma hûn ji jêbirina hesabê xwe piştrast in? Ev pêvajo piştî 30 rojan tê temamkirin.');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">Hesabı Sil</button>
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">Hesabê Jêbibe</button>
                             </form>
                         {% else %}
                             <form method="post" action="{% url 'cancel_account_deletion' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Silme İşlemini İptal Et</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Jêbirina Pêvajoyê Betal Bike</button>
                             </form>
                         {% endif %}
                     </div>

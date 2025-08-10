@@ -1,12 +1,12 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Şarkı Sözleri - {{ album.ad }}{% endblock %}
+{% block title %}Gotinên Stranan - {{ album.ad }}{% endblock %}
 {% block content %}
 <div class="container twitter-container sarki-container">
-    <h3>{{ album.ad }} Şarkıları</h3>
+    <h3>Stranên {{ album.ad }}</h3>
     <div class="card mb-3">
         <div class="card-body">
-            <h5>Şarkılar</h5>
+            <h5>Stran</h5>
             {% for sarki in sarkilar %}
                 <div class="sarki-item mb-2">
                     <div class="d-flex justify-content-between align-items-start">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Henüz şarkı eklenmemiş.</p>
+                <p class="text-muted">Hêj stran nehatiye zêdekirin.</p>
             {% endfor %}
         </div>
     </div>

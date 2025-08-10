@@ -14,17 +14,17 @@
                     <ul class="dropdown-menu">
                         {% if post.user == user %}
                             <li>
-                                <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
                                     {% csrf_token %}
-                                    <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                    <button type="submit" class="dropdown-item text-danger">Jêbirin</button>
                                 </form>
                             </li>
                         {% endif %}
                         <li>  <!-- Yeni -->
-                            <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                            <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Ji nîşankirina cîhê derxistin{% else %}Têxistina nîşankirina cîhê{% endif %} hûn piştrast in?');" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item">
-                                    {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                    {% if request.user in post.bookmarks.all %}Ji Nîşankirina Cîhê Derxistin{% else %}Têxistina Nîşankirina Cîhê{% endif %}
                                 </button>
                             </form>
                         </li>
@@ -34,16 +34,16 @@
             <div class="post-text">
                 {% if post.text|length > 400 or post.text|count_lines > 15 %}
                     <div class="text-preview">{{ post.text|truncatechars:100|linebreaks }}</div>
-                    <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                    <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                     <div class="full-text d-none">{{ post.text|linebreaks }}</div>
                 {% else %}
                     {{ post.text|linebreaks }}
                 {% endif %}
             </div>
             <div class="post-meta text-muted mt-2">
-                <span>Beğeni: {{ post.like_count }}</span> | 
-                <span>Yorum: {{ post.comments.count }}</span> | 
-                <span>Görüntüleme: {{ post.views }}</span>
+                <span>Ecibandin: {{ post.like_count }}</span> | 
+                <span>Şîrove: {{ post.comments.count }}</span> | 
+                <span>Dîtin: {{ post.views }}</span>
             </div>
             <div class="post-actions mt-2">
                 <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
@@ -63,10 +63,10 @@
                     <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
                 </form>
                 <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-chat"></i></a>
-                <span class="text-muted ms-2">Skor: {{ post.total_score|floatformat:1 }}</span>
+                <span class="text-muted ms-2">Pûan: {{ post.total_score|floatformat:1 }}</span>
             </div>
         </div>
     </div>
 {% empty %}
-    <p class="text-muted p-3">Henüz popüler eleştiri yok.</p>
+    <p class="text-muted p-3">Hêj nirxandina populer tune.</p>
 {% endfor %}

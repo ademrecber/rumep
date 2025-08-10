@@ -33,7 +33,7 @@ export function initAtasozuDeyimArama() {
             if (data.success) {
                 searchResults.innerHTML = '';
                 if (data.items.length === 0) {
-                    searchResults.innerHTML = '<p class="text-muted">Sonuç bulunamadı.</p>';
+                    searchResults.innerHTML = '<p class="text-muted">Encam nehat dîtin.</p>';
                 } else {
                     data.items.forEach(item => {
                         const itemDiv = document.createElement('div');
@@ -41,17 +41,17 @@ export function initAtasozuDeyimArama() {
                         itemDiv.innerHTML = `
                             <h5><a href="/atasozu-deyim/${sekme}/${item.id}/" class="text-decoration-none">${item.kelime}</a></h5>
                             <p>${item.anlami.substring(0, 100)}${item.anlami.length > 100 ? '...' : ''}</p>
-                            <small class="text-muted">Ekleyen: ${item.kullanici} - ${new Date(item.eklenme_tarihi).toLocaleDateString('tr-TR')}</small>
+                            <small class="text-muted">Zêdeker: ${item.kullanici} - ${new Date(item.eklenme_tarihi).toLocaleDateString('tr-TR')}</small>
                         `;
                         searchResults.appendChild(itemDiv);
                     });
                 }
             } else {
-                searchResults.innerHTML = '<p class="text-muted">Bir hata oluştu, lütfen tekrar deneyin.</p>';
+                searchResults.innerHTML = '<p class="text-muted">Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
             }
         } catch (error) {
             console.error('Arama hatası:', error);
-            searchResults.innerHTML = '<p class="text-muted">Bir hata oluştu, lütfen tekrar deneyin.</p>';
+            searchResults.innerHTML = '<p class="text-muted">Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
         }
     };
 

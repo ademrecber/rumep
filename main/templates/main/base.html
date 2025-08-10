@@ -1,11 +1,10 @@
-
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'tr' }}">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'ku' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block meta_description %}Rumep - Türkçe Sözlük ve Kültür Platformu{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Rumep - Ferhenga Kurdî û Platforma Çandê{% endblock %}">
     <meta name="theme-color" content="#ffffff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% csrf_token %}
@@ -120,31 +119,31 @@
                 </div>
                 <ul class="nav flex-column p-3">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Ana Sayfa" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Rûpela Sereke" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Popüler" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Populer" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Nirxandinên Populer" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Ferheng" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kişiler" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kes" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Şarkı Sözleri" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Gotinên Stranan" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Atasözü ve Deyimler" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Gotinên Pêşiyan û Îdîom" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profil" %}</a>
+                        <a class="nav-link" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profîl" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Navên Cihan" %}</a>
                     </li>
                 </ul>
             </div>
@@ -161,8 +160,8 @@
                             <input type="text" 
                                     name="q" 
                                     class="form-control" 
-                                    placeholder="{% trans 'Ara...' %}" 
-                                    aria-label="{% trans 'Arama' %}" 
+                                    placeholder="{% trans 'Lêbigere...' %}" 
+                                    aria-label="{% trans 'Lêgerîn' %}" 
                                     autocomplete="off"
                                     data-search-input>
                             <button class="search-btn" type="submit">
@@ -174,7 +173,7 @@
                 </div>
 
                 {% if request.resolver_match.url_name == 'post_detail' %}
-                <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri dön' %}">
+                <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Vegere' %}">
                     <i class="bi bi-arrow-left fs-3"></i>
                 </a>
                 {% endif %}
@@ -188,8 +187,8 @@
                         <input type="text" 
                                 name="q" 
                                 class="form-control" 
-                                placeholder="{% trans 'Ara...' %}" 
-                                aria-label="{% trans 'Arama' %}" 
+                                placeholder="{% trans 'Lêbigere...' %}" 
+                                aria-label="{% trans 'Lêgerîn' %}" 
                                 autocomplete="off"
                                 data-search-input>
                         <button class="search-btn" type="submit">
@@ -201,7 +200,7 @@
                 {% if request.GET.sekme == 'katkilar' %}
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h6 class="mb-3">{% trans "En Çok Katkı Sağlayanlar" %}</h6>
+                            <h6 class="mb-3">{% trans "Yên Herî Zêde Beşdarî Kirine" %}</h6>
                             <div class="liderler-container" style="max-height: 300px; overflow-y: auto;">
                                 {% for lider in liderler %}
                                     <div class="d-flex justify-content-between align-items-start mb-3">
@@ -256,7 +255,7 @@
     <script type="module">
         import { initLikes } from "{% static 'main/js/like.js' %}";
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('base.html scriptleri yüklendi');
+            console.log('scriptên base.html barkirî ne');
             initLikes();
         });
     </script>

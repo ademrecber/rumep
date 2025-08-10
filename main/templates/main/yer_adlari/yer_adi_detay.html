@@ -12,7 +12,7 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'yer_adlari_anasayfa' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-geo-alt me-1"></i>Yer Adları
+                                    <i class="bi bi-geo-alt me-1"></i>Navên Cihan
                                 </a>
                             </li>
                             {% if yer_adi.parent %}
@@ -37,7 +37,7 @@
                         </span>
                         {% if yer_adi.enlem and yer_adi.boylam %}
                             <span class="badge bg-success fs-6">
-                                <i class="bi bi-geo-alt me-1"></i>Koordinatlı
+                                <i class="bi bi-geo-alt me-1"></i>Bi Koordînat
                             </span>
                         {% endif %}
                     </div>
@@ -45,13 +45,13 @@
                     {% if is_owner %}
                         <div class="owner-actions d-flex gap-3">
                             <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-light btn-lg">
-                                <i class="bi bi-pencil me-2"></i>Düzenle
+                                <i class="bi bi-pencil me-2"></i>Biguherîne
                             </a>
                             <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" 
-                                  onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                  onsubmit="return confirm('Ma hûn ji vê navê cihê jêbirinê piştrast in?');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-light btn-lg">
-                                    <i class="bi bi-trash me-2"></i>Sil
+                                    <i class="bi bi-trash me-2"></i>Jêbirin
                                 </button>
                             </form>
                         </div>
@@ -63,11 +63,11 @@
                         <div class="row text-center">
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ detaylar.count }}</h3>
-                                <p class="mb-0 small">Ek Detay</p>
+                                <p class="mb-0 small">Kîtekîta Zêde</p>
                             </div>
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ yer_adi.children.count }}</h3>
-                                <p class="mb-0 small">Alt Yer</p>
+                                <p class="mb-0 small">Cihên Binî</p>
                             </div>
                         </div>
                     </div>
@@ -84,9 +84,9 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
-                            <i class="bi bi-info-circle me-2"></i>Açıklama
+                            <i class="bi bi-info-circle me-2"></i>Şirove
                         </h5>
-                        <p class="card-text lead">{{ yer_adi.detay|default:"Bu yer adı için henüz detaylı açıklama eklenmemiş." }}</p>
+                        <p class="card-text lead">{{ yer_adi.detay|default:"Ji bo vê navê cihê hêj şiroveyek kîtekît nehatiye zêdekirin." }}</p>
                     </div>
                 </div>
                 <!-- Harita -->
@@ -94,7 +94,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-white border-0 py-3">
                             <h5 class="mb-0">
-                                <i class="bi bi-map me-2"></i>Konum
+                                <i class="bi bi-map me-2"></i>Cih
                                 <small class="text-muted ms-2">({{ yer_adi.enlem }}, {{ yer_adi.boylam }})</small>
                             </h5>
                         </div>
@@ -108,7 +108,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white border-0 py-3">
                         <h5 class="mb-0">
-                            <i class="bi bi-journal-text me-2"></i>Ek Detaylar
+                            <i class="bi bi-journal-text me-2"></i>Kîtekîtên Zêde
                             <span class="badge bg-primary ms-2">{{ detaylar.count }}</span>
                         </h5>
                     </div>
@@ -130,7 +130,7 @@
                                             </a>
                                             <form method="post" action="{% url 'yer_adi_detay_sil' detay.id %}" 
                                                   class="d-inline" 
-                                                  onsubmit="return confirm('Bu detayı silmek istediğinizden emin misiniz?');">
+                                                  onsubmit="return confirm('Ma hûn ji vê kîtekîtê jêbirinê piştrast in?');">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-sm btn-outline-danger">
                                                     <i class="bi bi-trash"></i>
@@ -144,7 +144,7 @@
                         {% empty %}
                             <div class="text-center py-4">
                                 <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
-                                <p class="text-muted">Henüz ek detay eklenmemiş.</p>
+                                <p class="text-muted">Hêj kîtekîtên zêde nehatine zêdekirin.</p>
                             </div>
                         {% endfor %}
                     </div>
@@ -157,25 +157,25 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Bilgiler
+                            <i class="bi bi-info-circle me-2"></i>Agahî
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Kategori</strong>
+                            <strong class="text-muted d-block mb-1">Kategorî</strong>
                             <span class="badge bg-primary-subtle text-primary">
                                 {{ yer_adi.kategori|capfirst }}
                             </span>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Bölge</strong>
+                            <strong class="text-muted d-block mb-1">Herêm</strong>
                             <span>{{ yer_adi.bolge|capfirst }}</span>
                         </div>
                         
                         {% if yer_adi.parent %}
                             <div class="info-item mb-3">
-                                <strong class="text-muted d-block mb-1">Bağlı Olduğu Yer</strong>
+                                <strong class="text-muted d-block mb-1">Cihê Têkildar</strong>
                                 <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}" 
                                    class="text-decoration-none">
                                     {{ yer_adi.parent.ad }}
@@ -186,13 +186,13 @@
                         
                         {% if yer_adi.enlem and yer_adi.boylam %}
                             <div class="info-item mb-3">
-                                <strong class="text-muted d-block mb-1">Koordinatlar</strong>
+                                <strong class="text-muted d-block mb-1">Koordînat</strong>
                                 <code class="small">{{ yer_adi.enlem }}, {{ yer_adi.boylam }}</code>
                             </div>
                         {% endif %}
                         
                         <div class="info-item">
-                            <strong class="text-muted d-block mb-1">Eklenme Tarihi</strong>
+                            <strong class="text-muted d-block mb-1">Dîroka Zêdekirinê</strong>
                             <span>{{ yer_adi.eklenme_tarihi|date:"d F Y" }}</span>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-white border-0 py-3">
                             <h6 class="mb-0">
-                                <i class="bi bi-diagram-3 me-2"></i>Alt Yerler
+                                <i class="bi bi-diagram-3 me-2"></i>Cihên Binî
                                 <span class="badge bg-secondary ms-2">{{ yer_adi.children.count }}</span>
                             </h6>
                         </div>
@@ -232,7 +232,7 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-header bg-success text-white">
                             <h6 class="mb-0">
-                                <i class="bi bi-plus-circle me-2"></i>Yeni Detay Ekle
+                                <i class="bi bi-plus-circle me-2"></i>Kîtekîta Nû Lê Zêde Bike
                             </h6>
                         </div>
                         <div class="card-body">
@@ -242,7 +242,7 @@
                                     {{ form.as_p }}
                                 </div>
                                 <button type="submit" class="btn btn-success w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Detay Ekle
+                                    <i class="bi bi-plus-circle me-2"></i>Kîtekît Lê Zêde Bike
                                 </button>
                             </form>
                         </div>

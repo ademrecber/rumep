@@ -1,23 +1,23 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Albüm Ekle - {{ kisi.ad }}{% endblock %}
+{% block title %}Albûm Lê Zêde Bike - {{ kisi.ad }}{% endblock %}
 {% block content %}
 <div class="container twitter-container sarki-container">
-    <h3>{{ kisi.ad }} için Albüm Ekle</h3>
+    <h3>Ji bo {{ kisi.ad }} Albûm Lê Zêde Bike</h3>
     <div class="card mb-3">
         <div class="card-body">
             <form id="album-ekle-form" method="post" action="{% url 'sarki_album_ekle' kisi.id %}">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="id_ad" class="form-label">Albüm Adı</label>
+                    <label for="id_ad" class="form-label">Navê Albûmê</label>
                     {{ album_form.ad }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_yil" class="form-label">Albüm Yılı (İsteğe Bağlı)</label>
+                    <label for="id_yil" class="form-label">Sala Albûmê (Bijarte)</label>
                     {{ album_form.yil }}
                 </div>
                 <div id="album-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                <button type="submit" class="btn btn-primary rounded-pill">Albüm Ekle</button>
+                <button type="submit" class="btn btn-primary rounded-pill">Albûm Lê Zêde Bike</button>
             </form>
         </div>
     </div>

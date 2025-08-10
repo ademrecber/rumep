@@ -1,11 +1,11 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}{{ period|title }} En Popüler{% endblock %}
+{% block title %}{{ period|title }} Yên Herî Populer{% endblock %}
 {% block content %}
     <div class="container twitter-container" id="post-list">
         {% include 'main/popular/_tabs.html' with active_period=period %}
-        <h2 id="period-title">{{ period|title }} En Popüler</h2>
+        <h2 id="period-title">{{ period|title }} Yên Herî Populer</h2>
         <div class="post-container">
             {% for post in posts %}
                 <div class="card mb-2 tweet-card" id="post-{{ post.id }}">
@@ -22,31 +22,31 @@
                                 <ul class="dropdown-menu">
                                     {% if post.user == user %}
                                         <li>
-                                            <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
                                                 {% csrf_token %}
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">Jêbirin</button>
                                             </form>
                                         </li>
                                     {% endif %}
                                     <li>
-                                        <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Yer işaretinden kaldırmak{% else %}Yer işaretine eklemek{% endif %} istediğinizden emin misiniz?');" data-post-id="{{ post.id }}">
+                                        <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Ji nîşankirina cîhê derxistin{% else %}Têxistina nîşankirina cîhê{% endif %} hûn piştrast in?');" data-post-id="{{ post.id }}">
                                             {% csrf_token %}
                                             <button type="submit" class="dropdown-item">
-                                                {% if request.user in post.bookmarks.all %}Yer İşaretinden Kaldır{% else %}Yer İşaretine Ekle{% endif %}
+                                                {% if request.user in post.bookmarks.all %}Ji Nîşankirina Cîhê Derxistin{% else %}Têxistina Nîşankirina Cîhê{% endif %}
                                             </button>
                                         </form>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Bağlantıyı Kopyala</button>
+                                        <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Girêdanê Kopî Bike</button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <h5>{{ post.title|default:'Başlıksız' }}</h5>
+                        <h5>{{ post.title|default:'Bêsernav' }}</h5>
                         <div class="post-text">
                             {% if post.text|length > 500 or post.text|count_lines > 15 %}
                                 <div class="text-preview"><p>{{ post.text|render_emojis|truncatechars:100|linebreaks|safe }}</p></div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                                 <div class="full-text d-none"><p>{{ post.text|render_emojis|linebreaks|safe }}</p></div>
                             {% else %}
                                 <p>{{ post.text|render_emojis|linebreaks|safe }}</p>
@@ -59,8 +59,8 @@
                             <div class="social-embed">{{ post.embed_code|safe }}</div>
                         {% endif %}
                         <div class="post-meta text-muted mt-2">
-                            <span>Beğeni: {{ post.like_count }}</span> | 
-                            <span>Yorum: {{ post.comments.count }}</span> | 
+                            <span>Ecibandin: {{ post.like_count }}</span> | 
+                            <span>Şîrove: {{ post.comments.count }}</span> | 
                             <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
                             <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
                         </div>
@@ -82,26 +82,26 @@
                                 <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
                             </form>
                             <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            <span class="text-muted ms-2">Skor: {{ post.total_score|floatformat:1 }}</span>
+                            <span class="text-muted ms-2">Pûan: {{ post.total_score|floatformat:1 }}</span>
                         </div>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted p-3">Henüz popüler eleştiri yok.</p>
+                <p class="text-muted p-3">Hêj nirxandina populer tune.</p>
             {% endfor %}
         </div>
-        <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
-        <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Daha Fazla Yükle</button>
+        <div id="loading" class="text-center mt-3" style="display: none;">Tê barkirin...</div>
+        <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Zêdetir Barkirin</button>
         <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
         <!-- Toast Mesajı -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <strong class="me-auto">Bilgi</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <strong class="me-auto">Agahî</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
                 </div>
                 <div class="toast-body">
-                    Bağlantı kopyalandı!
+                    Girêdan hate kopîkirin!
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
             document.querySelectorAll('#popular-tabs .nav-link').forEach(tab => {
                 tab.addEventListener('click', function(e) {
                     e.preventDefault();
-                    console.log('Sekme değişimi:', this.dataset.period);
+                    console.log('Guherîna tabê:', this.dataset.period);
                     document.querySelectorAll('#popular-tabs .nav-link').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
 
@@ -151,7 +151,7 @@
 
                     document.querySelector('.post-container').innerHTML = '';
                     document.getElementById('period-title').textContent = 
-                        `${window.currentPeriod.charAt(0).toUpperCase() + window.currentPeriod.slice(1)} En Popüler`;
+                        `${window.currentPeriod.charAt(0).toUpperCase() + window.currentPeriod.slice(1)} Yên Herî Populer`;
 
                     loadMorePopularPosts();
                 });

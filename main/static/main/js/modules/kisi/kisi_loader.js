@@ -1,4 +1,3 @@
-
 import { getCsrfToken } from '../../like.js';
 
 export function initKisiForm() {
@@ -27,7 +26,7 @@ export function initKisiForm() {
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }]
                 ]
             },
-            placeholder: 'Biyografiyi buraya yazın...',
+            placeholder: 'Biyografiyê li vir binivîse...',
             readOnly: false
         });
         console.log('Quill düzenleyici başlatıldı, yazılabilir mod aktif.');
@@ -55,11 +54,11 @@ export function initKisiForm() {
                     errorToast.className = 'toast';
                     errorToast.innerHTML = `
                         <div class="toast-header">
-                            <strong class="me-auto">Hata</strong>
+                            <strong class="me-auto">Çewtî</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
-                            Lütfen önce bir metin yazın.
+                            Ji kerema xwe pêşî nivîsekê binivîse.
                         </div>
                     `;
                     document.querySelector('.toast-container').appendChild(errorToast);
@@ -90,7 +89,7 @@ export function initKisiForm() {
                     const data = await response.json();
                     console.log('Sunucu yanıtı:', data);
                     if (!response.ok) {
-                        throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Bilinmeyen hata'}`);
+                        throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Nenas çewtî'}`);
                     }
                     if (data.success) {
                         console.log('Metin işlendi:', data.enhanced_text);
@@ -103,7 +102,7 @@ export function initKisiForm() {
                         errorToast.className = 'toast';
                         errorToast.innerHTML = `
                             <div class="toast-header">
-                                <strong class="me-auto">Hata</strong>
+                                <strong class="me-auto">Çewtî</strong>
                                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                             </div>
                             <div class="toast-body">
@@ -119,11 +118,11 @@ export function initKisiForm() {
                     errorToast.className = 'toast';
                     errorToast.innerHTML = `
                         <div class="toast-header">
-                            <strong class="me-auto">Hata</strong>
+                            <strong class="me-auto">Çewtî</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
-                            Metin işleme başarısız: ${error.message}
+                            Pêvajoya nivîsê bi ser neket: ${error.message}
                         </div>
                     `;
                     document.querySelector('.toast-container').appendChild(errorToast);
@@ -156,7 +155,7 @@ export function initKisiForm() {
             if (data.success) {
                 form.reset();
                 console.log('Form sıfırlandı, alert gösteriliyor...');
-                alert('Kişi başarıyla eklendi!');
+                alert('Kes bi serkeftî hate zêdekirin!');
             } else {
                 console.warn('Form hataları:', data.errors);
                 errorDiv.classList.remove('d-none');
@@ -167,7 +166,7 @@ export function initKisiForm() {
         } catch (error) {
             console.error('Form gönderim hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Bir hata oluştu, lütfen tekrar deneyin.</p>';
+            errorDiv.innerHTML = '<p>Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
         }
     });
     console.log('Form submit dinleyicisi bağlandı.');
@@ -225,7 +224,7 @@ export function initKisiLoader() {
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">Sil</button>
+                                            <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">Jêbirin</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -248,7 +247,7 @@ export function initKisiLoader() {
         } catch (error) {
             console.error('Kişi yükleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Kişiler yüklenirken hata oluştu: ' + error.message;
+            errorDiv.textContent = 'Kes nehatin barkirin: ' + error.message;
         } finally {
             loading = false;
             loadingDiv.style.display = 'none';
@@ -257,7 +256,7 @@ export function initKisiLoader() {
 
     const handleDelete = async (e) => {
         const btn = e.target;
-        if (!confirm('Bu kişiyi silmek istediğinizden emin misiniz?')) return;
+        if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
         try {
             const response = await fetch(`/kisi/sil/${btn.dataset.kisiId}/`, {
                 method: 'POST',
@@ -269,15 +268,15 @@ export function initKisiLoader() {
             const data = await response.json();
             if (data.success) {
                 document.querySelector(`.kisi-item[data-kisi-id="${btn.dataset.kisiId}"]`).remove();
-                alert('Kişi başarıyla silindi!');
+                alert('Kes bi serkeftî hate jêbirin!');
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = data.error || 'Kişi silinirken hata oluştu.';
+                errorDiv.textContent = data.error || 'Di dema jêbirina kesê de çewtîyek çêbû.';
             }
         } catch (error) {
             console.error('Silme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     };
 

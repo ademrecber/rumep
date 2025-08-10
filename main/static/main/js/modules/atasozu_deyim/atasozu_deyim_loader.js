@@ -18,11 +18,11 @@ export function initAtasozuDeyimEkle() {
             const data = await response.json();
             if (data.success) {
                 form.reset();
-                alert('Atasözü veya deyim başarıyla eklendi!');
+                alert('Gotina pêşiyan an îdîom bi serkeftî hate zêdekirin!');
                 window.location.href = '/atasozu-deyim/';
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>Ekleme başarısız. Aşağıdaki hataları kontrol edin:</p><ul>';
+                errorDiv.innerHTML = '<p>Zêdekirin bi ser neket. Çewtiyên jêrîn kontrol bikin:</p><ul>';
                 for (const [field, errors] of Object.entries(data.errors)) {
                     errors.forEach(error => {
                         errorDiv.innerHTML += `<li>${field}: ${error}</li>`;
@@ -33,7 +33,7 @@ export function initAtasozuDeyimEkle() {
         } catch (error) {
             console.error('Ekleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Bir hata oluştu, lütfen tekrar deneyin.</p>';
+            errorDiv.innerHTML = '<p>Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
         }
     });
 }

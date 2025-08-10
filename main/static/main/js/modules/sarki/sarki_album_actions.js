@@ -11,11 +11,12 @@ export function initSarkiAlbumActions() {
 
         button.addEventListener('click', async (e) => {
             e.preventDefault(); // Formun varsayılan gönderimini engelle
-            if (!confirm('Bu albümü silmek istediğinizden emin misiniz?')) return;
+            if (!confirm('Ma hûn ji vê albûmê jêbirinê piştrast in?')) return;
             const albumId = form.getAttribute('data-album-id');
             try {
                 const response = await fetch(`/sarki/album-sil/${albumId}/`, {
                     method: 'POST',
+                    
                     headers: {
                         'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
                         'X-Requested-With': 'XMLHttpRequest'
@@ -25,11 +26,11 @@ export function initSarkiAlbumActions() {
                 if (data.success) {
                     location.reload(); // Sayfayı yenile
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Albüm silme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
@@ -68,11 +69,11 @@ export function initSarkiAlbumActions() {
                     const modal = new bootstrap.Modal(document.getElementById('albumDegistirModal'));
                     modal.show();
                 } else {
-                    alert(data.error || 'Albüm bilgileri alınamadı.');
+                    alert(data.error || 'Agahiyên albûmê nehatin wergirtin.');
                 }
             } catch (error) {
                 console.error('Albüm bilgileri alma hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
@@ -96,11 +97,11 @@ export function initSarkiAlbumActions() {
             if (data.success) {
                 location.reload(); // Sayfayı yenile
             } else {
-                alert(data.error || 'Albüm değiştirilemedi.');
+                alert(data.error || 'Albûm nehat guherandin.');
             }
         } catch (error) {
             console.error('Albüm değiştirme hatası:', error);
-            alert('Bir hata oluştu.');
+            alert('Çewtîyek çêbû.');
         }
     });
 }
