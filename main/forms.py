@@ -171,23 +171,14 @@ class AlbumForm(forms.ModelForm):
 class SarkiForm(forms.ModelForm):
     link = forms.URLField(required=False)
     tur = forms.ChoiceField(
-        choices=[
-            ('', 'Cure Hilbijêre'),
-            ('pop', 'Pop'),
-            ('klasik', 'Klasîk'),
-            ('arabesk', 'Erebesk'),
-            ('dengbej', 'Dengbêj'),
-            ('halk', 'Muzîka Gelêrî'),
-            ('serbest', 'Serbest')
-        ],
+        choices=[('', 'Cure Hilbijêre')] + Sarki._meta.get_field('tur').choices,
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
-
     )
 
     class Meta:
         model = Sarki
-        fields = ['album', 'ad', 'sozler', 'link', 'tur']  # 'tur' alanı eklendi
+        fields = ['album', 'ad', 'sozler', 'link', 'tur']
         widgets = {
             'album': forms.Select(attrs={'class': 'form-control', 'required': True}),
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê stranê binivîse', 'required': True}),
@@ -197,12 +188,10 @@ class SarkiForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(SarkiForm, self).__init__(*args, **kwargs)
-        # Albüm alanını dinamik olarak doldur
         self.fields['album'].queryset = Album.objects.all().order_by('ad')
-        # Eğer form bir Sarki nesnesi ile başlatılmışsa, albüm alanını o şarkının albümü ile doldur
         if 'instance' in kwargs and kwargs['instance']:
             self.fields['album'].initial = kwargs['instance'].album.id if kwargs['instance'].album else None
-    # Şarkı adı ve albüm alanlarının temizlenmesi
+
     def clean(self):
         cleaned_data = super().clean()
         ad = cleaned_data.get('ad')
@@ -211,13 +200,12 @@ class SarkiForm(forms.ModelForm):
         if not ad or not ad.strip():
             raise forms.ValidationError('Navê stranê mecbûrî ye.')
         if not album:
-                raise forms.ValidationError('Hilbijartina albûmê mecbûrî ye.')
+            raise forms.ValidationError('Hilbijartina albûmê mecbûrî ye.')
         if not sozler or not sozler.strip():
             raise forms.ValidationError('Gotinên stranê mecbûrî ne.')
-        # Albümde aynı isimde bir şarkı kontrolü
         if album:
             existing_songs = Sarki.objects.filter(album=album, ad__iexact=ad)
-            if self.instance and self.instance.pk:  # Eğer düzenleme yapılıyorsa, mevcut şarkıyı hariç tut
+            if self.instance and self.instance.pk:
                 existing_songs = existing_songs.exclude(pk=self.instance.pk)
             if existing_songs.exists():
                 raise forms.ValidationError('Di vê albûmê de jixwe stranek bi heman navî heye.')
@@ -228,59 +216,45 @@ class SarkiForm(forms.ModelForm):
         if not ad.strip():
             raise forms.ValidationError('Navê stranê mecbûrî ye.')
         return ad
+
     def clean_album(self):
         album = self.cleaned_data.get('album')
         if not album:
             raise forms.ValidationError('Hilbijartina albûmê mecbûrî ye.')
         return album
 
-
     def clean_sozler(self):
         sozler = self.cleaned_data.get('sozler')
         if not sozler.strip():
             raise forms.ValidationError('Gotinên stranê mecbûrî ne.')
-        # Eğer sözler çok uzun ise, 5000 karakter sınırı koy
         if len(sozler) > 5000:
             raise forms.ValidationError('Gotinên stranê nikarin ji 5000 tîpan dirêjtir bin.')
         return sozler
 
-    
 class SarkiDuzenleForm(forms.ModelForm):
     link = forms.URLField(required=False)
     tur = forms.ChoiceField(
-        choices=[
-            ('', 'Cure Hilbijêre'),
-            ('pop', 'Pop'),
-            ('klasik', 'Klasîk'),
-            ('arabesk', 'Erebesk'),
-            ('dengbej', 'Dengbêj'),
-            ('halk', 'Muzîka Gelêrî'),
-            ('serbest', 'Serbest')
-        ],
+        choices=[('', 'Cure Hilbijêre')] + Sarki._meta.get_field('tur').choices,
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     class Meta:
         model = Sarki
-        fields = ['ad', 'sozler', 'link', 'tur']  # album field is excluded for editing
+        fields = ['ad', 'sozler', 'link', 'tur']
         widgets = {
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê stranê binivîse', 'required': True}),
             'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Gotinên stranê binivîse', 'rows': 6, 'required': True}),
             'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Girêdana stranê (bijarte)'})
-            # album field is excluded for editing
         }
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
             raise forms.ValidationError('Navê stranê mecbûrî ye.')
-               
-
-        # Check for duplicate song names in the same album
         if self.instance and self.instance.album:
             existing_songs = Sarki.objects.filter(album=self.instance.album, ad__iexact=ad)
-            if self.instance.pk:  # If editing an existing song
+            if self.instance.pk:
                 existing_songs = existing_songs.exclude(pk=self.instance.pk)
             if existing_songs.exists():
                 raise forms.ValidationError('Di vê albûmê de jixwe stranek bi heman navî heye.')

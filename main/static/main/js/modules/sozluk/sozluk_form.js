@@ -22,16 +22,16 @@ export function initEditKelimeForm() {
             const data = await response.json();
             console.log('Kelime düzenleme yanıtı:', data);
             if (data.success) {
-                alert('Kelime başarıyla düzenlendi!');
+                alert('Peyv bi serkeftî hat sererastkirin!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
             }
         } catch (error) {
             console.error('Düzenleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     });
 }

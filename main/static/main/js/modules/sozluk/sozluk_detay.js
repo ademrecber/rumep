@@ -22,16 +22,16 @@ export function initDetayEkleForm() {
             const data = await response.json();
             console.log('Detay ekleme yanıtı:', data);
             if (data.success) {
-                alert('Detay başarıyla eklendi!');
+                alert('Berfirehî bi serkeftî hate zêdekirin!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
             }
         } catch (error) {
             console.error('Detay ekleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     });
 }
@@ -60,16 +60,16 @@ export function initEditDetayForm() {
             const data = await response.json();
             console.log('Detay düzenleme yanıtı:', data);
             if (data.success) {
-                alert('Detay başarıyla düzenlendi!');
+                alert('Berfirehî bi serkeftî hate guherandin!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
             }
         } catch (error) {
             console.error('Detay düzenleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     });
 }

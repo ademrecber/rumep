@@ -17,7 +17,7 @@ export function initCopyLink() {
                     })
                     .catch(err => {
                         console.error("Kopyalama hatası:", err);
-                        alert("Bağlantı kopyalanamadı!");
+                        alert("Girêdan nehat kopîkirin!");
                     });
             });
             btn.dataset.listenerAdded = 'true';
@@ -34,7 +34,7 @@ export function initCopyLink() {
                 const postId = btn.dataset.postId;
                 if (!critiqueId || !postId) {
                     console.error("Eksik veri: critiqueId veya postId bulunamadı", { critiqueId, postId });
-                    alert("Bağlantı kopyalanamadı!");
+                    alert("Girêdan nehat kopîkirin!");
                     return;
                 }
                 const critiqueUrl = `${window.location.origin}/post/${postId}/#critique-${critiqueId}`;
@@ -46,7 +46,7 @@ export function initCopyLink() {
                     })
                     .catch(err => {
                         console.error("Değerlendirme kopyalama hatası:", err);
-                        alert("Bağlantı kopyalanamadı!");
+                        alert("Girêdan nehat kopîkirin!");
                     });
             });
             btn.dataset.listenerAdded = 'true';

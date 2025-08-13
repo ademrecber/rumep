@@ -40,9 +40,9 @@ function initPost() {
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <form method="post" action="/delete-post/${data.post_id}/" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            <form method="post" action="/delete-post/${data.post_id}/" onsubmit="return confirm('Ma tu bawer î ku dixwazî vê postê jê bibî?');">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">Jê bibe</button>
                                             </form>
                                         </li>
                                     </ul>

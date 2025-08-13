@@ -17,11 +17,11 @@ export function initAiEnhance() {
                 errorToast.className = 'toast';
                 errorToast.innerHTML = `
                     <div class="toast-header">
-                        <strong class="me-auto">Hata</strong>
+                        <strong class="me-auto">Çewtîyek çêbû</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                        Lütfen önce bir metin yazın.
+                        Ji kerema xwe pêşî nivîsek binivîse..
                     </div>
                 `;
                 document.querySelector('.toast-container').appendChild(errorToast);
@@ -52,7 +52,7 @@ export function initAiEnhance() {
                 const data = await response.json();
                 console.log('Sunucu yanıtı:', data);
                 if (!response.ok) {
-                    throw new Error(`Sunucu hatası: ${response.status} - ${data.error || 'Bilinmeyen hata'}`);
+                    throw new Error(`Çewtiya nenas: ${response.status} - ${data.error || 'Çewtiya nenas'}`);
                 }
                 if (data.success) {
                     console.log('Metin işlendi:', data.enhanced_text);
@@ -64,7 +64,7 @@ export function initAiEnhance() {
                     errorToast.className = 'toast';
                     errorToast.innerHTML = `
                         <div class="toast-header">
-                            <strong class="me-auto">Hata</strong>
+                            <strong class="me-auto">Çewtîyek çêbû</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
@@ -80,11 +80,11 @@ export function initAiEnhance() {
                 errorToast.className = 'toast';
                 errorToast.innerHTML = `
                     <div class="toast-header">
-                        <strong class="me-auto">Hata</strong>
+                        <strong class="me-auto">Çewtîyek çêbû</strong>
                         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                        Metin işleme başarısız: ${error.message}
+                       Pêvajoya metnê bi ser neket: ${error.message}
                     </div>
                 `;
                 document.querySelector('.toast-container').appendChild(errorToast);

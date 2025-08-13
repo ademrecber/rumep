@@ -18,10 +18,10 @@ const createKelimeTemplate = ({ id, kelime, detay, is_owner }) => `
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <button class="dropdown-item edit-kelime-btn" data-kelime-id="${id}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                        <button class="dropdown-item edit-kelime-btn" data-kelime-id="${id}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Sererast bike</button>
                     </li>
                     <li>
-                        <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${id}">Sil</button>
+                        <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${id}">Jê bibe</button>
                     </li>
                 </ul>
             </div>
@@ -45,7 +45,7 @@ const throttle = (func, limit) => {
 const handleError = (error, errorDiv, customMessage = '') => {
     console.error(error);
     errorDiv.classList.remove('d-none');
-    errorDiv.innerHTML = `<p>${customMessage || 'Bir hata oluştu, lütfen tekrar deneyin.'}</p>`;
+    errorDiv.innerHTML = `<p>${customMessage || 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.'}</p>`;
 };
 
 // Form submission handler with optimized error handling
@@ -83,11 +83,11 @@ export async function initSozlukForm() {
                     const module = await import("./sozluk_search.js");
                     await module.initTumKelimeler(true);
                 } catch (importError) {
-                    handleError(importError, errorDiv, 'Kelime listesi yenilenemedi.');
+                    handleError(importError, errorDiv, 'Lîsteya peyvan nû nehat nûkirin.');
                 }
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>Kelime eklenirken bir hata oluştu, lütfen tekrar deneyin.</p>';
+                errorDiv.innerHTML = '<p>Di dema zêdekirina peyvê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
             }
         } catch (error) {
             handleError(error, errorDiv);
@@ -139,7 +139,7 @@ export function initSozlukLoader(harf) {
             renderKelimeler(data);
 
         } catch (error) {
-            handleError(error, elements.errorDiv, 'Kelimeler yüklenirken hata oluştu.');
+            handleError(error, elements.errorDiv, 'Di dema barkirina peyvan de çewtiyek çêbû.');
         } finally {
             state.loading = false;
             elements.loadingDiv.style.display = 'none';
@@ -169,7 +169,7 @@ export function initSozlukLoader(harf) {
             .then(module => module.bindKelimeActions())
             .catch(error => {
                 console.error('Action binding failed:', error);
-                handleError(error, elements.errorDiv, 'İşlem bağlama başarısız oldu.');
+                handleError(error, elements.errorDiv, 'Girêdana kiraran bi ser neket.');
             });
     };
 
