@@ -10,6 +10,8 @@ class ModernInteractions {
         this.setupModernHovers();
         this.setupLoadingStates();
         this.setupFormEnhancements();
+        this.setupMobileOptimizations();
+        this.setupTouchGestures();
     }
 
     // Intersection Observer for animations
@@ -154,6 +156,65 @@ class ModernInteractions {
         if (skeleton && skeleton.parentNode) {
             skeleton.parentNode.removeChild(skeleton);
         }
+    }
+
+    // Mobile-specific optimizations
+    setupMobileOptimizations() {
+        // Prevent zoom on input focus for iOS
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                if (input.style.fontSize === '' || parseFloat(input.style.fontSize) < 16) {
+                    input.style.fontSize = '16px';
+                }
+            });
+        }
+
+        // Improve touch targets
+        document.querySelectorAll('.btn, .nav-link, .dropdown-item').forEach(element => {
+            const rect = element.getBoundingClientRect();
+            if (rect.height < 44) {
+                element.style.minHeight = '44px';
+                element.style.display = 'flex';
+                element.style.alignItems = 'center';
+            }
+        });
+
+        // Mobile-friendly dropdowns
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.minWidth = '200px';
+                menu.style.maxWidth = '90vw';
+            });
+        }
+    }
+
+    // Touch gesture support
+    setupTouchGestures() {
+        let startX, startY;
+        
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            if (!startX || !startY) return;
+            
+            const endX = e.changedTouches[0].clientX;
+            const deltaX = endX - startX;
+            
+            // Swipe detection for sidebar
+            if (Math.abs(deltaX) > 50 && window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                if (deltaX > 0 && sidebar && !sidebar.classList.contains('active')) {
+                    sidebar.classList.add('active');
+                } else if (deltaX < 0 && sidebar && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            }
+            
+            startX = startY = null;
+        }, { passive: true });
     }
 }
 
