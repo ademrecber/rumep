@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildParentOptions() {
-        parentSelect.innerHTML = '<option value="">Seçiniz</option>';
+        parentSelect.innerHTML = '<option value="">Hilbijêre</option>';
         const iller = yerAdlari.filter(yer => yer.kategori === 'il').sort((a, b) => a.ad.localeCompare(b.ad));
         iller.forEach(il => {
             const option = document.createElement('option');
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ilceler.forEach(ilce => {
                 const option = document.createElement('option');
                 option.value = ilce.id;
-                option.text = `└ ${ilce.ad} (İlçe)`;
+                option.text = `└ ${ilce.ad} (Navçe)`;
                 parentSelect.appendChild(option);
 
                 const altYerler = yerAdlari.filter(yer => ['kasaba', 'belde', 'koy'].indexOf(yer.kategori) !== -1 && yer.parent_id === ilce.id).sort((a, b) => a.ad.localeCompare(b.ad));
