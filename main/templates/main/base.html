@@ -27,6 +27,7 @@
     <link href="{% static 'main/css/styles.css' %}" rel="stylesheet">
     <link href="{% static 'main/css/kisi.css' %}" rel="stylesheet">
     <link href="{% static 'main/css/modern.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/modern-2025.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'main/images/favicon.ico' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
@@ -110,7 +111,7 @@
     <div class="container-xxl">
         <div class="row">
             <!-- Sol Sidebar -->
-            <div class="col-12 col-md-2 col-lg-2 sidebar" id="sidebar">
+            <div class="col-12 col-md-2 col-lg-2 sidebar fade-in" id="sidebar">
                 <div class="d-flex justify-content-between align-items-center p-3">
                     <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
                     <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()">
@@ -119,7 +120,10 @@
                 </div>
                 <ul class="nav flex-column p-3">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Rûpela Sereke" %}</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                            <i class="bi bi-house"></i>
+                            <span>{% trans "Rûpela Sereke" %}</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Populer" %}</a>
@@ -269,5 +273,7 @@
     <script type="module" src="{% static 'main/js/performance.js' %}"></script>
     <!-- Arama işlevselliği için search.js -->
     <script type="module" src="{% static 'main/js/search.js' %}"></script>
+    <!-- Modern etkileşimler için modern-interactions.js -->
+    <script type="module" src="{% static 'main/js/modern-interactions.js' %}"></script>
 </body>
 </html>

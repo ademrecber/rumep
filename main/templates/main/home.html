@@ -1,7 +1,7 @@
 {% load static %}
 {% load post_tags %}
 <link href="{% static 'main/css/ai.css' %}" rel="stylesheet">
-<div class="card mb-3 tweet-form">
+<div class="card mb-3 tweet-form fade-in">
     <div class="card-body">
         <form method="post" id="postForm">
             {% csrf_token %}
@@ -22,7 +22,7 @@
             {% if form.non_field_errors %}<div class="alert alert-danger mt-2">{{ form.non_field_errors }}</div>{% endif %}
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <span class="text-muted" id="charCount">10000</span>
-                <button type="submit" class="btn btn-primary rounded-pill">Parvekirin</button>
+                <button type="submit" class="btn btn-primary">Parvekirin</button>
             </div>
         </form>
     </div>
@@ -71,7 +71,7 @@
 </div>
 <div class="post-container">
     {% for post in posts %}
-        <div class="card mb-2 tweet-card" id="post-{{ post.id }}">
+        <div class="card mb-2 tweet-card fade-in" id="post-{{ post.id }}">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <p class="mb-1">
