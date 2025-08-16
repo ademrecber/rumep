@@ -3,7 +3,7 @@ from main.models import (
     Post, Profile, Comment, PostVote, CommentVote, 
     Category, Critique, CritiqueVote, Kategori, Kisi,
     Album, Sarki, Sozluk, Atasozu, Deyim, Katki,
-    AIProviderConfig
+    AIProviderConfig, YerAdi, YerAdiDetay, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay
 )
 
 @admin.register(AIProviderConfig)
@@ -36,3 +36,10 @@ admin.site.register(Sozluk)
 admin.site.register(Atasozu)
 admin.site.register(Deyim)
 admin.site.register(Katki)
+admin.site.register(YerAdi)
+admin.site.register(YerAdiDetay)
+admin.site.register(SozlukDetay)
+admin.site.register(SarkiDetay)
+admin.site.register(AtasozuDeyimDetay)
+admin.site.register(KisiDetay)
+
