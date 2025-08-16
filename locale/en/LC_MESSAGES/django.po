@@ -45,6 +45,10 @@ msgstr "Song Lyrics"
 msgid "Atasözü ve Deyimler"
 msgstr "Proverbs and Idioms"
 
+#: .\main\templates\main\base.html:144
+msgid "Yer Adları"
+msgstr "Place names"
+
 #: .\main\templates\main\base.html:142
 msgid "Profil"
 msgstr "Profile"

@@ -45,7 +45,11 @@ msgstr "Gotinên Stranan"
 msgid "Atasözü ve Deyimler"
 msgstr "Pêşgotin û Îdîom"
 
-#: .\main\templates\main\base.html:142
+#: .\main\templates\main\base.html:144
+msgid "Yer Adları"
+msgstr "Nave Cîhan"
+
+#: .\main\templates\main\base.html:147
 msgid "Profil"
 msgstr "Profîl"
 
