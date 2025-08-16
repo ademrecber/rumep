@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 22:04+0300\n"
+"POT-Creation-Date: 2025-08-16 18:07+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -17,54 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\main\templates\main\base.html:121
+#: .\main\templates\main\base.html:123
 msgid "Ana Sayfa"
 msgstr "Serûpel"
 
-#: .\main\templates\main\base.html:124
+#: .\main\templates\main\base.html:126
 msgid "Popüler"
 msgstr "Populer"
 
-#: .\main\templates\main\base.html:127
+#: .\main\templates\main\base.html:129
 msgid "Popüler Değerlendirmeler"
 msgstr "Nirxandinên Populer"
 
-#: .\main\templates\main\base.html:130
+#: .\main\templates\main\base.html:132
 msgid "Sözlük"
 msgstr "Ferheng"
 
-#: .\main\templates\main\base.html:133
+#: .\main\templates\main\base.html:135
 msgid "Kişiler"
 msgstr "Kes"
 
-#: .\main\templates\main\base.html:136
+#: .\main\templates\main\base.html:138
 msgid "Şarkı Sözleri"
 msgstr "Gotinên Stranan"
 
-#: .\main\templates\main\base.html:139
+#: .\main\templates\main\base.html:141
 msgid "Atasözü ve Deyimler"
 msgstr "Pêşgotin û Îdîom"
 
 #: .\main\templates\main\base.html:144
 msgid "Yer Adları"
-msgstr "Nave Cîhan"
+msgstr "Navê Cîhan"
 
 #: .\main\templates\main\base.html:147
 msgid "Profil"
 msgstr "Profîl"
 
-#: .\main\templates\main\base.html:159 .\main\templates\main\base.html:186
+#: .\main\templates\main\base.html:165 .\main\templates\main\base.html:192
 msgid "Ara..."
 msgstr "Lêgerîn..."
 
-#: .\main\templates\main\base.html:160 .\main\templates\main\base.html:187
+#: .\main\templates\main\base.html:166 .\main\templates\main\base.html:193
 msgid "Arama"
 msgstr "Lêgerîn"
 
-#: .\main\templates\main\base.html:172
+#: .\main\templates\main\base.html:178
 msgid "Geri dön"
 msgstr "Vegere"
 
-#: .\main\templates\main\base.html:199
+#: .\main\templates\main\base.html:205
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Yên Herî Zêde Beşdarî Kirin"

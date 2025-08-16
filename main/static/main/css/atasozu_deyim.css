@@ -1,5 +1,5 @@
-/* KİŞİLER SAYFALARI */
-.kisi-container {
+/* ATASÖZÜ VE DEYİMLER SAYFALARI */
+.atasozu-deyim-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -8,7 +8,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.kisi-container h1 {
+.atasozu-deyim-container h1 {
     color: #1da1f2;
     font-size: 2rem;
     font-weight: 700;
@@ -16,7 +16,7 @@
     text-align: center;
 }
 
-.kisi-container h2 {
+.atasozu-deyim-container h2 {
     color: #333;
     font-size: 1.5rem;
     font-weight: 600;
@@ -25,8 +25,8 @@
     padding-bottom: 5px;
 }
 
-/* Kategori navigasyonu */
-.kategori-nav {
+/* Harf navigasyonu */
+.harf-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -37,82 +37,71 @@
     border-radius: 10px;
 }
 
-.kisi-container .btn-link {
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 8px 16px;
-    color: #1da1f2;
-    border: 2px solid #1da1f2;
-    border-radius: 20px;
-    background-color: #fff;
+.harf-nav .btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 600;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
-    margin: 3px;
+    border: 2px solid #1da1f2;
+    color: #1da1f2;
+    background-color: #fff;
 }
 
-.kisi-container .btn-link:hover {
+.harf-nav .btn:hover {
     background-color: #1da1f2;
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
-    text-decoration: none;
 }
 
-.kisi-container .btn-link.active {
-    font-weight: bold;
+.harf-nav .btn.active {
     background-color: #1da1f2;
     color: #fff;
 }
 
-/* Kişi öğeleri */
-.kisi-item {
+/* Liste öğeleri */
+.atasozu-item,
+.deyim-item {
     background-color: #fff;
     border: 1px solid #e1e8ed;
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 15px;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
-.kisi-container .kisi-item:hover {
+.atasozu-item:hover,
+.deyim-item:hover {
     background-color: #f8f9fa;
     border-color: #1da1f2;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.kisi-item h5 {
+.atasozu-item h5,
+.deyim-item h5 {
     color: #1da1f2;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-.kisi-item .kisi-bilgi {
+.atasozu-item p,
+.deyim-item p {
     color: #657786;
     font-size: 1rem;
-    margin-bottom: 8px;
+    line-height: 1.5;
+    margin-bottom: 0;
 }
 
-.kisi-item .kisi-bilgi strong {
-    color: #333;
-    font-weight: 600;
-}
-
-.kisi-item .kategori-badge {
-    background-color: #e8f5fd;
-    color: #1da1f2;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-top: 5px;
-}
-
-/* Kişi detay sayfası */
-.kisi-detay-container {
+/* Detay sayfası */
+.detay-container {
     max-width: 900px;
     margin: 0 auto;
     padding: 30px;
@@ -121,7 +110,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.kisi-detay-container .kisi-baslik {
+.detay-container .kelime-baslik {
     color: #1da1f2;
     font-size: 2.5rem;
     font-weight: 700;
@@ -131,7 +120,7 @@
     padding-bottom: 15px;
 }
 
-.kisi-detay-container .bilgi-kart {
+.detay-container .anlam {
     background-color: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
@@ -139,21 +128,22 @@
     margin-bottom: 20px;
 }
 
-.kisi-detay-container .bilgi-kart h4 {
+.detay-container .anlam h4 {
     color: #333;
     font-size: 1.3rem;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.kisi-detay-container .bilgi-kart .detay-icerik {
+.detay-container .anlam p {
     color: #657786;
     font-size: 1.1rem;
     line-height: 1.6;
+    margin-bottom: 0;
 }
 
 /* Form stilleri */
-.kisi-form-container {
+.form-container {
     max-width: 700px;
     margin: 0 auto;
     padding: 30px;
@@ -162,7 +152,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.kisi-form-container h2 {
+.form-container h2 {
     color: #1da1f2;
     font-size: 2rem;
     font-weight: 700;
@@ -170,18 +160,18 @@
     text-align: center;
 }
 
-.kisi-form-container .form-group {
+.form-container .form-group {
     margin-bottom: 20px;
 }
 
-.kisi-form-container label {
+.form-container label {
     color: #333;
     font-weight: 600;
     margin-bottom: 8px;
     display: block;
 }
 
-.kisi-form-container .form-control {
+.form-container .form-control {
     border: 2px solid #e1e8ed;
     border-radius: 8px;
     padding: 12px;
@@ -189,12 +179,12 @@
     transition: border-color 0.3s ease;
 }
 
-.kisi-form-container .form-control:focus {
+.form-container .form-control:focus {
     border-color: #1da1f2;
     box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
 }
 
-.kisi-form-container .btn-primary {
+.form-container .btn-primary {
     background-color: #1da1f2;
     border-color: #1da1f2;
     border-radius: 25px;
@@ -204,84 +194,29 @@
     transition: all 0.3s ease;
 }
 
-.kisi-form-container .btn-primary:hover {
+.form-container .btn-primary:hover {
     background-color: #1991db;
     border-color: #1991db;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
 }
 
-/* Select2 stilleri */
-.select2-container {
-    width: 100% !important;
-}
-
-.select2-container--default .select2-selection--single {
-    border: 2px solid #e1e8ed;
-    border-radius: 8px;
-    height: 45px;
-    padding: 8px 12px;
-}
-
-.select2-container--default .select2-selection--single:focus {
-    border-color: #1da1f2;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 28px;
-    color: #333;
-}
-
-/* Quill editor stilleri */
-.quill-editor {
-    width: 100%;
-    min-height: 200px;
-    border: 2px solid #e1e8ed;
-    border-radius: 8px;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
-}
-
-.quill-editor:focus-within {
-    border-color: #1da1f2;
-    box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
-}
-
-.quill-editor .ql-container {
-    min-height: 150px;
-    font-size: 1.1rem;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-.quill-editor .ql-toolbar {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom: 1px solid #e1e8ed;
-}
-
-.quill-editor .ql-editor {
-    padding: 15px;
-    outline: none;
-    cursor: text;
-    line-height: 1.6;
-}
-
 /* Responsive tasarım */
 @media (max-width: 768px) {
-    .kisi-container,
-    .kisi-detay-container,
-    .kisi-form-container {
+    .atasozu-deyim-container,
+    .detay-container,
+    .form-container {
         margin: 10px;
         padding: 15px;
     }
     
-    .kisi-container .btn-link {
-        font-size: 0.9rem;
-        padding: 6px 12px;
+    .harf-nav .btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
     }
     
-    .kisi-detay-container .kisi-baslik {
+    .detay-container .kelime-baslik {
         font-size: 2rem;
     }
 }

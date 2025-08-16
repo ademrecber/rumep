@@ -1,6 +1,6 @@
-/* ŞARKI SÖZLERİ SAYFALARI */
-.sarki-container {
-    max-width: 800px;
+/* YER ADLARI SAYFALARI */
+.yer-adlari-container {
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -8,7 +8,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.sarki-container h1 {
+.yer-adlari-container h1 {
     color: #1da1f2;
     font-size: 2rem;
     font-weight: 700;
@@ -16,7 +16,7 @@
     text-align: center;
 }
 
-.sarki-container h2 {
+.yer-adlari-container h2 {
     color: #333;
     font-size: 1.5rem;
     font-weight: 600;
@@ -25,8 +25,18 @@
     padding-bottom: 5px;
 }
 
-/* Harf navigasyonu */
-.harf-nav {
+/* Harita stilleri */
+#map {
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    border: 2px solid #e1e8ed;
+}
+
+/* Bölge seçimi butonları */
+.bolge-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -37,38 +47,32 @@
     border-radius: 10px;
 }
 
-.sarki-container .btn-outline-primary {
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px;
+.btn-group .btn {
+    margin: 3px;
+    border-radius: 20px;
+    padding: 8px 16px;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     border: 2px solid #1da1f2;
     color: #1da1f2;
     background-color: #fff;
 }
 
-.sarki-container .btn-outline-primary:hover {
+.btn-group .btn:hover {
     background-color: #1da1f2;
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
 }
 
-.sarki-container .btn-outline-primary.active {
+.btn-group .btn.active {
     background-color: #1da1f2;
     color: #fff;
 }
 
-/* Sanatçı, albüm ve şarkı öğeleri */
-.kisi-item,
-.album-item,
-.sarki-item {
+/* Yer adı öğeleri */
+.yer-adi-item {
     background-color: #fff;
     border: 1px solid #e1e8ed;
     border-radius: 10px;
@@ -78,41 +82,44 @@
     cursor: pointer;
 }
 
-.sarki-container .kisi-item:hover,
-.sarki-container .album-item:hover,
-.sarki-container .sarki-item:hover {
+.yer-adi-item:hover {
     background-color: #f8f9fa;
     border-color: #1da1f2;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.kisi-item h5,
-.album-item h5,
-.sarki-item h5 {
+.yer-adi-item h5 {
     color: #1da1f2;
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-.kisi-item .sanatci-bilgi,
-.album-item .album-bilgi,
-.sarki-item .sarki-bilgi {
+.yer-adi-item .yer-bilgi {
     color: #657786;
     font-size: 1rem;
     margin-bottom: 8px;
 }
 
-.kisi-item .sanatci-bilgi strong,
-.album-item .album-bilgi strong,
-.sarki-item .sarki-bilgi strong {
+.yer-adi-item .yer-bilgi strong {
     color: #333;
     font-weight: 600;
 }
 
-/* Şarkı detay sayfası */
-.sarki-detay-container {
+.yer-adi-item .koordinat {
+    background-color: #e8f5fd;
+    color: #1da1f2;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Detay sayfası */
+.yer-detay-container {
     max-width: 900px;
     margin: 0 auto;
     padding: 30px;
@@ -121,101 +128,101 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.sarki-detay-container .sarki-baslik {
+.yer-detay-container .yer-baslik {
     color: #1da1f2;
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     text-align: center;
-}
-
-.sarki-detay-container .sanatci-album {
-    color: #657786;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 30px;
     border-bottom: 3px solid #1da1f2;
     padding-bottom: 15px;
 }
 
-.sarki-detay-container .sozler-kart {
+.yer-detay-container .bilgi-kart {
     background-color: #f8f9fa;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 10px;
     border-left: 4px solid #1da1f2;
     margin-bottom: 20px;
-    font-family: 'Georgia', serif;
 }
 
-.sarki-detay-container .sozler-kart .sozler {
+.yer-detay-container .bilgi-kart h4 {
     color: #333;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    white-space: pre-line;
-    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-/* Liste stilleri */
-.sarki-container .kisi-list,
-.sarki-container .album-list,
-.sarki-container .sarki-list {
+.yer-detay-container .bilgi-satir {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.yer-detay-container .bilgi-satir:last-child {
+    border-bottom: none;
+}
+
+.yer-detay-container .bilgi-etiket {
+    color: #657786;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.yer-detay-container .bilgi-deger {
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Alt yerler listesi */
+.alt-yerler {
+    background-color: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 10px;
+    padding: 20px;
     margin-top: 20px;
 }
 
-.sarki-container .kisi-list h6,
-.sarki-container .album-list h6,
-.sarki-container .sarki-list h6 {
-    font-size: 1.3rem;
+.alt-yerler h4 {
+    color: #1da1f2;
+    font-size: 1.4rem;
     font-weight: 600;
-    color: #333;
     margin-bottom: 15px;
     border-bottom: 2px solid #1da1f2;
     padding-bottom: 8px;
 }
 
-.sarki-container .kisi-list ul,
-.sarki-container .album-list ul,
-.sarki-container .sarki-list ul {
-    padding-left: 0;
-    list-style: none;
-}
-
-.sarki-container .kisi-list li,
-.sarki-container .album-list li,
-.sarki-container .sarki-list li {
-    margin-bottom: 10px;
-    padding: 12px 15px;
+.alt-yer-item {
     background-color: #f8f9fa;
+    border: 1px solid #e1e8ed;
     border-radius: 8px;
-    border-left: 3px solid #1da1f2;
+    padding: 12px 15px;
+    margin-bottom: 10px;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.sarki-container .kisi-list li:hover,
-.sarki-container .album-list li:hover,
-.sarki-container .sarki-list li:hover {
+.alt-yer-item:hover {
     background-color: #e8f5fd;
-    transform: translateX(5px);
+    border-color: #1da1f2;
 }
 
-.sarki-container .kisi-list li a,
-.sarki-container .album-list li a,
-.sarki-container .sarki-list li a {
+.alt-yer-item a {
     color: #1da1f2;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1.1rem;
 }
 
-.sarki-container .kisi-list li a:hover,
-.sarki-container .album-list li a:hover,
-.sarki-container .sarki-list li a:hover {
+.alt-yer-item a:hover {
     color: #1991db;
     text-decoration: underline;
 }
 
 /* Form stilleri */
-.sarki-form-container {
+.yer-form-container {
     max-width: 700px;
     margin: 0 auto;
     padding: 30px;
@@ -224,7 +231,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.sarki-form-container h2 {
+.yer-form-container h2 {
     color: #1da1f2;
     font-size: 2rem;
     font-weight: 700;
@@ -232,18 +239,18 @@
     text-align: center;
 }
 
-.sarki-form-container .form-group {
+.yer-form-container .form-group {
     margin-bottom: 20px;
 }
 
-.sarki-form-container label {
+.yer-form-container label {
     color: #333;
     font-weight: 600;
     margin-bottom: 8px;
     display: block;
 }
 
-.sarki-form-container .form-control {
+.yer-form-container .form-control {
     border: 2px solid #e1e8ed;
     border-radius: 8px;
     padding: 12px;
@@ -251,12 +258,12 @@
     transition: border-color 0.3s ease;
 }
 
-.sarki-form-container .form-control:focus {
+.yer-form-container .form-control:focus {
     border-color: #1da1f2;
     box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
 }
 
-.sarki-container .btn-primary {
+.yer-form-container .btn-primary {
     background-color: #1da1f2;
     border-color: #1da1f2;
     border-radius: 25px;
@@ -266,7 +273,7 @@
     transition: all 0.3s ease;
 }
 
-.sarki-container .btn-primary:hover {
+.yer-form-container .btn-primary:hover {
     background-color: #1991db;
     border-color: #1991db;
     transform: translateY(-2px);
@@ -274,73 +281,65 @@
 }
 
 /* Kart stilleri */
-.sarki-container .card {
+.card {
     border-radius: 12px;
     border: 1px solid #e1e8ed;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
-.sarki-container .card:hover {
+.card:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
 
-.sarki-container .card-header {
+.card-header {
     background-color: #f8f9fa;
     border-bottom: 1px solid #e1e8ed;
     border-radius: 12px 12px 0 0 !important;
     padding: 15px 20px;
 }
 
-.sarki-container .card-body {
+.card-body {
     padding: 20px;
 }
 
-/* Albüm kartı */
-.album-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 20px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-.album-card h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.album-card p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    margin-bottom: 0;
+/* Uyarı mesajları */
+.alert-warning {
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #ffeaa7;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 12px 16px;
 }
 
 /* Responsive tasarım */
 @media (max-width: 768px) {
-    .sarki-container,
-    .sarki-detay-container,
-    .sarki-form-container {
+    .yer-adlari-container,
+    .yer-detay-container,
+    .yer-form-container {
         margin: 10px;
         padding: 15px;
     }
     
-    .sarki-container .btn-outline-primary {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
+    #map {
+        height: 300px;
     }
     
-    .sarki-detay-container .sarki-baslik {
+    .btn-group .btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    .yer-detay-container .yer-baslik {
         font-size: 2rem;
     }
     
-    .sarki-detay-container .sozler-kart .sozler {
-        font-size: 1.1rem;
+    .bilgi-satir {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
 }
 

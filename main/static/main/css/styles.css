@@ -16,4 +16,9 @@
     @import url('modern.css'); /* Modern design improvements */
     @import url('accessibility.css'); /* Accessibility improvements */
     @import url('ai.css'); /* AI widget styles */
+    @import url('sozluk.css'); /* Sözlük sayfası stilleri */
+    @import url('kisi.css'); /* Kişiler sayfası stilleri */
+    @import url('sarki.css'); /* Şarkı sözleri sayfası stilleri */
+    @import url('atasozu_deyim.css'); /* Atasözü ve deyimler sayfası stilleri */
+    @import url('yer_adlari_new.css'); /* Yer adları sayfası stilleri */
 
