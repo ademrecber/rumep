@@ -17,12 +17,31 @@
 }
 
 .yer-adlari-container h2 {
-    color: #333;
+    color: #0f1419;
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 15px;
     border-bottom: 2px solid #1da1f2;
     padding-bottom: 5px;
+}
+
+/* Metin renkleri düzeltmesi */
+.yer-adlari-container .card-title {
+    color: #0f1419 !important;
+}
+
+.yer-adlari-container .form-label {
+    color: #0f1419 !important;
+}
+
+.yer-adlari-container .text-muted {
+    color: #657786 !important;
+}
+
+.yer-adlari-container .btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
 }
 
 /* Harita stilleri */

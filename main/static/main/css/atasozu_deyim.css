@@ -17,12 +17,72 @@
 }
 
 .atasozu-deyim-container h2 {
-    color: #333;
+    color: #0f1419;
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 15px;
     border-bottom: 2px solid #1da1f2;
     padding-bottom: 5px;
+}
+
+/* Metin renkleri düzeltmesi */
+.item-title a {
+    color: #0f1419 !important;
+    text-decoration: none;
+}
+
+.item-title a:hover {
+    color: #1da1f2 !important;
+}
+
+.item-description {
+    color: #657786 !important;
+}
+
+.item-meta {
+    color: #657786 !important;
+}
+
+.letter-header h6 {
+    color: #0f1419 !important;
+}
+
+.card-title {
+    color: #0f1419 !important;
+}
+
+.form-label {
+    color: #0f1419 !important;
+}
+
+.nav-link {
+    color: #1da1f2 !important;
+}
+
+.nav-link.active {
+    color: #ffffff !important;
+    background-color: #1da1f2 !important;
+}
+
+.btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-primary {
+    border-color: #1da1f2 !important;
+    color: #1da1f2 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+.badge {
+    background-color: #1da1f2 !important;
+    color: #ffffff !important;
 }
 
 /* Harf navigasyonu */

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-16 18:07+0300\n"
+"POT-Creation-Date: 2025-06-05 22:04+0300\n"
 "PO-Revision-Date: 2025-06-05 22:05+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English <en@li.org>\n"
@@ -17,54 +17,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\main\templates\main\base.html:123
+#: .\main\templates\main\base.html:121
 msgid "Ana Sayfa"
 msgstr "Home"
 
-#: .\main\templates\main\base.html:126
+#: .\main\templates\main\base.html:124
 msgid "Popüler"
 msgstr "Popular"
 
-#: .\main\templates\main\base.html:129
+#: .\main\templates\main\base.html:127
 msgid "Popüler Değerlendirmeler"
 msgstr "Popular Reviews"
 
-#: .\main\templates\main\base.html:132
+#: .\main\templates\main\base.html:130
 msgid "Sözlük"
 msgstr "Dictionary"
 
-#: .\main\templates\main\base.html:135
+#: .\main\templates\main\base.html:133
 msgid "Kişiler"
 msgstr "People"
 
-#: .\main\templates\main\base.html:138
+#: .\main\templates\main\base.html:136
 msgid "Şarkı Sözleri"
 msgstr "Song Lyrics"
 
-#: .\main\templates\main\base.html:141
+#: .\main\templates\main\base.html:139
 msgid "Atasözü ve Deyimler"
 msgstr "Proverbs and Idioms"
 
-#: .\main\templates\main\base.html:144
-msgid "Yer Adları"
-msgstr "Place names"
-
-#: .\main\templates\main\base.html:147
+#: .\main\templates\main\base.html:142
 msgid "Profil"
 msgstr "Profile"
 
-#: .\main\templates\main\base.html:165 .\main\templates\main\base.html:192
+#: .\main\templates\main\base.html:159 .\main\templates\main\base.html:186
 msgid "Ara..."
 msgstr "Search..."
 
-#: .\main\templates\main\base.html:166 .\main\templates\main\base.html:193
+#: .\main\templates\main\base.html:160 .\main\templates\main\base.html:187
 msgid "Arama"
 msgstr "Search"
 
-#: .\main\templates\main\base.html:178
+#: .\main\templates\main\base.html:172
 msgid "Geri dön"
 msgstr "Go Back"
 
-#: .\main\templates\main\base.html:205
+#: .\main\templates\main\base.html:199
 msgid "En Çok Katkı Sağlayanlar"
 msgstr "Top Contributors"

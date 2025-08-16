@@ -2,16 +2,16 @@
 
 :root {
   /* Color palette */
-  --primary-color: #3b82f6;
-  --primary-hover: #2563eb;
-  --background-color: #f9fafb;
+  --primary-color: #1da1f2;
+  --primary-hover: #1991db;
+  --background-color: #f5f8fa;
   --card-bg: #ffffff;
-  --text-color: #1f2937;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
-  --success-color: #10b981;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
+  --text-color: #0f1419;
+  --text-muted: #657786;
+  --border-color: #e1e8ed;
+  --success-color: #17bf63;
+  --danger-color: #e0245e;
+  --warning-color: #ffad1f;
   
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -446,13 +446,59 @@ a:focus, button:focus, input:focus, textarea:focus {
   outline-offset: 2px;
 }
 
+/* Hero section styles */
+.hero-section {
+  background: linear-gradient(135deg, #1da1f2 0%, #1991db 100%);
+  color: #ffffff !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.hero-section * {
+  position: relative;
+  z-index: 2;
+  color: #ffffff !important;
+}
+
+.hero-section .btn-light {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #1da1f2 !important;
+}
+
+.hero-section .btn-outline-light {
+  border-color: #ffffff;
+  color: #ffffff !important;
+}
+
+.hero-section .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #1da1f2 !important;
+}
+
+.stats-card {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 /* Dark mode support */
 html.dark-theme {
-  --background-color: #111827;
-  --card-bg: #1f2937;
-  --text-color: #f9fafb;
-  --text-muted: #9ca3af;
-  --border-color: #374151;
+  --background-color: #15202b;
+  --card-bg: #192734;
+  --text-color: #ffffff;
+  --text-muted: #8899a6;
+  --border-color: #38444d;
 }
 
 html.dark-theme body {
