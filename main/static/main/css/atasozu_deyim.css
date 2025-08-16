@@ -9,7 +9,10 @@
 }
 
 .atasozu-deyim-container h1 {
-    color: #1da1f2;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 20px;
@@ -107,9 +110,11 @@
     font-weight: 600;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    border: 2px solid #1da1f2;
-    color: #1da1f2;
-    background-color: #fff;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #667eea, #764ba2) border-box;
+    color: #667eea;
+    position: relative;
+    overflow: hidden;
 }
 
 .harf-nav .btn:hover {
@@ -138,10 +143,12 @@
 
 .atasozu-item:hover,
 .deyim-item:hover {
-    background-color: #f8f9fa;
-    border-color: #1da1f2;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(240, 147, 251, 0.05) 100%);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 0 0 1px rgba(102, 126, 234, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
 }
 
 .atasozu-item h5,

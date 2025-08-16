@@ -2,8 +2,13 @@
 
 :root {
   /* Color palette */
-  --primary-color: #1da1f2;
-  --primary-hover: #1991db;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --primary-color: #667eea;
+  --primary-hover: #5a67d8;
+  --secondary-color: #f093fb;
+  --accent-color: #4facfe;
   --background-color: #f5f8fa;
   --card-bg: #ffffff;
   --text-color: #0f1419;
@@ -120,18 +125,42 @@ body {
 
 /* Button styles */
 .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background: var(--primary-gradient);
+  border: none;
   border-radius: var(--border-radius-full);
   padding: var(--spacing-sm) var(--spacing-lg);
   font-weight: 500;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--secondary-gradient);
+  transition: left 0.5s ease;
+  z-index: 0;
+}
+
+.btn-primary:hover::before {
+  left: 0;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-primary:active {
@@ -448,10 +477,28 @@ a:focus, button:focus, input:focus, textarea:focus {
 
 /* Hero section styles */
 .hero-section {
-  background: linear-gradient(135deg, #1da1f2 0%, #1991db 100%);
+  background: var(--primary-gradient);
   color: #ffffff !important;
   position: relative;
   overflow: hidden;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--secondary-gradient);
+  opacity: 0.3;
+  z-index: 1;
+  animation: gradientShift 8s ease-in-out infinite alternate;
+}
+
+@keyframes gradientShift {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.1; }
 }
 
 .hero-section::before {
