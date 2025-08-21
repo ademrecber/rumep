@@ -195,6 +195,7 @@ CONTENT_SECURITY_POLICY = {
             "https://code.jquery.com",
             "https://www.google-analytics.com",
             "https://maps.googleapis.com",
+            "https://www.googletagmanager.com",
         ],
         'style-src': [
             "'self'",
