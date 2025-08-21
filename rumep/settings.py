@@ -198,6 +198,13 @@ CONTENT_SECURITY_POLICY = {
             "https://maps.googleapis.com",
             "https://www.googletagmanager.com",
         ],
+        'script-src-elem': [
+            "'self'",
+            "'unsafe-inline'",
+            "https://cdn.jsdelivr.net",
+            "https://code.jquery.com",
+            "https://www.googletagmanager.com",
+        ],
         'style-src': [
             "'self'",
             "'unsafe-inline'",
