@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'csp.middleware.CSPMiddleware',  # Geçici olarak devre dışı
+    'csp.middleware.CSPMiddleware',  # django-csp middleware'ini ekleyin
     'main.middleware.SecurityMiddleware',
     'main.middleware.SocialAuthExceptionMiddleware',
     'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
@@ -70,7 +70,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.google_analytics',
             ],
         },
     },
@@ -182,18 +181,44 @@ KATKI_PUANLARI = {
 HUMANIZE_TIME_FORMAT = 'd M Y H:i'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', None)
-GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', 'G-6JW7ZSY31H')
+GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
+GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', '')
 
-# CSP ayarları geçici olarak devre dışı
-# CONTENT_SECURITY_POLICY = {
-#     'DIRECTIVES': {
-#         'script-src': (
-#             "'self'",
-#             "'unsafe-inline'",
-#             "'unsafe-eval'",
-#             'https://cdn.jsdelivr.net',
-#             'https://www.googletagmanager.com'
-#         )
-#     }
-# }
+CONTENT_SECURITY_POLICY = {
+    'DIRECTIVES': {
+        'script-src': [
+            "'self'",
+            "'unsafe-inline'",
+            "'unsafe-eval'",
+            "https://cdn.jsdelivr.net",
+            "https://platform.twitter.com",
+            "https://www.instagram.com",
+            "https://code.jquery.com",
+            "https://www.google-analytics.com",
+            "https://maps.googleapis.com",
+            "https://www.googletagmanager.com",
+        ],
+        'style-src': [
+            "'self'",
+            "'unsafe-inline'",
+            "https://cdn.jsdelivr.net",
+            "https://fonts.googleapis.com",
+            "https://www.googletagmanager.com",
+        ],
+        'font-src': [
+            "'self'",
+            "https://fonts.gstatic.com",
+        ],
+        'img-src': [
+            "'self'",
+            "data:",
+        ],
+        'connect-src': [
+            "'self'",
+            "https://www.google-analytics.com",
+            "https://maps.googleapis.com",
+            "https://*.googleapis.com",
+            "https://www.googletagmanager.com",
+        ],
+    }
+}
