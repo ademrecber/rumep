@@ -216,6 +216,7 @@ CONTENT_SECURITY_POLICY = {
             "https://www.google-analytics.com",
             "https://maps.googleapis.com",
             "https://*.googleapis.com",
+            "https://www.googletagmanager.com",
         ],
     }
 }
