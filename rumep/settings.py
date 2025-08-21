@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.google_analytics',
             ],
         },
     },
@@ -182,7 +183,7 @@ HUMANIZE_TIME_FORMAT = 'd M Y H:i'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', None)
-GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', '')
+GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', 'G-6JW7ZSY31H')
 
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
