@@ -184,41 +184,38 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
 GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', 'G-6JW7ZSY31H')
 
-CONTENT_SECURITY_POLICY = {
-    'DIRECTIVES': {
-        'script-src': [
-            "'self'",
-            "'unsafe-inline'",
-            "'unsafe-eval'",
-            "https://cdn.jsdelivr.net",
-            "https://platform.twitter.com",
-            "https://www.instagram.com",
-            "https://code.jquery.com",
-            "https://www.google-analytics.com",
-            "https://maps.googleapis.com",
-            "https://www.googletagmanager.com",
-        ],
-        'style-src': [
-            "'self'",
-            "'unsafe-inline'",
-            "https://cdn.jsdelivr.net",
-            "https://fonts.googleapis.com",
-            
-        ],
-        'font-src': [
-            "'self'",
-            "https://fonts.gstatic.com",
-        ],
-        'img-src': [
-            "'self'",
-            "data:",
-        ],
-        'connect-src': [
-            "'self'",
-            "https://www.google-analytics.com",
-            "https://maps.googleapis.com",
-            "https://*.googleapis.com",
-            "https://www.googletagmanager.com",
-        ],
-    }
-}
+# CSP Settings
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    "https://cdn.jsdelivr.net",
+    "https://platform.twitter.com",
+    "https://www.instagram.com",
+    "https://code.jquery.com",
+    "https://www.google-analytics.com",
+    "https://maps.googleapis.com",
+    "https://www.googletagmanager.com",
+)
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "https://cdn.jsdelivr.net",
+    "https://fonts.googleapis.com",
+)
+CSP_FONT_SRC = (
+    "'self'",
+    "https://fonts.gstatic.com",
+)
+CSP_IMG_SRC = (
+    "'self'",
+    "data:",
+)
+CSP_CONNECT_SRC = (
+    "'self'",
+    "https://www.google-analytics.com",
+    "https://maps.googleapis.com",
+    "https://*.googleapis.com",
+    "https://www.googletagmanager.com",
+)
