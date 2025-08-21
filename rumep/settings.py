@@ -182,7 +182,7 @@ HUMANIZE_TIME_FORMAT = 'd M Y H:i'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
-GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', '')
+GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', 'G-6JW7ZSY31H')
 
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
@@ -203,7 +203,7 @@ CONTENT_SECURITY_POLICY = {
             "'unsafe-inline'",
             "https://cdn.jsdelivr.net",
             "https://fonts.googleapis.com",
-            "https://www.googletagmanager.com",
+            
         ],
         'font-src': [
             "'self'",

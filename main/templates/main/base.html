@@ -4,6 +4,7 @@
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'tr' }}">
 <head>
     <!-- Google tag (gtag.js) --> 
+    {% if GOOGLE_TAG_MANAGER_ID %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_TAG_MANAGER_ID }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -11,12 +12,14 @@
         gtag('js', new Date());
         gtag('config', '{{ GOOGLE_TAG_MANAGER_ID }}');
     </script>
+    {% endif %}
   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block meta_description %}Rumep - Türkçe Sözlük ve Kültür Platformu{% endblock %}">
     <meta name="theme-color" content="#ffffff">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://platform.twitter.com https://www.instagram.com https://code.jquery.com https://www.google-analytics.com https://www.googletagmanager.com https://maps.googleapis.com; connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://www.googletagmanager.com;">
     {% csrf_token %}
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Rumep - {% block title %}{% endblock %}</title>
