@@ -42,7 +42,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <h5>{{ post.title|default:'Bêsernav' }}</h5>
+                        <h5>{{ post.title|default:'' }}</h5>
                         <div class="post-text">
                             {% if post.text|length > 500 or post.text|count_lines > 15 %}
                                 <div class="text-preview"><p>{{ post.text|render_emojis|truncatechars:100|linebreaks|safe }}</p></div>

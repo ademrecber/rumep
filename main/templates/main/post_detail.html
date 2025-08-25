@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}{{ post.title|default:'Bêsernav' }}{% endblock %}
+{% block title %}{{ post.title|default:'' }}{% endblock %}
 {% block content %}
     <meta name="critique-url" content="{% url 'list_critiques' %}?post_id={{ post.id }}">
     <div class="container twitter-container">

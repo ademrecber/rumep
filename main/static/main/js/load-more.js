@@ -76,7 +76,7 @@ async function loadMorePosts() {
                                 </ul>
                             </div>
                         </div>
-                        <h5>${post.title || 'Bêsernav'}</h5>
+                        <h5>${post.title || ''}</h5>
                         <div class="post-text">
                             ${post.text.length > 400 || totalLines > 15 ? `
                                 <div class="text-preview">${post.text.substring(0, 100).replace(/\n/g, '<br>')}</div>

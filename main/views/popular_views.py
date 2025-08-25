@@ -123,7 +123,7 @@ def load_more_popular(request):
         'nickname': bleach.clean(post.user.profile.nickname, tags=['p', 'br'], strip=True),
         'username': bleach.clean(post.user.profile.username, tags=['p', 'br'], strip=True),
         'short_id': post.short_id,
-        'title': post.title if post.title else 'Başlıksız',
+        'title': post.title if post.title else '',
         'text': render_emojis(bleach.clean(post.text, tags=['p', 'br', 'img'], attributes={'img': ['src', 'alt']}, strip=False)),
         'link': post.link,
         'embed_code': post.embed_code or '',

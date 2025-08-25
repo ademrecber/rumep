@@ -92,7 +92,7 @@ async function loadMorePopularPosts() {
                                 </ul>
                             </div>
                         </div>
-                        <h5>${post.title || 'Bêsernav'}</h5>
+                        <h5>${post.title || ''}</h5>
                         <div class="post-text">
                             ${processedText.length > 400 || totalLines > 15 ? `
                                 <div class="text-preview"><p>${processedText.substring(0, 100)}</p></div>
