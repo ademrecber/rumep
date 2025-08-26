@@ -72,9 +72,9 @@
                             <div class="bg-light rounded-3 p-3 mb-3">
                                 <i class="bi bi-link-45deg text-primary me-2"></i>
                        
-                    <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
+                    <!--  <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
         
-                              <!--<a href="{{ post.link }}" target="_blank" class="text-decoration-none fw-medium">{{ post.link }}</a>-->
+                              <a href="{{ post.link }}" target="_blank" class="text-decoration-none fw-medium">{{ post.link }}</a>-->
                             </div>
                         {% endif %}
                         {% if post.embed_code %}
