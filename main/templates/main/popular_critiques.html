@@ -80,7 +80,7 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="dropdown-item copy-critique-link-btn" data-critique-id="{{ critique.short_id }}" data-post-id="{{ critique.post_id }}">
+                                                    <button class="dropdown-item copy-critique-link-btn" data-post-short-id="{{ critique.post.short_id }}">
                                                         <i class="bi bi-link-45deg me-2"></i>Girêdanê Kopî Bike
                                                     </button>
                                                 </li>
@@ -93,7 +93,7 @@
                                             </button>
                                             <ul class="dropdown-menu shadow border-0 rounded-3">
                                                 <li>
-                                                    <button class="dropdown-item copy-critique-link-btn" data-critique-id="{{ critique.short_id }}" data-post-id="{{ critique.post_id }}">
+                                                    <button class="dropdown-item copy-critique-link-btn" data-post-short-id="{{ critique.post.short_id }}">
                                                         <i class="bi bi-link-45deg me-2"></i>Girêdanê Kopî Bike
                                                     </button>
                                                 </li>
@@ -261,7 +261,7 @@
                         </button>
                     </form>
                     
-                    <button class="btn btn-outline-primary rounded-pill copy-critique-link-btn mt-3" id="copy-critique-link">
+                    <button class="btn btn-outline-primary rounded-pill copy-critique-link-btn mt-3" id="copy-critique-link" data-post-short-id="">
                         <i class="bi bi-link-45deg me-1"></i>Girêdanê Kopî Bike
                     </button>
                 </div>
