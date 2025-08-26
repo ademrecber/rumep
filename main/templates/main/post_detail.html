@@ -7,33 +7,19 @@
     <div class="container-fluid px-3 px-md-5">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                <!-- Modern Post Card -->
-                <div class="bg-white rounded-4 shadow-sm border-0 mb-4 p-4 fade-in">
-                    <!-- Post Header -->
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div class="d-flex align-items-center">
-                            <div class="bg-gradient bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
-                                 style="width: 50px; height: 50px;">
-                                <span class="text-white fw-bold fs-5">{{ post.user.profile.nickname|first|upper }}</span>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold text-dark">{{ post.user.profile.nickname }}</h6>
-                                <div class="d-flex align-items-center text-muted small">
-                                    <a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none me-2">@{{ post.user.profile.username }}</a>
-                                    <span class="me-2">·</span>
-                                    <span class="me-2">{{ post.short_id }}</span>
-                                    <span class="me-2">·</span>
-                                    <span>{{ post.created_at|timesince }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Action Dropdown -->
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu shadow border-0 rounded-3">
+                <!-- Post Card -->
+                <div class="card mb-3 fade-in">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <p class="mb-1">
+                                <strong>{{ post.user.profile.nickname }}</strong> 
+                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
+                            </p>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu">
                                 {% if post.user == user %}
                                     <li>
                                         <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
@@ -58,88 +44,49 @@
                                         <i class="bi bi-link-45deg me-2"></i>Girêdanê Kopî Bike
                                     </button>
                                 </li>
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Post Content -->
-                    <div class="mb-4">
-                        <h4 class="fw-bold text-dark mb-3">{{ post.title|default:'Bêsernav' }}</h4>
+                        <h5>{{ post.title|default:'' }}</h5>
                         <div class="post-text">
-                            <p class="lh-base mb-3">{{ post.text|render_emojis|safe|linebreaks }}</p>
+                            <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
                         </div>
                         {% if post.link %}
-                            <div class="bg-light rounded-3 p-3 mb-3">
-                                <i class="bi bi-link-45deg text-primary me-2"></i>
-                       
-                    <!--  <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
-        
-                              <a href="{{ post.link }}" target="_blank" class="text-decoration-none fw-medium">{{ post.link }}</a>-->
-                            </div>
+                            <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
                         {% endif %}
                         {% if post.embed_code %}
-                            <div class="social-embed rounded-3 overflow-hidden mb-3">{{ post.embed_code|safe }}</div>
+                            <div class="social-embed">{{ post.embed_code|safe }}</div>
                         {% endif %}
-                    </div>
-                    
-                    <!-- Post Stats -->
-                    <div class="border-top pt-3 mb-3">
-                        <div class="row text-center">
-                            <div class="col-4">
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-heart text-danger me-1"></i>
-                                    <span class="fw-medium">{{ like_count }}</span>
-                                    <small class="text-muted ms-1">Ecibandin</small>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-chat text-primary me-1"></i>
-                                    <span class="fw-medium">{{ comment_count }}</span>
-                                    <small class="text-muted ms-1">Şîrove</small>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-eye text-info me-1"></i>
-                                    <span class="fw-medium">{{ post.views }}</span>
-                                    <small class="text-muted ms-1">Dîtin</small>
-                                </div>
-                            </div>
+                        <div class="post-meta text-muted mt-2">
+                            <span>Ecibandin: {{ like_count }}</span> | 
+                            <span>Şîrove: {{ comment_count }}</span> | 
+                            <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
+                            <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
                         </div>
-                    </div>
-                    
-                    <!-- Action Buttons -->
-                    <div class="d-flex justify-content-around border-top pt-3">
-                        <form method="post" action="{% url 'like_post' post.id %}" class="like-form">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-danger rounded-pill px-4 like-btn {% if request.user in post.likes.all %}btn-danger text-white{% endif %}" data-post-id="{{ post.id }}">
-                                <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %} me-1"></i>
-                                Ecibandin
-                            </button>
-                        </form>
-                        
-                        <div class="d-flex gap-2">
-                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form" data-post-id="{{ post.id }}">
+                        <div class="post-actions mt-2">
+                            <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
                                 {% csrf_token %}
-                                <input type="hidden" name="vote" value="up">
-                                <button type="submit" class="btn btn-outline-success rounded-pill px-3 upvote-btn" data-vote-type="up">
-                                    <i class="bi bi-arrow-up me-1"></i>{{ post.upvotes }}
+                                <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
+                                    <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
                                 </button>
                             </form>
-                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form" data-post-id="{{ post.id }}">
+                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="vote" value="up">
+                                <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
+                            </form>
+                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
                                 {% csrf_token %}
                                 <input type="hidden" name="vote" value="down">
-                                <button type="submit" class="btn btn-outline-danger rounded-pill px-3 downvote-btn" data-vote-type="down">
-                                    <i class="bi bi-arrow-down me-1"></i>{{ post.downvotes }}
-                                </button>
+                                <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
                 <!-- Mobile Critique Section -->
-                <div class="bg-white rounded-4 shadow-sm border-0 mb-4 p-4 d-md-none">
+                <div class="card mb-3 d-md-none">
+                    <div class="card-body"
                     <button class="btn btn-primary rounded-pill w-100 mb-3" id="mobile-toggle-critique-btn">
                         <i class="bi bi-star me-2"></i>Vê nivîsê nirxandin bike
                     </button>
@@ -152,8 +99,9 @@
                     </div>
                 </div>
 
-                <!-- Modern Critique Form -->
-                <div class="bg-white rounded-4 shadow-sm border-0 mb-4 p-4 slide-up" id="critique-section" style="display: none;">
+                <!-- Critique Form -->
+                <div class="card mb-3 slide-up" id="critique-section" style="display: none;">
+                    <div class="card-body"
                     <div class="d-flex align-items-center mb-3">
                         <div class="bg-warning bg-gradient rounded-3 p-2 me-3">
                             <i class="bi bi-star-fill text-white"></i>
@@ -303,8 +251,9 @@
             </div>
         </div>
 
-                <!-- Modern Comment Form -->
-                <div class="bg-white rounded-4 shadow-sm border-0 mb-4 p-4 fade-in">
+                <!-- Comment Form -->
+                <div class="card mb-3 fade-in">
+                    <div class="card-body"
                     <div class="d-flex align-items-center mb-3">
                         <div class="bg-info bg-gradient rounded-3 p-2 me-3">
                             <i class="bi bi-chat-dots text-white"></i>
