@@ -56,7 +56,7 @@
             left: 0;
         }
         .main-content {
-            padding: 20px 20px 80px; /* Üst boşluk azaltıldı, alt bar için padding-bottom korundu */
+            padding: 20px 20px 80px; /* Üst boşluk korundu, alt bar için padding-bottom */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -80,7 +80,7 @@
                 position: fixed;
             }
             .main-content {
-                padding: 20px 20px 80px; /* Üst boşluk masaüstü için de azaltıldı */
+                padding: 20px 20px 80px; /* Üst boşluk masaüstü için korundu */
             }
             .right-sidebar {
                 right: 0;
@@ -98,10 +98,10 @@
                 display: none;
             }
             .main-content {
-                padding: 20px 15px 80px; /* Üst boşluk mobil için azaltıldı */
+                padding: 20px 15px 80px; /* Üst boşluk mobil için korundu */
             }
             .mobile-header {
-                height: 40px; /* Header yüksekliği azaltıldı */
+                height: 40px; /* Header yüksekliği korundu */
                 z-index: 1001;
             }
         }
@@ -109,26 +109,35 @@
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
-            width: 100%;
+            left: 300px; /* Sol sidebar genişliği kadar kaydır */
+            right: 300px; /* Sağ sidebar genişliği kadar kaydır */
+            width: calc(100% - 600px); /* Sidebar genişliklerini çıkar */
             background-color: #fff;
             border-top: 1px solid #e1e8ed;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between; /* İkonlar eşit aralıklarla dizilsin */
+            gap: 10px; /* İkonlar arasında boşluk */
             align-items: center;
-            padding: 10px 0;
-            z-index: 1000;
+            padding: 5px 0; /* Yükseklik azaltıldı */
+            z-index: 1052; /* Sidebar’ların üstünde */
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
         .bottom-nav a {
             color: #333;
             text-decoration: none;
-            font-size: 1.5rem;
-            padding: 8px;
+            font-size: 1.2rem; /* İkon boyutu küçültüldü */
+            padding: 6px; /* Padding azaltıldı */
         }
         .bottom-nav a:hover,
         .bottom-nav a.active {
             color: #0d6efd; /* Bootstrap primary rengi */
+        }
+        @media (max-width: 770px) {
+            .bottom-nav {
+                left: 0; /* Mobilde tam genişlik */
+                right: 0;
+                width: 100%;
+            }
         }
     </style>
 </head>
