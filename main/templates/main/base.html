@@ -39,495 +39,190 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --sidebar-width: 280px;
-            --bottom-nav-height: 70px;
-            --header-height: 60px;
-            --border-color: #e1e8ed;
-            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         html {
             font-size: 16px;
-            scroll-behavior: smooth;
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Layout Container */
-        .app-container {
-            display: grid;
-            grid-template-areas: 
-                "sidebar main right-sidebar"
-                "bottom-nav bottom-nav bottom-nav";
-            grid-template-columns: var(--sidebar-width) 1fr 300px;
-            grid-template-rows: 1fr auto;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styles */
         .sidebar {
-            grid-area: sidebar;
-            background: #fff;
-            border-right: 1px solid var(--border-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--sidebar-width);
             height: 100vh;
-            z-index: 1050;
-            transform: translateX(-100%);
-            transition: var(--transition);
-            box-shadow: var(--shadow-medium);
-            overflow-y: auto;
-        }
-
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            background: #fff;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .sidebar .nav-link {
-            padding: 0.75rem 1.5rem;
-            color: #64748b;
-            border-radius: 0;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar .nav-link:hover {
-            background: #f8fafc;
-            color: var(--primary-color);
-            border-left-color: var(--primary-color);
-        }
-
-        .sidebar .nav-link.active {
-            background: #eff6ff;
-            color: var(--primary-color);
-            border-left-color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        /* Main Content */
-        .main-content {
-            grid-area: main;
-            padding: 2rem;
-            margin-left: 0;
-            padding-bottom: calc(var(--bottom-nav-height) + 2rem);
-            max-width: 100%;
-        }
-
-        /* Right Sidebar */
-        .right-sidebar {
-            grid-area: right-sidebar;
-            background: #fff;
-            border-left: 1px solid var(--border-color);
-            padding: 2rem 1.5rem;
             position: fixed;
             top: 0;
-            right: 0;
+            left: -300px;
             width: 300px;
+            transition: 0.3s;
+            z-index: 1051;
+            background-color: #fff;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .main-content {
+            padding: 60px 20px 80px; /* Alt bar için padding-bottom artırıldı */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .right-sidebar {
             height: 100vh;
-            overflow-y: auto;
-        }
-
-        /* Mobile Header */
-        .mobile-header {
-            background: #fff;
-            border-bottom: 1px solid var(--border-color);
-            height: var(--header-height);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 1040;
-            box-shadow: var(--shadow-light);
+            right: -300px;
+            width: 300px;
+            transition: 0.3s;
+            z-index: 1050;
+            background-color: #fff;
+            padding: 15px;
         }
-
-        .mobile-header .btn {
-            border: none;
-            background: none;
-            color: #64748b;
-            font-size: 1.25rem;
+        .right-sidebar.active {
+            right: 0;
         }
-
-        /* Bottom Navigation */
+        @media (min-width: 768px) {
+            .sidebar {
+                left: 0;
+                position: fixed;
+            }
+            .main-content {
+                padding-top: 20px;
+                padding-bottom: 80px; /* Alt bar için masaüstü padding */
+            }
+            .right-sidebar {
+                right: 0;
+                position: fixed;
+            }
+        }
+        @media (max-width: 770px) {
+            .sidebar {
+                left: -300px;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .right-sidebar {
+                display: none;
+            }
+            .main-content {
+                padding: 60px 15px 80px; /* Alt bar için mobil padding */
+            }
+            .mobile-header {
+                height: 60px;
+                z-index: 1001;
+            }
+        }
+        /* Alt Navigasyon Çubuğu Stilleri */
         .bottom-nav {
-            grid-area: bottom-nav;
             position: fixed;
             bottom: 0;
             left: 0;
-            right: 0;
-            height: var(--bottom-nav-height);
-            background: #fff;
-            border-top: 1px solid var(--border-color);
+            width: 100%;
+            background-color: #fff;
+            border-top: 1px solid #e1e8ed;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 1060;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .bottom-nav a {
+            color: #333;
             text-decoration: none;
-            color: #64748b;
-            transition: var(--transition);
-            padding: 0.5rem;
-            border-radius: 12px;
-            min-width: 50px;
+            font-size: 1.5rem;
+            padding: 8px;
         }
-
-        .bottom-nav-item i {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
+        .bottom-nav a:hover,
+        .bottom-nav a.active {
+            color: #0d6efd; /* Bootstrap primary rengi */
         }
-
-        .bottom-nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .bottom-nav-item:hover,
-        .bottom-nav-item.active {
-            color: var(--primary-color);
-            background: #eff6ff;
-        }
-
-        .bottom-nav-item.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* Desktop Styles */
-        @media (min-width: 992px) {
-            .app-container {
-                grid-template-columns: var(--sidebar-width) 1fr 300px;
-            }
-
-            .sidebar {
-                transform: translateX(0);
-                position: relative;
-                box-shadow: none;
-                border-right: 1px solid var(--border-color);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding-bottom: calc(var(--bottom-nav-height) + 2rem);
-            }
-
-            .right-sidebar {
-                position: relative;
-            }
-
-            .bottom-nav {
-                display: flex;
-                z-index: 1070;
-            }
-
-            .mobile-header {
-                display: none;
-            }
-        }
-
-        /* Tablet Styles */
-        @media (max-width: 991px) and (min-width: 768px) {
-            .app-container {
-                grid-template-areas: "main main";
-                grid-template-columns: 1fr;
-            }
-
-            .right-sidebar {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1.5rem;
-            }
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 767px) {
-            .app-container {
-                grid-template-areas: "main";
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .right-sidebar {
-                display: none;
-            }
-
-            .main-content {
-                padding: 1rem;
-                margin-left: 0;
-            }
-
-            .bottom-nav-item span {
-                display: none;
-            }
-
-            .bottom-nav-item i {
-                font-size: 1.5rem;
-                margin-bottom: 0;
-            }
-        }
-
-        /* Desktop bottom nav adjustments */
         @media (min-width: 768px) {
-            .bottom-nav-item {
-                min-width: 80px;
+            .bottom-nav {
+                display: none; /* Masaüstünde alt barı gizle */
             }
-            
-            .bottom-nav-item span {
-                display: block;
-            }
-        }
-
-        /* Overlay for mobile sidebar */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1049;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .bottom-nav {
-            animation: slideInUp 0.3s ease-out;
-        }
-
-        /* Scrollbar Styling */
-        .sidebar::-webkit-scrollbar,
-        .right-sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .sidebar::-webkit-scrollbar-track,
-        .right-sidebar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb,
-        .right-sidebar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb:hover,
-        .right-sidebar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
         }
     </style>
 </head>
 <body class="bg-white">
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
-    
-    <!-- App Container -->
-    <div class="app-container">
-        <!-- Sol Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">
-                        <a href="/" class="text-dark text-decoration-none fw-bold">Rumep</a>
-                    </h2>
-                    <button class="btn d-lg-none" onclick="closeSidebar()" aria-label="Menüyü kapat">
+    <div class="container-xxl">
+        <div class="row">
+            <!-- Sol Sidebar -->
+            <div class="col-12 col-md-2 col-lg-2 sidebar" id="sidebar">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
+                    <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()">
                         <i class="bi bi-x-lg"></i>
                     </button>
                 </div>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <ul class="nav flex-column">
+                <ul class="nav flex-column p-3">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" 
-                           href="{% url 'popular_critiques' %}">
-                            <i class="bi bi-star me-3"></i>
-                            {% trans "Popüler Değerlendirmeler" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" 
-                           href="{% url 'sozluk_ana_sayfa' %}">
-                            <i class="bi bi-book me-3"></i>
-                            {% trans "Sözlük" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" 
-                           href="{% url 'kisi_liste' %}">
-                            <i class="bi bi-people me-3"></i>
-                            {% trans "Kişiler" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kişiler" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" 
-                           href="{% url 'sarki_sozleri' %}">
-                            <i class="bi bi-music-note-list me-3"></i>
-                            {% trans "Şarkı Sözleri" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Şarkı Sözleri" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" 
-                           href="{% url 'atasozu_deyim' %}">
-                            <i class="bi bi-quote me-3"></i>
-                            {% trans "Atasözü ve Deyimler" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Atasözü ve Deyimler" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" 
-                           href="{% url 'yer_adlari_anasayfa' %}">
-                            <i class="bi bi-geo-alt me-3"></i>
-                            {% trans "Yer Adları" %}
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
                     </li>
                 </ul>
-            </nav>
-        </aside>
-
-        <!-- Ana İçerik -->
-        <main class="main-content" id="main-content">
-            <!-- Mobil Header -->
-            <header class="mobile-header d-lg-none">
-                <div class="d-flex justify-content-between align-items-center px-3 h-100">
-                    <button class="btn" onclick="openSidebar()" aria-label="Menüyü aç">
-                        <i class="bi bi-list"></i>
-                    </button>
-                    <h1 class="h5 mb-0 fw-bold">Rumep</h1>
-                    <div style="width: 40px;"></div> <!-- Spacer for centering -->
-                </div>
-            </header>
-
-            <!-- Back Button -->
-            {% if request.resolver_match.url_name == 'post_detail' %}
-            <div class="mb-3">
-                <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" 
-                   class="btn btn-link text-muted p-0 d-inline-flex align-items-center" 
-                   title="{% trans 'Geri dön' %}">
-                    <i class="bi bi-arrow-left me-2"></i>
-                    <span class="d-none d-sm-inline">{% trans 'Geri dön' %}</span>
-                </a>
             </div>
-            {% endif %}
-            
-            <!-- Content Block -->
-            {% block content %}{% endblock %}
-        </main>
 
-        <!-- Sağ Sidebar -->
-        <aside class="right-sidebar d-none d-lg-block">
-            {% if request.GET.sekme == 'katkilar' %}
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <h6 class="card-title fw-semibold mb-3">
-                            <i class="bi bi-trophy me-2 text-warning"></i>
-                            {% trans "En Çok Katkı Sağlayanlar" %}
-                        </h6>
-                        <div class="liderler-container" style="max-height: 400px; overflow-y: auto;">
-                            {% for lider in liderler %}
-                                <div class="d-flex align-items-center mb-3 p-2 rounded hover-bg-light">
-                                    <div class="flex-grow-1">
-                                        <a href="{% url 'profile_detail' lider.username %}" 
-                                           class="text-decoration-none">
-                                            <div class="fw-semibold text-dark">{{ lider.nickname }}</div>
-                                            <div class="text-muted small">@{{ lider.username }}</div>
-                                        </a>
+            <!-- Ana İçerik -->
+            <div class="col-12 col-md-8 col-lg-8 main-content" id="main-content">
+                <!-- Mobil için üstte hamburger menü -->
+                <div class="d-md-none d-flex justify-content-between align-items-center p-3 bg-light sticky-top mobile-header">
+                    <button class="btn btn-link text-muted" onclick="toggleSidebar()">
+                        <i class="bi bi-list fs-3"></i>
+                    </button>
+                </div>
+
+                {% if request.resolver_match.url_name == 'post_detail' %}
+                <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri dön' %}">
+                    <i class="bi bi-arrow-left fs-3"></i>
+                </a>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+
+            <!-- Sağ Sidebar (Arama Alanı Kaldırıldı) -->
+            <div class="col-12 col-md-2 col-lg-2 right-sidebar d-none d-md-block">
+                {% if request.GET.sekme == 'katkilar' %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="mb-3">{% trans "En Çok Katkı Sağlayanlar" %}</h6>
+                            <div class="liderler-container" style="max-height: 300px; overflow-y: auto;">
+                                {% for lider in liderler %}
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <a href="{% url 'profile_detail' lider.username %}" class="text-decoration-none">
+                                                <strong>{{ lider.nickname }}</strong>  
+                                                <span class="text-muted">@{{ lider.username }}</span>
+                                            </a>
+                                            <div class="mt-1">
+                                                <span class="badge bg-warning text-dark">⭐ {{ lider.katki_puani }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span class="badge bg-warning text-dark rounded-pill">
-                                        <i class="bi bi-star-fill me-1"></i>{{ lider.katki_puani }}
-                                    </span>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endif %}
-        </aside>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="{% url 'home' %}" 
-           class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <i class="bi bi-house-fill"></i>
-            <span>Ana Sayfa</span>
-        </a>
-        <a href="{% url 'popular' %}" 
-           class="bottom-nav-item {% if request.resolver_match.url_name == 'popular' %}active{% endif %}">
-            <i class="bi bi-fire"></i>
-            <span>Popüler</span>
-        </a>
-        <a href="{% url 'search' %}" 
-           class="bottom-nav-item {% if request.resolver_match.url_name == 'search' %}active{% endif %}">
-            <i class="bi bi-search"></i>
-            <span>Ara</span>
-        </a>
-        {% if user.is_authenticated %}
-        <a href="{% url 'profile_detail' user.username %}" 
-           class="bottom-nav-item {% if request.resolver_match.url_name == 'profile_detail' %}active{% endif %}">
-            <i class="bi bi-person-fill"></i>
-            <span>Profil</span>
-        </a>
-        {% else %}
-        <a href="{% url 'account_login' %}" 
-           class="bottom-nav-item">
-            <i class="bi bi-person"></i>
-            <span>Giriş</span>
-        </a>
-        {% endif %}
-        <a href="#" class="bottom-nav-item disabled">
-            <i class="bi bi-bell"></i>
-            <span>Bildirim</span>
-        </a>
+    <!-- Alt Navigasyon Çubuğu -->
+    <nav class="bottom-nav d-md-none">
+        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="bi bi-house"></i></a>
+        <a href="{% url 'popular' %}" class="{% if request.resolver_match.url_name == 'popular' %}active{% endif %}"><i class="bi bi-fire"></i></a>
+        <a href="{% url 'search' %}" class="{% if request.resolver_match.url_name == 'search' %}active{% endif %}"><i class="bi bi-search"></i></a>
+        <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"><i class="bi bi-person"></i></a>
+        <a href="#" class="disabled"><i class="bi bi-bell"></i></a>
     </nav>
 
     {% block extra_scripts %}{% endblock %}
@@ -541,64 +236,23 @@
     <script async src="https://www.instagram.com/embed.js"></script>
     {% endif %}
     <script>
-        // Modern Sidebar Management
-        function openSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
             if (sidebar.classList.contains('active')) {
-                closeSidebar();
+                document.addEventListener('click', closeSidebarOnClickOutside);
             } else {
-                openSidebar();
+                document.removeEventListener('click', closeSidebarOnClickOutside);
             }
         }
         
-        // Close sidebar on escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeSidebar();
+        function closeSidebarOnClickOutside(event) {
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.contains(event.target) && !event.target.classList.contains('bi-list')) {
+                sidebar.classList.remove('active');
+                document.removeEventListener('click', closeSidebarOnClickOutside);
             }
-        });
-        
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 992) {
-                closeSidebar();
-            }
-        });
-        
-        // Smooth scroll for anchor links
-        document.addEventListener('DOMContentLoaded', function() {
-            const anchorLinks = document.querySelectorAll('a[href^="#"]');
-            anchorLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        e.preventDefault();
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        });
+        }
     </script>
     <!-- Beğen butonları için like.js -->
     <script type="module">
