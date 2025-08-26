@@ -21,9 +21,9 @@ def create_short_link(post, long_url):
     return post.link
 
 def resolve_short_link(short_code):
-    """Kısa kodu orijinal URL'ye çevirir."""
+    """Kısa kodu post detay URL'sine çevirir."""
     try:
-        post = Post.objects.get(link=f"rmp/{short_code}")
-        return post.original_link
+        post = Post.objects.get(short_id=short_code)
+        return reverse('post_detail', kwargs={'pk': post.id})
     except Post.DoesNotExist:
         return None
