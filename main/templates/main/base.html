@@ -56,7 +56,7 @@
             left: 0;
         }
         .main-content {
-            padding: 60px 20px 80px; /* Alt bar için padding-bottom artırıldı */
+            padding: 20px 20px 80px; /* Üst boşluk azaltıldı, alt bar için padding-bottom korundu */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -80,8 +80,7 @@
                 position: fixed;
             }
             .main-content {
-                padding-top: 20px;
-                padding-bottom: 80px; /* Alt bar için masaüstü padding */
+                padding: 20px 20px 80px; /* Üst boşluk masaüstü için de azaltıldı */
             }
             .right-sidebar {
                 right: 0;
@@ -99,10 +98,10 @@
                 display: none;
             }
             .main-content {
-                padding: 60px 15px 80px; /* Alt bar için mobil padding */
+                padding: 20px 15px 80px; /* Üst boşluk mobil için azaltıldı */
             }
             .mobile-header {
-                height: 60px;
+                height: 40px; /* Header yüksekliği azaltıldı */
                 z-index: 1001;
             }
         }
@@ -130,11 +129,6 @@
         .bottom-nav a:hover,
         .bottom-nav a.active {
             color: #0d6efd; /* Bootstrap primary rengi */
-        }
-        @media (min-width: 768px) {
-            .bottom-nav {
-                display: none; /* Masaüstünde alt barı gizle */
-            }
         }
     </style>
 </head>
@@ -174,7 +168,7 @@
             <!-- Ana İçerik -->
             <div class="col-12 col-md-8 col-lg-8 main-content" id="main-content">
                 <!-- Mobil için üstte hamburger menü -->
-                <div class="d-md-none d-flex justify-content-between align-items-center p-3 bg-light sticky-top mobile-header">
+                <div class="d-md-none d-flex justify-content-between align-items-center p-2 bg-light sticky-top mobile-header">
                     <button class="btn btn-link text-muted" onclick="toggleSidebar()">
                         <i class="bi bi-list fs-3"></i>
                     </button>
@@ -217,7 +211,7 @@
     </div>
 
     <!-- Alt Navigasyon Çubuğu -->
-    <nav class="bottom-nav d-md-none">
+    <nav class="bottom-nav">
         <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="bi bi-house"></i></a>
         <a href="{% url 'popular' %}" class="{% if request.resolver_match.url_name == 'popular' %}active{% endif %}"><i class="bi bi-fire"></i></a>
         <a href="{% url 'search' %}" class="{% if request.resolver_match.url_name == 'search' %}active{% endif %}"><i class="bi bi-search"></i></a>
