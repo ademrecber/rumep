@@ -125,10 +125,10 @@ def kisi_liste_yukle(request):
         kisiler = kisiler.filter(ad__icontains=query)
     kisiler = kisiler.order_by('ad')[offset:offset + limit]
     data = [{
-        'id': kisi.id,
-        'ad': kisi.ad,
-        'biyografi': kisi.biyografi[:100] + ('...' if len(kisi.biyografi) > 100 else ''),
-        'kategoriler': [kat.ad for kat in kisi.kategoriler.all()],
+        'id': kisi.id, # JSON'a gönderilmeden önce bleach ile temizleniyor.
+        'ad': bleach.clean(kisi.ad, tags=[], strip=True),
+        'biyografi': bleach.clean(kisi.biyografi, tags=[], strip=True)[:100] + ('...' if len(kisi.biyografi) > 100 else ''),
+        'kategoriler': [bleach.clean(kat.ad, tags=[], strip=True) for kat in kisi.kategoriler.all()],
         'is_owner': kisi.kullanici == request.user
     } for kisi in kisiler]
     has_more = Kisi.objects.count() > offset + limit

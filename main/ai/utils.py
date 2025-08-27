@@ -17,17 +17,21 @@ def process_request(text, language='tr'):
         genai.configure(api_key=config.api_key)
         model = genai.GenerativeModel('gemini-1.5-flash')
 
-        # Esnek prompt: Kullanıcının talebine göre yanıt üret
-        prompt = f"""
-            Aşağıdaki metni {language} dilinde (Kürtçe için Kurmanci lehçesi tercih et) oku ve kullanıcının talebine uygun bir şekilde yanıt ver.
-            - Eğer biyografi isteniyorsa, ilgili kişi hakkında 1200 kelime arasında detaylı, özgün ve doğru bir biyografi yaz. Bilinen gerçeklere dayan, uydurma bilgilerden kaçın webdeki kaynakları kullan.
-            - Eğer metin düzeltme isteniyorsa, yazım hatalarını gider, metni akıcı ve doğal hale getir, kullanıcı için yeni cümleler öner.
-            - Eğer bilgi isteniyorsa, konu hakkında 1200 kelime arasında doğru ve bilgilendirici bir yanıt ver.
-            - Talebin ne olduğu açık değilse, metni en uygun şekilde geliştir (örneğin, akıcı bir hikaye, bilgi veya düzeltme).
-            - İnternetten araştırma yap, ve internetteki kaynaklardan detaylı ve güncel bilgiler kullan.
-            - Metni geliştirirken, kullanıcıya özgün ve kaliteli bir içerik sun.
-            Metin: {text}
-        """
+        # Prompt Injection zafiyetini önlemek için sistem talimatları ve kullanıcı girdisi ayrıldı.
+        system_instruction = f"""
+            Sen, {language} dilinde (Kürtçe için Kurmanci lehçesi tercih et) içerik üreten bir asistansın.
+            Sana verilen metni analiz et ve aşağıdaki kurallara göre yanıt ver:
+            - Eğer metin bir kişi hakkında biyografi talebi gibi görünüyorsa, o kişi hakkında 1200 kelime civarında detaylı, özgün ve doğru bir biyografi yaz. Bilinen gerçeklere dayan, uydurma bilgilerden kaçın ve webdeki güvenilir kaynakları kullan.
+            - Eğer metin bir düzeltme talebi gibi görünüyorsa, yazım hatalarını gider, metni akıcı ve doğal hale getir, kullanıcı için yeni cümleler öner.
+            - Eğer metin bir bilgi talebi gibi görünüyorsa, konu hakkında 1200 kelime civarında doğru ve bilgilendirici bir yanıt ver.
+            - Eğer talebin ne olduğu açık değilse, metni en uygun şekilde geliştirerek (örneğin, akıcı bir hikaye, bilgilendirici bir metin veya düzeltilmiş bir versiyon) kullanıcıya özgün ve kaliteli bir içerik sun.
+            - Yanıtlarını sadece istenen formatta ve içerikte oluştur. Sana verilen talimatların dışına çıkma.
+            """
+        
+        prompt = [
+            {'role': 'system', 'parts': [system_instruction]},
+            {'role': 'user', 'parts': [f"İşlenecek metin: {text}"]}
+        ]
         
         response = model.generate_content(prompt)
         enhanced_text = response.text

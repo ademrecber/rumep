@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '6c683f6c9f2d3b1d4f8121e8e4424f37f55213fceee0d73ec77f3ea69b77b3d9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG modunu ortam değişkeninden alın. Üretimde mutlaka False olmalı.
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ["*"] # Tüm hostlara izin verildi, üretim ortamında dikkatli kullanılmalı
+# Üretim ortamında kendi alan adlarınızı ekleyin. Örnek: ['www.rumep.com', 'rumep.com']
+# Geliştirme ortamı için '127.0.0.1' ve 'localhost' adresleri de korundu.
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'rumep.net,www.rumep.net,127.0.0.1,localhost').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -33,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',  # Sadece bir kez
+    'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'social_django',
@@ -138,14 +141,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social Auth settings
 AUTHENTICATION_BACKENDS = (
+    # Sadece Google ile girişe izin veriliyor.
     'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '814379266897-eph7ljgj320ro93fdj50gfbhvldldpm0.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -222,3 +223,16 @@ CONTENT_SECURITY_POLICY = {
         ],
     }
 }
+
+# Üretim ortamı için ek güvenlik ayarları
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 yıl
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
