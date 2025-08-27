@@ -56,7 +56,7 @@
             left: 0;
         }
         .main-content {
-            padding: 20px 20px 80px; /* Üst padding azaltıldı */
+            padding: 60px 20px 80px; /* Alt bar için padding-bottom artırıldı */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -99,7 +99,7 @@
                 display: none;
             }
             .main-content {
-                padding: 70px 15px 80px; /* Mobil header için padding */
+                padding: 60px 15px 80px; /* Alt bar için mobil padding */
             }
             .mobile-header {
                 height: 60px;
@@ -117,9 +117,9 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 12px 0;
-            z-index: 1050; /* z-index artırıldı */
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
         .bottom-nav a {
             color: #333;
@@ -139,6 +139,12 @@
     </style>
 </head>
 <body class="bg-white">
+    <!-- Mobil için üstte hamburger menü -->
+    <div class="d-md-none d-flex justify-content-between align-items-center p-3 bg-light sticky-top mobile-header">
+        <button class="btn btn-link text-muted" onclick="toggleSidebar()">
+            <i class="bi bi-list fs-3"></i>
+        </button>
+    </div>
     <div class="container-xxl">
         <div class="row">
             <!-- Sol Sidebar -->
@@ -150,6 +156,22 @@
                     </button>
                 </div>
                 <ul class="nav flex-column p-3">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Anasayfa" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Popüler" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'search' %}active{% endif %}" href="{% url 'search' %}"><i class="bi bi-search me-2"></i> {% trans "Arama" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profil" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#"><i class="bi bi-bell me-2"></i> {% trans "Bildirimler" %}</a>
+                    </li>
+                    <li class="nav-item"><hr class="my-2"></li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
                     </li>
@@ -173,13 +195,6 @@
 
             <!-- Ana İçerik -->
             <div class="col-12 col-md-8 col-lg-8 main-content" id="main-content">
-                <!-- Mobil için üstte hamburger menü -->
-                <div class="d-md-none d-flex justify-content-between align-items-center px-3 py-2 bg-light sticky-top mobile-header">
-                    <button class="btn btn-link text-muted p-1" onclick="toggleSidebar()">
-                        <i class="bi bi-list fs-4"></i>
-                    </button>
-                </div>
-
                 {% if request.resolver_match.url_name == 'post_detail' %}
                 <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri dön' %}">
                     <i class="bi bi-arrow-left fs-3"></i>
