@@ -156,22 +156,22 @@
                     </button>
                 </div>
                 <ul class="nav flex-column p-3">
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-md-block">
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Anasayfa" %}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-md-block">
                         <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Popüler" %}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-md-block">
                         <a class="nav-link {% if request.resolver_match.url_name == 'search' %}active{% endif %}" href="{% url 'search' %}"><i class="bi bi-search me-2"></i> {% trans "Arama" %}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-md-block">
                         <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profil" %}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-md-block">
                         <a class="nav-link disabled" href="#"><i class="bi bi-bell me-2"></i> {% trans "Bildirimler" %}</a>
                     </li>
-                    <li class="nav-item"><hr class="my-2"></li>
+                    <li class="nav-item d-none d-md-block"><hr class="my-2"></li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
                     </li>
