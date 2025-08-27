@@ -20,7 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6c683f6c9f2d3b1d4f8121e8e4424f37f55213fceee0d73ec77f3ea69b77b3d9'
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG modunu ortam değişkeninden alın. Üretimde mutlaka False olmalı.
@@ -82,15 +83,16 @@ WSGI_APPLICATION = 'rumep.wsgi.application'
 
 # Database
 DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.postgresql',
-             'NAME': 'rumep_db_vdej',
-             'USER': 'rumep_user',
-             'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
-             'HOST': 'dpg-d13141be5dus73cskem0-a',
-             'PORT': '5432',
-         }
-     }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
