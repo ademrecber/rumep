@@ -39,281 +39,205 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
         html {
             font-size: 16px;
         }
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        
-        /* Mobil Header */
-        .mobile-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: #fff;
-            border-bottom: 1px solid #e1e8ed;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-        }
-        
-        /* Sidebar */
         .sidebar {
+            height: 100vh;
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100vh;
-            background: #fff;
-            border-right: 1px solid #e1e8ed;
-            transition: left 0.3s ease;
-            z-index: 1050;
-            overflow-y: auto;
+            left: -300px;
+            width: 300px;
+            transition: 0.3s;
+            z-index: 1051;
+            background-color: #fff;
         }
         .sidebar.active {
             left: 0;
         }
-        
-        /* Ana İçerik */
         .main-content {
-            min-height: 100vh;
-            padding: 0;
+            padding: 60px 20px 80px; /* Alt bar için padding-bottom artırıldı */
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        /* Sağ Sidebar */
         .right-sidebar {
+            height: 100vh;
             position: fixed;
             top: 0;
+            right: -300px;
+            width: 300px;
+            transition: 0.3s;
+            z-index: 1050;
+            background-color: #fff;
+            padding: 15px;
+        }
+        .right-sidebar.active {
             right: 0;
-            width: 280px;
-            height: 100vh;
-            background: #fff;
-            border-left: 1px solid #e1e8ed;
-            padding: 20px;
-            overflow-y: auto;
         }
-        
-        /* Alt Navigasyon */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: #fff;
-            border-top: 1px solid #e1e8ed;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
-        .bottom-nav a {
-            color: #536471;
-            text-decoration: none;
-            font-size: 1.4rem;
-            padding: 12px;
-            border-radius: 50%;
-            transition: all 0.2s;
-        }
-        .bottom-nav a:hover,
-        .bottom-nav a.active {
-            color: #1d9bf0;
-            background: rgba(29, 155, 240, 0.1);
-        }
-        
-        /* Masaüstü Düzeni */
         @media (min-width: 768px) {
-            .mobile-header {
-                display: none;
-            }
             .sidebar {
                 left: 0;
-                width: 260px;
+                position: fixed;
             }
             .main-content {
-                margin-left: 260px;
-                margin-right: 280px;
-                padding: 20px;
-                max-width: none;
+                padding-top: 20px;
+                padding-bottom: 80px; /* Alt bar için masaüstü padding */
             }
             .right-sidebar {
-                display: block;
-            }
-            .bottom-nav {
-                display: block;
+                right: 0;
                 position: fixed;
-                bottom: 20px;
-                left: 20px;
-                right: auto;
-                width: 220px;
-                height: auto;
-                background: #fff;
-                border: 1px solid #e1e8ed;
-                border-radius: 16px;
-                flex-direction: column;
-                padding: 12px 0;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
-            .bottom-nav a {
-                width: 100%;
-                text-align: left;
-                padding: 12px 20px;
-                border-radius: 0;
-                display: flex;
-                align-items: center;
-                font-size: 1.1rem;
-            }
-            .bottom-nav a i {
-                margin-right: 12px;
-                width: 20px;
-            }
-            .bottom-nav a:hover {
-                background: rgba(29, 155, 240, 0.1);
             }
         }
-        
-        /* Mobil Düzeni */
-        @media (max-width: 767px) {
+        @media (max-width: 770px) {
             .sidebar {
-                left: -280px;
+                left: -300px;
             }
             .sidebar.active {
                 left: 0;
             }
-            .main-content {
-                padding-top: 50px;
-                padding-bottom: 60px;
-                padding-left: 15px;
-                padding-right: 15px;
-            }
             .right-sidebar {
                 display: none;
             }
+            .main-content {
+                padding: 60px 15px 80px; /* Alt bar için mobil padding */
+            }
+            .mobile-header {
+                height: 60px;
+                z-index: 1001;
+            }
         }
-        
-        /* Overlay */
-        .sidebar-overlay {
+        /* Alt Navigasyon Çubuğu Stilleri */
+        .bottom-nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1040;
-            display: none;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border-top: 1px solid #e1e8ed;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
-        .sidebar-overlay.active {
-            display: block;
+        .bottom-nav a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.5rem;
+            padding: 8px;
+        }
+        .bottom-nav a:hover,
+        .bottom-nav a.active {
+            color: #0d6efd; /* Bootstrap primary rengi */
+        }
+        @media (min-width: 768px) {
+            .bottom-nav {
+                display: none; /* Masaüstünde alt barı gizle */
+            }
         }
     </style>
 </head>
 <body class="bg-white">
-    <!-- Mobil Header -->
-    <div class="mobile-header d-md-none">
-        <button class="btn btn-link text-muted p-1" onclick="toggleSidebar()">
-            <i class="bi bi-list fs-4"></i>
+    <!-- Mobil için üstte hamburger menü -->
+    <div class="d-md-none d-flex justify-content-between align-items-center p-3 bg-light sticky-top mobile-header">
+        <button class="btn btn-link text-muted" onclick="toggleSidebar()">
+            <i class="bi bi-list fs-3"></i>
         </button>
-        <h5 class="mb-0 ms-3">Rumep</h5>
     </div>
-    
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-    <!-- Sol Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-            <h3 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h3>
-            <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
-        <ul class="nav flex-column p-3">
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kişiler" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Şarkı Sözleri" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Atasözü ve Deyimler" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Ana İçerik -->
-    <div class="main-content" id="main-content">
-        {% if request.resolver_match.url_name == 'post_detail' %}
-        <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri dön' %}">
-            <i class="bi bi-arrow-left fs-3"></i>
-        </a>
-        {% endif %}
-        {% block content %}{% endblock %}
-    </div>
-
-    <!-- Sağ Sidebar -->
-    <div class="right-sidebar d-none d-md-block">
-        {% if request.GET.sekme == 'katkilar' %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h6 class="mb-3">{% trans "En Çok Katkı Sağlayanlar" %}</h6>
-                    <div class="liderler-container" style="max-height: 300px; overflow-y: auto;">
-                        {% for lider in liderler %}
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <a href="{% url 'profile_detail' lider.username %}" class="text-decoration-none">
-                                        <strong>{{ lider.nickname }}</strong>  
-                                        <span class="text-muted">@{{ lider.username }}</span>
-                                    </a>
-                                    <div class="mt-1">
-                                        <span class="badge bg-warning text-dark">⭐ {{ lider.katki_puani }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+    <div class="container-xxl">
+        <div class="row">
+            <!-- Sol Sidebar -->
+            <div class="col-12 col-md-2 col-lg-2 sidebar" id="sidebar">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
+                    <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
                 </div>
+                <ul class="nav flex-column p-3">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Anasayfa" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'popular' %}"><i class="bi bi-fire me-2"></i> {% trans "Popüler" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'search' %}active{% endif %}" href="{% url 'search' %}"><i class="bi bi-search me-2"></i> {% trans "Arama" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profil" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#"><i class="bi bi-bell me-2"></i> {% trans "Bildirimler" %}</a>
+                    </li>
+                    <li class="nav-item"><hr class="my-2"></li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'popular_critiques' %}active{% endif %}" href="{% url 'popular_critiques' %}"><i class="bi bi-star me-2"></i> {% trans "Popüler Değerlendirmeler" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kişiler" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Şarkı Sözleri" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Atasözü ve Deyimler" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
+                    </li>
+                </ul>
             </div>
-        {% endif %}
+
+            <!-- Ana İçerik -->
+            <div class="col-12 col-md-8 col-lg-8 main-content" id="main-content">
+                {% if request.resolver_match.url_name == 'post_detail' %}
+                <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri dön' %}">
+                    <i class="bi bi-arrow-left fs-3"></i>
+                </a>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+
+            <!-- Sağ Sidebar (Arama Alanı Kaldırıldı) -->
+            <div class="col-12 col-md-2 col-lg-2 right-sidebar d-none d-md-block">
+                {% if request.GET.sekme == 'katkilar' %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="mb-3">{% trans "En Çok Katkı Sağlayanlar" %}</h6>
+                            <div class="liderler-container" style="max-height: 300px; overflow-y: auto;">
+                                {% for lider in liderler %}
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <a href="{% url 'profile_detail' lider.username %}" class="text-decoration-none">
+                                                <strong>{{ lider.nickname }}</strong>  
+                                                <span class="text-muted">@{{ lider.username }}</span>
+                                            </a>
+                                            <div class="mt-1">
+                                                <span class="badge bg-warning text-dark">⭐ {{ lider.katki_puani }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
-    <!-- Navigasyon -->
-    <nav class="bottom-nav">
-        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <i class="bi bi-house"></i>
-            <span class="d-none d-md-inline ms-2">{% trans "Anasayfa" %}</span>
-        </a>
-        <a href="{% url 'popular' %}" class="{% if request.resolver_match.url_name == 'popular' %}active{% endif %}">
-            <i class="bi bi-fire"></i>
-            <span class="d-none d-md-inline ms-2">{% trans "Popüler" %}</span>
-        </a>
-        <a href="{% url 'search' %}" class="{% if request.resolver_match.url_name == 'search' %}active{% endif %}">
-            <i class="bi bi-search"></i>
-            <span class="d-none d-md-inline ms-2">{% trans "Arama" %}</span>
-        </a>
-        <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
-            <i class="bi bi-person"></i>
-            <span class="d-none d-md-inline ms-2">{% trans "Profil" %}</span>
-        </a>
-        <a href="#" class="disabled">
-            <i class="bi bi-bell"></i>
-            <span class="d-none d-md-inline ms-2">{% trans "Bildirimler" %}</span>
-        </a>
+    <!-- Alt Navigasyon Çubuğu -->
+    <nav class="bottom-nav d-md-none">
+        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="bi bi-house"></i></a>
+        <a href="{% url 'popular' %}" class="{% if request.resolver_match.url_name == 'popular' %}active{% endif %}"><i class="bi bi-fire"></i></a>
+        <a href="{% url 'search' %}" class="{% if request.resolver_match.url_name == 'search' %}active{% endif %}"><i class="bi bi-search"></i></a>
+        <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"><i class="bi bi-person"></i></a>
+        <a href="#" class="disabled"><i class="bi bi-bell"></i></a>
     </nav>
 
     {% block extra_scripts %}{% endblock %}
@@ -329,10 +253,20 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            
             sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                document.addEventListener('click', closeSidebarOnClickOutside);
+            } else {
+                document.removeEventListener('click', closeSidebarOnClickOutside);
+            }
+        }
+        
+        function closeSidebarOnClickOutside(event) {
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.contains(event.target) && !event.target.classList.contains('bi-list')) {
+                sidebar.classList.remove('active');
+                document.removeEventListener('click', closeSidebarOnClickOutside);
+            }
         }
     </script>
     <!-- Beğen butonları için like.js -->
