@@ -71,6 +71,9 @@
                         <input type="hidden" name="vote" value="down">
                         <button type="submit" class="btn btn-link text-danger p-0 downvote-btn" data-vote-type="down">{{ post.downvotes }} ↓</button>
                     </form>
+                    <button class="btn btn-link text-primary p-0" id="toggle-critique-btn">
+                        <i class="bi bi-star me-1"></i>Nirxandin
+                    </button>
                 </div>
             </div>
         </div>
@@ -280,13 +283,14 @@
                 });
             });
             
-            // Mobile critique toggle
+            // Critique toggle (both mobile and desktop)
             const mobileToggleBtn = document.getElementById('mobile-toggle-critique-btn');
+            const toggleCritiqueBtn = document.getElementById('toggle-critique-btn');
             const critiqueSection = document.getElementById('critique-section');
             const cancelBtn = document.getElementById('cancel-critique-btn');
             
-            if (mobileToggleBtn && critiqueSection) {
-                mobileToggleBtn.addEventListener('click', () => {
+            function showCritiqueSection() {
+                if (critiqueSection) {
                     critiqueSection.style.display = 'block';
                     critiqueSection.scrollIntoView({ behavior: 'smooth' });
                     
@@ -295,7 +299,15 @@
                         const textarea = critiqueSection.querySelector('textarea');
                         if (textarea) textarea.focus();
                     }, 300);
-                });
+                }
+            }
+            
+            if (mobileToggleBtn) {
+                mobileToggleBtn.addEventListener('click', showCritiqueSection);
+            }
+            
+            if (toggleCritiqueBtn) {
+                toggleCritiqueBtn.addEventListener('click', showCritiqueSection);
             }
             
             if (cancelBtn && critiqueSection) {
