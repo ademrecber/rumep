@@ -222,9 +222,10 @@ CONTENT_SECURITY_POLICY = {
         'connect-src': [
             "'self'",
             "https://maps.googleapis.com",
-            "https://*.googleapis.com",
-            "https://www.google-analytics.com",  # Analytics verilerinin gönderilmesi için
-            "https://www.googletagmanager.com",  # Tag Assistant ve gtag.js'nin çalışması için
+            "*.googleapis.com",
+            "https://www.googletagmanager.com",  # Gerekli
+            "https://www.google-analytics.com",  # Gerekli
+            "*.google-analytics.com",           # Gerekli (bölgesel endpoint'ler için)
         ],
     }
 }
