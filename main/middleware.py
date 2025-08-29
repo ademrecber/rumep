@@ -4,33 +4,6 @@ from django.contrib import messages
 from django.utils import translation
 from django.conf import settings
 
-class SecurityMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        
-        csp = (
-            "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://platform.twitter.com https://www.instagram.com https://code.jquery.com https://www.google-analytics.com https://maps.googleapis.com; "
-            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; "
-            "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; "
-            "img-src 'self' data: https:; "
-            "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com; "
-            "frame-src 'self' https://platform.twitter.com https://www.instagram.com; "
-            "object-src 'none';"
-        )
-        
-        response['Content-Security-Policy'] = csp
-        response['X-Content-Type-Options'] = 'nosniff'
-        response['X-Frame-Options'] = 'DENY'
-        response['X-XSS-Protection'] = '1; mode=block'
-        response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-        response['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
-        
-        return response
-
 class SocialAuthExceptionMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
