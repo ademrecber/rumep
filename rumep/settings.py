@@ -52,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',  # django-csp middleware'ini ekleyin
-    'main.middleware.SecurityMiddleware',
     'main.middleware.SocialAuthExceptionMiddleware',
     'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
 ]
