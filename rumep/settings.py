@@ -20,16 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
-
+SECRET_KEY = '6c683f6c9f2d3b1d4f8121e8e4424f37f55213fceee0d73ec77f3ea69b77b3d9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG modunu ortam değişkeninden alın. Üretimde mutlaka False olmalı.
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = False
 
-# Üretim ortamında kendi alan adlarınızı ekleyin. Örnek: ['www.rumep.com', 'rumep.com']
-# Geliştirme ortamı için '127.0.0.1' ve 'localhost' adresleri de korundu.
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'rumep.net,www.rumep.net,127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ["*"] # Tüm hostlara izin verildi, üretim ortamında dikkatli kullanılmalı
 
 # Application definition
 INSTALLED_APPS = [
@@ -37,7 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages',  # Sadece bir kez
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'social_django',
@@ -56,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',  # django-csp middleware'ini ekleyin
+    'main.middleware.SecurityMiddleware',
     'main.middleware.SocialAuthExceptionMiddleware',
     'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
 ]
@@ -73,7 +70,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.global_settings',  # Google Analytics için eklendi
             ],
         },
     },
@@ -83,16 +79,15 @@ WSGI_APPLICATION = 'rumep.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
-}
-
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'rumep_db_vdej',
+             'USER': 'rumep_user',
+             'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
+             'HOST': 'dpg-d13141be5dus73cskem0-a',
+             'PORT': '5432',
+         }
+     }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -143,13 +138,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social Auth settings
 AUTHENTICATION_BACKENDS = (
-    # Sadece Google ile girişe izin veriliyor.
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '814379266897-eph7ljgj320ro93fdj50gfbhvldldpm0.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 
 LOGIN_URL = '/login/'
@@ -189,10 +184,8 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
 GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', 'G-6JW7ZSY31H')
 
-# django-csp ayarları (django-csp >= 4.0 için doğru format)
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
-        'default-src': ["'self'"],
         'script-src': [
             "'self'",
             "'unsafe-inline'",
@@ -210,31 +203,22 @@ CONTENT_SECURITY_POLICY = {
             "'unsafe-inline'",
             "https://cdn.jsdelivr.net",
             "https://fonts.googleapis.com",
+            
         ],
-        'font-src': ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
-        'img-src': ["'self'", "data:", "https:"],
+        'font-src': [
+            "'self'",
+            "https://fonts.gstatic.com",
+        ],
+        'img-src': [
+            "'self'",
+            "data:",
+        ],
         'connect-src': [
             "'self'",
-            "https://maps.googleapis.com",
-            "*.googleapis.com",
-            "https://www.googletagmanager.com",
             "https://www.google-analytics.com",
-            "*.google-analytics.com",
+            "https://maps.googleapis.com",
+            "https://*.googleapis.com",
+            "https://www.googletagmanager.com",
         ],
-        'frame-src': ["'self'", "https://platform.twitter.com", "https://www.instagram.com"],
-        'object-src': ["'none'"],
     }
 }
-
-# Üretim ortamı için ek güvenlik ayarları
-if not DEBUG:
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_SECONDS = 31536000  # 1 yıl
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
-    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
