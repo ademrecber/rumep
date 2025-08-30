@@ -196,6 +196,8 @@ CONTENT_SECURITY_POLICY = {
             "https://www.google-analytics.com",
             "https://maps.googleapis.com",
             "https://www.googletagmanager.com",
+            "https://pagead2.googlesyndication.com",
+            "https://googleads.g.doubleclick.net",
         ],
         'style-src': [
             "'self'",
@@ -212,6 +214,8 @@ CONTENT_SECURITY_POLICY = {
         'img-src': [
             "'self'",
             "data:",
+            "https://pagead2.googlesyndication.com",
+            "https://googleads.g.doubleclick.net",
         ],
         'connect-src': [
             "'self'",
@@ -219,6 +223,8 @@ CONTENT_SECURITY_POLICY = {
             "https://maps.googleapis.com",
             "https://*.googleapis.com",
             "https://www.googletagmanager.com",
+            "https://pagead2.googlesyndication.com",
+            "https://googleads.g.doubleclick.net",
         ],
     }
 }
