@@ -198,6 +198,7 @@ CONTENT_SECURITY_POLICY = {
             "https://www.googletagmanager.com",
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
+            "https://ep2.adtrafficquality.google",
         ],
         'style-src': [
             "'self'",
@@ -226,6 +227,11 @@ CONTENT_SECURITY_POLICY = {
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
             "https://ep1.adtrafficquality.google",
+        ],
+        'frame-src': [
+            "'self'",
+            "https://googleads.g.doubleclick.net",
+            "https://pagead2.googlesyndication.com",
         ],
     }
 }
