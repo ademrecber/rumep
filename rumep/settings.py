@@ -217,6 +217,7 @@ CONTENT_SECURITY_POLICY = {
             "data:",
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
+            "https://ep1.adtrafficquality.google",
         ],
         'connect-src': [
             "'self'",
