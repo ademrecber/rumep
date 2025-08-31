@@ -225,6 +225,7 @@ CONTENT_SECURITY_POLICY = {
             "https://www.googletagmanager.com",
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
+            "https://ep1.adtrafficquality.google",
         ],
     }
 }
