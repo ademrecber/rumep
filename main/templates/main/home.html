@@ -1,30 +1,93 @@
+{% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Ana Sayfa" %}{% endblock %}
+
+{% block page_tabs %}
+<div class="d-flex p-3" style="gap: 0;">
+    <a href="?tab=home" class="flex-fill text-center py-2 text-decoration-none {% if not tab or tab == 'home' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-house me-1"></i>{% trans "Anasayfa" %}
+    </a>
+    {% if user.is_authenticated %}
+    <a href="?tab=following" class="flex-fill text-center py-2 text-decoration-none {% if tab == 'following' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-people me-1"></i>{% trans "Takip Ettiklerim" %}
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+
 <link href="{% static 'main/css/ai.css' %}" rel="stylesheet">
-<div class="card mb-3 tweet-form fade-in">
-    <div class="card-body">
-        <form method="post" id="postForm">
-            {% csrf_token %}
-            <div class="title-field form-group mb-2">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Sernav</label>
-                {{ form.title }}
+<link href="{% static 'main/css/home.css' %}" rel="stylesheet">
+<link href="{% static 'main/css/emoji.css' %}" rel="stylesheet">
+
+
+<!-- Create Topic Modal -->
+<div class="modal fade" id="createTopicModal" tabindex="-1" aria-labelledby="createTopicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTopicModalLabel">{% trans "Başlık Aç & İlk Entry'yi Yaz" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
             </div>
-            <div class="input-group mb-2">
-                <label for="{{ form.text.id_for_label }}" class="form-label w-100">Nivîs</label>
-                {{ form.text }}
-                <button type="button" id="emojiButton" class="btn btn-link p-0 mt-1"><i class="bi bi-emoji-smile"></i></button>
-                <button type="button" id="aiEnhanceButton" class="btn btn-link p-0 mt-1 ms-2"><i class="bi bi-magic"></i></button>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_topic' %}" id="topicEntryForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="font_family" id="fontFamilyInput" value="">
+                    <div class="title-field form-group mb-2">
+                        <label for="{{ topic_form.title.id_for_label }}" class="form-label">{% trans "Başlık" %}</label>
+                        {{ topic_form.title }}
+                    </div>
+                    <div class="form-group mb-2">
+                        <label class="form-label">{% trans "Kategori (En fazla 3)" %}</label>
+                        <div class="row">
+                            {% for choice in topic_form.categories %}
+                                <div class="col-md-4 col-6">
+                                    <div class="form-check">
+                                        {{ choice.tag }}
+                                        <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                            {{ choice.choice_label }}
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="{{ entry_form.content.id_for_label }}" class="form-label w-100">{% trans "Entry" %}</label>
+                        {{ entry_form.content }}
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="{{ entry_form.content.id_for_label }}">
+                                <i class="bi bi-emoji-smile"></i> {% trans "Emojiler" %}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="{{ entry_form.link.id_for_label }}" class="form-label">{% trans "Bağlantı (isteğe bağlı)" %}</label>
+                        {{ entry_form.link }}
+                    </div>
+                    {% if topic_form.errors %}
+                        <div class="alert alert-danger mt-2">
+                            <strong>{% trans "Başlık Hataları:" %}</strong>
+                            {{ topic_form.errors }}
+                        </div>
+                    {% endif %}
+                    {% if entry_form.errors %}
+                        <div class="alert alert-danger mt-2">
+                            <strong>{% trans "Entry Hataları:" %}</strong>
+                            {{ entry_form.errors }}
+                        </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="text-muted" id="charCount">10000</span>
+                        <button type="submit" class="btn btn-primary">{% trans "Başlık Aç" %}</button>
+                    </div>
+                </form>
             </div>
-            <div class="link-field form-group mb-2">
-                <label for="{{ form.link.id_for_label }}" class="form-label">Girêdan (bijarte)</label>
-                {{ form.link }}
-            </div>
-            {% if form.non_field_errors %}<div class="alert alert-danger mt-2">{{ form.non_field_errors }}</div>{% endif %}
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <span class="text-muted" id="charCount">10000</span>
-                <button type="submit" class="btn btn-primary">Parvekirin</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 <!-- Emoji Modal -->
@@ -32,8 +95,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="emojiModalLabel">Emojî</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
+                <h5 class="modal-title" id="emojiModalLabel">{% trans "Emoji" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
             </div>
             <div class="modal-body">
                 <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
@@ -45,14 +108,14 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="aiEnhanceToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto">Nivîsê Pêşve Bibe</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
+            <strong class="me-auto">{% trans "Yazıyı Geliştir" %}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="{% trans 'Kapat' %}"></button>
         </div>
         <div class="toast-body">
-            Ma hûn dixwazin nivîsê pêşve bibin?
+            {% trans "Yazıyı geliştirmek istiyor musunuz?" %}
             <div class="mt-2">
-                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">Erê</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Na</button>
+                <button type="button" class="btn btn-primary btn-sm" id="confirmEnhance">{% trans "Evet" %}</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">{% trans "Hayır" %}</button>
             </div>
         </div>
     </div>
@@ -61,117 +124,262 @@
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto">Agahî</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
+            <strong class="me-auto">{% trans "Bilgi" %}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="{% trans 'Kapat' %}"></button>
         </div>
         <div class="toast-body">
-            Girêdan hate kopîkirin!
+            {% trans "Bağlantı kopyalandı!" %}
         </div>
     </div>
 </div>
-<div class="post-container">
-    {% for post in posts %}
-        <div class="card mb-2 tweet-card fade-in" id="post-{{ post.id }}">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <p class="mb-1">
-                        <strong>{{ post.user.profile.nickname }}</strong> 
-                        <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
-                    </p>
-                    <div class="dropdown">
-                        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            {% if post.user == user %}
-                                <li>
-                                    <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
-                                        {% csrf_token %}
-                                        <button type="submit" class="dropdown-item text-danger">Jêbirin</button>
-                                    </form>
-                                </li>
+<!-- Sekme içeriği artık üst alanda -->
+
+<!-- Anasayfa -->
+<div class="tab-content {% if tab == 'following' %}d-none{% endif %}" id="home-tab">
+    <div class="topic-container">
+    {% for topic in topics %}
+        {% with first_entry=topic.entries.first %}
+            <div class="card mb-2 topic-card fade-in border-0" id="topic-{{ topic.id }}" style="box-shadow: none !important;">
+                <div class="card-body">
+                    <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                        <h5 class="card-title mb-2">{{ topic.title }}</h5>
+                    </a>
+                    <!-- Kategori Badges -->
+                    <div class="mb-2">
+                        {% for category in topic.categories.all %}
+                            <span class="badge rounded-pill bg-primary me-1 mb-1" style="font-size: 0.7rem;">{{ category.name }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {% if first_entry %}
+                    <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                        {% with truncated_content=first_entry.content|truncate_by_lines:10 %}
+                            {% if '[TRUNCATED]' in truncated_content or first_entry.content|length > 790 %}
+                                {% if '[TRUNCATED]' in truncated_content %}
+                                    {{ truncated_content|slice:":-12"|render_emojis|with_entry_font:first_entry|linebreaks }}
+                                {% else %}
+                                    {{ first_entry.content|slice:":790"|render_emojis|with_entry_font:first_entry|linebreaks }}
+                                {% endif %}
+                                <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...{% trans "devamını gör" %}</a>
+                            {% else %}
+                                {{ first_entry.content|render_emojis|with_entry_font:first_entry|linebreaks }}
                             {% endif %}
-                            <li>
-                                <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Ji nîşankirina cîhê derxistin{% else %}Têxistina nîşankirina cîhê{% endif %} hûn piştrast in?');" data-post-id="{{ post.id }}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="dropdown-item">
-                                        {% if request.user in post.bookmarks.all %}Ji Nîşankirina Cîhê Derxistin{% else %}Têxistina Nîşankirina Cîhê{% endif %}
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Girêdanê Kopî Bike</button>
-                            </li>
-                        </ul>
+                        {% endwith %}
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex justify-content-between align-items-end mt-3">
+                        <div class="vote-buttons d-flex gap-1 align-items-center">
+                            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                            </button>
+                            <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                            </button>
+                            <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
+                            {% if user.is_authenticated %}
+                                <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
+                                    <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                                </button>
+                            {% endif %}
+                            <div class="dropdown d-inline ms-2">
+                                <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-share"></i>
+                                </button>
+                                <ul class="dropdown-menu share-dropdown">
+                                    <li>
+                                        <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-twitter share-icon"></i>
+                                            {% trans "Twitter'da Paylaş" %}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-whatsapp share-icon"></i>
+                                            {% trans "WhatsApp'ta Paylaş" %}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-telegram share-icon"></i>
+                                            {% trans "Telegram'da Paylaş" %}
+                                        </button>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-link-45deg share-icon"></i>
+                                            {% trans "Linki Kopyala" %}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-hash share-icon"></i>
+                                            {% trans "Kodu Kopyala" %}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
+                                            <i class="bi bi-qr-code share-icon"></i>
+                                            {% trans "QR Kod" %}
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="text-end me-2">
+                                <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
+                                <small class="text-muted d-block">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-person text-white"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <h5>{{ post.title|default:'' }}</h5>
-                <div class="post-text">
-                    {% if post.text|length > 500 or post.text|count_lines > 15 %}
-                        <div class="text-preview"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
-                        <div class="full-text d-none"><p>{{ post.text|render_emojis|safe|linebreaks }}</p></div>
-                        <button class="btn btn-link text-primary p-0 show-less-btn d-none">Kêmtir bibîne</button>
-                    {% else %}
-                        <p>{{ post.text|render_emojis|safe|linebreaks }}</p>
-                    {% endif %}
-                </div>
-                {% if post.link %}
-                    <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
-                {% endif %}
-                {% if post.embed_code %}
-                    <div class="social-embed">{{ post.embed_code|safe }}</div>
-                {% endif %}
-                <div class="post-meta text-muted mt-2">
-                    <span>Ecibandin: {{ post.like_count }}</span> | 
-                    <span>Şîrove: {{ post.comments.count }}</span> | 
-                    <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
-                    <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
-                </div>
-                <div class="post-actions mt-2">
-                    <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
-                            <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
-                        </button>
-                    </form>
-                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="vote" value="up">
-                        <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
-                    </form>
-                    <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="vote" value="down">
-                        <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
-                    </form>
-                    <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                </div>
+            </div>
+            <div class="text-center mb-3">
+                <hr class="topic-divider">
+            </div>
+        {% endwith %}
+        {% empty %}
+            <p class="text-muted p-3">{% trans "Henüz hiç başlık açılmamış." %}</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Takip Ettiklerim -->
+{% if user.is_authenticated %}
+<div class="tab-content {% if not tab or tab != 'following' %}d-none{% endif %}" id="following-tab">
+    <div class="topic-container">
+        {% if tab == 'following' %}
+            {% if not topics %}
+                <p class="text-muted p-3">{% trans "Henüz kimseyi takip etmiyorsunuz veya takip ettikleriniz henüz başlık açmamış." %}</p>
+            {% else %}
+                {% for topic in topics %}
+                    {% with first_entry=topic.entries.first %}
+                        <div class="card mb-2 topic-card fade-in border-0" id="topic-{{ topic.id }}" style="box-shadow: none !important;">
+                            <div class="card-body">
+                                <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                                    <h5 class="card-title mb-1">{{ topic.title }}</h5>
+                                </a>
+
+                                {% if first_entry %}
+                                <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                                    {% if first_entry.content|length > 790 %}
+                                        {{ first_entry.content|slice:":790"|render_emojis|safe }}
+                                        <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...{% trans "devamını gör" %}</a>
+                                    {% else %}
+                                        {{ first_entry.content|render_emojis|safe }}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+
+                                <div class="d-flex justify-content-between align-items-end mt-3">
+                                    <div class="vote-buttons d-flex gap-1 align-items-center">
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                            <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                                        </button>
+                                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                            <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                                        </button>
+                                        <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
+                                        <div class="dropdown d-inline ms-2">
+                                            <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                                                <i class="bi bi-share"></i>
+                                            </button>
+                                            <ul class="dropdown-menu share-dropdown">
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-twitter share-icon"></i>
+                                                        {% trans "Twitter'da Paylaş" %}
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-whatsapp share-icon"></i>
+                                                        {% trans "WhatsApp'ta Paylaş" %}
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-telegram share-icon"></i>
+                                                        {% trans "Telegram'da Paylaş" %}
+                                                    </button>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-link-45deg share-icon"></i>
+                                                        {% trans "Linki Kopyala" %}
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-hash share-icon"></i>
+                                                        {% trans "Kodu Kopyala" %}
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
+                                                        <i class="bi bi-qr-code share-icon"></i>
+                                                        {% trans "QR Kod" %}
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-end me-2">
+                                            <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
+                                            <small class="text-muted d-block">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
+                                        </div>
+                                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <hr class="topic-divider">
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+
+
+<!-- Skeleton Loading -->
+<div id="loading" class="mt-3" style="display: none;">
+    {% for i in "123" %}
+    <div class="card mb-3 border-0">
+        <div class="card-body">
+            <div class="placeholder-glow">
+                <span class="placeholder col-8 mb-2"></span>
+                <span class="placeholder col-4 mb-3"></span>
+                <span class="placeholder col-12 mb-1"></span>
+                <span class="placeholder col-10 mb-1"></span>
+                <span class="placeholder col-6"></span>
             </div>
         </div>
-    {% empty %}
-        <p class="text-muted p-3">Hêj rexne tune.</p>
+    </div>
     {% endfor %}
 </div>
-<div id="loading" class="text-center mt-3" style="display: none;">Tê barkirin...</div>
-<button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Zêdetir Barkirin</button>
+<button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">{% trans "Daha Fazla Yükle" %}</button>
 <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
 
 <script type="module" src="{% static 'main/js/load-more.js' %}"></script>
-<script>
-    window.offset = 10;
-    window.hasMore = true;
-    window.loading = false;
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const textarea = document.querySelector('textarea[name="text"]');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = `${this.scrollHeight}px`;
-            const charCount = document.getElementById('charCount');
-            if (charCount) {
-                charCount.textContent = 10000 - this.value.length;
-            }
-        });
-    });
-</script>
+<script src="{% static 'main/js/home.js' %}"></script>
+<script src="{% static 'main/js/auto-links.js' %}"></script>
+<script src="{% static 'main/js/share.js' %}"></script>
+<script src="{% static 'main/js/bookmarks.js' %}"></script>
+<script src="{% static 'main/js/emoji-keyboard.js' %}"></script>
+{% endblock %}

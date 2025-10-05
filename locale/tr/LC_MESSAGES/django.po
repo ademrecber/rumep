@@ -3,64 +3,2674 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-05 22:04+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2025-10-01 23:19+0300\n"
+"PO-Revision-Date: 2025-01-08 00:30+0300\n"
+"Last-Translator: Rumep Team\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: .\main\templates\main\base.html:121
-msgid "Ana Sayfa"
+
+#: .\main\context_processors.py:27 .\main\context_processors.py:28
+#: .\main\models.py:221
+#, fuzzy
+#| msgid "Kullanıcılar"
+msgid "Kullanıcı"
+msgstr "Kullanıcılar"
+
+#: .\main\forms.py:12
+msgid "Bu alan boş olamaz."
+msgstr "Bu alan boş olamaz."
+
+#: .\main\forms.py:20 .\main\forms.py:38
+msgid "En fazla 3 kategori seçebilirsiniz."
+msgstr "En fazla 3 kategori seçebilirsiniz."
+
+#: .\main\forms.py:29
+msgid "Başlık başlığını girin..."
+msgstr "Başlık başlığını girin..."
+
+#: .\main\forms.py:44
+#, fuzzy
+#| msgid "Başlıklar"
+msgid "Başlık boş olamaz."
+msgstr "Başlıklar"
+
+#: .\main\forms.py:47
+#, fuzzy
+#| msgid "Başlık, entry, kullanıcı ara..."
+msgid "Başlık en az 3 karakter olmalıdır."
+msgstr "Başlık, entry, kullanıcı ara..."
+
+#: .\main\forms.py:52
+msgid "Başlık sadece harf ve sayı içerebilir. Geçersiz karakterler: {}"
 msgstr ""
 
-#: .\main\templates\main\base.html:124
-msgid "Popüler"
-msgstr ""
+#: .\main\forms.py:55
+msgid "Bu başlık zaten mevcut."
+msgstr "Bu başlık zaten mevcut."
 
-#: .\main\templates\main\base.html:127
-msgid "Popüler Değerlendirmeler"
-msgstr ""
+#: .\main\forms.py:65
+msgid "Entry'nizi yazın..."
+msgstr "Entry'nizi yazın..."
 
-#: .\main\templates\main\base.html:130
-msgid "Sözlük"
-msgstr ""
+#: .\main\forms.py:72 .\main\templates\main\home.html:69
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Bağlantı (isteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
 
-#: .\main\templates\main\base.html:133
-msgid "Kişiler"
-msgstr ""
+#: .\main\forms.py:80
+msgid "Entry içeriği boş olamaz."
+msgstr "Entry içeriği boş olamaz."
 
-#: .\main\templates\main\base.html:136
-msgid "Şarkı Sözleri"
-msgstr ""
+#: .\main\forms.py:83
+msgid "Entry en az 10 karakter olmalıdır."
+msgstr "Entry en az 10 karakter olmalıdır."
 
-#: .\main\templates\main\base.html:139
-msgid "Atasözü ve Deyimler"
-msgstr ""
+#: .\main\forms.py:90
+msgid "Seçiniz"
+msgstr "Seçiniz"
 
-#: .\main\templates\main\base.html:142
-msgid "Profil"
-msgstr ""
+#: .\main\forms.py:90 .\main\models.py:329
+#: .\main\templates\main\sozluk\sozluk.html:83
+#: .\main\templates\main\sozluk\sozluk.html:186
+#: .\main\templates\main\sozluk\sozluk_kelime.html:136
+msgid "İsim"
+msgstr "İsim"
 
-#: .\main\templates\main\base.html:159 .\main\templates\main\base.html:186
-msgid "Ara..."
-msgstr ""
+#: .\main\forms.py:90 .\main\models.py:330
+#: .\main\templates\main\sozluk\sozluk.html:84
+#: .\main\templates\main\sozluk\sozluk.html:187
+#: .\main\templates\main\sozluk\sozluk_kelime.html:137
+msgid "Fiil"
+msgstr "Fiil"
 
-#: .\main\templates\main\base.html:160 .\main\templates\main\base.html:187
+#: .\main\forms.py:90 .\main\models.py:331
+#: .\main\templates\main\sozluk\sozluk.html:85
+#: .\main\templates\main\sozluk\sozluk.html:188
+#: .\main\templates\main\sozluk\sozluk_kelime.html:138
+msgid "Sıfat"
+msgstr "Sıfat"
+
+#: .\main\forms.py:90 .\main\models.py:332
+#: .\main\templates\main\sozluk\sozluk.html:86
+#: .\main\templates\main\sozluk\sozluk.html:189
+#: .\main\templates\main\sozluk\sozluk_kelime.html:139
+msgid "Zarf"
+msgstr "Zarf"
+
+#: .\main\forms.py:99
+msgid "Kelimeyi yazın"
+msgstr "Kelimeyi yazın"
+
+#: .\main\forms.py:100
+msgid "Kelimenin detaylarını yazın"
+msgstr "Kelimenin detaylarını yazın"
+
+#: .\main\forms.py:106
+msgid "Kelime alanı zorunludur."
+msgstr "Kelime alanı zorunludur."
+
+#: .\main\forms.py:111
+msgid "Bu kelime zaten sözlükte mevcut, lütfen farklı bir kelime yazın."
+msgstr "Bu kelime zaten sözlükte mevcut, lütfen farklı bir kelime yazın."
+
+#: .\main\forms.py:119 .\main\forms.py:133 .\main\forms.py:169
+#: .\main\forms.py:374 .\main\forms.py:491
+#, fuzzy
+#| msgid "Ek Detaylar"
+msgid "Ek detayları yazın"
+msgstr "Ek Detaylar"
+
+#: .\main\forms.py:125 .\main\forms.py:139 .\main\forms.py:175
+#: .\main\forms.py:380 .\main\forms.py:497 .\main\models.py:350
+#: .\main\models.py:449
+msgid "Detay alanı zorunludur."
+msgstr "Detay alanı zorunludur."
+
+#: .\main\forms.py:147
+msgid "Kişinin adını yazın"
+msgstr "Kişinin adını yazın"
+
+#: .\main\forms.py:155
+msgid "Ad alanı zorunludur."
+msgstr "Ad alanı zorunludur."
+
+#: .\main\forms.py:161 .\main\models.py:411
+msgid "Biyografi alanı zorunludur."
+msgstr "Biyografi alanı zorunludur."
+
+#: .\main\forms.py:179
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Albüm yılı (isteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\forms.py:185
+msgid "Albüm adını yazın"
+msgstr "Albüm adını yazın"
+
+#: .\main\forms.py:191 .\main\models.py:481
+msgid "Albüm adı zorunludur."
+msgstr "Albüm adı zorunludur."
+
+#: .\main\forms.py:197 .\main\forms.py:260
+msgid "Tür Seçin"
+msgstr "Tür Seçin"
+
+#: .\main\forms.py:207 .\main\forms.py:269
+msgid "Şarkı adını yazın"
+msgstr "Şarkı adını yazın"
+
+#: .\main\forms.py:208 .\main\forms.py:270
+msgid "Şarkı sözlerini yazın"
+msgstr "Şarkı sözlerini yazın"
+
+#: .\main\forms.py:209 .\main\forms.py:271
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Şarkı bağlantısı (isteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\forms.py:224 .\main\forms.py:240 .\main\forms.py:277
+#: .\main\models.py:539
+msgid "Şarkı adı zorunludur."
+msgstr "Şarkı adı zorunludur."
+
+#: .\main\forms.py:226 .\main\forms.py:246
+msgid "Albüm seçimi zorunludur."
+msgstr "Albüm seçimi zorunludur."
+
+#: .\main\forms.py:228 .\main\forms.py:252 .\main\forms.py:289
+#: .\main\models.py:541
+msgid "Şarkı sözleri zorunludur."
+msgstr "Şarkı sözleri zorunludur."
+
+#: .\main\forms.py:234 .\main\forms.py:283
+msgid "Bu albümde aynı isimde bir şarkı zaten mevcut."
+msgstr "Bu albümde aynı isimde bir şarkı zaten mevcut."
+
+#: .\main\forms.py:254
+msgid "Şarkı sözleri 5000 karakterden uzun olamaz."
+msgstr "Şarkı sözleri 5000 karakterden uzun olamaz."
+
+#: .\main\forms.py:295 .\main\models.py:582 .\main\models.py:680
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:31
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+msgid "Atasözü"
+msgstr "Atasözü"
+
+#: .\main\forms.py:295 .\main\models.py:617 .\main\models.py:681
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:35
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:11
+msgid "Deyim"
+msgstr "Deyim"
+
+#: .\main\forms.py:297 .\main\templates\main\sozluk\sozluk.html:183
+#: .\main\templates\main\sozluk\sozluk_kelime.html:34
+#: .\main\templates\main\sozluk\sozluk_kelime.html:133
+msgid "Tür"
+msgstr "Tür"
+
+#: .\main\forms.py:301 .\main\forms.py:386
+msgid "Atasözü veya deyimi yazın"
+msgstr "Atasözü veya deyimi yazın"
+
+#: .\main\forms.py:302 .\main\forms.py:387
+#: .\main\templates\main\global_search.html:25
+msgid "Atasözü/Deyim"
+msgstr "Atasözü/Deyim"
+
+#: .\main\forms.py:306 .\main\forms.py:391
+msgid "Anlamı yazın"
+msgstr "Anlamı yazın"
+
+#: .\main\forms.py:307 .\main\forms.py:392
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:136
+msgid "Anlam"
+msgstr "Anlam"
+
+#: .\main\forms.py:312 .\main\forms.py:397
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Örnek kullanım (isteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\forms.py:313 .\main\forms.py:398
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:140
+msgid "Örnek"
+msgstr "Örnek"
+
+#: .\main\forms.py:319 .\main\forms.py:412
+msgid "Atasözü/Deyim alanı zorunludur."
+msgstr "Atasözü/Deyim alanı zorunludur."
+
+#: .\main\forms.py:322 .\main\forms.py:416 .\main\forms.py:421
+msgid "Bu atasözü zaten mevcut, lütfen farklı bir ifade yazın."
+msgstr "Bu atasözü zaten mevcut, lütfen farklı bir ifade yazın."
+
+#: .\main\forms.py:324 .\main\forms.py:418 .\main\forms.py:423
+msgid "Bu deyim zaten mevcut, lütfen farklı bir ifade yazın."
+msgstr "Bu deyim zaten mevcut, lütfen farklı bir ifade yazın."
+
+#: .\main\forms.py:341
+msgid "Kelime veya anlamı arayın..."
+msgstr "Kelime veya anlamı arayın..."
+
+#: .\main\forms.py:342 .\main\templates\main\advanced_search.html:6
+#: .\main\templates\main\advanced_search.html:7
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:75
+#: .\main\templates\main\base.html:111 .\main\templates\main\base.html:152
+#: .\main\templates\main\sozluk\sozluk.html:77
 msgid "Arama"
+msgstr "Arama"
+
+#: .\main\forms.py:347
+#, fuzzy
+#| msgid "Başlıklar"
+msgid "Başlangıç Tarihi"
+msgstr "Başlıklar"
+
+#: .\main\forms.py:352
+msgid "Bitiş Tarihi"
+msgstr "Bitiş Tarihi"
+
+#: .\main\forms.py:357
+#, fuzzy
+#| msgid "Başlık, entry, kullanıcı ara..."
+msgid "Ekleyen kullanıcı..."
+msgstr "Başlık, entry, kullanıcı ara..."
+
+#: .\main\forms.py:358
+#, fuzzy
+#| msgid "Kullanıcılar"
+msgid "Ekleyen Kullanıcı"
+msgstr "Kullanıcılar"
+
+#: .\main\forms.py:442
+msgid "Yer adını yazın"
+msgstr "Yer adını yazın"
+
+#: .\main\forms.py:443
+msgid "Yer hakkında detay yazın"
+msgstr "Yer hakkında detay yazın"
+
+#: .\main\forms.py:446
+msgid "Enlem (örnek: 37.7749)"
+msgstr "Enlem (örnek: 37.7749)"
+
+#: .\main\forms.py:447
+msgid "Boylam (örnek: 40.7128)"
+msgstr "Boylam (örnek: 40.7128)"
+
+#: .\main\forms.py:458 .\main\models.py:776
+msgid "Yer adı alanı zorunludur."
+msgstr "Yer adı alanı zorunludur."
+
+#: .\main\forms.py:460 .\main\models.py:778
+msgid ""
+"Yer adı sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+msgstr ""
+"Yer adı sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+
+#: .\main\forms.py:464
+msgid "Bu yer adı zaten mevcut, devam etmek istiyor musunuz?"
+msgstr "Bu yer adı zaten mevcut, devam etmek istiyor musunuz?"
+
+#: .\main\forms.py:474
+msgid "Enlem ve boylam birlikte yazılmalıdır."
+msgstr "Enlem ve boylam birlikte yazılmalıdır."
+
+#: .\main\forms.py:476 .\main\models.py:780
+msgid "Şehir dışındaki kategoriler için ilgili yer seçilmelidir."
+msgstr "Şehir dışındaki kategoriler için ilgili yer seçilmelidir."
+
+#: .\main\forms.py:478 .\main\models.py:782
+msgid "Şehir kategorisi için ilgili yer seçilmez."
+msgstr "Şehir kategorisi için ilgili yer seçilmez."
+
+#: .\main\forms.py:481 .\main\models.py:785
+msgid "İlçe sadece bir şehirle bağlantılı olabilir."
+msgstr "İlçe sadece bir şehirle bağlantılı olabilir."
+
+#: .\main\forms.py:483 .\main\models.py:787
+msgid "Kasaba, belde veya köy sadece şehir veya ilçe ile bağlantılı olabilir."
+msgstr "Kasaba, belde veya köy sadece şehir veya ilçe ile bağlantılı olabilir."
+
+#: .\main\gamification.py:8
+#, fuzzy
+#| msgid "Entry"
+msgid "İlk Entry"
+msgstr "Entry"
+
+#: .\main\gamification.py:9
+msgid "Popüler Yazar"
 msgstr ""
 
+#: .\main\gamification.py:10
+msgid "Günlük Aktif"
+msgstr ""
+
+#: .\main\gamification.py:11
+#, fuzzy
+#| msgid "Yardım"
+msgid "Yardımsever"
+msgstr "Yardım"
+
+#: .\main\gamification.py:12
+#, fuzzy
+#| msgid "Kürtçe"
+msgid "Kürtçe Uzmanı"
+msgstr "Kürtçe"
+
+#: .\main\gamification.py:13
+msgid "Topluluk Kurucusu"
+msgstr ""
+
+#: .\main\gamification.py:41
+#, fuzzy
+#| msgid "Entry"
+msgid "Entry Yaz"
+msgstr "Entry"
+
+#: .\main\gamification.py:42
+#, fuzzy
+#| msgid "İçerik"
+msgid "İçerik Oyla"
+msgstr "İçerik"
+
+#: .\main\gamification.py:43 .\main\templates\main\sozluk\sozluk.html:58
+#: .\main\templates\main\sozluk\sozluk_harf.html:26
+msgid "Kelime Ekle"
+msgstr "Kelime Ekle"
+
+#: .\main\gamification.py:44
+#, fuzzy
+#| msgid "Giriş Yap"
+msgid "Çeviri Yap"
+msgstr "Giriş Yap"
+
+#: .\main\gamification.py:78
+msgid "Günlük"
+msgstr ""
+
+#: .\main\gamification.py:79
+msgid "Haftalık"
+msgstr ""
+
+#: .\main\gamification.py:80
+msgid "Aylık"
+msgstr ""
+
+#: .\main\gamification.py:81
+#, fuzzy
+#| msgid "Tüm zamanlar"
+msgid "Tüm Zamanlar"
+msgstr "Tüm zamanlar"
+
+#: .\main\mixins.py:10
+#, fuzzy
+#| msgid "Ad alanı zorunludur."
+msgid "Bu alan zorunludur."
+msgstr "Ad alanı zorunludur."
+
+#: .\main\mixins.py:14
+#, fuzzy
+#| msgid "Ad sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+msgid ""
+"Bu alan sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+msgstr "Ad sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+
+#: .\main\models.py:22
+msgid ""
+"Başlık sadece harf, rakam, boşluk ve temel noktalama işaretleri içerebilir. "
+"Emoji ve özel karakterler kullanılamaz."
+msgstr ""
+
+#: .\main\models.py:36 .\main\models.py:750
+#: .\main\templates\main\kisi\kisi_detay.html:54
+#: .\main\templates\main\kisi\kisi_detay.html:176
+#: .\main\templates\main\kisi\kisi_ekle.html:60
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:166
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:82
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:191
+#: .\main\templates\main\yer_adlari\yer_adlari.html:99
+msgid "Kategori"
+msgstr "Kategori"
+
+#: .\main\models.py:37 .\main\templates\main\categories.html:5
+#: .\main\templates\main\categories.html:7
+#: .\main\templates\main\category_detail.html:5
+#: .\main\templates\main\popular\popular.html:18
+msgid "Kategoriler"
+msgstr "Kategoriler"
+
+#: .\main\models.py:46
+msgid "Bilim"
+msgstr "Bilim"
+
+#: .\main\models.py:47
+msgid "Eğitim"
+msgstr "Eğitim"
+
+#: .\main\models.py:48
+#, fuzzy
+#| msgid "Sanatçı"
+msgid "Sanat"
+msgstr "Sanat"
+
+#: .\main\models.py:49
+msgid "Siyaset"
+msgstr "Siyaset"
+
+#: .\main\models.py:50
+msgid "Spor"
+msgstr "Spor"
+
+#: .\main\models.py:51
+msgid "Teknoloji"
+msgstr "Teknoloji"
+
+#: .\main\models.py:85 .\main\templates\main\edit_topic.html:12
+#: .\main\templates\main\home.html:41
+msgid "Başlık"
+msgstr "Başlık"
+
+#: .\main\models.py:86 .\main\templates\main\advanced_search.html:25
+#: .\main\templates\main\advanced_search.html:54
+#: .\main\templates\main\global_search.html:27
+#: .\main\templates\main\global_search.html:170
+#: .\main\templates\main\popular\popular.html:12
+#: .\main\templates\main\profile.html:85 .\main\templates\main\profile.html:210
+#: .\main\templates\main\profile_detail.html:244
+msgid "Başlıklar"
+msgstr "Başlıklar"
+
+#: .\main\models.py:164 .\main\templates\main\home.html:60
+msgid "Entry"
+msgstr "Entry"
+
+#: .\main\models.py:165 .\main\templates\main\advanced_search.html:26
+#: .\main\templates\main\advanced_search.html:77
+#: .\main\templates\main\popular\popular.html:15
+#: .\main\templates\main\profile.html:81 .\main\templates\main\profile.html:206
+#: .\main\templates\main\profile_detail.html:241
+#, fuzzy
+#| msgid "Entry"
+msgid "Entry'ler"
+msgstr "Entry"
+
+#: .\main\models.py:222
+msgid "Yazar"
+msgstr ""
+
+#: .\main\models.py:223
+msgid "Moderatör"
+msgstr ""
+
+#: .\main\models.py:224
+msgid "Admin"
+msgstr ""
+
+#: .\main\models.py:225
+msgid "Süper Admin"
+msgstr ""
+
+#: .\main\models.py:238
+#, fuzzy
+#| msgid "Kullanıcılar"
+msgid "Kullanıcı Rolü"
+msgstr "Kullanıcılar"
+
+#: .\main\models.py:244 .\main\models.py:712 .\main\models.py:722
+#: .\main\templates\main\profile.html:462
+msgid "Aktif"
+msgstr "Aktif"
+
+#: .\main\models.py:245 .\main\templates\main\profile.html:464
+msgid "Dondurulmuş"
+msgstr "Dondurulmuş"
+
+#: .\main\models.py:246 .\main\templates\main\profile.html:466
+msgid "Silinme Planlandı"
+msgstr "Silinme Planlandı"
+
+#: .\main\models.py:254 .\main\templates\main\profile.html:402
+msgid "Türkçe"
+msgstr "Türkçe"
+
+#: .\main\models.py:255 .\main\templates\main\profile.html:403
+msgid "Kürtçe"
+msgstr "Kürtçe"
+
+#: .\main\models.py:256 .\main\templates\main\profile.html:404
+msgid "İngilizce"
+msgstr "İngilizce"
+
+#: .\main\models.py:265
+msgid "Kullanıcı adı sadece harf, rakam ve alt çizgi içerebilir."
+msgstr "Kullanıcı adı sadece harf, rakam ve alt çizgi içerebilir."
+
+#: .\main\models.py:267
+msgid "İsim sadece harf, rakam, alt çizgi ve boşluk içerebilir."
+msgstr "İsim sadece harf, rakam, alt çizgi ve boşluk içerebilir."
+
+#: .\main\models.py:333
+msgid "Beyanvan"
+msgstr "Beyanvan"
+
+#: .\main\models.py:334 .\main\models.py:335
+msgid "Bağlaç"
+msgstr "Bağlaç"
+
+#: .\main\models.py:336
+msgid "Ünlem"
+msgstr "Ünlem"
+
+#: .\main\models.py:343 .\main\models.py:344 .\main\models.py:679
+#: .\main\templates\main\base.html:125 .\main\templates\main\base.html:177
+#: .\main\templates\main\global_search.html:22
+#: .\main\templates\main\global_search.html:80
+#: .\main\templates\main\sozluk\sozluk.html:6
+msgid "Sözlük"
+msgstr "Sözlük"
+
+#: .\main\models.py:348
+msgid ""
+"Kelime sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+msgstr ""
+"Kelime sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+
+#: .\main\models.py:404 .\main\models.py:678
+#, fuzzy
+#| msgid "Kişiler"
+msgid "Kişi"
+msgstr "Kişiler"
+
+#: .\main\models.py:405 .\main\templates\main\base.html:128
+#: .\main\templates\main\base.html:180
+#: .\main\templates\main\global_search.html:23
+#: .\main\templates\main\global_search.html:98
+#: .\main\templates\main\kisi\kisi_detay.html:16
+#: .\main\templates\main\kisi\kisi_ekle.html:16
+#: .\main\templates\main\kisi\kisi_liste.html:4
+#: .\main\templates\main\kisi\kisi_liste.html:5
+#: .\main\templates\main\kisi\kisi_liste.html:14
+#: .\main\templates\main\kisi\kisi_liste.html:98
+msgid "Kişiler"
+msgstr "Kişiler"
+
+#: .\main\models.py:409
+msgid "Ad sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+msgstr "Ad sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk)."
+
+#: .\main\models.py:444
+#, fuzzy
+#| msgid "Kişi Adı"
+msgid "Kişi Detayı"
+msgstr "Kişi Adı"
+
+#: .\main\models.py:445
+#, fuzzy
+#| msgid "Ek Detaylar"
+msgid "Kişi Detayları"
+msgstr "Ek Detaylar"
+
+#: .\main\models.py:471
+msgid "Albüm Yılı"
+msgstr "Albüm Yılı"
+
+#: .\main\models.py:475 .\main\templates\main\sarki\sarki_detay.html:179
+msgid "Albüm"
+msgstr "Albüm"
+
+#: .\main\models.py:476 .\main\templates\main\sarki\album_liste.html:10
+msgid "Albümler"
+msgstr "Albümler"
+
+#: .\main\models.py:507
+msgid "Klasik"
+msgstr "Klasik"
+
+#: .\main\models.py:508
+msgid "Arabesk"
+msgstr "Arabesk"
+
+#: .\main\models.py:509
+msgid "Dengbej"
+msgstr "Dengbej"
+
+#: .\main\models.py:510
+msgid "Halk Müziği"
+msgstr "Halk Müziği"
+
+#: .\main\models.py:518
+msgid "Elektronik"
+msgstr "Elektronik"
+
+#: .\main\models.py:522
+msgid "Dini Müzik"
+msgstr "Dini Müzik"
+
+#: .\main\models.py:523
+msgid "Film Müziği"
+msgstr "Film Müziği"
+
+#: .\main\models.py:524
+msgid "Çocuk Müziği"
+msgstr "Çocuk Müziği"
+
+#: .\main\models.py:525
+msgid "Enstrümantal"
+msgstr "Enstrümantal"
+
+#: .\main\models.py:526
+msgid "Deneysel"
+msgstr "Deneysel"
+
+#: .\main\models.py:534
+msgid "Şarkı"
+msgstr "Şarkı"
+
+#: .\main\models.py:535 .\main\templates\main\global_search.html:24
+#: .\main\templates\main\global_search.html:116
+#: .\main\templates\main\sarki\sarki_liste.html:11
+msgid "Şarkılar"
+msgstr "Şarkılar"
+
+#: .\main\models.py:567
+#, fuzzy
+#| msgid "Ek Detay"
+msgid "Şarkı Detayı"
+msgstr "Ek Detay"
+
+#: .\main\models.py:568
+#, fuzzy
+#| msgid "Ek Detaylar"
+msgid "Şarkı Detayları"
+msgstr "Ek Detaylar"
+
+#: .\main\models.py:583
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:53
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:127
+#: .\main\templates\main\profile_detail.html:167
+msgid "Atasözleri"
+msgstr "Atasözleri"
+
+#: .\main\models.py:587
+msgid "Atasözü alanı zorunludur."
+msgstr "Atasözü alanı zorunludur."
+
+#: .\main\models.py:589 .\main\models.py:624
+msgid "Anlam alanı zorunludur."
+msgstr "Anlam alanı zorunludur."
+
+#: .\main\models.py:618
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:59
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:127
+#: .\main\templates\main\profile_detail.html:182
+msgid "Deyimler"
+msgstr "Deyimler"
+
+#: .\main\models.py:622
+msgid "Deyim alanı zorunludur."
+msgstr "Deyim alanı zorunludur."
+
+#: .\main\models.py:652
+msgid "Atasözü/Deyim Detayı"
+msgstr "Atasözü/Deyim Detayı"
+
+#: .\main\models.py:653
+msgid "Atasözü/Deyim Detayları"
+msgstr "Atasözü/Deyim Detayları"
+
+#: .\main\models.py:657
+msgid "Atasözü ve deyim birlikte belirtilemez."
+msgstr "Atasözü ve deyim birlikte belirtilemez."
+
+#: .\main\models.py:659
+msgid "Atasözü veya deyimden biri belirtilmelidir."
+msgstr "Atasözü veya deyimden biri belirtilmelidir."
+
+#: .\main\models.py:677 .\main\templates\main\base.html:183
+#: .\main\templates\main\profile_detail.html:152
+#: .\main\templates\main\sarki\album_liste.html:4
+#: .\main\templates\main\sarki\sarki_detay.html:4
+#: .\main\templates\main\sarki\sarki_detay.html:16
+#: .\main\templates\main\sarki\sarki_detay.html:93
+#: .\main\templates\main\sarki\sarki_ekle.html:62
+#: .\main\templates\main\sarki\sarki_liste.html:4
+#: .\main\templates\main\sarki\sarki_liste.html:5
+#: .\main\templates\main\sarki\sarki_sozleri.html:4
+#: .\main\templates\main\sarki\sarki_sozleri.html:5
+#: .\main\templates\main\sarki\sarki_sozleri.html:14
+msgid "Şarkı Sözleri"
+msgstr "Şarkı Sözleri"
+
+#: .\main\models.py:682 .\main\models.py:771
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:72
+msgid "Yer Adı"
+msgstr "Yer Adı"
+
+#: .\main\models.py:691
+msgid "Katkı"
+msgstr "Katkı"
+
+#: .\main\models.py:692
+#, fuzzy
+#| msgid "Kullanıcılar"
+msgid "Katkılar"
+msgstr "Kullanıcılar"
+
+#: .\main\models.py:710
+msgid "AI Sağlayıcısı"
+msgstr "AI Sağlayıcısı"
+
+#: .\main\models.py:713
+msgid "API Anahtarı"
+msgstr "API Anahtarı"
+
+#: .\main\models.py:714
+msgid "Oluşturulma Tarihi"
+msgstr "Oluşturulma Tarihi"
+
+#: .\main\models.py:715
+#, fuzzy
+#| msgid "Eklenme Tarihi"
+msgid "Güncelleme Tarihi"
+msgstr "Eklenme Tarihi"
+
+#: .\main\models.py:718
+msgid "AI Sağlayıcı Yapılandırması"
+msgstr "AI Sağlayıcı Yapılandırması"
+
+#: .\main\models.py:719
+msgid "AI Sağlayıcı Yapılandırmaları"
+msgstr "AI Sağlayıcı Yapılandırmaları"
+
+#: .\main\models.py:722
+msgid "Pasif"
+msgstr "Pasif"
+
+#: .\main\models.py:744
+msgid "İl/Şehir"
+msgstr "İl/Şehir"
+
+#: .\main\models.py:745
+msgid "İlçe"
+msgstr "İlçe"
+
+#: .\main\models.py:746
+msgid "Kasaba"
+msgstr "Kasaba"
+
+#: .\main\models.py:747
+msgid "Belde"
+msgstr "Belde"
+
+#: .\main\models.py:748
+msgid "Köy"
+msgstr "Köy"
+
+#: .\main\models.py:760 .\main\templates\main\yer_adlari\yer_adi_ekle.html:104
+msgid "Kürdistan Bölgesi"
+msgstr "Kürdistan Bölgesi"
+
+#: .\main\models.py:762 .\main\templates\main\yer_adlari\yer_adi_ekle.html:126
+msgid "Enlem"
+msgstr "Enlem"
+
+#: .\main\models.py:763 .\main\templates\main\yer_adlari\yer_adi_ekle.html:136
+msgid "Boylam"
+msgstr "Boylam"
+
+#: .\main\models.py:767
+msgid "İlgili Yer"
+msgstr "İlgili Yer"
+
+#: .\main\models.py:772 .\main\templates\main\base.html:189
+#: .\main\templates\main\global_search.html:26
+#: .\main\templates\main\global_search.html:152
+#: .\main\templates\main\profile_detail.html:212
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:16
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:16
+#: .\main\templates\main\yer_adlari\yer_adlari.html:5
+#: .\main\templates\main\yer_adlari\yer_adlari.html:6
+#: .\main\templates\main\yer_adlari\yer_adlari.html:16
+msgid "Yer Adları"
+msgstr "Yer Adları"
+
+#: .\main\models.py:814
+msgid "Yer Adı Detayı"
+msgstr "Yer Adı Detayı"
+
+#: .\main\models.py:815
+#, fuzzy
+#| msgid "Ek Detaylar"
+msgid "Yer Adı Detayları"
+msgstr "Ek Detaylar"
+
+#: .\main\templates\main\advanced_search.html:15
+msgid "Başlık, entry, kullanıcı ara..."
+msgstr "Başlık, entry, kullanıcı ara..."
+
+#: .\main\templates\main\advanced_search.html:17
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:22
+#: .\main\templates\main\base.html:366
+#: .\main\templates\main\sozluk\sozluk.html:90
+msgid "Ara"
+msgstr "Ara"
+
+#: .\main\templates\main\advanced_search.html:24
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:109
+#: .\main\templates\main\kisi\kisi_liste.html:80
+#: .\main\templates\main\sarki\sarki_sozleri.html:74
+#: .\main\templates\main\sozluk\sozluk.html:109
+#: .\main\templates\main\yer_adlari\yer_adlari.html:91
+msgid "Tümü"
+msgstr "Tümü"
+
+#: .\main\templates\main\advanced_search.html:27
+#: .\main\templates\main\advanced_search.html:103
+msgid "Kullanıcılar"
+msgstr "Kullanıcılar"
+
+#: .\main\templates\main\advanced_search.html:28
+#: .\main\templates\main\advanced_search.html:128
+msgid "Hashtag'ler"
+msgstr "Hashtag'ler"
+
+#: .\main\templates\main\advanced_search.html:31
+msgid "Tüm zamanlar"
+msgstr "Tüm zamanlar"
+
+#: .\main\templates\main\advanced_search.html:32
+msgid "Bugün"
+msgstr "Bugün"
+
+#: .\main\templates\main\advanced_search.html:33
+msgid "Bu hafta"
+msgstr "Bu hafta"
+
+#: .\main\templates\main\advanced_search.html:34
+msgid "Bu ay"
+msgstr "Bu ay"
+
+#: .\main\templates\main\advanced_search.html:35
+msgid "Bu yıl"
+msgstr "Bu yıl"
+
+#: .\main\templates\main\advanced_search.html:38
+msgid "Kullanıcı filtrele..."
+msgstr "Kullanıcı filtrele..."
+
+#: .\main\templates\main\advanced_search.html:39
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:93
+msgid "Filtrele"
+msgstr "Filtrele"
+
+#: .\main\templates\main\advanced_search.html:48
+#, python-format
+msgid "\"%(query)s\" için %(total_count)s sonuç bulundu"
+msgstr "\"%(query)s\" için %(total_count)s sonuç bulundu"
+
+#: .\main\templates\main\advanced_search.html:64
+#: .\main\templates\main\category_detail.html:42
+#: .\main\templates\main\home.html:180 .\main\templates\main\home.html:289
+#: .\main\templates\main\popular\popular.html:61
+#: .\main\templates\main\profile_detail.html:27
+#: .\main\templates\main\profile_detail.html:120
+#: .\main\templates\main\profile_detail.html:288
+#: .\main\templates\main\topic_detail.html:38
+#, fuzzy
+#| msgid "Entry"
+msgid "entry"
+msgstr "Entry"
+
+#: .\main\templates\main\advanced_search.html:137
+msgid "kullanım"
+msgstr "kullanım"
+
+#: .\main\templates\main\advanced_search.html:149
+#: .\main\templates\main\global_search.html:186
+msgid "Sonuç bulunamadı"
+msgstr "Sonuç bulunamadı"
+
+#: .\main\templates\main\advanced_search.html:150
+msgid "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+msgstr "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+
+#: .\main\templates\main\advanced_search.html:160
+#: .\main\templates\main\global_search.html:43
+msgid "Arama İpuçları"
+msgstr "Arama İpuçları"
+
+#: .\main\templates\main\advanced_search.html:162
+msgid "Kullanıcı ara"
+msgstr "Kullanıcı ara"
+
+#: .\main\templates\main\advanced_search.html:163
+msgid "Hashtag ara"
+msgstr "Hashtag ara"
+
+#: .\main\templates\main\advanced_search.html:164
+msgid "Tam eşleşme"
+msgstr "Tam eşleşme"
+
+#: .\main\templates\main\advanced_search.html:170
+msgid "Filtreler"
+msgstr "Filtreler"
+
+#: .\main\templates\main\advanced_search.html:172
+msgid "Tarih aralığı seçin"
+msgstr "Tarih aralığı seçin"
+
+#: .\main\templates\main\advanced_search.html:173
+msgid "İçerik türünü belirleyin"
+msgstr "İçerik türünü belirleyin"
+
+#: .\main\templates\main\advanced_search.html:174
+msgid "Kullanıcıya göre filtreleyin"
+msgstr "Kullanıcıya göre filtreleyin"
+
+#: .\main\templates\main\agenda.html:5 .\main\templates\main\base.html:108
+#: .\main\templates\main\base.html:149 .\main\templates\main\base.html:362
+#: .\main\templates\main\popular\popular.html:5
+#: .\main\templates\main\popular\popular.html:7
+msgid "Gündem"
+msgstr "Gündem"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:4
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:5
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:14
+#: .\main\templates\main\base.html:186
+#: .\main\templates\main\global_search.html:134
+msgid "Atasözü ve Deyimler"
+msgstr "Atasözü ve Deyimler"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:16
+msgid "Geleneksel atasözleri ve deyimleri keşfedin, yenilerini ekleyin"
+msgstr "Geleneksel atasözleri ve deyimleri keşfedin, yenilerini ekleyin"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:19
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:20
+msgid "Yeni Ekle"
+msgstr "Yeni Ekle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:81
+#, fuzzy
+#| msgid "Başlık"
+msgid "Başlangıç"
+msgstr "Başlık"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:87
+msgid "Bitiş"
+msgstr "Bitiş"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:143
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:201
+msgid "harfi ile başlayanlar"
+msgstr "harfi ile başlayanlar"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:186
+#, fuzzy
+#| msgid "Sonuç bulunamadı"
+msgid "Deyim bulunamadı"
+msgstr "Sonuç bulunamadı"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:187
+msgid "Bu harfle başlayan deyim bulunamadı."
+msgstr "Bu harfle başlayan deyim bulunamadı."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:189
+#, fuzzy
+#| msgid "Detay Ekle"
+msgid "Deyim Ekle"
+msgstr "Detay Ekle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:244
+#, fuzzy
+#| msgid "Sonuç bulunamadı"
+msgid "Atasözü bulunamadı"
+msgstr "Sonuç bulunamadı"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:245
+msgid "Bu harfle başlayan atasözü bulunamadı."
+msgstr "Bu harfle başlayan atasözü bulunamadı."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:247
+msgid "Atasözü Ekle"
+msgstr "Atasözü Ekle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:274
+#, fuzzy
+#| msgid "Bu entry'yi silmek istediğinizden emin misiniz?"
+msgid "Bu deyimi silmek istediğinizden emin misiniz?"
+msgstr "Bu entry'yi silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:274
+#, fuzzy
+#| msgid "Bu entry'yi silmek istediğinizden emin misiniz?"
+msgid "Bu atasözünü silmek istediğinizden emin misiniz?"
+msgstr "Bu entry'yi silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim.html:292
+msgid "Modül yükleme hatası:"
+msgstr "Modül yükleme hatası:"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:14
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:15
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:53
+#: .\main\templates\main\profile.html:56 .\main\templates\main\profile.html:129
+#: .\main\templates\main\profile.html:329
+#: .\main\templates\main\sarki\sarki_detay.html:49
+#: .\main\templates\main\sozluk\sozluk_harf.html:64
+#: .\main\templates\main\sozluk\sozluk_kelime.html:27
+#: .\main\templates\main\sozluk\sozluk_kelime.html:57
+#: .\main\templates\main\sozluk\sozluk_kelime.html:100
+#: .\main\templates\main\topic_detail.html:48
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:49
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:20
+#: .\main\templates\main\yer_adlari\yer_adlari.html:183
+msgid "Düzenle"
+msgstr ""
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:19
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:20
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:56
+#: .\main\templates\main\profile.html:130
+#: .\main\templates\main\profile.html:330
+#: .\main\templates\main\sarki\album_liste.html:23
+#: .\main\templates\main\sarki\sarki_detay.html:61
+#: .\main\templates\main\sozluk\sozluk_harf.html:67
+#: .\main\templates\main\sozluk\sozluk_kelime.html:58
+#: .\main\templates\main\sozluk\sozluk_kelime.html:101
+#: .\main\templates\main\topic_detail.html:49
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:55
+#: .\main\templates\main\yer_adlari\yer_adlari.html:190
+msgid "Sil"
+msgstr ""
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:26
+msgid "Anlam:"
+msgstr "Anlam:"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:28
+msgid "Örnek:"
+msgstr "Örnek:"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:30
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:49
+#: .\main\templates\main\sozluk\sozluk_kelime.html:53
+#: .\main\templates\main\sozluk\sozluk_kelime.html:96
+msgid "Ekleyen:"
+msgstr "Ekleyen:"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:30
+msgid "Tarih:"
+msgstr "Tarih:"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:38
+#: .\main\templates\main\kisi\kisi_detay.html:111
+#: .\main\templates\main\sarki\sarki_detay.html:113
+msgid "Ek Detaylar"
+msgstr "Ek Detaylar"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:40
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:76
+#: .\main\templates\main\kisi\kisi_detay.html:93
+msgid "Detay Ekle"
+msgstr "Detay Ekle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:64
+#: .\main\templates\main\kisi\kisi_detay.html:152
+msgid "Henüz ek detay eklenmemiş."
+msgstr "Henüz ek detay eklenmemiş."
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:77
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:101
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:124
+#: .\main\templates\main\base.html:140 .\main\templates\main\home.html:34
+#: .\main\templates\main\home.html:99 .\main\templates\main\home.html:112
+#: .\main\templates\main\home.html:128
+#: .\main\templates\main\sarki\album_degistir_form.html:7
+#: .\main\templates\main\sozluk\sozluk.html:154
+#: .\main\templates\main\sozluk\sozluk_harf.html:88
+#: .\main\templates\main\sozluk\sozluk_kelime.html:119
+#: .\main\templates\main\sozluk\sozluk_kelime.html:156
+#: .\main\templates\main\topic_detail.html:240
+msgid "Kapat"
+msgstr ""
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:85
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:108
+#: .\main\templates\main\kisi\kisi_detay.html:217
+msgid "Detay"
+msgstr "Detay"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:88
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:165
+msgid "Ekle"
+msgstr "Ekle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:100
+#: .\main\templates\main\kisi\kisi_detay.html:210
+msgid "Detayı Düzenle"
+msgstr "Detayı Düzenle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:111
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:143
+#: .\main\templates\main\edit_entry.html:33
+#: .\main\templates\main\edit_topic.html:19
+#: .\main\templates\main\kisi\kisi_detay.html:221
+#: .\main\templates\main\profile.html:407
+#: .\main\templates\main\profile.html:439
+#: .\main\templates\main\sozluk\sozluk.html:196
+#: .\main\templates\main\sozluk\sozluk_harf.html:102
+#: .\main\templates\main\sozluk\sozluk_kelime.html:143
+#: .\main\templates\main\sozluk\sozluk_kelime.html:166
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:165
+msgid "Kaydet"
+msgstr "Kaydet"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:123
+msgid "Atasözünü Düzenle"
+msgstr "Atasözünü Düzenle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:123
+#, fuzzy
+#| msgid "Detayı Düzenle"
+msgid "Deyimi Düzenle"
+msgstr "Detayı Düzenle"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_detay.html:132
+#: .\main\templates\main\sozluk\sozluk.html:160
+#: .\main\templates\main\sozluk\sozluk_harf.html:94
+#: .\main\templates\main\sozluk\sozluk_kelime.html:125
+msgid "Kelime"
+msgstr "Kelime"
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:4
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:7
+msgid "Gotina Pêşiyan an Îdîom Lê Zêde Bike"
+msgstr ""
+
+#: .\main\templates\main\atasozu_deyim\atasozu_deyim_ekle.html:14
+msgid "Lê Zêde Bike"
+msgstr ""
+
+#: .\main\templates\main\base.html:105 .\main\templates\main\base.html:358
+#: .\main\templates\main\home.html:6
+msgid "Ana Sayfa"
+msgstr "Ana Sayfa"
+
+#: .\main\templates\main\base.html:115 .\main\templates\main\base.html:156
+#: .\main\templates\main\base.html:377 .\main\templates\main\profile.html:6
+#: .\main\templates\main\profile_detail.html:5
+#, fuzzy
+#| msgid "Profîl"
+msgid "Profil"
+msgstr "Profil"
+
+#: .\main\templates\main\base.html:117 .\main\templates\main\base.html:158
+#: .\main\templates\main\login.html:78
+msgid "Giriş Yap"
+msgstr "Giriş Yap"
+
+#: .\main\templates\main\base.html:121 .\main\templates\main\base.html:164
 #: .\main\templates\main\base.html:172
-msgid "Geri dön"
+#: .\main\templates\main\notifications.html:4
+#: .\main\templates\main\notifications.html:5
+msgid "Bildirimler"
+msgstr "Bildirimler"
+
+#: .\main\templates\main\base.html:146
+msgid "Rûpela Sereke"
+msgstr "Ana Sayfa"
+
+#: .\main\templates\main\base.html:196 .\main\templates\main\home.html:86
+#, fuzzy
+#| msgid "Başlık"
+msgid "Başlık Aç"
+msgstr "Başlık"
+
+#: .\main\templates\main\base.html:219
+#: .\main\templates\main\kisi\kisi_ekle.html:84
+#: .\main\templates\main\topic_detail.html:12
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:168
+msgid "Geri Dön"
+msgstr "Geri Dön"
+
+#: .\main\templates\main\base.html:233
+#, fuzzy
+#| msgid "Başlıklar"
+msgid "Popüler Başlıklar"
+msgstr "Başlıklar"
+
+#: .\main\templates\main\base.html:246
+#, fuzzy
+#| msgid "Henüz gündem başlığı yok."
+msgid "Henüz popüler başlık yok"
+msgstr "Henüz gündem başlığı yok."
+
+#: .\main\templates\main\base.html:250 .\main\templates\main\base.html:279
+#, fuzzy
+#| msgid "Daha Fazla Yükle"
+msgid "Daha Fazla Göster"
+msgstr "Daha Fazla Yükle"
+
+#: .\main\templates\main\base.html:258
+msgid "Aktif Yazarlar"
 msgstr ""
 
-#: .\main\templates\main\base.html:199
+#: .\main\templates\main\base.html:271
+#, fuzzy
+#| msgid "takip et"
+msgid "Takip Et"
+msgstr "takip et"
+
+#: .\main\templates\main\base.html:275
+#, fuzzy
+#| msgid "Henüz kategori yok."
+msgid "Henüz aktif yazar yok"
+msgstr "Henüz kategori yok."
+
+#: .\main\templates\main\base.html:288
 msgid "En Çok Katkı Sağlayanlar"
+msgstr "En Çok Katkı Sağlayanlar"
+
+#: .\main\templates\main\base.html:311
+#: .\main\templates\main\kisi\kisi_ekle.html:97
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:181
+msgid "Yardım"
+msgstr "Yardım"
+
+#: .\main\templates\main\base.html:316
+#, fuzzy
+#| msgid "Henüz başlık açmamış."
+msgid "Nasıl başlık açarım?"
+msgstr "Henüz başlık açmamış."
+
+#: .\main\templates\main\base.html:321
+msgid "Başlık Aç butonuna tıklayarak yeni başlık açabilirsiniz."
 msgstr ""
+
+#: .\main\templates\main\base.html:328
+msgid "Nasıl oy veririm?"
+msgstr ""
+
+#: .\main\templates\main\base.html:333
+msgid "Başlıkların yanındaki ok butonlarına tıklayarak oy verebilirsiniz."
+msgstr ""
+
+#: .\main\templates\main\base.html:370
+#, fuzzy
+#| msgid "Bildirimler"
+msgid "Bildirim"
+msgstr "Bildirimler"
+
+#: .\main\templates\main\categories.html:12
+msgid "İlgilendiğiniz konulara göz atın"
+msgstr ""
+
+#: .\main\templates\main\categories.html:24
+#, fuzzy
+#| msgid "Henüz şarkı eklenmemiş."
+msgid "Henüz kategori eklenmemiş."
+msgstr "Henüz şarkı eklenmemiş."
+
+#: .\main\templates\main\category_detail.html:26
+#: .\main\templates\main\home.html:163 .\main\templates\main\home.html:273
+#: .\main\templates\main\popular\popular.html:53
+#: .\main\templates\main\popular\popular.html:98
+msgid "devamını gör"
+msgstr "devamını gör"
+
+#: .\main\templates\main\category_detail.html:58
+msgid "Bu kategoride henüz başlık yok."
+msgstr "Bu kategoride henüz başlık yok."
+
+#: .\main\templates\main\category_detail.html:68
+#: .\main\templates\main\topic_detail.html:176
+msgid "İlk"
+msgstr "İlk"
+
+#: .\main\templates\main\category_detail.html:71
+#: .\main\templates\main\topic_detail.html:179
+msgid "Önceki"
+msgstr "Önceki"
+
+#: .\main\templates\main\category_detail.html:81
+#: .\main\templates\main\topic_detail.html:189
+msgid "Sonraki"
+msgstr "Sonraki"
+
+#: .\main\templates\main\category_detail.html:84
+#: .\main\templates\main\topic_detail.html:192
+msgid "Son"
+msgstr "Son"
+
+#: .\main\templates\main\complete_profile.html:7
+#: .\main\templates\main\complete_profile.html:49
+#: .\main\templates\main\complete_profile.html:76
+msgid "Profilini Tamamla"
+msgstr "Profilini Tamamla"
+
+#: .\main\templates\main\complete_profile.html:50
+msgid "Rumep'te nasıl görünmek istediğini seç"
+msgstr "Rumep'te nasıl görünmek istediğini seç"
+
+#: .\main\templates\main\complete_profile.html:63
+#: .\main\templates\main\complete_profile.html:64
+#: .\main\templates\main\profile.html:379
+msgid "Takma Ad"
+msgstr "Takma Ad"
+
+#: .\main\templates\main\complete_profile.html:65
+msgid "Diğer kullanıcıların göreceği isim"
+msgstr "Diğer kullanıcıların göreceği isim"
+
+#: .\main\templates\main\complete_profile.html:70
+#: .\main\templates\main\complete_profile.html:71
+#, fuzzy
+#| msgid "Navên Cihan"
+msgid "Navê Bikarhêner"
+msgstr "Yer Adları"
+
+#: .\main\templates\main\complete_profile.html:72
+msgid "Benzersiz kullanıcı adı (harf, rakam ve alt çizgi kullanabilirsiniz)"
+msgstr "Benzersiz kullanıcı adı (harf, rakam ve alt çizgi kullanabilirsiniz)"
+
+#: .\main\templates\main\complete_profile.html:83
+msgid "Bu bilgileri daha sonra profilinden değiştirebilirsin."
+msgstr "Bu bilgileri daha sonra profilinden değiştirebilirsin."
+
+#: .\main\templates\main\confirm_delete_entry.html:3
+#: .\main\templates\main\confirm_delete_entry.html:8
+#, fuzzy
+#| msgid "Entry"
+msgid "Entry Sil"
+msgstr "Entry"
+
+#: .\main\templates\main\confirm_delete_entry.html:9
+msgid "Bu entry'yi silmek istediğinizden emin misiniz?"
+msgstr "Bu entry'yi silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\confirm_delete_entry.html:11
+msgid "Başlık:"
+msgstr "Başlık:"
+
+#: .\main\templates\main\confirm_delete_entry.html:12
+msgid "İçerik:"
+msgstr "İçerik:"
+
+#: .\main\templates\main\confirm_delete_entry.html:17
+#: .\main\templates\main\confirm_delete_topic.html:16
+msgid "Evet, Sil"
+msgstr "Evet, Sil"
+
+#: .\main\templates\main\confirm_delete_entry.html:18
+#: .\main\templates\main\confirm_delete_topic.html:17
+#: .\main\templates\main\edit_entry.html:34
+#: .\main\templates\main\edit_topic.html:20
+#: .\main\templates\main\sozluk\sozluk.html:194
+msgid "İptal"
+msgstr "İptal"
+
+#: .\main\templates\main\confirm_delete_topic.html:3
+#: .\main\templates\main\confirm_delete_topic.html:8
+msgid "Başlığı Sil"
+msgstr "Başlığı Sil"
+
+#: .\main\templates\main\confirm_delete_topic.html:9
+msgid "Bu başlığı silmek istediğinizden emin misiniz?"
+msgstr "Bu başlığı silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\edit_entry.html:4
+#: .\main\templates\main\edit_entry.html:9
+msgid "Entry Düzenle"
+msgstr "Entry Düzenle"
+
+#: .\main\templates\main\edit_entry.html:14
+msgid "İçerik"
+msgstr "İçerik"
+
+#: .\main\templates\main\edit_entry.html:18
+msgid "Font"
+msgstr "Font"
+
+#: .\main\templates\main\edit_entry.html:21
+#: .\main\templates\main\edit_entry.html:26
+msgid "Link"
+msgstr "Link"
+
+#: .\main\templates\main\edit_entry.html:46 .\main\templates\main\home.html:98
+#: .\main\templates\main\topic_detail.html:239
+msgid "Emoji"
+msgstr "Emoji"
+
+#: .\main\templates\main\edit_entry.html:60
+msgid "Link URL girin:"
+msgstr "Link URL girin:"
+
+#: .\main\templates\main\edit_topic.html:3
+#: .\main\templates\main\edit_topic.html:8
+msgid "Başlığı Düzenle"
+msgstr "Başlığı Düzenle"
+
+#: .\main\templates\main\global_search.html:5
+#: .\main\templates\main\global_search.html:6
+msgid "Global Arama"
+msgstr ""
+
+#: .\main\templates\main\global_search.html:16
+msgid "Tüm içeriklerde ara... 🔍"
+msgstr ""
+
+#: .\main\templates\main\global_search.html:21
+#: .\main\templates\main\kisi\kisi_liste.html:55
+#: .\main\templates\main\partials\category_tabs.html:5
+#: .\main\templates\main\yer_adlari\yer_adlari.html:102
+msgid "Tüm Kategoriler"
+msgstr "Tüm Kategoriler"
+
+#: .\main\templates\main\global_search.html:187
+#, fuzzy
+#| msgid "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+msgid "Farklı anahtar kelimeler deneyin veya kategori filtrelerini değiştirin"
+msgstr "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+
+#: .\main\templates\main\global_search.html:195
+msgid "Bugün En Çok Arananlar"
+msgstr ""
+
+#: .\main\templates\main\global_search.html:202
+#: .\main\templates\main\global_search.html:236
+#, fuzzy
+#| msgid "Arama"
+msgid "arama"
+msgstr "Arama"
+
+#: .\main\templates\main\global_search.html:207
+#: .\main\templates\main\home.html:376
+msgid "Daha Fazla Yükle"
+msgstr "Daha Fazla Yükle"
+
+#: .\main\templates\main\home.html:11
+#, fuzzy
+#| msgid "Ana Sayfa"
+msgid "Anasayfa"
+msgstr "Ana Sayfa"
+
+#: .\main\templates\main\home.html:15
+msgid "Takip Ettiklerim"
+msgstr "Takip Ettiklerim"
+
+#: .\main\templates\main\home.html:33
+msgid "Başlık Aç & İlk Entry'yi Yaz"
+msgstr "Başlık Aç & İlk Entry'yi Yaz"
+
+#: .\main\templates\main\home.html:45
+msgid "Kategori (En fazla 3)"
+msgstr "Kategori (En fazla 3)"
+
+#: .\main\templates\main\home.html:64
+#, fuzzy
+#| msgid "Emoji"
+msgid "Emojiler"
+msgstr "Emoji"
+
+#: .\main\templates\main\home.html:74
+msgid "Başlık Hataları:"
+msgstr "Başlık Hataları:"
+
+#: .\main\templates\main\home.html:80
+msgid "Entry Hataları:"
+msgstr "Entry Hataları:"
+
+#: .\main\templates\main\home.html:111
+msgid "Yazıyı Geliştir"
+msgstr "Yazıyı Geliştir"
+
+#: .\main\templates\main\home.html:115
+msgid "Yazıyı geliştirmek istiyor musunuz?"
+msgstr "Yazıyı geliştirmek istiyor musunuz?"
+
+#: .\main\templates\main\home.html:117
+#: .\main\templates\main\kisi\kisi_ekle.html:137
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:154
+msgid "Evet"
+msgstr "Evet"
+
+#: .\main\templates\main\home.html:118
+#: .\main\templates\main\kisi\kisi_ekle.html:140
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:156
+msgid "Hayır"
+msgstr "Hayır"
+
+#: .\main\templates\main\home.html:127
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:161
+msgid "Bilgi"
+msgstr "Bilgi"
+
+#: .\main\templates\main\home.html:131
+msgid "Bağlantı kopyalandı!"
+msgstr "Bağlantı kopyalandı!"
+
+#: .\main\templates\main\home.html:194 .\main\templates\main\home.html:298
+#: .\main\templates\main\topic_detail.html:106
+msgid "Twitter'da Paylaş"
+msgstr "Twitter'da Paylaş"
+
+#: .\main\templates\main\home.html:200 .\main\templates\main\home.html:304
+#: .\main\templates\main\topic_detail.html:112
+msgid "WhatsApp'ta Paylaş"
+msgstr "WhatsApp'ta Paylaş"
+
+#: .\main\templates\main\home.html:206 .\main\templates\main\home.html:310
+#: .\main\templates\main\topic_detail.html:118
+msgid "Telegram'da Paylaş"
+msgstr "Telegram'da Paylaş"
+
+#: .\main\templates\main\home.html:213 .\main\templates\main\home.html:317
+#: .\main\templates\main\topic_detail.html:125
+msgid "Linki Kopyala"
+msgstr "Linki Kopyala"
+
+#: .\main\templates\main\home.html:219 .\main\templates\main\home.html:323
+#: .\main\templates\main\topic_detail.html:131
+#, fuzzy
+#| msgid "Linki Kopyala"
+msgid "Kodu Kopyala"
+msgstr "Linki Kopyala"
+
+#: .\main\templates\main\home.html:225 .\main\templates\main\home.html:329
+#: .\main\templates\main\topic_detail.html:137
+msgid "QR Kod"
+msgstr "QR Kod"
+
+#: .\main\templates\main\home.html:248
+msgid "Henüz hiç başlık açılmamış."
+msgstr "Henüz hiç başlık açılmamış."
+
+#: .\main\templates\main\home.html:259
+msgid ""
+"Henüz kimseyi takip etmiyorsunuz veya takip ettikleriniz henüz başlık "
+"açmamış."
+msgstr ""
+"Henüz kimseyi takip etmiyorsunuz veya takip ettikleriniz henüz başlık "
+"açmamış."
+
+#: .\main\templates\main\kisi\kisi_detay.html:50
+msgid "Ek Detay"
+msgstr "Ek Detay"
+
+#: .\main\templates\main\kisi\kisi_detay.html:71
+#: .\main\templates\main\kisi\kisi_ekle.html:68
+msgid "Biyografi"
+msgstr "Biyografi"
+
+#: .\main\templates\main\kisi\kisi_detay.html:82
+msgid "Yeni Detay Ekle"
+msgstr "Yeni Detay Ekle"
+
+#: .\main\templates\main\kisi\kisi_detay.html:102
+msgid "Kendi kişinize detay ekleyemezsiniz."
+msgstr "Kendi kişinize detay ekleyemezsiniz."
+
+#: .\main\templates\main\kisi\kisi_detay.html:166
+#: .\main\templates\main\kisi\kisi_ekle.html:43
+msgid "Kişi Bilgileri"
+msgstr "Kişi Bilgileri"
+
+#: .\main\templates\main\kisi\kisi_detay.html:171
+msgid "Ad"
+msgstr "Ad"
+
+#: .\main\templates\main\kisi\kisi_detay.html:182
+msgid "Kategori belirtilmemiş"
+msgstr "Kategori belirtilmemiş"
+
+#: .\main\templates\main\kisi\kisi_detay.html:187
+msgid "Ekleyen"
+msgstr "Ekleyen"
+
+#: .\main\templates\main\kisi\kisi_detay.html:195
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:196
+msgid "Eklenme Tarihi"
+msgstr "Eklenme Tarihi"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:4
+#: .\main\templates\main\kisi\kisi_ekle.html:81
+msgid "Kişi Ekle"
+msgstr "Kişi Ekle"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:23
+#: .\main\templates\main\kisi\kisi_liste.html:19
+msgid "Yeni Kişi Ekle"
+msgstr "Yeni Kişi Ekle"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:53
+msgid "Kişi Adı"
+msgstr "Kişi Adı"
+
+#: .\main\templates\main\kisi\kisi_ekle.html:130
+msgid "AI ile Biyografi Geliştirme"
+msgstr "AI ile Biyografi Geliştirme"
+
+#: .\main\templates\main\kisi\kisi_liste.html:16
+msgid "Tarihi ve kültürel kişilikleri keşfedin, yeni kişiler ekleyin"
+msgstr "Tarihi ve kültürel kişilikleri keşfedin, yeni kişiler ekleyin"
+
+#: .\main\templates\main\kisi\kisi_liste.html:29
+msgid "Kişi Sayısı"
+msgstr "Kişi Sayısı"
+
+#: .\main\templates\main\kisi\kisi_liste.html:47
+msgid "Kişi ara (ad, biyografi...)"
+msgstr "Kişi ara (ad, biyografi...)"
+
+#: .\main\templates\main\kisi\kisi_liste.html:165
+msgid "Kişi bulunamadı"
+msgstr "Kişi bulunamadı"
+
+#: .\main\templates\main\login.html:7
+msgid "Têkeve an Tomar Bibe"
+msgstr "Giriş Yap veya Kayıt Ol"
+
+#: .\main\templates\main\login.html:53
+msgid "Bixêr Hatî"
+msgstr "Hoş Geldiniz"
+
+#: .\main\templates\main\login.html:54
+msgid "Ji kerema xwe têkeve da ku berdewam bikî"
+msgstr "Lütfen devam etmek için giriş yapın"
+
+#: .\main\templates\main\login.html:73
+msgid "Kullanıcı adı"
+msgstr "Kullanıcı adı"
+
+#: .\main\templates\main\login.html:76
+msgid "Şifre"
+msgstr "Şifre"
+
+#: .\main\templates\main\login.html:85
+msgid "Anasayfaya Git"
+msgstr "Anasayfaya Git"
+
+#: .\main\templates\main\login.html:95
+msgid "Hemû maf parastî ne."
+msgstr "Tüm hakları saklıdır."
+
+#: .\main\templates\main\notifications.html:10
+msgid "Tümünü Okundu İşaretle"
+msgstr "Tümünü Okundu İşaretle"
+
+#: .\main\templates\main\notifications.html:27
+msgid "Yeni"
+msgstr "Yeni"
+
+#: .\main\templates\main\notifications.html:31
+msgid "tarafından"
+msgstr "tarafından"
+
+#: .\main\templates\main\notifications.html:33
+msgid "önce"
+msgstr "önce"
+
+#: .\main\templates\main\notifications.html:37
+msgid "Görüntüle"
+msgstr ""
+
+#: .\main\templates\main\notifications.html:42
+#, fuzzy
+#| msgid "Tümünü Okundu İşaretle"
+msgid "Okundu İşaretle"
+msgstr "Tümünü Okundu İşaretle"
+
+#: .\main\templates\main\notifications.html:53
+#, fuzzy
+#| msgid "Henüz bildiriminiz yok."
+msgid "Henüz bildiriminiz yok"
+msgstr "Henüz bildiriminiz yok."
+
+#: .\main\templates\main\notifications.html:54
+msgid "Yeni bildirimler burada görünecek"
+msgstr ""
+
+#: .\main\templates\main\offline.html:7
+msgid "Offline"
+msgstr "Çevrimdışı"
+
+#: .\main\templates\main\offline.html:86
+msgid "İnternet Bağlantısı Yok"
+msgstr "İnternet Bağlantısı Yok"
+
+#: .\main\templates\main\offline.html:87
+msgid ""
+"Şu anda çevrimdışısınız. İnternet bağlantınızı kontrol edin ve tekrar "
+"deneyin."
+msgstr ""
+"Şu anda çevrimdışısınız. İnternet bağlantınızı kontrol edin ve tekrar "
+"deneyin."
+
+#: .\main\templates\main\offline.html:90
+msgid "Tekrar Dene"
+msgstr "Tekrar Dene"
+
+#: .\main\templates\main\offline.html:94
+msgid "İpuçları"
+msgstr "İpuçları"
+
+#: .\main\templates\main\offline.html:96
+msgid "Wi-Fi veya mobil veri bağlantınızı kontrol edin"
+msgstr "Wi-Fi veya mobil veri bağlantınızı kontrol edin"
+
+#: .\main\templates\main\offline.html:97
+msgid "Uçak modunu kapatın"
+msgstr "Uçak modunu kapatın"
+
+#: .\main\templates\main\offline.html:98
+msgid "Daha önce ziyaret ettiğiniz sayfalar cache'den yüklenebilir"
+msgstr "Daha önce ziyaret ettiğiniz sayfalar cache'den yüklenebilir"
+
+#: .\main\templates\main\offline.html:99
+msgid "İnternet bağlantısı geldiğinde otomatik olarak senkronize olacak"
+msgstr "İnternet bağlantısı geldiğinde otomatik olarak senkronize olacak"
+
+#: .\main\templates\main\offline.html:116
+msgid "Bağlantı Geldi - Yenile"
+msgstr "Bağlantı Geldi - Yenile"
+
+#: .\main\templates\main\partials\category_tabs.html:13
+#: .\main\templates\main\popular\popular.html:152
+msgid "başlık"
+msgstr "başlık"
+
+#: .\main\templates\main\popular\popular.html:61
+msgid "son 24 saat"
+msgstr "son 24 saat"
+
+#: .\main\templates\main\popular\popular.html:62
+#: .\main\templates\main\topic_detail.html:36
+msgid "tarafından açıldı"
+msgstr "tarafından açıldı"
+
+#: .\main\templates\main\popular\popular.html:75
+msgid "Henüz gündem başlığı yok."
+msgstr "Henüz gündem başlığı yok."
+
+#: .\main\templates\main\popular\popular.html:114
+msgid "Başlığa Git"
+msgstr "Başlığa Git"
+
+#: .\main\templates\main\popular\popular.html:129
+msgid "Henüz gündem entry'si yok."
+msgstr "Henüz gündem entry'si yok."
+
+#: .\main\templates\main\popular\popular.html:157
+msgid "Henüz kategori yok."
+msgstr "Henüz kategori yok."
+
+#: .\main\templates\main\profile.html:5
+msgid "Profîl"
+msgstr "Profil"
+
+#: .\main\templates\main\profile.html:60
+msgid "Gizlilik"
+msgstr ""
+
+#: .\main\templates\main\profile.html:64
+msgid "Hesap"
+msgstr ""
+
+#: .\main\templates\main\profile.html:70
+msgid "Çıkış"
+msgstr ""
+
+#: .\main\templates\main\profile.html:89
+#, fuzzy
+#| msgid "Oylarım"
+msgid "Oylar"
+msgstr "Oylarım"
+
+#: .\main\templates\main\profile.html:93
+msgid "Kaydedilenler"
+msgstr ""
+
+#: .\main\templates\main\profile.html:151
+msgid "Henüz başlık açmamışsınız."
+msgstr "Henüz başlık açmamışsınız."
+
+#: .\main\templates\main\profile.html:159
+#, fuzzy
+#| msgid "Upvote Verdiğim Başlıklar"
+msgid "Beğendiğim Başlıklar"
+msgstr "Upvote Verdiğim Başlıklar"
+
+#: .\main\templates\main\profile.html:176
+#, fuzzy
+#| msgid "Henüz hiçbir başlığa upvote vermediniz."
+msgid "Henüz hiçbir başlığa oy vermediniz."
+msgstr "Henüz hiçbir başlığa upvote vermediniz."
+
+#: .\main\templates\main\profile.html:181
+#, fuzzy
+#| msgid "Upvote Verdiğim Entry'ler"
+msgid "Beğendiğim Entry'ler"
+msgstr "Upvote Verdiğim Entry'ler"
+
+#: .\main\templates\main\profile.html:195
+#, fuzzy
+#| msgid "Henüz hiçbir entry'ye upvote vermediniz."
+msgid "Henüz hiçbir entry'ye oy vermediniz."
+msgstr "Henüz hiçbir entry'ye upvote vermediniz."
+
+#: .\main\templates\main\profile.html:249
+#, fuzzy
+#| msgid "devamını gör"
+msgid "...devamını gör"
+msgstr "devamını gör"
+
+#: .\main\templates\main\profile.html:260
+#, fuzzy
+#| msgid "Henüz hiçbir entry'ye upvote vermediniz."
+msgid "Henüz hiçbir entry'yi kaydetmediniz."
+msgstr "Henüz hiçbir entry'ye upvote vermediniz."
+
+#: .\main\templates\main\profile.html:299
+#, fuzzy
+#| msgid "Henüz hiçbir başlığa upvote vermediniz."
+msgid "Henüz hiçbir başlığı kaydetmediniz."
+msgstr "Henüz hiçbir başlığa upvote vermediniz."
+
+#: .\main\templates\main\profile.html:356
+msgid "Henüz entry yazmamışsınız."
+msgstr "Henüz entry yazmamışsınız."
+
+#: .\main\templates\main\profile.html:369
+#, fuzzy
+#| msgid "Entry Düzenle"
+msgid "Profili Düzenle"
+msgstr "Entry Düzenle"
+
+#: .\main\templates\main\profile.html:380
+msgid "Sadece harf, rakam, alt çizgi ve boşluk kullanabilirsiniz"
+msgstr "Sadece harf, rakam, alt çizgi ve boşluk kullanabilirsiniz"
+
+#: .\main\templates\main\profile.html:383
+#, fuzzy
+#| msgid "Kullanıcı ara"
+msgid "Kullanıcı Adı"
+msgstr "Kullanıcı ara"
+
+#: .\main\templates\main\profile.html:384
+msgid "Sadece harf, rakam ve alt çizgi kullanabilirsiniz"
+msgstr "Sadece harf, rakam ve alt çizgi kullanabilirsiniz"
+
+#: .\main\templates\main\profile.html:387
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Biyografi (İsteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\templates\main\profile.html:388
+msgid "Kendiniz hakkında bir şeyler yazın..."
+msgstr "Kendiniz hakkında bir şeyler yazın..."
+
+#: .\main\templates\main\profile.html:389
+msgid "Emoji, font karakterleri ve özel karakterler kullanabilirsiniz."
+msgstr "Emoji, font karakterleri ve özel karakterler kullanabilirsiniz."
+
+#: .\main\templates\main\profile.html:392
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Instagram (İsteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\templates\main\profile.html:396
+#, fuzzy
+#| msgid "Link (isteğe bağlı)"
+msgid "Twitter (İsteğe bağlı)"
+msgstr "Link (isteğe bağlı)"
+
+#: .\main\templates\main\profile.html:400
+msgid "Tercih Edilen Dil"
+msgstr "Tercih Edilen Dil"
+
+#: .\main\templates\main\profile.html:419
+msgid "Görünürlük Ayarları"
+msgstr "Görünürlük Ayarları"
+
+#: .\main\templates\main\profile.html:428
+msgid "Gönderiler Görünür"
+msgstr "Gönderiler Görünür"
+
+#: .\main\templates\main\profile.html:432
+msgid "Değerlendirmeler Görünür"
+msgstr "Değerlendirmeler Görünür"
+
+#: .\main\templates\main\profile.html:436
+msgid "Yorumlar Görünür"
+msgstr "Yorumlar Görünür"
+
+#: .\main\templates\main\profile.html:451
+msgid "Hesap Yönetimi"
+msgstr "Hesap Yönetimi"
+
+#: .\main\templates\main\profile.html:459
+msgid "Hesap Durumu"
+msgstr "Hesap Durumu"
+
+#: .\main\templates\main\profile.html:460
+msgid "Mevcut durum:"
+msgstr "Mevcut durum:"
+
+#: .\main\templates\main\profile.html:467
+#, fuzzy
+#| msgid "Eklenme Tarihi"
+msgid "Silinme tarihi:"
+msgstr "Eklenme Tarihi"
+
+#: .\main\templates\main\profile.html:469
+msgid "Bilinmeyen Durum"
+msgstr "Bilinmeyen Durum"
+
+#: .\main\templates\main\profile.html:475
+#: .\main\templates\main\profile.html:480
+msgid "Hesabı Dondur"
+msgstr "Hesabı Dondur"
+
+#: .\main\templates\main\profile.html:476
+msgid ""
+"Hesabınızı dondurduğunuzda, içerikleriniz görünmez ancak silinmez. "
+"İstediğiniz zaman tekrar aktif hale getirebilirsiniz."
+msgstr ""
+"Hesabınızı dondurduğunuzda, içerikleriniz görünmez ancak silinmez. "
+"İstediğiniz zaman tekrar aktif hale getirebilirsiniz."
+
+#: .\main\templates\main\profile.html:478
+#, fuzzy
+#| msgid "Bu başlığı silmek istediğinizden emin misiniz?"
+msgid "Hesabınızı dondurmak istediğinizden emin misiniz?"
+msgstr "Bu başlığı silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\profile.html:485
+msgid "Hesabı Aktifleştir"
+msgstr "Hesabı Aktifleştir"
+
+#: .\main\templates\main\profile.html:491
+#: .\main\templates\main\profile.html:496
+msgid "Hesabı Sil"
+msgstr "Hesabı Sil"
+
+#: .\main\templates\main\profile.html:492
+msgid ""
+"Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm "
+"verileriniz kalıcı olarak silinir."
+msgstr ""
+"Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm "
+"verileriniz kalıcı olarak silinir."
+
+#: .\main\templates\main\profile.html:494
+#, fuzzy
+#| msgid "Bu başlığı silmek istediğinizden emin misiniz?"
+msgid ""
+"Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra "
+"tamamlanır."
+msgstr "Bu başlığı silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\profile.html:501
+msgid "Silme İşlemini İptal Et"
+msgstr "Silme İşlemini İptal Et"
+
+#: .\main\templates\main\profile_detail.html:28
+msgid "takipçi"
+msgstr "takipçi"
+
+#: .\main\templates\main\profile_detail.html:29
+msgid "takip"
+msgstr "takip"
+
+#: .\main\templates\main\profile_detail.html:38
+msgid "takibi bırak"
+msgstr "takibi bırak"
+
+#: .\main\templates\main\profile_detail.html:38
+msgid "takip et"
+msgstr "takip et"
+
+#: .\main\templates\main\profile_detail.html:47
+msgid "entry'ler"
+msgstr "entry'ler"
+
+#: .\main\templates\main\profile_detail.html:50
+msgid "başlıklar"
+msgstr "başlıklar"
+
+#: .\main\templates\main\profile_detail.html:53
+msgid "istatistikler"
+msgstr "istatistikler"
+
+#: .\main\templates\main\profile_detail.html:57
+msgid "yer işaretleri"
+msgstr "yer işaretleri"
+
+#: .\main\templates\main\profile_detail.html:96
+msgid "Henüz entry yazmamış."
+msgstr "Henüz entry yazmamış."
+
+#: .\main\templates\main\profile_detail.html:127
+msgid "Henüz başlık açmamış."
+msgstr "Henüz başlık açmamış."
+
+#: .\main\templates\main\profile_detail.html:137
+msgid "Sözlük Kelimeleri"
+msgstr "Sözlük Kelimeleri"
+
+#: .\main\templates\main\profile_detail.html:197
+msgid "Kişi Biyografileri"
+msgstr "Kişi Biyografileri"
+
+#: .\main\templates\main\profile_detail.html:225
+msgid "Henüz hiçbir katkıda bulunmamış."
+msgstr "Henüz hiçbir katkıda bulunmamış."
+
+#: .\main\templates\main\profile_detail.html:272
+msgid "Henüz entry yer işareti eklenmemiş."
+msgstr "Henüz entry yer işareti eklenmemiş."
+
+#: .\main\templates\main\profile_detail.html:298
+msgid "Henüz başlık yer işareti eklenmemiş."
+msgstr "Henüz başlık yer işareti eklenmemiş."
+
+#: .\main\templates\main\sarki\album_degistir_form.html:6
+#: .\main\templates\main\sarki\sarki_detay.html:55
+msgid "Albümü Değiştir"
+msgstr "Albümü Değiştir"
+
+#: .\main\templates\main\sarki\album_degistir_form.html:14
+msgid "Yeni Albüm Seç"
+msgstr "Yeni Albüm Seç"
+
+#: .\main\templates\main\sarki\album_degistir_form.html:16
+msgid "Albümler JS ile doldurulacak"
+msgstr "Albümler JS ile doldurulacak"
+
+#: .\main\templates\main\sarki\album_degistir_form.html:19
+msgid "Değiştir"
+msgstr "Değiştir"
+
+#: .\main\templates\main\sarki\album_ekle.html:4
+#: .\main\templates\main\sarki\album_ekle.html:21
+#: .\main\templates\main\sarki\sarki_ekle.html:37
+msgid "Albüm Ekle"
+msgstr "Albüm Ekle"
+
+#: .\main\templates\main\sarki\album_ekle.html:7
+#: .\main\templates\main\sarki\sarki_ekle.html:24
+msgid "için Albüm Ekle"
+msgstr "için Albüm Ekle"
+
+#: .\main\templates\main\sarki\album_ekle.html:13
+#: .\main\templates\main\sarki\sarki_ekle.html:29
+msgid "Albüm Adı"
+msgstr "Albüm Adı"
+
+#: .\main\templates\main\sarki\album_ekle.html:17
+msgid "Albüm Yılı (İsteğe Bağlı)"
+msgstr "Albüm Yılı (İsteğe Bağlı)"
+
+#: .\main\templates\main\sarki\album_liste.html:4
+#: .\main\templates\main\sarki\album_liste.html:7
+msgid "Albümleri"
+msgstr "Albümleri"
+
+#: .\main\templates\main\sarki\album_liste.html:31
+msgid "Henüz albüm eklenmemiş."
+msgstr "Henüz albüm eklenmemiş."
+
+#: .\main\templates\main\sarki\sarki_detay.html:162
+msgid "Şarkı Bilgileri"
+msgstr "Şarkı Bilgileri"
+
+#: .\main\templates\main\sarki\sarki_detay.html:167
+#: .\main\templates\main\sarki\sarki_ekle.html:58
+msgid "Şarkı Adı"
+msgstr "Şarkı Adı"
+
+#: .\main\templates\main\sarki\sarki_detay.html:172
+msgid "Sanatçı"
+msgstr "Sanatçı"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:4
+#: .\main\templates\main\sarki\sarki_ekle.html:7
+msgid "Şarkı Sözleri Ekle"
+msgstr "Şarkı Sözleri Ekle"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:10
+msgid "Sanatçı Ara"
+msgstr "Sanatçı Ara"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:13
+msgid "Sanatçı adını yazın..."
+msgstr "Sanatçı adını yazın..."
+
+#: .\main\templates\main\sarki\sarki_ekle.html:13
+msgid "Sanatçı ara"
+msgstr "Sanatçı ara"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:44
+msgid "için Şarkı Sözleri Ekle"
+msgstr "için Şarkı Sözleri Ekle"
+
+#: .\main\templates\main\sarki\sarki_ekle.html:74
+msgid "Şarkı Ekle"
+msgstr "Şarkı Ekle"
+
+#: .\main\templates\main\sarki\sarki_liste.html:8
+msgid "Şarkıları"
+msgstr "Şarkıları"
+
+#: .\main\templates\main\sarki\sarki_liste.html:24
+msgid "Henüz şarkı eklenmemiş."
+msgstr "Henüz şarkı eklenmemiş."
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:16
+msgid "Kürt şarkı sözlerini keşfedin, yeni şarkılar ekleyin"
+msgstr "Kürt şarkı sözlerini keşfedin, yeni şarkılar ekleyin"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:19
+msgid "Yeni Şarkı Ekle"
+msgstr "Yeni Şarkı Ekle"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:29
+msgid "Sanatçı Sayısı"
+msgstr "Sanatçı Sayısı"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:91
+msgid "Sanatçılar"
+msgstr "Sanatçılar"
+
+#: .\main\templates\main\sarki\sarki_sozleri.html:142
+msgid "Henüz şarkı eklenmemiş"
+msgstr "Henüz şarkı eklenmemiş"
+
+#: .\main\templates\main\sozluk\sozluk.html:5
+#: .\main\templates\main\sozluk\sozluk.html:22
+#: .\main\templates\main\sozluk\sozluk_harf.html:4
+#: .\main\templates\main\sozluk\sozluk_kelime.html:4
+msgid "Kürtçe Sözlük"
+msgstr "Kürtçe Sözlük"
+
+#: .\main\templates\main\sozluk\sozluk.html:8
+msgid "Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme"
+msgstr "Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme"
+
+#: .\main\templates\main\sozluk\sozluk.html:24
+msgid "Kelime arama, ekleme ve düzenleme"
+msgstr "Kelime arama, ekleme ve düzenleme"
+
+#: .\main\templates\main\sozluk\sozluk.html:27
+#: .\main\templates\main\sozluk\sozluk.html:51
+msgid "Yeni Kelime Ekle"
+msgstr "Yeni Kelime Ekle"
+
+#: .\main\templates\main\sozluk\sozluk.html:30
+#: .\main\templates\main\sozluk\sozluk.html:69
+msgid "Kelime Ara"
+msgstr "Kelime Ara"
+
+#: .\main\templates\main\sozluk\sozluk.html:37
+msgid "Toplam Kelime"
+msgstr "Toplam Kelime"
+
+#: .\main\templates\main\sozluk\sozluk.html:76
+msgid "Kelime ara (örnek: su)"
+msgstr "Kelime ara (örnek: su)"
+
+#: .\main\templates\main\sozluk\sozluk.html:81
+msgid "Kelime türü filtresi"
+msgstr "Kelime türü filtresi"
+
+#: .\main\templates\main\sozluk\sozluk.html:82
+msgid "Tüm Türler"
+msgstr "Tüm Türler"
+
+#: .\main\templates\main\sozluk\sozluk.html:101
+msgid "Harf"
+msgstr "Harf"
+
+#: .\main\templates\main\sozluk\sozluk.html:103
+msgid "Alfabe navigasyonu"
+msgstr "Alfabe navigasyonu"
+
+#: .\main\templates\main\sozluk\sozluk.html:108
+msgid "Tüm kelimeler"
+msgstr "Tüm kelimeler"
+
+#: .\main\templates\main\sozluk\sozluk.html:114
+msgid "Harfi ile başlayan kelimeler"
+msgstr "Harfi ile başlayan kelimeler"
+
+#: .\main\templates\main\sozluk\sozluk.html:129
+#: .\main\templates\main\sozluk\sozluk_harf.html:23
+#: .\main\templates\main\sozluk\sozluk_kelime.html:23
+msgid "Tüm Kelimeler"
+msgstr "Tüm Kelimeler"
+
+#: .\main\templates\main\sozluk\sozluk.html:134
+msgid "Kelimeler yükleniyor..."
+msgstr "Kelimeler yükleniyor..."
+
+#: .\main\templates\main\sozluk\sozluk.html:139
+#: .\main\templates\main\sozluk\sozluk_harf.html:79
+msgid "Yükleniyor..."
+msgstr "Yükleniyor..."
+
+#: .\main\templates\main\sozluk\sozluk.html:152
+#: .\main\templates\main\sozluk\sozluk_harf.html:87
+#: .\main\templates\main\sozluk\sozluk_kelime.html:118
+msgid "Kelimeyi Düzenle"
+msgstr "Kelimeyi Düzenle"
+
+#: .\main\templates\main\sozluk\sozluk.html:168
+msgid "Lütfen bir kelime girin."
+msgstr "Lütfen bir kelime girin."
+
+#: .\main\templates\main\sozluk\sozluk.html:172
+#: .\main\templates\main\sozluk\sozluk_harf.html:98
+#: .\main\templates\main\sozluk\sozluk_kelime.html:129
+#: .\main\templates\main\sozluk\sozluk_kelime.html:162
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:88
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:93
+msgid "Açıklama"
+msgstr "Açıklama"
+
+#: .\main\templates\main\sozluk\sozluk.html:179
+msgid "Lütfen kelimenin açıklamasını girin."
+msgstr "Lütfen kelimenin açıklamasını girin."
+
+#: .\main\templates\main\sozluk\sozluk.html:185
+#: .\main\templates\main\sozluk\sozluk_kelime.html:135
+msgid "Seçin"
+msgstr "Seçin"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:4
+#: .\main\templates\main\sozluk\sozluk_harf.html:18
+#: .\main\templates\main\sozluk\sozluk_harf.html:33
+msgid "Harfi"
+msgstr "Harfi"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:20
+msgid "harfi ile başlayan kelimeleri keşfedin"
+msgstr "harfi ile başlayan kelimeleri keşfedin"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:45
+msgid "Harfi ile Başlayan Kelimeler"
+msgstr "Harfi ile Başlayan Kelimeler"
+
+#: .\main\templates\main\sozluk\sozluk_harf.html:75
+msgid "Bu harfle başlayan kelime bulunamadı."
+msgstr "Bu harfle başlayan kelime bulunamadı."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:47
+msgid "Kelime Bilgileri"
+msgstr "Kelime Bilgileri"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:51
+msgid "Açıklama:"
+msgstr "Açıklama:"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:52
+msgid "Tür:"
+msgstr "Tür:"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:54
+msgid "Eklenme Tarihi:"
+msgstr "Eklenme Tarihi:"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:69
+#: .\main\templates\main\sozluk\sozluk_kelime.html:78
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:246
+msgid "Açıklama Ekle"
+msgstr "Açıklama Ekle"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:72
+msgid "Kendi kelimenize açıklama ekleyemezsiniz."
+msgstr "Kendi kelimenize açıklama ekleyemezsiniz."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:89
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:112
+msgid "Ek Açıklamalar"
+msgstr "Ek Açıklamalar"
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:107
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:148
+msgid "Henüz ek açıklama eklenmemiş."
+msgstr "Henüz ek açıklama eklenmemiş."
+
+#: .\main\templates\main\sozluk\sozluk_kelime.html:155
+msgid "Açıklamayı Düzenle"
+msgstr "Açıklamayı Düzenle"
+
+#: .\main\templates\main\topic_detail.html:146
+msgid "Bu entry\\'yi silmek istediğinizden emin misiniz?"
+msgstr "Bu entry'yi silmek istediğinizden emin misiniz?"
+
+#: .\main\templates\main\topic_detail.html:165
+msgid "Bu başlıkta henüz entry yok."
+msgstr "Bu başlıkta henüz entry yok."
+
+#: .\main\templates\main\topic_detail.html:202
+#, fuzzy
+#| msgid "Entry"
+msgid "Entry Ekle"
+msgstr "Entry Ekle"
+
+#: .\main\templates\main\topic_detail.html:207
+msgid "Düşüncelerinizi paylaşın... Bu konuda ne düşünüyorsunuz?"
+msgstr ""
+
+#: .\main\templates\main\topic_detail.html:210
+msgid "İsteğe bağlı: Bir link ekleyin"
+msgstr ""
+
+#: .\main\templates\main\topic_detail.html:217
+#, fuzzy
+#| msgid "Emoji"
+msgid "Emoji Ekle"
+msgstr "Emoji"
+
+#: .\main\templates\main\topic_detail.html:220
+#, fuzzy
+#| msgid "Font"
+msgid "Font Seç"
+msgstr "Font"
+
+#: .\main\templates\main\topic_detail.html:226
+msgid "Paylaş"
+msgstr ""
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:41
+msgid "Koordinatlı"
+msgstr "Koordinatlı"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:67
+msgid "Ek Açıklama"
+msgstr "Ek Açıklama"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:71
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:207
+#: .\main\templates\main\yer_adlari\yer_adlari.html:205
+msgid "Alt Yerler"
+msgstr "Alt Yerler"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:98
+msgid "Konum"
+msgstr "Konum"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:173
+#: .\main\templates\main\yer_adlari\yer_adlari.html:114
+msgid "Bölge"
+msgstr "Bölge"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:179
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:114
+msgid "İlişkili Yer"
+msgstr "İlişkili Yer"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:190
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:202
+msgid "Koordinatlar"
+msgstr "Koordinatlar"
+
+#: .\main\templates\main\yer_adlari\yer_adi_detay.html:236
+msgid "Yeni Açıklama Ekle"
+msgstr "Yeni Açıklama Ekle"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:26
+msgid "Yer Adını Düzenle"
+msgstr "Yer Adını Düzenle"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:26
+#: .\main\templates\main\yer_adlari\yer_adlari.html:21
+msgid "Yeni Yer Adı Ekle"
+msgstr "Yeni Yer Adı Ekle"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:28
+msgid "Koordinatları haritadan seçebilir veya manuel girebilirsiniz"
+msgstr "Koordinatları haritadan seçebilir veya manuel girebilirsiniz"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:32
+#: .\main\templates\main\yer_adlari\yer_adlari.html:24
+#: .\main\templates\main\yer_adlari\yer_adlari.html:44
+msgid "Harita Görünümü"
+msgstr "Harita Görünümü"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:45
+msgid "Yer Seçimi"
+msgstr "Yer Seçimi"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:62
+msgid "Yer Adı Bilgileri"
+msgstr "Yer Adı Bilgileri"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:149
+msgid "Bu yer adı zaten mevcut. Devam etmek istiyor musunuz?"
+msgstr "Bu yer adı zaten mevcut. Devam etmek istiyor musunuz?"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:186
+msgid "Harita Kullanımı"
+msgstr "Harita Kullanımı"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:187
+msgid "Haritaya tıklayarak koordinatları otomatik olarak girebilirsiniz."
+msgstr "Haritaya tıklayarak koordinatları otomatik olarak girebilirsiniz."
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:193
+msgid "Şehir: Büyük şehirler"
+msgstr "Şehir: Büyük şehirler"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:194
+msgid "İlçe: Şehirlere bağlı yerler"
+msgstr "İlçe: Şehirlere bağlı yerler"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:195
+msgid "Köy: Küçük yerleşim yerleri"
+msgstr "Köy: Küçük yerleşim yerleri"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:196
+msgid "Dağ: Dağ adları"
+msgstr "Dağ: Dağ adları"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:197
+msgid "Nehir: Su kaynakları"
+msgstr "Nehir: Su kaynakları"
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:203
+msgid ""
+"Enlem ve boylam değerlerini ondalık formatta girin (örnek: 37.0625, 40.2317)."
+msgstr ""
+"Enlem ve boylam değerlerini ondalık formatta girin (örnek: 37.0625, 40.2317)."
+
+#: .\main\templates\main\yer_adlari\yer_adi_ekle.html:237
+msgid "Haritayı Göster"
+msgstr "Haritayı Göster"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:18
+msgid "Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin"
+msgstr "Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:31
+msgid "Toplam Yer Adı"
+msgstr "Toplam Yer Adı"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:80
+msgid "Harflere Göre Filtrele"
+msgstr "Harflere Göre Filtrele"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:117
+msgid "Tüm Bölgeler"
+msgstr "Tüm Bölgeler"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:140
+msgid "yer adı"
+msgstr "yer adı"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:157
+msgid "Koordinatlar mevcut"
+msgstr "Koordinatlar mevcut"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:236
+msgid "Henüz yer adı eklenmemiş"
+msgstr "Henüz yer adı eklenmemiş"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:237
+msgid "İlk yer adını ekleyerek başlayın!"
+msgstr "İlk yer adını ekleyerek başlayın!"
+
+#: .\main\templates\main\yer_adlari\yer_adlari.html:239
+msgid "Yer Adı Ekle"
+msgstr "Yer Adı Ekle"
+
+#, fuzzy
+#~| msgid "Yeni Ekle"
+#~ msgid "Topic Ekle"
+#~ msgstr "Yeni Ekle"
+
+#, fuzzy
+#~| msgid "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+#~ msgid "Farklı anahtar kelimeler deneyin"
+#~ msgstr "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin."
+
+#~ msgid "Bağlantıyı Kopyala"
+#~ msgstr "Bağlantıyı Kopyala"
+
+#~ msgid "E-posta:"
+#~ msgstr "E-posta:"
+
+#~ msgid "Entry Giştî:"
+#~ msgstr "Toplam Entry:"
+
+#~ msgid "Profîlê Biguherîne"
+#~ msgstr "Profili Düzenle"
+
+#~ msgid "Mîhengên Xuyabûnê"
+#~ msgstr "Görünürlük Ayarları"
+
+#~ msgid "Rêveberiya Hesabê"
+#~ msgstr "Hesap Yönetimi"
+
+#~ msgid "Derkeve"
+#~ msgstr "Çıkış Yap"
+
+#~ msgid "Başlıklarım"
+#~ msgstr "Başlıklarım"
+
+#, fuzzy
+#~| msgid "Entry"
+#~ msgid "Entry'lerim"
+#~ msgstr "Entry"
+
+#~ msgid "Yer İşaretleri"
+#~ msgstr "Yer İşaretleri"
+
+#~ msgid "Henüz hiçbir entry'yi yer işaretlerine eklemediniz."
+#~ msgstr "Henüz hiçbir entry'yi yer işaretlerine eklemediniz."
+
+#~ msgid "Henüz hiçbir topic'i yer işaretlerine eklemediniz."
+#~ msgstr "Henüz hiçbir topic'i yer işaretlerine eklemediniz."
+
+#~ msgid "Yazı Tipi"
+#~ msgstr "Yazı Tipi"
+
+#~ msgid "Takip Ettiklerimin Başlıkları"
+#~ msgstr "Takip Ettiklerimin Başlıkları"
+
+#~ msgid "Son 24 saatteki trend başlıklar ve entry'ler"
+#~ msgstr "Son 24 saatteki trend başlıklar ve entry'ler"
+
+#, fuzzy
+#~| msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgid "Gotinên Pêşiyan û Îdîom"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#, fuzzy
+#~| msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgid "Gotina Pêşiyan"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#, fuzzy
+#~| msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgid "Gotinên Pêşiyan"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#~ msgid "Lêgerîn"
+#~ msgstr "Arama"
+
+#, fuzzy
+#~| msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgid "Gotina Pêşiyan nehat dîtin"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#, fuzzy
+#~| msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgid "Gotina Pêşiyan Lê Zêde Bike"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#, fuzzy
+#~| msgid "Lêgerîn"
+#~ msgid "Biguherîne"
+#~ msgstr "Arama"
+
+#~ msgid "Sernavê Veke & Entryê Yekem Binivîse"
+#~ msgstr "Başlık Aç & İlk Entry'yi Yaz"
+
+#~ msgid "Sernav"
+#~ msgstr "Başlık"
+
+#~ msgid "Sernavê Veke"
+#~ msgstr "Başlık Aç"
+
+#~ msgid "Şopandina Min"
+#~ msgstr "Takip Ettiklerim"
+
+#~ msgid "Sernavên Dawî"
+#~ msgstr "Son Başlıklar"
+
+#, fuzzy
+#~| msgid "Navên Cihan"
+#~ msgid "Navê Nasnavê"
+#~ msgstr "Yer Adları"
+
+#~ msgid "Rojeva"
+#~ msgstr "Gündem"
+
+#~ msgid "Têkeve"
+#~ msgstr "Giriş Yap"
+
+#~ msgid "Agahdarî"
+#~ msgstr "Bildirimler"
+
+#~ msgid "Ferheng"
+#~ msgstr "Sözlük"
+
+#~ msgid "Kes"
+#~ msgstr "Kişiler"
+
+#~ msgid "Gotînên Stranan"
+#~ msgstr "Şarkı Sözleri"
+
+#~ msgid "Gotînên Pêşiyan û Îdiom"
+#~ msgstr "Atasözleri ve Deyimler"
+
+#~ msgid "Navên Cihan"
+#~ msgstr "Yer Adları"

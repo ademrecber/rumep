@@ -1,0 +1,37 @@
+<!-- Canlı İstatistikler Widget'ı -->
+<div class="glass-card p-4 mb-4">
+    <h5 class="mb-3">
+        <span class="online-indicator"></span>
+        Canlı İstatistikler
+    </h5>
+    
+    <div class="row text-center">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-item">
+                <div class="stat-number" id="total-users">{{ total_users|default:0 }}</div>
+                <div class="stat-label">Toplam Üye</div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-item">
+                <div class="stat-number" id="online-users">{{ online_users|default:0 }}</div>
+                <div class="stat-label">Online</div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-item">
+                <div class="stat-number" id="today-entries">{{ today_entries|default:0 }}</div>
+                <div class="stat-label">Bugünkü Entry</div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-item">
+                <div class="stat-number" id="active-writers">{{ active_writers|default:0 }}</div>
+                <div class="stat-label">Aktif Yazar</div>
+            </div>
+        </div>
+    </div>
+</div>

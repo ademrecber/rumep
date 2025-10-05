@@ -306,7 +306,7 @@ export function bindKelimeActions() {
             errorDiv.textContent = 'Ji bo kiryara jêbirinê URL-ya pêwîst nehat dîtin.';
             return;
         }
-        if (!confirm('Ma tu bawer î ku dixwazî vê peyvê jê bibî?')) return;
+        if (!confirm(window.i18n?.t('sozluk.confirm_delete_word') || 'Bu kelimeyi silmek istediğinizden emin misiniz?')) return;
         try {
             console.log(`Silme isteği: ${url}`);
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
@@ -323,7 +323,7 @@ export function bindKelimeActions() {
             const data = await response.json();
             console.log('Silme yanıtı:', data);
             if (data.success) {
-                alert('Peyv bi serkeftî hat jêbirin!');
+                alert(window.i18n?.t('sozluk.word_deleted_success') || 'Kelime başarıyla silindi!');
                 window.location.href = '/sozluk/';
             } else {
                 errorDiv.classList.remove('d-none');
@@ -377,7 +377,7 @@ export function bindKelimeActions() {
             errorDiv.textContent = 'Ji bo kiryara jêbirina detayê URL-ya pêwîst nehat dîtin.';
             return;
         }
-        if (!confirm('Ma tu bawer î ku dixwazî vê detayê jê bibî?')) return;
+        if (!confirm(window.i18n?.t('sozluk.confirm_delete_detail') || 'Bu detayı silmek istediğinizden emin misiniz?')) return;
         try {
             console.log(`Detay silme isteği: ${url}`);
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
@@ -395,7 +395,7 @@ export function bindKelimeActions() {
             console.log('Detay silme yanıtı:', data);
             if (data.success) {
                 document.querySelector(`.detay-item[data-detay-id="${btn.dataset.detayId}"]`)?.remove();
-                alert('Detay bi serkeftî hat jêbirin!');
+                alert(window.i18n?.t('sozluk.detail_deleted_success') || 'Detay başarıyla silindi!');
             } else {
                 errorDiv.classList.remove('d-none');
                 errorDiv.textContent = 'Di dema jêbirina detayê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';

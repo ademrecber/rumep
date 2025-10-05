@@ -1,183 +1,395 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}Profîl - {{ profile.nickname }}{% endblock %}
+{% load i18n %}
+{% load link_tags %}
+{% block title %}{% trans "Profîl" %} - {{ profile.nickname }}{% endblock %}
+{% block page_header %}{% trans "Profil" %}{% endblock %}
 {% block content %}
-<div class="container twitter-container py-4">
-    <!-- Profil Bilgileri -->
-    <div class="card border-0 shadow-sm mb-4 profile-card">
-        <div class="card-body p-4">
-            <div class="d-flex align-items-center mb-3">
-                <div class="profile-avatar me-3">
-                    <i class="bi bi-person-circle" style="font-size: 3rem; color: #1a73e8;"></i>
+<div class="modern-profile-container">
+    <!-- Profil Header -->
+    <div class="profile-header">
+        <div class="profile-cover">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="mb-0">{{ profile.nickname }} <small class="text-muted fs-6">@{{ profile.username }}</small></h3>
-                    <p class="text-muted mb-0">E-posta: {{ user.email }}</p>
+                <div class="profile-details">
+                    <h2 class="profile-name">{{ profile.nickname }}</h2>
+                    <p class="profile-username">@{{ profile.username }}</p>
+                    {% if profile.biography %}
+                        <p class="profile-bio">{{ profile.biography|render_emojis }}</p>
+                    {% endif %}
+                    <div class="profile-meta">
+                        <span class="meta-item">
+                            <i class="bi bi-envelope"></i>
+                            {{ user.email }}
+                        </span>
+                        <span class="meta-item">
+                            <i class="bi bi-file-post"></i>
+                            {{ entries_count }} entry
+                        </span>
+                    </div>
+                    {% if profile.instagram_username or profile.twitter_username or profile.youtube_url or profile.tiktok_username or profile.linkedin_url or profile.github_username or profile.website_url or profile.facebook_username %}
+                        <div class="social-links">
+                            {% if profile.website_url %}
+                                <a href="{{ profile.website_url }}" target="_blank" class="social-link website" title="{% trans 'Website' %}">
+                                    <i class="bi bi-globe"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.instagram_username %}
+                                <a href="https://instagram.com/{{ profile.instagram_username }}" target="_blank" class="social-link instagram" title="Instagram">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.twitter_username %}
+                                <a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank" class="social-link twitter" title="Twitter">
+                                    <i class="bi bi-twitter"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.facebook_username %}
+                                <a href="https://facebook.com/{{ profile.facebook_username }}" target="_blank" class="social-link facebook" title="Facebook">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.youtube_url %}
+                                <a href="{{ profile.youtube_url }}" target="_blank" class="social-link youtube" title="YouTube">
+                                    <i class="bi bi-youtube"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.tiktok_username %}
+                                <a href="https://tiktok.com/@{{ profile.tiktok_username }}" target="_blank" class="social-link tiktok" title="TikTok">
+                                    <i class="bi bi-tiktok"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.linkedin_url %}
+                                <a href="{{ profile.linkedin_url }}" target="_blank" class="social-link linkedin" title="LinkedIn">
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+                            {% endif %}
+                            {% if profile.github_username %}
+                                <a href="https://github.com/{{ profile.github_username }}" target="_blank" class="social-link github" title="GitHub">
+                                    <i class="bi bi-github"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-            {% if profile.instagram_username %}
-                <p class="text-muted mb-1"><i class="bi bi-instagram me-2"></i><a href="https://instagram.com/{{ profile.instagram_username }}" target="_blank" class="text-decoration-none">@{{ profile.instagram_username }}</a></p>
-            {% endif %}
-            {% if profile.twitter_username %}
-                <p class="text-muted mb-1"><i class="bi bi-twitter me-2"></i><a href="https://twitter.com/{{ profile.twitter_username }}" target="_blank" class="text-decoration-none">@{{ profile.twitter_username }}</a></p>
-            {% endif %}
-            <p class="text-muted mb-3"><i class="bi bi-file-post me-2"></i>Postên Giştî: {{ posts_count }}</p>
-            <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">Profîlê Biguherîne</button>
-                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 visibility-btn" data-bs-toggle="modal" data-bs-target="#visibilityModal">Mîhengên Xuyabûnê</button>
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#accountManagementModal">Rêveberiya Hesabê</button>
-                <form method="post" action="{% url 'logout' %}" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Derkeve</button>
-                </form>
-            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="profile-actions">
+            <button class="action-btn primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                <i class="bi bi-pencil"></i>
+                <span>{% trans "Düzenle" %}</span>
+            </button>
+            <button class="action-btn secondary" data-bs-toggle="modal" data-bs-target="#visibilityModal">
+                <i class="bi bi-eye"></i>
+                <span class="d-none d-sm-inline">{% trans "Gizlilik" %}</span>
+            </button>
+            <button class="action-btn danger" data-bs-toggle="modal" data-bs-target="#accountManagementModal">
+                <i class="bi bi-gear"></i>
+                <span class="d-none d-sm-inline">{% trans "Hesap" %}</span>
+            </button>
+            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="action-btn outline">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-sm-inline">{% trans "Çıkış" %}</span>
+                </button>
+            </form>
         </div>
     </div>
 
-    <!-- Sekmeler -->
-    <ul class="nav nav-tabs modern-tabs mb-4 scrollable-tabs">
-        <li class="nav-item">
-            <a class="nav-link {% if tab == 'posts' %}active{% endif %}" href="{% url 'profile' %}?tab=posts">Post</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if tab == 'likes' %}active{% endif %}" href="{% url 'profile' %}?tab=likes">Ecibandin</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if tab == 'comments' %}active{% endif %}" href="{% url 'profile' %}?tab=comments">Şîrove</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if tab == 'critiques' %}active{% endif %}" href="{% url 'profile' %}?tab=critiques">Nirxandin</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">Nîşankirina Cîhê</a>
-        </li>
-    </ul>
+    <!-- Modern Tabs -->
+    <div class="profile-tabs">
+        <div class="tabs-container">
+            <a class="tab-item {% if tab == 'entries' or not tab %}active{% endif %}" href="{% url 'profile' %}?tab=entries">
+                <i class="bi bi-chat-text"></i>
+                <span>{% trans "Entry'ler" %}</span>
+            </a>
+            <a class="tab-item {% if tab == 'topics' %}active{% endif %}" href="{% url 'profile' %}?tab=topics">
+                <i class="bi bi-chat-square-text"></i>
+                <span>{% trans "Başlıklar" %}</span>
+            </a>
+            <a class="tab-item {% if tab == 'votes' %}active{% endif %}" href="{% url 'profile' %}?tab=votes">
+                <i class="bi bi-hand-thumbs-up"></i>
+                <span>{% trans "Oylar" %}</span>
+            </a>
+            <a class="tab-item {% if tab == 'bookmarks' %}active{% endif %}" href="{% url 'profile' %}?tab=bookmarks">
+                <i class="bi bi-bookmark"></i>
+                <span>{% trans "Kaydedilenler" %}</span>
+            </a>
+        </div>
+    </div>
 
-    <!-- Sekme İçeriği -->
-    <div class="tab-content">
-        {% if tab == 'posts' %}
-            {% for post in posts %}
-                <div class="card border-0 shadow-sm mb-3 post-card">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <p class="mb-0">
-                                <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
-                            </p>
-                            <form method="post" action="{% url 'profile_delete_post' post.id %}?tab=posts" class="d-inline" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
-                            </form>
-                        </div>
-                        <p class="mb-1"><a href="{% url 'post_detail' post.id %}" class="text-dark text-decoration-none">{{ post.text|render_emojis|safe|linebreaks }}</a></p>
-                        {% if post.link %}
-                            <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-primary">{{ post.link|truncatechars:50 }}</a>
-                        {% endif %}
-                    </div>
-                </div>
-            {% empty %}
-                <p class="text-muted">Hêj we post neparvekiriye.</p>
-            {% endfor %}
-        {% elif tab == 'likes' %}
-            {% for post in liked_posts %}
-                <div class="card border-0 shadow-sm mb-3 post-card">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <p class="mb-0">
-                                <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
-                            </p>
-                            <form method="post" action="{% url 'unlike_post' post.id %}?tab=likes" class="bookmark-form d-inline" onsubmit="return confirm('Ma hûn ji vê ecibandina rakirinê piştrast in?');" data-post-id="{{ post.id }}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-heartbreak"></i></button>
-                            </form>
-                        </div>
-                        <p class="mb-1"><a href="{% url 'post_detail' post.id %}" class="text-dark text-decoration-none">{{ post.text|render_emojis|safe|linebreaks }}</a></p>
-                        {% if post.link %}
-                            <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-primary">{{ post.link|truncatechars:50 }}</a>
-                        {% endif %}
-                    </div>
-                </div>
-            {% empty %}
-                <p class="text-muted">Hêj we postek ecib nekiriye.</p>
-            {% endfor %}
-        {% elif tab == 'comments' %}
-            {% for comment in comments %}
-                <div class="card border-0 shadow-sm mb-3 post-card">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <p class="mb-0">
-                                <strong>{{ comment.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' comment.user.profile.username %}" class="text-muted text-decoration-none">@{{ comment.user.profile.username }}</a> · {{ comment.created_at }}</span>
-                            </p>
-                            <form method="post" action="{% url 'profile_delete_comment' comment.id %}?tab=comments" class="d-inline" onsubmit="return confirm('Ma hûn ji vê şîrovê jêbirinê piştrast in?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
-                            </form>
-                        </div>
-                        <p class="mb-1"><a href="{% url 'post_detail' comment.post.id %}" class="text-dark text-decoration-none">{{ comment.text|render_emojis|safe|linebreaks }}</a></p>
-                        <p class="text-muted small">Post: <a href="{% url 'post_detail' comment.post.id %}" class="text-muted">{{ comment.post.title|default:comment.post.text|truncatechars:50 }}</a></p>
-                    </div>
-                </div>
-            {% empty %}
-                <p class="text-muted">Hêj we şîrove nekiriye.</p>
-            {% endfor %}
-        {% elif tab == 'critiques' %}
-            {% for critique in critiques %}
-                <div class="card border-0 shadow-sm mb-3 post-card">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <p class="mb-0">
-                                <strong>{{ critique.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' critique.user.profile.username %}" class="text-muted text-decoration-none">@{{ critique.user.profile.username }}</a> · {{ critique.created_at }} · ID: {{ critique.short_id }}</span>
-                            </p>
-                            <form method="post" action="{% url 'profile_delete_critique' critique.id %}?tab=critiques" class="d-inline" onsubmit="return confirm('Ma hûn ji vê nirxandinê jêbirinê piştrast in?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link text-danger p-0"><i class="bi bi-trash"></i></button>
-                            </form>
-                        </div>
-                        <p class="mb-1"><a href="{% url 'post_detail' critique.post.id %}" class="text-dark text-decoration-none">{{ critique.text|render_emojis|safe|linebreaks }}</a></p>
-                        <p class="text-muted small">Post: <a href="{% url 'post_detail' critique.post.id %}" class="text-muted">{{ critique.post.title|default:critique.post.text|truncatechars:50 }}</a></p>
-                        <p class="text-muted small">Pûan: {{ critique.rating|floatformat:1 }}</p>
-                    </div>
-                </div>
-            {% empty %}
-                <p class="text-muted">Hêj we nirxandin nekiriye.</p>
-            {% endfor %}
-        {% elif tab == 'bookmarks' %}
-            {% for post in bookmarked_posts %}
-                <div class="card border-0 shadow-sm mb-3 post-card">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <p class="mb-0">
-                                <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.created_at }} · ID: {{ post.short_id }}</span>
-                            </p>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <form method="post" action="{% url 'remove_bookmark' post.id %}?tab=bookmarks" class="bookmark-form m-0" onsubmit="return confirm('Ma hûn ji vê nîşankirina cîhê rakirinê piştrast in?');" data-post-id="{{ post.id }}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="dropdown-item">Ji Nîşankirina Cîhê Derxistin</button>
-                                        </form>
-                                    </li>
-                                </ul>
+    <!-- Content Area -->
+    <div class="profile-content">
+
+        <!-- Topic'ler -->
+        {% if tab == 'topics' %}
+        <div class="content-section">
+            {% for topic in topics %}
+                <div class="content-card">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <a href="{% url 'topic_detail' topic.slug %}" class="card-title">
+                                {{ topic.title }}
+                            </a>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-chat"></i>
+                                    {{ topic.entry_count }} entry
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i>
+                                    {{ topic.created_at|date:"d.m.Y" }}
+                                </span>
                             </div>
                         </div>
-                        <p class="mb-1"><a href="{% url 'post_detail' post.id %}" class="text-dark text-decoration-none">{{ post.text|render_emojis|safe|linebreaks }}</a></p>
-                        {% if post.link %}
-                            <a href="{% url 'redirect_short_link' short_code=post.link|slice:'4:' %}" target="_blank" class="text-primary">{{ post.link|truncatechars:50 }}</a>
+                        {% if user == topic.user %}
+                            <div class="card-actions">
+                                <div class="dropdown">
+                                    <button class="action-menu-btn" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'edit_topic' topic.slug %}">{% trans "Düzenle" %}</a></li>
+                                        <li><a class="dropdown-item text-danger" href="{% url 'delete_topic' topic.slug %}">{% trans "Sil" %}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <div class="vote-actions">
+                            <button class="vote-btn up {% if user in topic.upvotes.all %}active{% endif %}" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <span class="vote-count">{{ topic.vote_score }}</span>
+                            <button class="vote-btn down {% if user in topic.downvotes.all %}active{% endif %}" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-muted">Hêj we nîşankirina cîhê zêde nekiriye.</p>
+                <div class="empty-state">
+                    <i class="bi bi-chat-square-text"></i>
+                    <p>{% trans "Henüz başlık açmamışsınız." %}</p>
+                </div>
             {% endfor %}
+        </div>
+        {% elif tab == 'votes' %}
+        <!-- Oylar -->
+        <div class="content-section">
+            <div class="section-header">
+                <h6>{% trans "Beğendiğim Başlıklar" %}</h6>
+            </div>
+            {% for topic in upvoted_topics %}
+                <div class="content-card simple">
+                    <a href="{% url 'topic_detail' topic.slug %}" class="card-title">
+                        {{ topic.title }}
+                    </a>
+                    <div class="card-meta">
+                        <span class="meta-item">
+                            <i class="bi bi-chat"></i>
+                            {{ topic.entry_count }} entry
+                        </span>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state small">
+                    <i class="bi bi-hand-thumbs-up"></i>
+                    <p>{% trans "Henüz hiçbir başlığa oy vermediniz." %}</p>
+                </div>
+            {% endfor %}
+            
+            <div class="section-header mt-4">
+                <h6>{% trans "Beğendiğim Entry'ler" %}</h6>
+            </div>
+            {% for entry in upvoted_entries %}
+                <div class="content-card simple">
+                    <a href="{% url 'topic_detail' entry.topic.slug %}#entry-{{ entry.id }}" class="entry-preview">
+                        {{ entry.content|truncatechars:100|render_emojis|with_entry_font:entry }}
+                    </a>
+                    <div class="card-meta">
+                        <span class="topic-link">{{ entry.topic.title }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state small">
+                    <i class="bi bi-chat-text"></i>
+                    <p>{% trans "Henüz hiçbir entry'ye oy vermediniz." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% elif tab == 'bookmarks' %}
+        <!-- Yer İşaretleri -->
+        <div class="content-section">
+            <!-- Bookmark Tabs -->
+            <div class="bookmark-tabs">
+                <button class="bookmark-tab active" data-bookmark-tab="entries">
+                    <i class="bi bi-chat-text"></i>
+                    <span>{% trans "Entry'ler" %}</span>
+                </button>
+                <button class="bookmark-tab" data-bookmark-tab="topics">
+                    <i class="bi bi-chat-square-text"></i>
+                    <span>{% trans "Başlıklar" %}</span>
+                </button>
+            </div>
+        
+            <!-- Entry Bookmarks -->
+            <div class="bookmark-content" id="bookmark-entries">
+                {% for entry in bookmarked_entries %}
+                    <div class="content-card entry-card">
+                        <div class="card-header">
+                            <div class="card-info">
+                                <a href="{% url 'topic_detail' entry.topic.slug %}#entry-{{ entry.id }}" class="topic-link">
+                                    {{ entry.topic.title }}
+                                </a>
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <i class="bi bi-person"></i>
+                                        {{ entry.user.profile.nickname }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        {{ entry.created_at|date:"d.m.Y H:i" }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="bookmark-btn active" data-entry-id="{{ entry.id }}">
+                                    <i class="bi bi-bookmark-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="entry-content">
+                            <div class="entry-text">
+                                {% with truncated_content=entry.content|truncate_by_lines:5 %}
+                                    {% if '[TRUNCATED]' in truncated_content or entry.content|length > 300 %}
+                                        {% if '[TRUNCATED]' in truncated_content %}
+                                            {{ truncated_content|slice:":-12"|render_emojis|with_entry_font:entry|linebreaks }}
+                                        {% else %}
+                                            {{ entry.content|slice:":300"|render_emojis|with_entry_font:entry|linebreaks }}
+                                        {% endif %}
+                                        <a href="{% url 'topic_detail' entry.topic.slug %}#entry-{{ entry.id }}" class="read-more">{% trans "...devamını gör" %}</a>
+                                    {% else %}
+                                        {{ entry.content|render_emojis|with_entry_font:entry|linebreaks }}
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-state">
+                        <i class="bi bi-bookmark"></i>
+                        <p>{% trans "Henüz hiçbir entry'yi kaydetmediniz." %}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Topic Bookmarks -->
+            <div class="bookmark-content d-none" id="bookmark-topics">
+                {% for topic in bookmarked_topics %}
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-info">
+                                <a href="{% url 'topic_detail' topic.slug %}" class="card-title">
+                                    {{ topic.title }}
+                                </a>
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <i class="bi bi-person"></i>
+                                        {{ topic.user.profile.nickname }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        {{ topic.created_at|date:"d.m.Y H:i" }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="bi bi-chat"></i>
+                                        {{ topic.entry_count }} entry
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="bookmark-btn active" data-topic-slug="{{ topic.slug }}">
+                                    <i class="bi bi-bookmark-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-state">
+                        <i class="bi bi-bookmark"></i>
+                        <p>{% trans "Henüz hiçbir başlığı kaydetmediniz." %}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+        {% else %}
+        <!-- Entry'ler -->
+        <div class="content-section">
+            {% for entry in entries %}
+                <div class="content-card entry-card">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <a href="{% url 'topic_detail' entry.topic.slug %}" class="topic-link">
+                                {{ entry.topic.title }}
+                            </a>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i>
+                                    {{ entry.created_at|date:"d.m.Y H:i" }}
+                                </span>
+                            </div>
+                        </div>
+                        {% if user == entry.user %}
+                            <div class="card-actions">
+                                <div class="dropdown">
+                                    <button class="action-menu-btn" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'edit_entry' entry.id %}">{% trans "Düzenle" %}</a></li>
+                                        <li><a class="dropdown-item text-danger" href="{% url 'delete_entry' entry.id %}">{% trans "Sil" %}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-content">
+                        <a href="{% url 'topic_detail' entry.topic.slug %}#entry-{{ entry.id }}" class="entry-text">
+                            {{ entry.content|render_emojis|auto_link|safe }}
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="vote-actions">
+                            <button class="vote-btn up {% if user in entry.upvotes.all %}active{% endif %}" data-entry-id="{{ entry.id }}" data-vote-type="up">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                            <span class="vote-count">{{ entry.vote_score }}</span>
+                            <button class="vote-btn down {% if user in entry.downvotes.all %}active{% endif %}" data-entry-id="{{ entry.id }}" data-vote-type="down">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="bi bi-chat-text"></i>
+                    <p>{% trans "Henüz entry yazmamışsınız." %}</p>
+                </div>
+            {% endfor %}
+        </div>
         {% endif %}
+
     </div>
 
     <!-- Profil Düzenleme Modalı -->
@@ -185,7 +397,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Profîlê Biguherîne</h5>
+                    <h5 class="modal-title" id="editProfileModalLabel">{% trans "Profili Düzenle" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -195,30 +407,43 @@
                     <form method="post" action="{% url 'update_profile' %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="nickname" class="form-label">Navê Nasnavê</label>
-                            <input type="text" class="form-control" id="nickname" name="nickname" value="{{ profile.nickname }}" required>
+                            <label for="nickname" class="form-label">{% trans "Takma Ad" %}</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" value="{{ profile.nickname }}" pattern="[a-zA-Z0-9_\s]+" title="{% trans 'Sadece harf, rakam, alt çizgi ve boşluk kullanabilirsiniz' %}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Navê Bikarhêner</label>
-                            <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" required>
+                            <label for="username" class="form-label">{% trans "Kullanıcı Adı" %}</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{ profile.username }}" pattern="[a-zA-Z0-9_]+" title="{% trans 'Sadece harf, rakam ve alt çizgi kullanabilirsiniz' %}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="instagram_username" class="form-label">Instagram (Bijarte)</label>
+                            <label for="biography" class="form-label">{% trans "Biyografi (İsteğe bağlı)" %}</label>
+                            <textarea class="form-control" id="biography" name="biography" rows="3" maxlength="500" placeholder="{% trans 'Kendiniz hakkında bir şeyler yazın...' %}">{{ profile.biography|default_if_none:'' }}</textarea>
+                            <div class="form-text">{% trans "Emoji, font karakterleri ve özel karakterler kullanabilirsiniz." %}</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="instagram_username" class="form-label">{% trans "Instagram (İsteğe bağlı)" %}</label>
                             <input type="text" class="form-control" id="instagram_username" name="instagram_username" value="{{ profile.instagram_username|default_if_none:'' }}">
                         </div>
                         <div class="mb-3">
-                            <label for="twitter_username" class="form-label">Twitter (Bijarte)</label>
+                            <label for="twitter_username" class="form-label">{% trans "Twitter (İsteğe bağlı)" %}</label>
                             <input type="text" class="form-control" id="twitter_username" name="twitter_username" value="{{ profile.twitter_username|default_if_none:'' }}">
                         </div>
+                        
+                        <!-- Sosyal Medya Bağlantıları Butonu -->
                         <div class="mb-3">
-                            <label for="preferred_language" class="form-label">Terciha Ziman</label>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#socialLinksModal">
+                                <i class="bi bi-link-45deg me-2"></i>{% trans "Sosyal Medya Bağlantılarını Düzenle" %}
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="preferred_language" class="form-label">{% trans "Tercih Edilen Dil" %}</label>
                             <select class="form-control" id="preferred_language" name="preferred_language">
-                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>Tirkî</option>
-                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>Kurdî</option>
-                                <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>Îngilîzî</option>
+                                <option value="tr" {% if profile.preferred_language == 'tr' %}selected{% endif %}>{% trans "Türkçe" %}</option>
+                                <option value="ku" {% if profile.preferred_language == 'ku' %}selected{% endif %}>{% trans "Kürtçe" %}</option>
+                                <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>{% trans "İngilizce" %}</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
+
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Kaydet" %}</button>
                     </form>
                 </div>
             </div>
@@ -230,7 +455,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="visibilityModalLabel">Mîhengên Xuyabûnê</h5>
+                    <h5 class="modal-title" id="visibilityModalLabel">{% trans "Görünürlük Ayarları" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -239,18 +464,18 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="postsVisible" name="posts_visible" {% if profile.posts_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="postsVisible">Post Xuya Ne</label>
+                                <label class="form-check-label" for="postsVisible">{% trans "Gönderiler Görünür" %}</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="critiquesVisible" name="critiques_visible" {% if profile.critiques_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="critiquesVisible">Nirxandin Xuya Ne</label>
+                                <label class="form-check-label" for="critiquesVisible">{% trans "Değerlendirmeler Görünür" %}</label>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="commentsVisible" name="comments_visible" {% if profile.comments_visible %}checked{% endif %}>
-                                <label class="form-check-label" for="commentsVisible">Şîrove Xuya Ne</label>
+                                <label class="form-check-label" for="commentsVisible">{% trans "Yorumlar Görünür" %}</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
+                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Kaydet" %}</button>
                     </form>
                 </div>
             </div>
@@ -262,7 +487,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="accountManagementModalLabel">Rêveberiya Hesabê</h5>
+                    <h5 class="modal-title" id="accountManagementModalLabel">{% trans "Hesap Yönetimi" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -270,52 +495,126 @@
                         Debug: account_status = {{ profile.account_status }}
                     </div>
                     <div class="mb-4">
-                        <h6>Rewşa Hesabê</h6>
-                        <p>Rewşa heyî: 
+                        <h6>{% trans "Hesap Durumu" %}</h6>
+                        <p>{% trans "Mevcut durum:" %} 
                             {% if profile.account_status == 'active' %}
-                                <span class="badge bg-success">Çalak</span>
+                                <span class="badge bg-success">{% trans "Aktif" %}</span>
                             {% elif profile.account_status == 'frozen' %}
-                                <span class="badge bg-warning">Cemidî</span>
+                                <span class="badge bg-warning">{% trans "Dondurulmuş" %}</span>
                             {% elif profile.account_status == 'deletion_scheduled' %}
-                                <span class="badge bg-danger">Jêbirina Plankirî</span>
-                                <small class="d-block mt-1">Dîroka jêbirinê: {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
+                                <span class="badge bg-danger">{% trans "Silinme Planlandı" %}</span>
+                                <small class="d-block mt-1">{% trans "Silinme tarihi:" %} {{ profile.scheduled_deletion_date|date:"d.m.Y H:i" }}</small>
                             {% else %}
-                                <span class="badge bg-secondary">Rewşek Nenas</span>
+                                <span class="badge bg-secondary">{% trans "Bilinmeyen Durum" %}</span>
                             {% endif %}
                         </p>
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabê Bicemidîne</h6>
-                        <p class="small text-muted">Dema ku hûn hesabê xwe bicemidînin, naverokên we xuya nabin lê nayên jêbirin. Hûn dikarin her dem dîsa çalak bikin.</p>
+                        <h6>{% trans "Hesabı Dondur" %}</h6>
+                        <p class="small text-muted">{% trans "Hesabınızı dondurduğunuzda, içerikleriniz görünmez ancak silinmez. İstediğiniz zaman tekrar aktif hale getirebilirsiniz." %}</p>
                         {% if profile.account_status == 'active' %}
-                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('Ma hûn ji cemidandina hesabê xwe piştrast in?');">
+                            <form method="post" action="{% url 'freeze_account' %}" class="d-inline" onsubmit="return confirm('{% trans "Hesabınızı dondurmak istediğinizden emin misiniz?" %}');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">Hesabê Bicemidîne</button>
+                                <button type="submit" class="btn btn-warning btn-sm rounded-pill">{% trans "Hesabı Dondur" %}</button>
                             </form>
                         {% elif profile.account_status == 'frozen' %}
                             <form method="post" action="{% url 'unfreeze_account' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Hesabê Çalak Bike</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">{% trans "Hesabı Aktifleştir" %}</button>
                             </form>
                         {% endif %}
                     </div>
                     
                     <div class="mb-3">
-                        <h6>Hesabê Jêbibe</h6>
-                        <p class="small text-muted">Dema ku hûn hesabê xwe jêbibin, heke hûn di nav 30 rojan de dîsa têkevin, hemû daneyên we bi domdarî têne jêbirin.</p>
+                        <h6>{% trans "Hesabı Sil" %}</h6>
+                        <p class="small text-muted">{% trans "Hesabınızı sildiğinizde, 30 gün içinde tekrar giriş yapmazsanız tüm verileriniz kalıcı olarak silinir." %}</p>
                         {% if profile.account_status != 'deletion_scheduled' %}
-                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('Ma hûn ji jêbirina hesabê xwe piştrast in? Ev pêvajo piştî 30 rojan tê temamkirin.');">
+                            <form method="post" action="{% url 'schedule_account_deletion' %}" class="d-inline" onsubmit="return confirm('{% trans "Hesabınızı silmek istediğinizden emin misiniz? Bu işlem 30 gün sonra tamamlanır." %}');">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">Hesabê Jêbibe</button>
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">{% trans "Hesabı Sil" %}</button>
                             </form>
                         {% else %}
                             <form method="post" action="{% url 'cancel_account_deletion' %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm rounded-pill">Jêbirina Pêvajoyê Betal Bike</button>
+                                <button type="submit" class="btn btn-success btn-sm rounded-pill">{% trans "Silme İşlemini İptal Et" %}</button>
                             </form>
                         {% endif %}
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sosyal Medya Bağlantıları Modalı -->
+    <div class="modal fade" id="socialLinksModal" tabindex="-1" aria-labelledby="socialLinksModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="socialLinksModalLabel">
+                        <i class="bi bi-link-45deg me-2"></i>{% trans "Sosyal Medya Bağlantıları" %}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'update_social_links' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="social_website_url" class="form-label">
+                                <i class="bi bi-globe text-primary me-2"></i>{% trans "Kişisel Website" %}
+                            </label>
+                            <input type="url" class="form-control" id="social_website_url" name="website_url" 
+                                   value="{{ profile.website_url|default_if_none:'' }}" placeholder="https://">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="social_facebook_username" class="form-label">
+                                <i class="bi bi-facebook text-primary me-2"></i>{% trans "Facebook" %}
+                            </label>
+                            <input type="text" class="form-control" id="social_facebook_username" name="facebook_username" 
+                                   value="{{ profile.facebook_username|default_if_none:'' }}" placeholder="kullaniciadi">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="social_youtube_url" class="form-label">
+                                <i class="bi bi-youtube text-danger me-2"></i>{% trans "YouTube Kanalı" %}
+                            </label>
+                            <input type="url" class="form-control" id="social_youtube_url" name="youtube_url" 
+                                   value="{{ profile.youtube_url|default_if_none:'' }}" placeholder="https://youtube.com/channel/...">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="social_tiktok_username" class="form-label">
+                                <i class="bi bi-tiktok text-dark me-2"></i>{% trans "TikTok" %}
+                            </label>
+                            <input type="text" class="form-control" id="social_tiktok_username" name="tiktok_username" 
+                                   value="{{ profile.tiktok_username|default_if_none:'' }}" placeholder="kullaniciadi">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="social_linkedin_url" class="form-label">
+                                <i class="bi bi-linkedin text-info me-2"></i>{% trans "LinkedIn" %}
+                            </label>
+                            <input type="url" class="form-control" id="social_linkedin_url" name="linkedin_url" 
+                                   value="{{ profile.linkedin_url|default_if_none:'' }}" placeholder="https://linkedin.com/in/...">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="social_github_username" class="form-label">
+                                <i class="bi bi-github text-dark me-2"></i>{% trans "GitHub" %}
+                            </label>
+                            <input type="text" class="form-control" id="social_github_username" name="github_username" 
+                                   value="{{ profile.github_username|default_if_none:'' }}" placeholder="kullaniciadi">
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "İptal" %}</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-2"></i>{% trans "Kaydet" %}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -324,4 +623,33 @@
 {% endblock %}
 {% block extra_css %}
     <link href="{% static 'main/css/profile.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/modern-profile.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Bookmark tab switching
+    document.querySelectorAll('.bookmark-tab').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabName = this.dataset.bookmarkTab;
+            
+            // Update button states
+            document.querySelectorAll('.bookmark-tab').forEach(b => {
+                b.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Show/hide content
+            document.querySelectorAll('.bookmark-content').forEach(content => {
+                content.classList.add('d-none');
+            });
+            const targetContent = document.getElementById('bookmark-' + tabName);
+            if (targetContent) {
+                targetContent.classList.remove('d-none');
+            }
+        });
+    });
+});
+</script>
+<script src="{% static 'main/js/bookmarks.js' %}"></script>
 {% endblock %}

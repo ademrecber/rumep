@@ -1,0 +1,114 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Bildirimler" %}{% endblock %}
+{% block page_header %}{% trans "Bildirimler" %}{% endblock %}
+{% block content %}
+<div class="notifications-header d-flex justify-content-between align-items-center mb-3">
+    <div class="notification-filters mx-auto">
+        <div class="btn-group btn-group-sm" role="group">
+            <a href="?category=all" class="btn {% if not category or category == 'all' %}btn-primary{% else %}btn-outline-primary{% endif %}">{% trans "Tev" %}</a>
+            <a href="?category=interaction" class="btn {% if category == 'interaction' %}btn-primary{% else %}btn-outline-primary{% endif %}">💬 {% trans "Karêkirin" %}</a>
+            <a href="?category=social" class="btn {% if category == 'social' %}btn-primary{% else %}btn-outline-primary{% endif %}">👥 {% trans "Civakî" %}</a>
+            <a href="?category=content" class="btn {% if category == 'content' %}btn-primary{% else %}btn-outline-primary{% endif %}">📝 {% trans "Naverok" %}</a>
+            <a href="?category=important" class="btn {% if category == 'important' %}btn-primary{% else %}btn-outline-primary{% endif %}">🔥 {% trans "Girng" %}</a>
+        </div>
+    </div>
+    {% if unread_count > 0 %}
+    <div class="position-absolute end-0">
+        <button class="btn btn-outline-success btn-sm" id="markAllRead">
+            <i class="bi bi-check-all me-2"></i>{% trans "Tümünü Okundu İşaretle" %}
+        </button>
+    </div>
+    {% endif %}
+</div>
+
+<div class="notifications-container">
+    {% for notification in notifications %}
+        <div class="notification-item {% if not notification.is_read %}bg-light{% endif %}" data-id="{{ notification.id }}">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <div class="notification-icon {% if notification.notification_type == 'entry_reply' %}reply{% elif notification.notification_type == 'topic_entry' %}entry{% elif notification.notification_type == 'vote_received' %}vote{% else %}mention{% endif %}">
+                        <i class="bi {% if notification.notification_type == 'entry_reply' %}bi-reply{% elif notification.notification_type == 'topic_entry' %}bi-chat-text{% elif notification.notification_type == 'vote_received' %}bi-hand-thumbs-up{% else %}bi-at{% endif %}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-message">
+                            {{ notification.message }}
+                            {% if not notification.is_read %}
+                                <span class="notification-badge">{% trans "Yeni" %}</span>
+                            {% endif %}
+                        </div>
+                        {% if notification.from_user %}
+                            <div class="notification-meta">{{ notification.from_user.profile.nickname }} {% trans "tarafından" %}</div>
+                        {% endif %}
+                        <div class="notification-time">{{ notification.created_at|timesince }} {% trans "önce" %}</div>
+                    </div>
+                    <div class="notification-actions">
+                        {% if notification.related_topic %}
+                            <a href="{% url 'topic_detail' notification.related_topic.slug %}{% if notification.related_entry %}#entry-{{ notification.related_entry.id }}{% endif %}" class="notification-btn primary" title="{% trans 'Görüntüle' %}">
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        {% endif %}
+                        {% if not notification.is_read %}
+                            <button class="notification-btn mark-read-btn" data-id="{{ notification.id }}" title="{% trans 'Okundu İşaretle' %}">
+                                <i class="bi bi-check"></i>
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="notifications-empty">
+            <i class="bi bi-bell"></i>
+            <h4>{% trans "Henüz bildiriminiz yok" %}</h4>
+            <p>{% trans "Yeni bildirimler burada görünecek" %}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tek bildirimi okundu işaretle
+    document.querySelectorAll('.mark-read-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const notificationId = this.dataset.id;
+            
+            fetch(`/notifications/${notificationId}/mark-read/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const item = this.closest('.notification-item');
+                    item.classList.remove('bg-light');
+                    item.querySelector('.badge')?.remove();
+                    this.remove();
+                }
+            });
+        });
+    });
+    
+    // Tümünü okundu işaretle
+    document.getElementById('markAllRead')?.addEventListener('click', function() {
+        fetch('/notifications/mark-all-read/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

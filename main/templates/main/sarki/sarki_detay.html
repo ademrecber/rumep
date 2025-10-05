@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Gotinên Stranan - {{ sarki.ad }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Şarkı Sözleri" %} - {{ sarki.ad }}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -12,7 +13,7 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'sarki_sozleri' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-music-note-list me-1"></i>Gotinên Stranan
+                                    <i class="bi bi-music-note-list me-1"></i>{% trans "Şarkı Sözleri" %}
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
@@ -45,19 +46,19 @@
                             <button class="btn btn-light btn-lg sarki-duzenle-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-url-duzenle="{% url 'sarki_duzenle' sarki.id %}">
-                                <i class="bi bi-pencil me-2"></i>Biguherîne
+                                <i class="bi bi-pencil me-2"></i>{% trans "Düzenle" %}
                             </button>
                             <button class="btn btn-outline-light btn-lg album-degistir-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-url-degistir-veri="{% url 'sarki_album_degistir_veri' sarki.id %}" 
                                     data-url-degistir="{% url 'sarki_album_degistir' sarki.id %}">
-                                <i class="bi bi-arrow-left-right me-2"></i>Albûmê Biguherîne
+                                <i class="bi bi-arrow-left-right me-2"></i>{% trans "Albümü Değiştir" %}
                             </button>
                             <button class="btn btn-outline-light btn-lg sarki-sil-btn" 
                                     data-sarki-id="{{ sarki.id }}"
                                     data-album-id="{{ sarki.album.id }}"
                                     data-url-sil="{% url 'sarki_sil' sarki.id %}">
-                                <i class="bi bi-trash me-2"></i>Jêbirin
+                                <i class="bi bi-trash me-2"></i>{% trans "Sil" %}
                             </button>
                         </div>
                     {% endif %}
@@ -89,7 +90,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
-                            <i class="bi bi-music-note-beamed me-2"></i>Gotinên Stranê
+                            <i class="bi bi-music-note-beamed me-2"></i>{% trans "Şarkı Sözleri" %}
                         </h5>
                         <div class="lyrics-content bg-light rounded p-4">
                             <div class="lyrics-text">{{ sarki.sozler|linebreaks }}</div>
@@ -109,7 +110,7 @@
                     <div class="card-header bg-white border-0 py-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <i class="bi bi-journal-text me-2"></i>Kîtekîtên Zêde
+                                <i class="bi bi-journal-text me-2"></i>{% trans "Ek Detaylar" %}
                                 <span class="badge bg-primary ms-2">{{ detaylar.count }}</span>
                             </h5>
                             <button class="btn btn-success" data-action="detay-ekle" data-sarki-id="{{ sarki.id }}">
@@ -158,24 +159,24 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Agahiyên Stranê
+                            <i class="bi bi-info-circle me-2"></i>{% trans "Şarkı Bilgileri" %}
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Navê Stranê</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Şarkı Adı" %}</strong>
                             <span class="fs-5 fw-bold">{{ sarki.ad }}</span>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Hunermend</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Sanatçı" %}</strong>
                             <a href="{% url 'sarki_album_liste' sarki.album.kisi.id %}" class="text-decoration-none">
                                 {{ sarki.album.kisi.ad }}
                             </a>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Albûm</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Albüm" %}</strong>
                             <span>{{ sarki.album.ad }}</span>
                         </div>
                         

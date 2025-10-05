@@ -1,0 +1,199 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load post_tags %}
+{% load i18n %}
+{% block title %}{% trans "Gündem" %}{% endblock %}
+{% block content %}
+    <div class="container twitter-container">
+        <h2>Gündem</h2>
+        <p class="text-muted">En çok entry yazılan başlıklar</p>
+        
+        <div class="agenda-container">
+            {% for topic in topics %}
+                {% with first_entry=topic.entries.first %}
+                    <div class="card mb-2 agenda-item">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                                        <h5 class="card-title mb-1">{{ topic.title }}</h5>
+                                    </a>
+                                    
+                                    {% if first_entry %}
+                                    <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                                        {% if first_entry.content|length > 790 %}
+                                            {{ first_entry.content|slice:":790"|render_emojis|safe }}
+                                            <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...devamını gör</a>
+                                        {% else %}
+                                            {{ first_entry.content|render_emojis|safe }}
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <small class="text-muted">
+                                        {{ topic.daily_entry_count }} entry (son 24 saat) • 
+                                        {{ topic.user.profile.nickname }} tarafından açıldı •
+                                        {{ topic.created_at|date:"d.m.Y H:i" }}
+                                    </small>
+                                    
+                                    <div class="vote-buttons d-flex gap-1 align-items-center mt-2">
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                            <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                                        </button>
+                                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                            <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">{{ topic.daily_entry_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+            {% empty %}
+                <p class="text-muted p-3">Henüz gündem başlığı yok.</p>
+            {% endfor %}
+        </div>
+        
+        <div id="loading" class="text-center mt-3" style="display: none;">Yükleniyor...</div>
+        <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Daha Fazla Yükle</button>
+        <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
+    </div>
+
+<script>
+let offset = 10;
+let loading = false;
+let hasMore = true;
+
+// Buton ile yükleme
+document.getElementById('load-more-btn').addEventListener('click', loadMoreAgenda);
+
+function loadMoreAgenda() {
+    if (loading || !hasMore) return;
+    loading = true;
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('load-more-btn').style.display = 'none';
+    
+    fetch(`/load-more-agenda/?offset=${offset}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.topics && data.topics.length > 0) {
+                data.topics.forEach(topic => {
+                    const topicHtml = createTopicHtml(topic);
+                    document.querySelector('.agenda-container').insertAdjacentHTML('beforeend', topicHtml);
+                });
+                addVoteListeners();
+                offset += data.topics.length;
+                hasMore = data.has_more;
+            } else {
+                hasMore = false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('error-message').textContent = 'Yükleme hatası oluştu.';
+            document.getElementById('error-message').style.display = 'block';
+        })
+        .finally(() => {
+            loading = false;
+            document.getElementById('loading').style.display = 'none';
+            if (hasMore) {
+                document.getElementById('load-more-btn').style.display = 'block';
+            }
+        });
+}
+
+function createTopicHtml(topic) {
+    const firstEntryPreview = topic.first_entry_content ? 
+        (topic.first_entry_content.length > 790 ? 
+            `${topic.first_entry_content}<a href="/topic/${topic.slug}/" class="text-primary text-decoration-none">...devamını gör</a>` : 
+            topic.first_entry_full) : '';
+    
+    return `<div class="card mb-2 agenda-item">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <a href="/topic/${topic.slug}/" class="text-decoration-none text-dark">
+                        <h5 class="card-title mb-1">${topic.title}</h5>
+                    </a>
+                    ${firstEntryPreview ? `<div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">${firstEntryPreview}</div>` : ''}
+                    <small class="text-muted">
+                        ${topic.daily_entry_count} entry (son 24 saat) • 
+                        ${topic.user_nickname} tarafından açıldı •
+                        ${topic.created_at}
+                    </small>
+                    <div class="vote-buttons d-flex gap-1 align-items-center mt-2">
+                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.slug}" data-vote-type="up">
+                            <i class="bi bi-arrow-up${topic.user_upvoted ? '-circle-fill text-success' : ''}"></i>
+                        </button>
+                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">${topic.vote_score}</span>
+                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.slug}" data-vote-type="down">
+                            <i class="bi bi-arrow-down${topic.user_downvoted ? '-circle-fill text-danger' : ''}"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <span class="badge bg-primary">${topic.daily_entry_count}</span>
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
+
+function addVoteListeners() {
+    document.querySelectorAll('.vote-btn:not([data-listener])').forEach(button => {
+        button.setAttribute('data-listener', 'true');
+        button.addEventListener('click', handleVote);
+    });
+}
+
+function handleVote() {
+    const topicSlug = this.dataset.topicSlug;
+    const voteType = this.dataset.voteType;
+    
+    fetch(`/topic/${topicSlug}/vote/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `vote_type=${voteType}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.vote_score !== undefined) {
+            const card = this.closest('.agenda-item');
+            const scoreElement = card.querySelector('.vote-score');
+            const upBtn = card.querySelector('[data-vote-type="up"]');
+            const downBtn = card.querySelector('[data-vote-type="down"]');
+            
+            scoreElement.textContent = data.vote_score;
+            
+            if (voteType === 'up') {
+                const icon = upBtn.querySelector('i');
+                if (data.voted) {
+                    icon.className = 'bi bi-arrow-up-circle-fill text-success';
+                } else {
+                    icon.className = 'bi bi-arrow-up';
+                }
+                downBtn.querySelector('i').className = 'bi bi-arrow-down';
+            } else {
+                const icon = downBtn.querySelector('i');
+                if (data.voted) {
+                    icon.className = 'bi bi-arrow-down-circle-fill text-danger';
+                } else {
+                    icon.className = 'bi bi-arrow-down';
+                }
+                upBtn.querySelector('i').className = 'bi bi-arrow-up';
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+addVoteListeners();
+</script>
+{% endblock %}

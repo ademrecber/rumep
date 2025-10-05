@@ -1,0 +1,123 @@
+/* Mention Styles */
+.mention-link {
+    color: #8b5cf6 !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    background-color: rgba(139, 92, 246, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.mention-link:hover {
+    background-color: rgba(139, 92, 246, 0.2);
+    color: #7c3aed !important;
+}
+
+/* Mention input suggestions (for future enhancement) */
+.mention-suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.mention-suggestion {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.mention-suggestion:hover {
+    background-color: #f8f9fa;
+}
+
+.mention-suggestion:last-child {
+    border-bottom: none;
+}
+
+/* Auto-Link Styles */
+.auto-link {
+    text-decoration: none !important;
+    font-weight: 500;
+    padding: 1px 3px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.dictionary-link {
+    color: #059669 !important;
+    background-color: rgba(5, 150, 105, 0.1);
+}
+
+.dictionary-link:hover {
+    background-color: rgba(5, 150, 105, 0.2);
+    color: #047857 !important;
+}
+
+.song-link {
+    color: #dc2626 !important;
+    background-color: rgba(220, 38, 38, 0.1);
+}
+
+.song-link:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+    color: #b91c1c !important;
+}
+
+.place-link {
+    color: #2563eb !important;
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.place-link:hover {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #1d4ed8 !important;
+}
+
+.person-link {
+    color: #7c2d12 !important;
+    background-color: rgba(124, 45, 18, 0.1);
+}
+
+.person-link:hover {
+    background-color: rgba(124, 45, 18, 0.2);
+    color: #92400e !important;
+}
+
+.proverb-link {
+    color: #7c3aed !important;
+    background-color: rgba(124, 58, 237, 0.1);
+    font-style: italic;
+}
+
+.proverb-link:hover {
+    background-color: rgba(124, 58, 237, 0.2);
+    color: #6d28d9 !important;
+}
+
+/* Hashtag Styles */
+.hashtag-link {
+    color: #1d4ed8 !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    background-color: rgba(29, 78, 216, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.hashtag-link:hover {
+    background-color: rgba(29, 78, 216, 0.2);
+    color: #1e40af !important;
+}
+
+.hashtag-inactive {
+    color: #6b7280;
+    font-weight: 500;
+}

@@ -1,4 +1,62 @@
 /* SÖZLÜK SAYFALARI */
+
+/* Genel metin renkleri */
+.card-title {
+    color: #0f1419 !important;
+}
+
+.form-label {
+    color: #0f1419 !important;
+}
+
+.text-primary {
+    color: #1da1f2 !important;
+}
+
+.text-muted {
+    color: #657786 !important;
+}
+
+.btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+/* Hero section renkleri */
+.hero-section .text-white {
+    color: #ffffff !important;
+}
+
+.hero-section h1 {
+    color: #ffffff !important;
+}
+
+.hero-section p {
+    color: #ffffff !important;
+}
+
+.hero-section .lead {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card h3 {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card p {
+    color: #ffffff !important;
+}
+
+.hero-section.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
 .sozluk-container {
     max-width: 800px;
     margin: 0 auto;

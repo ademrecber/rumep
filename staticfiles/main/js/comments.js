@@ -42,7 +42,7 @@ function initComments() {
                             <div class="d-flex justify-content-between align-items-start">
                                 <p class="mb-1">
                                     <strong>${data.nickname}</strong> 
-                                    <span class="text-muted">@${data.username} · şimdi</span>
+                                    <span class="text-muted">@${data.username} · niha</span>
                                 </p>
                                 <div class="dropdown">
                                     <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
@@ -52,7 +52,7 @@ function initComments() {
                                         <li>
                                             <form method="post" action="/delete-comment/${data.comment_id}/" onsubmit="return window.deleteComment(event, '${data.comment_id}')">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">Jê bibe</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -61,14 +61,14 @@ function initComments() {
                             <div class="post-text">
                                 ${showMore ? `
                                     <div class="text-preview"><p>${text}</p></div>
-                                    <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                    <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                                     <div class="full-text d-none"><p>${text}</p></div>
-                                    <button class="btn btn-link text-primary p-0 show-less-btn d-none">Daha az gör</button>
+                                    <button class="btn btn-link text-primary p-0 show-less-btn d-none">Kêmtir bibîne</button>
                                 ` : `<p>${text}</p>`}
                             </div>
                             <div class="post-actions mt-2">
                                 <button class="btn btn-link text-primary p-0 reply-btn" data-comment-id="${data.comment_id}">
-                                    <i class="bi bi-reply"></i> Yanıtla
+                                    <i class="bi bi-reply"></i> Bersiv bide
                                 </button>
                                 <form method="post" action="/vote-comment/${data.comment_id}/" class="vote-form d-inline" data-comment-id="${data.comment_id}">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
@@ -86,17 +86,19 @@ function initComments() {
                                     <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                                     <input type="hidden" name="parent_id" value="${data.comment_id}">
                                     <div class="input-group">
-                                        <textarea name="text" class="form-control auto-resize mb-2" rows="2" placeholder="Yanıtınız..." maxlength="500"></textarea>
+                                        <textarea name="text" class="form-control auto-resize mb-2" rows="2" placeholder="Bersiva te..." maxlength="500"></textarea>
                                         <button type="button" class="btn btn-link text-muted p-0 ms-2" id="emojiButton" data-bs-toggle="modal" data-bs-target="#emojiModal">
                                             <i class="bi bi-emoji-smile" style="font-size: 1.5rem;"></i>
                                         </button>
                                     </div>
-                                    <button type="submit" class="btn btn-sm btn-primary">Gönder</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply">İptal</button>
+                                    <button type="submit" class="btn btn-sm btn-primary">Şandin</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply">Betal</button>
                                 </form>
                             </div>
                         </div>
-                    `;
+                   ther
+                    </div>
+                `;
                     const commentsSection = document.querySelector('.comments-section');
                     if (data.parent_id) {
                         let parentReplies = document.querySelector(`#comment-${data.parent_id} .replies`);
@@ -125,7 +127,7 @@ function initComments() {
         event.preventDefault();
         console.log("deleteComment çağrıldı, commentId:", commentId);
 
-        if (!confirm('Bu yorumu silmek istediğinizden emin misiniz?')) {
+        if (!confirm('Ma tu bawer î ku dixwazî vê şîroveyê jê bibî?')) {
             console.log("Silme iptal edildi");
             return false;
         }

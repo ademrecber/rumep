@@ -1,0 +1,211 @@
+/* Modern Notifications Tasarımı */
+
+.notifications-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.notification-item {
+    border: none !important;
+    border-radius: 16px !important;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
+    margin-bottom: 16px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 4px solid transparent !important;
+}
+
+.notification-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.notification-item.bg-light {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border-left-color: #8b5cf6 !important;
+}
+
+.notification-item .card-body {
+    padding: 20px !important;
+}
+
+/* Notification Icon */
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.notification-icon.reply {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+.notification-icon.entry {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.notification-icon.vote {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.notification-icon.mention {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+}
+
+/* Notification Content */
+.notification-content {
+    flex: 1;
+}
+
+.notification-message {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.notification-meta {
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.notification-time {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+/* Notification Badge */
+.notification-badge {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+/* Action Buttons */
+.notification-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 16px;
+}
+
+.notification-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid #e5e7eb;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-btn:hover {
+    border-color: #8b5cf6;
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.05);
+    transform: scale(1.1);
+}
+
+.notification-btn.primary {
+    border-color: #8b5cf6;
+    background: #8b5cf6;
+    color: #fff;
+}
+
+.notification-btn.primary:hover {
+    background: #7c3aed;
+    transform: scale(1.1);
+}
+
+/* Header Actions */
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 0 16px;
+}
+
+.mark-all-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mark-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Empty State */
+.notifications-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.notifications-empty i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.notifications-empty h4 {
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .notifications-container {
+        padding: 0 12px;
+    }
+    
+    .notification-item .card-body {
+        padding: 16px !important;
+    }
+    
+    .notification-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+    }
+    
+    .notification-actions {
+        margin-left: 8px;
+    }
+    
+    .notification-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .notifications-header {
+        padding: 0 12px;
+        margin-bottom: 20px;
+    }
+}

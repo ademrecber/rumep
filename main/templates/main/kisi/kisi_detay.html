@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
@@ -12,7 +13,7 @@
                         <ol class="breadcrumb text-white-50">
                             <li class="breadcrumb-item">
                                 <a href="{% url 'kisi_liste' %}" class="text-white text-decoration-none">
-                                    <i class="bi bi-people me-1"></i>Kes
+                                    <i class="bi bi-people me-1"></i>{% trans "Kişiler" %}
                                 </a>
                             </li>
                             <li class="breadcrumb-item active text-white" aria-current="page">{{ kisi.ad }}</li>
@@ -46,11 +47,11 @@
                         <div class="row text-center">
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ kisi.detaylar.count }}</h3>
-                                <p class="mb-0 small">Kîtekîta Zêde</p>
+                                <p class="mb-0 small">{% trans "Ek Detay" %}</p>
                             </div>
                             <div class="col-6">
                                 <h3 class="h2 mb-1">{{ kisi.kategoriler.count }}</h3>
-                                <p class="mb-0 small">Kategorî</p>
+                                <p class="mb-0 small">{% trans "Kategori" %}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +68,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title mb-3">
-                            <i class="bi bi-journal-text me-2"></i>Biyografî
+                            <i class="bi bi-journal-text me-2"></i>{% trans "Biyografi" %}
                         </h5>
                         <div class="card-text lead">{{ kisi.biyografi|safe }}</div>
                     </div>
@@ -78,7 +79,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-success text-white">
                             <h6 class="mb-0">
-                                <i class="bi bi-plus-circle me-2"></i>Kîtekîta Nû Lê Zêde Bike
+                                <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Detay Ekle" %}
                             </h6>
                         </div>
                         <div class="card-body">
@@ -89,7 +90,7 @@
                                 </div>
                                 <div id="detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
                                 <button type="submit" class="btn btn-success w-100">
-                                    <i class="bi bi-plus-circle me-2"></i>Kîtekît Lê Zêde Bike
+                                    <i class="bi bi-plus-circle me-2"></i>{% trans "Detay Ekle" %}
                                 </button>
                             </form>
                         </div>
@@ -98,7 +99,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body text-center py-4">
                             <i class="bi bi-info-circle display-4 text-muted mb-3"></i>
-                            <p class="text-muted">Hûn nikarin kîtekîtên kesê xwe lê zêde bikin.</p>
+                            <p class="text-muted">{% trans "Kendi kişinize detay ekleyemezsiniz." %}</p>
                         </div>
                     </div>
                 {% endif %}
@@ -107,7 +108,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white border-0 py-3">
                         <h5 class="mb-0">
-                            <i class="bi bi-journal-text me-2"></i>Kîtekîtên Zêde
+                            <i class="bi bi-journal-text me-2"></i>{% trans "Ek Detaylar" %}
                             <span class="badge bg-primary ms-2">{{ kisi.detaylar.count }}</span>
                         </h5>
                     </div>
@@ -148,7 +149,7 @@
                             {% empty %}
                                 <div class="text-center py-4">
                                     <i class="bi bi-journal-text display-4 text-muted mb-3"></i>
-                                    <p class="text-muted">Hêj kîtekîtên zêde nehatine zêdekirin.</p>
+                                    <p class="text-muted">{% trans "Henüz ek detay eklenmemiş." %}</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -162,28 +163,28 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-info-circle me-2"></i>Agahiyên Kesê
+                            <i class="bi bi-info-circle me-2"></i>{% trans "Kişi Bilgileri" %}
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Nav</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Ad" %}</strong>
                             <span class="fs-5 fw-bold">{{ kisi.ad }}</span>
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Kategorî</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Kategori" %}</strong>
                             {% for kategori in kisi.kategoriler.all %}
                                 <span class="badge bg-primary-subtle text-primary me-1 mb-1">
                                     {{ kategori.ad }}
                                 </span>
                             {% empty %}
-                                <span class="text-muted">Kategorî nehat diyarkirin</span>
+                                <span class="text-muted">{% trans "Kategori belirtilmemiş" %}</span>
                             {% endfor %}
                         </div>
                         
                         <div class="info-item mb-3">
-                            <strong class="text-muted d-block mb-1">Zêdeker</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Ekleyen" %}</strong>
                             <a href="{% url 'profile_detail' kisi.kullanici.profile.username %}" class="text-decoration-none">
                                 {{ kisi.kullanici.profile.nickname }}
                                 <small class="text-muted">(@{{ kisi.kullanici.profile.username }})</small>
@@ -191,7 +192,7 @@
                         </div>
                         
                         <div class="info-item">
-                            <strong class="text-muted d-block mb-1">Dîroka Zêdekirinê</strong>
+                            <strong class="text-muted d-block mb-1">{% trans "Eklenme Tarihi" %}</strong>
                             <span>{{ kisi.eklenme_tarihi|date:"d F Y, H:i" }}</span>
                         </div>
                     </div>
@@ -206,18 +207,18 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editDetayModalLabel">Kîtekîtê Biguherîne</h5>
+                        <h5 class="modal-title" id="editDetayModalLabel">{% trans "Detayı Düzenle" %}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
                     </div>
                     <div class="modal-body">
                         <form id="edit-detay-form" method="post">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="detay" class="form-label">Kîtekît</label>
+                                <label for="detay" class="form-label">{% trans "Detay" %}</label>
                                 <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
                             </div>
                             <div id="edit-detay-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                            <button type="submit" class="btn btn-primary rounded-pill">Tomar Bike</button>
+                            <button type="submit" class="btn btn-primary rounded-pill">{% trans "Kaydet" %}</button>
                         </form>
                     </div>
                 </div>

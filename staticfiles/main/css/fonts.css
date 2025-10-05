@@ -1,0 +1,89 @@
+/* RumepLogosSVG fontu */
+@font-face {
+    font-family: 'RumepLogosSVG';
+    src: url('/static/fonts/RumepLogosSVG.woff2') format('woff2'),
+         url('/static/fonts/RumepLogosSVG.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* RumepLogosCOLR fontu */
+@font-face {
+    font-family: 'RumepLogosCOLR';
+    src: url('/static/fonts/RumepLogosCOLR.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font fallback classes */
+.rumep-svg-font {
+    font-family: 'RumepLogosSVG', Arial, sans-serif;
+}
+
+.rumep-colr-font {
+    font-family: 'RumepLogosCOLR', Arial, sans-serif;
+}
+
+/* Global font support - works everywhere */
+[style*="RumepLogosSVG"],
+.rumep-svg-font {
+    font-family: 'RumepLogosSVG', Arial, sans-serif !important;
+}
+
+[style*="RumepLogosCOLR"],
+.rumep-colr-font {
+    font-family: 'RumepLogosCOLR', Arial, sans-serif !important;
+}
+
+/* Apply to all content areas */
+.entry-content,
+.first-entry-preview,
+textarea,
+.card-body,
+.topic-content,
+.search-results,
+.profile-content {
+    /* Font inheritance will work automatically */
+}
+
+/* Font display for special characters */
+[style*="RumepLogosSVG"] *,
+[style*="RumepLogosCOLR"] * {
+    font-family: inherit !important;
+}
+
+/* BALANCED FONT SUPPORT - Fontları göster ama boşlukları bozma */
+body {
+    font-family: 'Inter', 'RumepLogosSVG', 'RumepLogosCOLR', sans-serif;
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+}
+
+/* Font karakterli elementler */
+[style*="RumepLogosSVG"],
+[style*="RumepLogosCOLR"],
+.entry-content,
+.nickname,
+.username-link,
+.profile,
+.card-body {
+    font-family: 'RumepLogosSVG', 'RumepLogosCOLR', 'Inter', sans-serif !important;
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+}
+
+/* Link alt çizgi düzeltmesi */
+a.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.nav-link {
+    text-decoration: none !important;
+}
+
+.sidebar a {
+    text-decoration: none !important;
+}
+

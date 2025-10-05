@@ -18,10 +18,10 @@ const createKelimeTemplate = ({ id, kelime, detay, is_owner }) => `
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <button class="dropdown-item edit-kelime-btn" data-kelime-id="${id}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Sererast bike</button>
+                        <button class="dropdown-item edit-kelime-btn" data-kelime-id="${id}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">${window.i18n?.t('common.edit') || 'Düzenle'}</button>
                     </li>
                     <li>
-                        <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${id}">Jê bibe</button>
+                        <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${id}">${window.i18n?.t('common.delete') || 'Sil'}</button>
                     </li>
                 </ul>
             </div>
@@ -45,7 +45,7 @@ const throttle = (func, limit) => {
 const handleError = (error, errorDiv, customMessage = '') => {
     console.error(error);
     errorDiv.classList.remove('d-none');
-    errorDiv.innerHTML = `<p>${customMessage || 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.'}</p>`;
+    errorDiv.innerHTML = `<p>${customMessage || (window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.')}</p>`;
 };
 
 // Form submission handler with optimized error handling
@@ -83,11 +83,11 @@ export async function initSozlukForm() {
                     const module = await import("./sozluk_search.js");
                     await module.initTumKelimeler(true);
                 } catch (importError) {
-                    handleError(importError, errorDiv, 'Lîsteya peyvan nû nehat nûkirin.');
+                    handleError(importError, errorDiv, '${window.i18n?.t('sozluk.word_list_update_error') || 'Kelime listesi güncellenemedi.'}');
                 }
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>Di dema zêdekirina peyvê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
+                errorDiv.innerHTML = '<p>${window.i18n?.t('sozluk.word_add_error') || 'Kelime eklenirken hata oluştu, lütfen tekrar deneyin.'}</p>';
             }
         } catch (error) {
             handleError(error, errorDiv);
@@ -139,7 +139,7 @@ export function initSozlukLoader(harf) {
             renderKelimeler(data);
 
         } catch (error) {
-            handleError(error, elements.errorDiv, 'Di dema barkirina peyvan de çewtiyek çêbû.');
+            handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.word_load_error') || 'Kelimeler yüklenirken hata oluştu.'}');
         } finally {
             state.loading = false;
             elements.loadingDiv.style.display = 'none';
@@ -169,7 +169,7 @@ export function initSozlukLoader(harf) {
             .then(module => module.bindKelimeActions())
             .catch(error => {
                 console.error('Action binding failed:', error);
-                handleError(error, elements.errorDiv, 'Girêdana kiraran bi ser neket.');
+                handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.action_binding_error') || 'Eylem bağlama başarısız oldu.'}');
             });
     };
 

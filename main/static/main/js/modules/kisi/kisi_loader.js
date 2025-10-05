@@ -26,7 +26,7 @@ export function initKisiForm() {
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }]
                 ]
             },
-            placeholder: 'Biyografiyê li vir binivîse...',
+            placeholder: window.i18n?.t('kisi.biography_placeholder') || 'Biyografiyi buraya yazın...',
             readOnly: false
         });
         console.log('Quill düzenleyici başlatıldı, yazılabilir mod aktif.');
@@ -58,7 +58,7 @@ export function initKisiForm() {
                             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                         </div>
                         <div class="toast-body">
-                            Ji kerema xwe pêşî nivîsekê binivîse.
+                            ${window.i18n?.t('kisi.write_text_first') || 'Lütfen önce bir metin yazın.'}
                         </div>
                     `;
                     document.querySelector('.toast-container').appendChild(errorToast);
@@ -155,7 +155,7 @@ export function initKisiForm() {
             if (data.success) {
                 form.reset();
                 console.log('Form sıfırlandı, alert gösteriliyor...');
-                alert('Kes bi serkeftî hate zêdekirin!');
+                alert(window.i18n?.t('kisi.person_added_success') || 'Kişi başarıyla eklendi!');
             } else {
                 console.warn('Form hataları:', data.errors);
                 errorDiv.classList.remove('d-none');
@@ -166,7 +166,7 @@ export function initKisiForm() {
         } catch (error) {
             console.error('Form gönderim hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.innerHTML = '<p>Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.</p>';
+            errorDiv.innerHTML = `<p>${window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.'}</p>`;
         }
     });
     console.log('Form submit dinleyicisi bağlandı.');
@@ -224,7 +224,7 @@ export function initKisiLoader() {
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">Jêbirin</button>
+                                            <button class="dropdown-item text-danger delete-kisi-btn" data-kisi-id="${kisi.id}">${window.i18n?.t('common.delete') || 'Sil'}</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -247,7 +247,7 @@ export function initKisiLoader() {
         } catch (error) {
             console.error('Kişi yükleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Kes nehatin barkirin: ' + error.message;
+            errorDiv.textContent = (window.i18n?.t('kisi.load_error') || 'Kişiler yüklenemedi') + ': ' + error.message;
         } finally {
             loading = false;
             loadingDiv.style.display = 'none';
@@ -256,7 +256,7 @@ export function initKisiLoader() {
 
     const handleDelete = async (e) => {
         const btn = e.target;
-        if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
+        if (!confirm(window.i18n?.t('kisi.confirm_delete') || 'Bu kişiyi silmek istediğinizden emin misiniz?')) return;
         try {
             const response = await fetch(`/kisi/sil/${btn.dataset.kisiId}/`, {
                 method: 'POST',
@@ -268,15 +268,15 @@ export function initKisiLoader() {
             const data = await response.json();
             if (data.success) {
                 document.querySelector(`.kisi-item[data-kisi-id="${btn.dataset.kisiId}"]`).remove();
-                alert('Kes bi serkeftî hate jêbirin!');
+                alert(window.i18n?.t('kisi.person_deleted_success') || 'Kişi başarıyla silindi!');
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = data.error || 'Di dema jêbirina kesê de çewtîyek çêbû.';
+                errorDiv.textContent = data.error || (window.i18n?.t('kisi.delete_error') || 'Kişi silinirken hata oluştu.');
             }
         } catch (error) {
             console.error('Silme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Çewtîyek çêbû, ji kerema xwe dîsa biceribîne.';
+            errorDiv.textContent = window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.';
         }
     };
 

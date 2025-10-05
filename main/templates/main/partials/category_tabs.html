@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load category_tags %}
+<div class="page-title-area">
+    <div class="d-flex align-items-center p-3">
+        <a href="{% url 'categories' %}" class="btn btn-link text-muted p-1 me-2 flex-shrink-0" title="{% trans 'Tüm Kategoriler' %}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-arrow-left fs-6"></i>
+        </a>
+        <div class="flex-grow-1">
+            <h4 class="page-title mb-0 fw-bold">#{{ category.name|translate_category }}</h4>
+            {% if category.description %}
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">{{ category.description }}</p>
+            {% endif %}
+            <small class="text-muted">{{ category.topic_count }} {% trans "başlık" %}</small>
+        </div>
+    </div>
+</div>

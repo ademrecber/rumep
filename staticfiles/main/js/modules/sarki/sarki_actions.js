@@ -2,7 +2,7 @@ export function initSarkiActions() {
     // Şarkı silme (detay sayfasında)
     document.querySelectorAll('.sarki-sil-btn').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Bu şarkıyı silmek istediğinizden emin misiniz?')) return;
+            if (!confirm(window.i18n?.t('sarki.confirm_delete_song') || 'Bu şarkıyı silmek istediğinizden emin misiniz?')) return;
             const sarkiId = button.getAttribute('data-sarki-id');
             const albumId = button.getAttribute('data-album-id');
             const silUrl = button.getAttribute('data-url-sil');
@@ -18,16 +18,16 @@ export function initSarkiActions() {
                     // Silme işleminden sonra şarkı listesine yönlendir
                     window.location.href = `/sarki/liste/${albumId}/`;
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Şarkı silme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
 
-    // Detay ekleme
+    // Berfirehî ekleme
     const detayEkleButton = document.querySelector('[data-action="detay-ekle"]');
     if (detayEkleButton) {
         detayEkleButton.addEventListener('click', () => {
@@ -38,7 +38,7 @@ export function initSarkiActions() {
         });
     }
 
-    // Detay ekleme formu gönderimi
+    // Berfirehî ekleme formu gönderimi
     const detayEkleForm = document.getElementById('detay-ekle-form');
     if (detayEkleForm) {
         detayEkleForm.addEventListener('submit', async (e) => {
@@ -57,7 +57,7 @@ export function initSarkiActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = 'Çewtîyek çêbû.';
                     if (data.errors) {
                         // Hata mesajlarını ayrıştır
                         if (typeof data.errors === 'string') {
@@ -65,11 +65,11 @@ export function initSarkiActions() {
                         } else if (data.errors.detay) {
                             const error = data.errors.detay[0];
                             if (error.code === 'min_length') {
-                                errorMessage = 'Detay alanı en az 10 karakter olmalıdır.';
+                                errorMessage = 'Qada berfireh divê herî kêm 10 tîp be.';
                             } else if (error.code === 'required') {
-                                errorMessage = 'Detay alanı zorunludur.';
+                                errorMessage = 'Qada berfireh mecbûrî ye.';
                             } else {
-                                errorMessage = error.message || 'Bilinmeyen bir hata oluştu.';
+                                errorMessage = error.message || 'Çewtiyek nenas çêbû.';
                             }
                         }
                     }
@@ -77,12 +77,12 @@ export function initSarkiActions() {
                 }
             } catch (error) {
                 console.error('Detay ekleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     }
 
-    // Detay düzenleme
+    // Berfirehî düzenleme
     document.querySelectorAll('[data-action="detay-duzenle"]').forEach(button => {
         button.addEventListener('click', async () => {
             const detayId = button.getAttribute('data-detay-id');
@@ -96,16 +96,16 @@ export function initSarkiActions() {
                     document.getElementById('detay-duzenle-text').value = data.data.detay;
                     modal.show();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Detay verisi alınamadı:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });
 
-    // Detay düzenleme formu gönderimi
+    // Berfirehî düzenleme formu gönderimi
     const detayDuzenleForm = document.getElementById('detay-duzenle-form');
     if (detayDuzenleForm) {
         detayDuzenleForm.addEventListener('submit', async (e) => {
@@ -124,7 +124,7 @@ export function initSarkiActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = 'Çewtîyek çêbû.';
                     if (data.errors) {
                         // Hata mesajlarını ayrıştır
                         if (typeof data.errors === 'string') {
@@ -132,11 +132,11 @@ export function initSarkiActions() {
                         } else if (data.errors.detay) {
                             const error = data.errors.detay[0];
                             if (error.code === 'min_length') {
-                                errorMessage = 'Detay alanı en az 10 karakter olmalıdır.';
+                                errorMessage = 'Qada berfireh divê herî kêm 10 tîp be.';
                             } else if (error.code === 'required') {
-                                errorMessage = 'Detay alanı zorunludur.';
+                                errorMessage = 'Qada berfireh mecbûrî ye.';
                             } else {
-                                errorMessage = error.message || 'Bilinmeyen bir hata oluştu.';
+                                errorMessage = error.message || 'Çewtiyek nenas çêbû.';
                             }
                         }
                     }
@@ -144,15 +144,15 @@ export function initSarkiActions() {
                 }
             } catch (error) {
                 console.error('Detay düzenleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     }
 
-    // Detay silme
+    // Berfirehî silme
     document.querySelectorAll('[data-action="detay-sil"]').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Bu detayı silmek istediğinizden emin misiniz?')) return;
+            if (!confirm(window.i18n?.t('sarki.confirm_delete_detail') || 'Bu detayı silmek istediğinizden emin misiniz?')) return;
             const detayId = button.getAttribute('data-detay-id');
             try {
                 const response = await fetch(`/sarki/detay-sil/${detayId}/`, {
@@ -165,11 +165,11 @@ export function initSarkiActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || 'Çewtîyek çêbû.');
                 }
             } catch (error) {
                 console.error('Detay silme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert('Çewtîyek çêbû.');
             }
         });
     });

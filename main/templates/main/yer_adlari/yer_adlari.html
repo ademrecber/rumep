@@ -1,5 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Yer Adları" %}{% endblock %}
+{% block page_header %}{% trans "Yer Adları" %}{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-0">
@@ -9,22 +13,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-geo-alt-fill me-3"></i>Navên Cihan
+                        <i class="bi bi-geo-alt-fill me-3"></i>{% trans "Yer Adları" %}
                     </h1>
-                    <p class="lead mb-4">Navên dîrokî û çandî yên Kurdistanê keşf bikin</p>
+                    <p class="lead mb-4">{% trans "Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin" %}</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'yer_adi_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Navê Cihê Nû Lê Zêde Bike
+                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Yer Adı Ekle" %}
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="toggleMapView()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-map me-2"></i>Nexşeya Dîtinê
+                            <i class="bi bi-map me-2"></i>{% trans "Harita Görünümü" %}
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ yer_adlari.count }}</h3>
-                        <p class="mb-0">Navên Cihên Giştî</p>
+                        <p class="mb-0">{% trans "Toplam Yer Adı" %}</p>
                     </div>
                 </div>
             </div>
@@ -37,7 +41,7 @@
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>Nexşeya Dîtinê</h5>
+                        <h5 class="mb-0"><i class="bi bi-map me-2"></i>{% trans "Harita Görünümü" %}</h5>
                         <button class="btn btn-sm btn-outline-secondary" onclick="toggleMapView()">
                             <i class="bi bi-x-lg"></i>
                         </button>
@@ -71,31 +75,25 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <!-- Harf Filtreleri -->
-                        <div class="col-lg-4">
+                        <div class="col-12">
                             <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-funnel me-2"></i>Li gorî Tîpan Fîltre Bike
+                                <i class="bi bi-funnel me-2"></i>{% trans "Harflere Göre Filtrele" %}
                             </label>
-                            <div class="alphabet-filter d-flex flex-wrap gap-1">
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="{% url 'yer_adlari_anasayfa' %}" class="text-decoration-none {% if not secili_harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{% trans "Tümü" %}</a>
                                 {% for harf in harfler %}
-                                    <a href="?harf={{ harf }}" 
-                                       class="btn btn-sm {% if secili_harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                                        {{ harf }}
-                                    </a>
+                                    <a href="?harf={{ harf }}" class="text-decoration-none {% if secili_harf == harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{{ harf|upper }}</a>
                                 {% endfor %}
-                                <a href="{% url 'yer_adlari_anasayfa' %}" 
-                                   class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                                    Hemû
-                                </a>
                             </div>
                         </div>
                         
-                        <!-- Kategori Filtreleri -->
-                        <div class="col-lg-4">
+                        <!-- Kategori ve Bölge Filtreleri -->
+                        <div class="col-md-6">
                             <label for="kategori-filter" class="form-label fw-semibold mb-2">
-                                <i class="bi bi-tags me-2"></i>Kategorî
+                                <i class="bi bi-tags me-2"></i>{% trans "Kategori" %}
                             </label>
                             <select id="kategori-filter" class="form-select" onchange="location.href='?kategori='+this.value">
-                                <option value="">Hemû Kategorî</option>
+                                <option value="">{% trans "Tüm Kategoriler" %}</option>
                                 {% for kategori in kategoriler %}
                                     <option value="{{ kategori }}" {% if secili_kategori == kategori %}selected{% endif %}>
                                         {{ kategori|capfirst }}
@@ -104,13 +102,12 @@
                             </select>
                         </div>
 
-                        <!-- Bölge Filtreleri -->
-                        <div class="col-lg-4">
+                        <div class="col-md-6">
                             <label for="bolge-filter" class="form-label fw-semibold mb-2">
-                                <i class="bi bi-geo me-2"></i>Herêm
+                                <i class="bi bi-geo me-2"></i>{% trans "Bölge" %}
                             </label>
                             <select id="bolge-filter" class="form-select" onchange="location.href='?bolge='+this.value">
-                                <option value="">Hemû Herêm</option>
+                                <option value="">{% trans "Tüm Bölgeler" %}</option>
                                 {% for bolge in bolgeler %}
                                     <option value="{{ bolge.0 }}" {% if secili_bolge == bolge.0 %}selected{% endif %}>
                                         {{ bolge.0|capfirst }}
@@ -133,7 +130,7 @@
                         </div>
                         <div>
                             <h2 class="h3 mb-1 text-primary">{{ bolge|capfirst }}</h2>
-                            <p class="text-muted mb-0">{{ bolge_yer_adlari|length }} navê cihê</p>
+                            <p class="text-muted mb-0">{{ bolge_yer_adlari|length }} {% trans "yer adı" %}</p>
                         </div>
                     </div>
                     
@@ -150,7 +147,7 @@
                                                     </span>
                                                 </div>
                                                 {% if yer_adi.enlem and yer_adi.boylam %}
-                                                    <i class="bi bi-geo-alt text-success" title="Koordînat hene"></i>
+                                                    <i class="bi bi-geo-alt text-success" title="{% trans 'Koordinatlar mevcut' %}"></i>
                                                 {% endif %}
                                             </div>
                                             
@@ -176,14 +173,14 @@
                                                 <div class="place-actions d-flex gap-2">
                                                     <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" 
                                                        class="btn btn-sm btn-outline-primary">
-                                                        <i class="bi bi-pencil me-1"></i>Biguherîne
+                                                        <i class="bi bi-pencil me-1"></i>{% trans "Düzenle" %}
                                                     </a>
                                                     <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" 
                                                           class="d-inline" 
-                                                          onsubmit="return confirm('Ma hûn ji vê navê cihê jêbirinê piştrast in?');">
+                                                          onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
                                                         {% csrf_token %}
                                                         <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                            <i class="bi bi-trash me-1"></i>Jêbirin
+                                                            <i class="bi bi-trash me-1"></i>{% trans "Sil" %}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -198,7 +195,7 @@
                                                             data-bs-target="#sub-places-{{ yer_adi.id }}" 
                                                             aria-expanded="false">
                                                         <i class="bi bi-chevron-down me-1"></i>
-                                                        Cihên Binî ({{ yer_adi.children.count }})
+                                                        {% trans "Alt Yerler" %} ({{ yer_adi.children.count }})
                                                     </button>
                                                     <div class="collapse mt-2" id="sub-places-{{ yer_adi.id }}">
                                                         <div class="sub-places-list">
@@ -229,10 +226,10 @@
             {% empty %}
                 <div class="text-center py-5">
                     <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
-                    <h3 class="text-muted">Hêj navê cihê nehat zêdekirin</h3>
-                    <p class="text-muted mb-4">Dest pê bike bi zêdekirina navê cihê yekem!</p>
+                    <h3 class="text-muted">{% trans "Henüz yer adı eklenmemiş" %}</h3>
+                    <p class="text-muted mb-4">{% trans "İlk yer adını ekleyerek başlayın!" %}</p>
                     <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg">
-                        <i class="bi bi-plus-circle me-2"></i>Navê Cihê Lê Zêde Bike
+                        <i class="bi bi-plus-circle me-2"></i>{% trans "Yer Adı Ekle" %}
                     </a>
                 </div>
             {% endfor %}
@@ -283,5 +280,8 @@
     };
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_API_KEY }}&callback=initMap"></script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{% static 'main/css/yer_adlari_new.css' %}" rel="stylesheet">
 {% endblock %}

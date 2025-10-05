@@ -27,7 +27,7 @@ export function initVoteHandler() {
 
                 if (!csrfToken || !id || !voteType) {
                     console.error('Eksik veri:', { csrfToken, id, voteType, postId, commentId });
-                    alert('Oylama işlemi başarısız: Eksik veri.');
+                    alert('Operasyona dengdanê bi ser neket: Daneyên kêm.');
                     return;
                 }
 
@@ -60,9 +60,9 @@ export function initVoteHandler() {
                     }
 
                     if (data.success !== undefined && !data.success) {
-                        const errorMessage = data.errors || data.error || 'Hata mesajı sağlanmadı';
+                        const errorMessage = data.errors || data.error || 'Peyama çewtiyê nehat dayîn';
                         console.error('Oylama hatası:', errorMessage, 'Tam yanıt:', data);
-                        alert(`Oylama başarısız: ${errorMessage}`);
+                        alert(`Operasyona dengdanê bi ser neket: ${errorMessage}`);
                         return;
                     }
 
@@ -73,7 +73,7 @@ export function initVoteHandler() {
 
                     if (upvoteBtn) {
                         upvoteBtn.textContent = `${data.upvotes} ↑`;
-                        console.log('Up butonu güncellendi:', upvoteBtn.textContent);
+                        console.log('Up butonu günソー: ', upvoteBtn.textContent);
                     } else {
                         console.error('Up butonu bulunamadı, container:', parentContainer);
                     }
@@ -86,7 +86,7 @@ export function initVoteHandler() {
                     console.log('Oylama başarılı:', data);
                 } catch (error) {
                     console.error('Oylama gönderim hatası:', error.message, 'Tam hata:', error);
-                    alert('Oylama işlemi başarısız: Sunucu hatası.');
+                    alert('Operasyona dengdanê bi ser neket: Çewtiya serverê.');
                 }
             }, { capture: true }); // Olayı yakalama aşamasında dinle
             form.dataset.listenerAdded = 'true';

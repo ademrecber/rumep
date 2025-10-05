@@ -50,19 +50,19 @@ export function initKatkiLoader() {
             if (isNaN(date.getTime())) throw new Error('Geçersiz tarih formatı');
             
             const seconds = Math.floor((now - date) / 1000);
-            if (seconds < 60) return `${seconds} saniye önce`;
+            if (seconds < 60) return `${seconds} ${window.i18n?.t('time.seconds_ago') || 'saniye önce'}`;
             
             const minutes = Math.floor(seconds / 60);
-            if (minutes < 60) return `${minutes} dakika önce`;
+            if (minutes < 60) return `${minutes} ${window.i18n?.t('time.minutes_ago') || 'dakika önce'}`;
             
             const hours = Math.floor(minutes / 60);
-            if (hours < 24) return `${hours} saat önce`;
+            if (hours < 24) return `${hours} ${window.i18n?.t('time.hours_ago') || 'saat önce'}`;
             
             const days = Math.floor(hours / 24);
-            return `${days} gün önce`;
+            return `${days} ${window.i18n?.t('time.days_ago') || 'gün önce'}`;
         } catch (error) {
             console.error('Zaman formatlama hatası:', error);
-            return 'Bilinmeyen zaman';
+            return window.i18n?.t('time.unknown') || 'Bilinmeyen zaman';
         }
     };
     
@@ -114,7 +114,7 @@ export function initKatkiLoader() {
             }
             
             // If this is the first load and container is empty, clear any "no contributions" message
-            if (katkiOffset === 0 && container.innerHTML.includes('Henüz katkı yok')) {
+            if (katkiOffset === 0 && container.innerHTML.includes(window.i18n?.t('katki.no_contributions') || 'Henüz katkı yok')) {
                 container.innerHTML = '';
             }
             
@@ -128,10 +128,10 @@ export function initKatkiLoader() {
                 div.id = `katki-${sanitizeHTML(katki.id)}`;
                 
                 // Create safe HTML content
-                const nickname = sanitizeHTML(katki.nickname || 'Bilinmeyen');
+                const nickname = sanitizeHTML(katki.nickname || (window.i18n?.t('common.unknown') || 'Bilinmeyen'));
                 const username = sanitizeHTML(katki.username || 'bilinmeyen');
                 const katki_puani = parseInt(katki.katki_puani) || 0;
-                const baslik = sanitizeHTML(katki.baslik || 'Bilinmeyen');
+                const baslik = sanitizeHTML(katki.baslik || (window.i18n?.t('common.unknown') || 'Bilinmeyen'));
                 const detay_url = katki.detay_url || '#';
                 const formattedTime = formatTimeSince(katki.eklenme_tarihi);
                 
@@ -140,27 +140,27 @@ export function initKatkiLoader() {
                 switch(katki.tur) {
                     case 'sarki':
                         typeIcon = 'bi-music-note';
-                        typeText = 'şarkı sözü';
+                        typeText = window.i18n?.t('katki.song_lyrics') || 'şarkı sözü';
                         break;
                     case 'kisi':
                         typeIcon = 'bi-person';
-                        typeText = 'kişi';
+                        typeText = window.i18n?.t('katki.person') || 'kişi';
                         break;
                     case 'sozluk':
                         typeIcon = 'bi-book';
-                        typeText = 'sözlük kelimesi';
+                        typeText = window.i18n?.t('katki.dictionary_word') || 'sözlük kelimesi';
                         break;
                     case 'atasozu':
                         typeIcon = 'bi-quote';
-                        typeText = 'atasözü';
+                        typeText = window.i18n?.t('katki.proverb') || 'atasözü';
                         break;
                     case 'deyim':
                         typeIcon = 'bi-quote';
-                        typeText = 'deyim';
+                        typeText = window.i18n?.t('katki.idiom') || 'deyim';
                         break;
                     default:
                         typeIcon = 'bi-info-circle';
-                        typeText = 'içerik';
+                        typeText = window.i18n?.t('katki.content') || 'içerik';
                 }
                 
                 div.innerHTML = `
@@ -176,7 +176,7 @@ export function initKatkiLoader() {
                             </p>
                         </div>
                         <div class="katki-text">
-                            <p><i class="bi ${typeIcon}"></i> Bu kullanıcı yeni bir ${typeText} ekledi: <a href="${detay_url}">${baslik}</a></p>
+                            <p><i class="bi ${typeIcon}"></i> ${window.i18n?.t('katki.user_added', {type: typeText}) || `Bu kullanıcı yeni ${typeText} ekledi`}: <a href="${detay_url}">${baslik}</a></p>
                         </div>
                     </div>
                 `;
@@ -192,7 +192,7 @@ export function initKatkiLoader() {
         } catch (error) {
             console.error('Katkı yükleme hatası:', error);
             katkiErrorMessage.style.display = 'block';
-            katkiErrorMessage.textContent = 'Katkılar yüklenemedi: ' + error.message;
+            katkiErrorMessage.textContent = (window.i18n?.t('katki.load_error') || 'Katkılar yüklenemedi') + ': ' + error.message;
         } finally {
             katkiLoadingActive = false;
             katkiLoading.style.display = 'none';
@@ -244,7 +244,7 @@ export function initKatkiLoader() {
                 const li = document.createElement('li');
                 li.className = 'mb-2';
                 
-                const nickname = sanitizeHTML(lider.nickname || 'Bilinmeyen');
+                const nickname = sanitizeHTML(lider.nickname || (window.i18n?.t('common.unknown') || 'Bilinmeyen'));
                 const username = sanitizeHTML(lider.username || 'bilinmeyen');
                 const katki_puani = parseInt(lider.katki_puani) || 0;
                 const profile_url = lider.profile_url || '#';
@@ -266,7 +266,7 @@ export function initKatkiLoader() {
         } catch (error) {
             console.error('Liderler yükleme hatası:', error);
             katkiLiderlerErrorMessage.style.display = 'block';
-            katkiLiderlerErrorMessage.textContent = 'Liderler yüklenemedi: ' + error.message;
+            katkiLiderlerErrorMessage.textContent = (window.i18n?.t('katki.leaders_load_error') || 'Liderler yüklenemedi') + ': ' + error.message;
         } finally {
             liderlerLoadingActive = false;
             katkiLiderlerLoading.style.display = 'none';

@@ -1,0 +1,141 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load post_tags %}
+{% load i18n %}
+{% load category_tags %}
+{% block title %}#{{ category.name|translate_category }} - {% trans "Kategoriler" %}{% endblock %}
+
+{% block page_tabs %}
+    {% include 'main/partials/category_tabs.html' with category=category %}
+{% endblock %}
+{% block content %}
+<div class="container twitter-container">
+    
+    <div class="topic-container">
+        {% for topic in topics %}
+            {% with first_entry=topic.entries.first %}
+                <div class="card mb-2 topic-card border-0" style="box-shadow: none !important;">
+                    <div class="card-body">
+                        <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                            <h5 class="card-title mb-1">{{ topic.title }}</h5>
+                        </a>
+
+                        {% if first_entry %}
+                        <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                            {% if first_entry.content|length > 790 %}
+                                {{ first_entry.content|slice:":790"|render_emojis|safe }}
+                                <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...{% trans "devamını gör" %}</a>
+                            {% else %}
+                                {{ first_entry.content|render_emojis|safe }}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <div class="d-flex justify-content-between align-items-end mt-3">
+                            <div class="vote-buttons d-flex gap-1 align-items-center">
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                    <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                                </button>
+                                <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                    <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                                </button>
+                                <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="text-end me-2">
+                                    <a href="{% url 'profile_detail' topic.user.profile.username %}" class="fw-bold text-decoration-none" style="font-size: 0.9rem; color: #8b5cf6;">{{ topic.user.profile.nickname }}</a>
+                                    <small class="text-muted d-block">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
+                                </div>
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-person text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% empty %}
+            <p class="text-muted p-3">{% trans "Bu kategoride henüz başlık yok." %}</p>
+        {% endfor %}
+    </div>
+    
+    <!-- Sayfalama -->
+    {% if topics.has_other_pages %}
+        <nav aria-label="Topic pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if topics.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">{% trans "İlk" %}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ topics.previous_page_number }}">{% trans "Önceki" %}</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">{{ topics.number }} / {{ topics.paginator.num_pages }}</span>
+                </li>
+                
+                {% if topics.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ topics.next_page_number }}">{% trans "Sonraki" %}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ topics.paginator.num_pages }}">{% trans "Son" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+
+<script>
+// Vote functionality
+document.querySelectorAll('.vote-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const topicSlug = this.dataset.topicSlug;
+        const voteType = this.dataset.voteType;
+        
+        fetch(`/topic/${topicSlug}/vote/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `vote_type=${voteType}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.vote_score !== undefined) {
+                const card = this.closest('.topic-card');
+                const scoreElement = card.querySelector('.vote-score');
+                const upBtn = card.querySelector('[data-vote-type="up"]');
+                const downBtn = card.querySelector('[data-vote-type="down"]');
+                
+                scoreElement.textContent = data.vote_score;
+                
+                if (voteType === 'up') {
+                    const icon = upBtn.querySelector('i');
+                    if (data.voted) {
+                        icon.className = 'bi bi-arrow-up-circle-fill text-success';
+                    } else {
+                        icon.className = 'bi bi-arrow-up';
+                    }
+                    downBtn.querySelector('i').className = 'bi bi-arrow-down';
+                } else {
+                    const icon = downBtn.querySelector('i');
+                    if (data.voted) {
+                        icon.className = 'bi bi-arrow-down-circle-fill text-danger';
+                    } else {
+                        icon.className = 'bi bi-arrow-down';
+                    }
+                    upBtn.querySelector('i').className = 'bi bi-arrow-up';
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
+{% endblock %}

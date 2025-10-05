@@ -36,7 +36,7 @@ export function initSarkiSearch() {
                 });
                 sonucDiv.appendChild(ul);
             } else {
-                sonucDiv.innerHTML = '<p class="text-muted">Stran nehat dîtin.</p>';
+                sonucDiv.innerHTML = '<p class="text-muted">${window.i18n?.t('sarki.song_not_found') || 'Şarkı bulunamadı.'}</p>';
             }
         } catch (error) {
             console.error('Şarkı arama hatası:', error);

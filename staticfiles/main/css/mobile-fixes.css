@@ -1,0 +1,272 @@
+/* Mobil Tasarım Düzeltmeleri */
+
+/* Mobil için layout container'ı basitleştir */
+@media (max-width: 768px) {
+    .layout-container {
+        display: block !important;
+        grid-template-columns: none !important;
+    }
+    
+    /* Sol sidebar mobilde */
+    .left-fixed-area {
+        position: fixed !important;
+        top: 0 !important;
+        left: -300px !important;
+        width: 300px !important;
+        height: 100vh !important;
+        z-index: 1051 !important;
+        background-color: #fff !important;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1) !important;
+        transition: left 0.3s ease !important;
+    }
+    
+    .left-fixed-area.active {
+        left: 0 !important;
+    }
+    
+    /* Sidebar overlay */
+    .sidebar-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: rgba(0,0,0,0.5) !important;
+        z-index: 1050 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    .sidebar-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Ana içerik alanı */
+    .center-main-area {
+        width: 100% !important;
+        max-width: none !important;
+        margin-top: 60px !important;
+        padding: 0 !important;
+    }
+    
+    /* Sağ alanı gizle */
+    .right-fixed-area {
+        display: none !important;
+    }
+    
+    /* Mobil header düzeltmeleri */
+    .mobile-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 60px !important;
+        z-index: 1001 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .mobile-header .btn-link {
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Alt navigasyon düzeltmeleri */
+    .bottom-nav {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        padding: 8px 0 12px 0 !important;
+        z-index: 1000 !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .bottom-nav .nav-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 6px 4px !important;
+        text-align: center !important;
+        color: #8e8e93 !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease !important;
+        flex: 1 !important;
+        max-width: none !important;
+    }
+    
+    .bottom-nav .nav-item i {
+        font-size: 1.3rem !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .bottom-nav .nav-item .nav-label {
+        font-size: 0.7rem !important;
+        font-weight: 500 !important;
+    }
+    
+    .bottom-nav .nav-item.active {
+        color: #667eea !important;
+    }
+    
+    /* Sayfa içeriği */
+    .page-content {
+        padding: 15px !important;
+        padding-bottom: 80px !important;
+    }
+    
+    /* Mobil FAB butonu */
+    .mobile-fab {
+        position: fixed !important;
+        bottom: 90px !important;
+        right: 20px !important;
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 50% !important;
+        z-index: 1001 !important;
+    }
+}
+
+/* Sidebar içeriği görünür olsun */
+@media (max-width: 768px) {
+    .left-fixed-area .d-none.d-md-block {
+        display: block !important;
+    }
+    
+    .sidebar {
+        height: 100% !important;
+        background-color: #fff !important;
+    }
+    
+    .sidebar .nav-link {
+        display: flex !important;
+        align-items: center !important;
+        padding: 12px 16px !important;
+        color: #333 !important;
+        text-decoration: none !important;
+    }
+    
+    .sidebar .nav-link i {
+        margin-right: 8px !important;
+    }
+    
+    /* Alt sekmeler düzeltmesi */
+    .page-tabs {
+        display: flex !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+    
+    .tab-link {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: 12px 8px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Modern tabs düzeltmesi */
+    .modern-tabs .tab-container {
+        display: flex !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+    
+    .modern-tab {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: 12px 8px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Tab-btn sistemi düzeltmesi */
+    .tab-btn {
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding: 12px 8px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Geri ok tuşu düzeltmesi */
+    .back-arrow {
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        margin-right: 10px !important;
+    }
+    
+    .back-arrow i {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Sayfa başlığı alanı düzeltmesi */
+    .page-title-area {
+        display: flex !important;
+        align-items: center !important;
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+    
+    .page-title-area .back-arrow {
+        flex-shrink: 0 !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .page-title-area h1,
+    .page-title-area h2,
+    .page-title-area h3,
+    .page-title-area h4,
+    .page-title-area .page-title {
+        flex: 1 !important;
+        margin: 0 !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    /* D-flex container'ları düzelt */
+    .d-flex {
+        display: flex !important;
+    }
+    
+    .d-flex.justify-content-between {
+        justify-content: space-between !important;
+    }
+    
+    .d-flex.align-items-center {
+        align-items: center !important;
+    }
+    
+    /* Flex item'ların boyutlarını kontrol et */
+    .d-flex > * {
+        flex-shrink: 1 !important;
+    }
+    
+    .d-flex > .btn,
+    .d-flex > button {
+        flex-shrink: 0 !important;
+        width: auto !important;
+        min-width: 40px !important;
+    }
+}

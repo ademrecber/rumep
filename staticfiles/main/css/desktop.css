@@ -1,0 +1,87 @@
+/* Desktop Layout */
+.desktop-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    grid-template-areas: "sidebar main rightbar";
+    height: 100vh;
+}
+
+/* Desktop Sidebar */
+.desktop-sidebar {
+    grid-area: sidebar;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.desktop-sidebar .sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #0d6efd;
+}
+
+.desktop-sidebar .sidebar-menu {
+    list-style: none;
+}
+
+.desktop-sidebar .sidebar-menu li {
+    margin-bottom: 5px;
+}
+
+.desktop-sidebar .sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.desktop-sidebar .sidebar-menu a:hover {
+    background: #f8f9fa;
+}
+
+.desktop-sidebar .sidebar-menu i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+/* Desktop Main Content */
+.desktop-main {
+    grid-area: main;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.desktop-main .content-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.desktop-main .content-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Desktop Right Sidebar */
+.desktop-right-sidebar {
+    grid-area: rightbar;
+    background: #fff;
+    border-left: 1px solid #e1e8ed;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.desktop-right-sidebar .widget {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.desktop-right-sidebar .widget h5 {
+    font-weight: 600;
+    margin-bottom: 15px;
+}

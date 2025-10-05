@@ -1,0 +1,34 @@
+/* Sidebar Düzeltmeleri */
+@media (max-width: 768px) {
+    /* Sidebar z-index düzeltmesi */
+    .left-fixed-area {
+        z-index: 1052 !important;
+    }
+    
+    /* Overlay z-index düzeltmesi */
+    .sidebar-overlay {
+        z-index: 1051 !important;
+    }
+    
+    /* Sidebar içeriği için özel kurallar */
+    .left-fixed-area .d-none.d-md-block {
+        display: block !important;
+    }
+    
+    /* Nav linkler görünür olsun */
+    .sidebar .nav-link {
+        color: #333 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Sidebar başlığı */
+    .sidebar h2 {
+        color: #333 !important;
+    }
+    
+    /* Sidebar arka planı */
+    .sidebar {
+        background-color: #fff !important;
+    }
+}

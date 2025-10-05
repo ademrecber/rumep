@@ -1,0 +1,464 @@
+html {
+    font-size: 16px;
+}
+
+/* 4 Alan Layout: Sol Sidebar + Orta (Sekme + İçerik) + Sağ Sidebar */
+/* Bootstrap Grid Layout */
+.layout-container {
+    min-height: 100vh;
+}
+
+/* Sol Sidebar */
+.left-fixed-area {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid #e1e8ed;
+    background-color: #fff;
+}
+
+.left-fixed-area .nav-link {
+    padding: 12px 16px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.left-fixed-area .nav-link i {
+    font-size: 1.2rem;
+}
+
+.sidebar {
+    height: 100%;
+    background-color: #fff;
+    transition: left 0.3s ease;
+    z-index: 1051;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+/* Orta Ana Alan */
+.center-main-area {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Üst Sekme Alanı - Orta alanın genişliğinde */
+.top-tabs-area {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #e1e8ed;
+    z-index: 100;
+    width: 100%;
+    padding: 0;
+}
+
+/* Sayfa Başlığı Alanı */
+.page-title-area {
+    border-bottom: 1px solid #e1e8ed;
+    padding: 15px 20px;
+}
+
+.page-title {
+    color: #0f1419;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+/* Sade Sekme Sistemi */
+.page-tabs {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.tab-link {
+    flex: 1;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #8e8e93;
+    font-weight: 500;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.tab-link:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.03);
+}
+
+.tab-link.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+/* Sayfa İçeriği - Sekme alanıyla aynı genişlikte */
+/* Sayfa İçeriği */
+.page-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+/* Sağ Sidebar */
+.right-fixed-area {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px 15px;
+    border-left: 1px solid #e1e8ed;
+}
+
+/* Sağ Alan Kartları */
+.right-fixed-area .card {
+    border: 1px solid #e1e8ed;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+}
+
+.right-fixed-area .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.right-fixed-area .card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f1419;
+}
+
+/* Popüler Başlıklar */
+.popular-topics-card .topic-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.popular-topics-card .topic-item:last-child {
+    border-bottom: none;
+}
+
+.popular-topics-card .topic-item h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Aktif Yazarlar */
+.active-authors-card .author-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.active-authors-card .author-item:last-child {
+    border-bottom: none;
+}
+
+.active-authors-card .author-item h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.active-authors-card .author-item .text-muted {
+    font-size: 0.8rem;
+}
+
+
+
+@media (max-width: 767px) {
+    .left-fixed-area {
+        position: fixed !important;
+        top: 0;
+        left: -300px;
+        width: 300px;
+        height: 100vh;
+        z-index: 1051;
+        background-color: #fff;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        transition: left 0.3s ease;
+        display: block !important;
+    }
+    
+    .left-fixed-area.active {
+        left: 0;
+    }
+    
+    .center-main-area {
+        margin-top: 60px;
+    }
+    
+    .page-content {
+        padding: 15px;
+        padding-bottom: 80px;
+    }
+    
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1050;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+    
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Modern Mobil Header */
+.mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 1001;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.mobile-header h5 {
+    color: white !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.mobile-header .btn-link {
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.mobile-header .btn-link {
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mobile-header .btn-link:hover {
+    transform: scale(1.1);
+    color: rgba(255,255,255,0.8) !important;
+}
+
+/* Sidebar overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modern Alt Navigasyon */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 8px 0 12px 0;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px 20px 0 0;
+}
+
+.bottom-nav .nav-item {
+    color: #8e8e93;
+    text-decoration: none;
+    padding: 6px 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-radius: 12px;
+    margin: 0 4px;
+}
+
+.bottom-nav .nav-item i {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+    transition: all 0.3s ease;
+}
+
+.bottom-nav .nav-item .nav-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.bottom-nav .nav-item:hover,
+.bottom-nav .nav-item.active {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.bottom-nav .nav-item.active i {
+    transform: scale(1.1);
+}
+
+.bottom-nav .nav-item.active .nav-label {
+    opacity: 1;
+    font-weight: 600;
+}
+
+.bottom-nav .notification-dot {
+    position: absolute;
+    top: 4px;
+    right: 20px;
+    width: 8px;
+    height: 8px;
+    background: #ff3b30;
+    border-radius: 50%;
+    border: 2px solid white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Modern Mobil FAB Butonu */
+.mobile-fab {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    z-index: 1001;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.mobile-fab:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.mobile-fab:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.mobile-fab i {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+@media (min-width: 768px) {
+    .mobile-fab {
+        display: none !important;
+    }
+}
+
+/* Desktop FAB Butonu */
+.desktop-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    z-index: 9999 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.desktop-fab:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    color: white;
+}
+
+.desktop-fab:active {
+    transform: translateY(-1px);
+    transition: transform 0.1s ease;
+}
+
+.desktop-fab i {
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+.tab-btn {
+    transition: none !important;
+}
+
+.tab-content {
+    min-height: 200px;
+}
+
+.entry-content,
+.first-entry-preview,
+.card-body,
+.topic-content {
+    font-family: var(--entry-font, inherit) !important;
+}
+/* Mobil sidebar için özel kural */
+@media (max-width: 767px) {
+    .left-fixed-area .d-none.d-md-block {
+        display: block !important;
+    }
+}

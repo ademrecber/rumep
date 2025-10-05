@@ -1,0 +1,38 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #0d6efd;
+}
+
+/* Common Components */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+/* Layout Reset */
+.desktop-layout,
+.mobile-layout {
+    width: 100%;
+    height: 100vh;
+}

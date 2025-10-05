@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Gotinên Pêşiyan û Îdîom - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Atasözü ve Deyimler" %} - Rumep{% endblock %}
+{% block page_header %}{% trans "Atasözü ve Deyimler" %}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -9,15 +11,15 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-quote me-3"></i>Gotinên Pêşiyan û Îdîom
+                        <i class="bi bi-quote me-3"></i>{% trans "Atasözü ve Deyimler" %}
                     </h1>
-                    <p class="lead mb-4">Gotinên pêşiyan û îdîomên kevneşopî keşf bikin, yên nû lê zêde bikin</p>
+                    <p class="lead mb-4">{% trans "Geleneksel atasözleri ve deyimleri keşfedin, yenilerini ekleyin" %}</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'atasozu_deyim_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Nû Lê Zêde Bike
+                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Ekle" %}
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Lêbigere
+                            <i class="bi bi-search me-2"></i>{% trans "Ara" %}
                         </button>
                     </div>
                 </div>
@@ -26,11 +28,11 @@
                         <div class="row text-center">
                             <div class="col-6">
                                 <h3 class="h3 mb-1">{{ atasozu_gruplari|length|default:"0" }}</h3>
-                                <p class="mb-0 small">Gotina Pêşiyan</p>
+                                <p class="mb-0 small">{% trans "Atasözü" %}</p>
                             </div>
                             <div class="col-6">
                                 <h3 class="h3 mb-1">{{ deyim_gruplari|length|default:"0" }}</h3>
-                                <p class="mb-0 small">Îdîom</p>
+                                <p class="mb-0 small">{% trans "Deyim" %}</p>
                             </div>
                         </div>
                     </div>
@@ -48,13 +50,13 @@
                         <li class="nav-item">
                             <a class="nav-link {% if sekme == 'atasozu' or not sekme %}active{% endif %} rounded-pill" 
                                href="?sekme=atasozu{% if secili_harf %}&harf={{ secili_harf }}{% endif %}">
-                                <i class="bi bi-book me-2"></i>Gotinên Pêşiyan
+                                <i class="bi bi-book me-2"></i>{% trans "Atasözleri" %}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if sekme == 'deyim' %}active{% endif %} rounded-pill" 
                                href="?sekme=deyim{% if secili_harf %}&harf={{ secili_harf }}{% endif %}">
-                                <i class="bi bi-chat-quote me-2"></i>Îdîom
+                                <i class="bi bi-chat-quote me-2"></i>{% trans "Deyimler" %}
                             </a>
                         </li>
                     </ul>
@@ -70,25 +72,25 @@
                         <div class="row g-3">
                             <div class="col-lg-4">
                                 <label class="form-label fw-semibold mb-2">
-                                    <i class="bi bi-search me-2"></i>Lêgerîn
+                                    <i class="bi bi-search me-2"></i>{% trans "Arama" %}
                                 </label>
                                 {{ arama_form.query }}
                             </div>
                             <div class="col-lg-3">
                                 <label class="form-label fw-semibold mb-2">
-                                    <i class="bi bi-calendar me-2"></i>Destpêk
+                                    <i class="bi bi-calendar me-2"></i>{% trans "Başlangıç" %}
                                 </label>
                                 {{ arama_form.tarih_baslangic }}
                             </div>
                             <div class="col-lg-3">
                                 <label class="form-label fw-semibold mb-2">
-                                    <i class="bi bi-calendar-check me-2"></i>Dawî
+                                    <i class="bi bi-calendar-check me-2"></i>{% trans "Bitiş" %}
                                 </label>
                                 {{ arama_form.tarih_bitis }}
                             </div>
                             <div class="col-lg-2 d-flex align-items-end">
                                 <button type="submit" class="btn btn-primary btn-lg w-100">
-                                    <i class="bi bi-funnel me-2"></i>Fîltre Bike
+                                    <i class="bi bi-funnel me-2"></i>{% trans "Filtrele" %}
                                 </button>
                             </div>
                         </div>
@@ -101,16 +103,10 @@
         <div class="alphabet-section mb-4">
             <div class="card border-0 shadow-sm">
                 <div class="card-body py-3">
-                    <div class="d-flex flex-wrap gap-2 justify-content-center">
-                        <a href="?sekme={{ sekme }}" 
-                           class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           Hemû
-                        </a>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="?sekme={{ sekme }}" class="text-decoration-none {% if not secili_harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{% trans "Tümü" %}</a>
                         {% for harf in harfler %}
-                            <a href="?sekme={{ sekme }}&harf={{ harf }}" 
-                               class="btn btn-sm {% if secili_harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                                {{ harf|upper }}
-                            </a>
+                            <a href="?sekme={{ sekme }}&harf={{ harf }}" class="text-decoration-none {% if secili_harf == harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{{ harf|upper }}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -122,7 +118,7 @@
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="mb-0">
                         <i class="bi bi-{% if sekme == 'deyim' %}chat-quote{% else %}book{% endif %} me-2"></i>
-                        {% if sekme == 'deyim' %}Îdîom{% else %}Gotinên Pêşiyan{% endif %}
+                        {% if sekme == 'deyim' %}{% trans "Deyimler" %}{% else %}{% trans "Atasözleri" %}{% endif %}
                         <span class="badge bg-primary ms-2">
                             {% if sekme == 'deyim' %}{{ deyim_gruplari|length|default:"0" }}{% else %}{{ atasozu_gruplari|length|default:"0" }}{% endif %}
                         </span>
@@ -138,7 +134,7 @@
                                             <div class="letter-badge bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                                 <strong>{{ harf|upper }}</strong>
                                             </div>
-                                            <h6 class="mb-0 text-success">Bi tîpa {{ harf|upper }} dest pê dikin</h6>
+                                            <h6 class="mb-0 text-success">{{ harf|upper }} {% trans "harfi ile başlayanlar" %}</h6>
                                         </div>
                                         <div class="row g-3">
                                             {% for item in items %}
@@ -181,10 +177,10 @@
                             {% empty %}
                                 <div class="empty-state text-center py-5">
                                     <i class="bi bi-chat-quote display-1 text-muted mb-3"></i>
-                                    <h4 class="text-muted">Îdîom nehat dîtin</h4>
-                                    <p class="text-muted mb-4">Bi vê tîpê destpêkirina îdîom nehat dîtin.</p>
+                                    <h4 class="text-muted">{% trans "Deyim bulunamadı" %}</h4>
+                                    <p class="text-muted mb-4">{% trans "Bu harfle başlayan deyim bulunamadı." %}</p>
                                     <a href="{% url 'atasozu_deyim_ekle' %}" class="btn btn-primary">
-                                        <i class="bi bi-plus-circle me-2"></i>Îdîom Lê Zêde Bike
+                                        <i class="bi bi-plus-circle me-2"></i>{% trans "Deyim Ekle" %}
                                     </a>
                                 </div>
                             {% endfor %}
@@ -196,7 +192,7 @@
                                             <div class="letter-badge bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                                 <strong>{{ harf|upper }}</strong>
                                             </div>
-                                            <h6 class="mb-0 text-warning">Bi tîpa {{ harf|upper }} dest pê dikin</h6>
+                                            <h6 class="mb-0 text-warning">{{ harf|upper }} {% trans "harfi ile başlayanlar" %}</h6>
                                         </div>
                                         <div class="row g-3">
                                             {% for item in items %}
@@ -239,10 +235,10 @@
                             {% empty %}
                                 <div class="empty-state text-center py-5">
                                     <i class="bi bi-book display-1 text-muted mb-3"></i>
-                                    <h4 class="text-muted">Gotina Pêşiyan nehat dîtin</h4>
-                                    <p class="text-muted mb-4">Bi vê tîpê destpêkirina gotina pêşiyan nehat dîtin.</p>
+                                    <h4 class="text-muted">{% trans "Atasözü bulunamadı" %}</h4>
+                                    <p class="text-muted mb-4">{% trans "Bu harfle başlayan atasözü bulunamadı." %}</p>
                                     <a href="{% url 'atasozu_deyim_ekle' %}" class="btn btn-primary">
-                                        <i class="bi bi-plus-circle me-2"></i>Gotina Pêşiyan Lê Zêde Bike
+                                        <i class="bi bi-plus-circle me-2"></i>{% trans "Atasözü Ekle" %}
                                     </a>
                                 </div>
                             {% endfor %}
@@ -255,7 +251,7 @@
 </div>
 {% endblock %}
 {% block extra_css %}
-    <link href="{% static 'main/css/modern.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/atasozu_deyim.css' %}" rel="stylesheet">
 {% endblock %}
 {% block extra_scripts %}
 <script>
@@ -269,7 +265,7 @@
         document.querySelectorAll('[id^="sil-form-"]').forEach(form => {
             form.addEventListener('submit', function(e) {
                 const tur = this.dataset.tur;
-                const confirmMessage = tur === 'deyim' ? 'Ma hûn ji vê îdîomê jêbirinê piştrast in?' : 'Ma hûn ji vê gotina pêşiyan jêbirinê piştrast in?';
+                const confirmMessage = tur === 'deyim' ? '{% trans "Bu deyimi silmek istediğinizden emin misiniz?" %}' : '{% trans "Bu atasözünü silmek istediğinizden emin misiniz?" %}';
                 if (!confirm(confirmMessage)) {
                     e.preventDefault();
                 }
@@ -287,8 +283,7 @@
         initAtasozuDeyimActions();
         initAtasozuDeyimArama();
     } catch (error) {
-        console.log('Çewtiya barkirina modûlê:', error);
+        console.log('{% trans "Modül yükleme hatası:" %}', error);
     }
 </script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}

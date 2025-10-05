@@ -10,7 +10,7 @@ function initGoogleSignIn() {
         googleSignInBtn.addEventListener('click', function(e) {
             // Butonun içeriğini yükleniyor göstergesiyle değiştir
             const originalContent = this.innerHTML;
-            this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Giriş yapılıyor...';
+            this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Têketin tê kirin...';
             this.disabled = true;
             
             // Yönlendirmeyi geciktir (kullanıcı yükleniyor göstergesini görebilsin)
@@ -63,9 +63,9 @@ function validateUsername(input) {
         }
         
         if (value.length < 3) {
-            errorElement.textContent = 'Kullanıcı adı en az 3 karakter olmalıdır.';
+            errorElement.textContent = 'Navê bikarhêner divê herî kêm 3 tîp be.';
         } else {
-            errorElement.textContent = 'Kullanıcı adı sadece harf, rakam ve alt çizgi içerebilir.';
+            errorElement.textContent = 'Navê bikarhêner tenê tîp, jimare û binxêz dikare bigire.';
         }
     } else {
         input.classList.remove('is-invalid');
@@ -97,7 +97,7 @@ function validateNickname(input) {
             input.parentNode.insertBefore(errorElement, input.nextSibling);
         }
         
-        errorElement.textContent = 'Takma ad 2-50 karakter arasında olmalıdır.';
+        errorElement.textContent = 'Navê nasnavê divê di navbera 2-50 tîpan de be.';
     } else {
         input.classList.remove('is-invalid');
         input.classList.add('is-valid');

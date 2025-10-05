@@ -1,44 +1,384 @@
+/* KİŞİLER SAYFALARI */
+
+/* Genel metin renkleri */
+.card-title {
+    color: #0f1419 !important;
+}
+
+.form-label {
+    color: #0f1419 !important;
+}
+
+.text-primary {
+    color: #1da1f2 !important;
+}
+
+.text-muted {
+    color: #657786 !important;
+}
+
+.btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+/* Hero section renkleri */
+.hero-section .text-white {
+    color: #ffffff !important;
+}
+
+.hero-section h1 {
+    color: #ffffff !important;
+}
+
+.hero-section p {
+    color: #ffffff !important;
+}
+
+.hero-section .lead {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card h3 {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card p {
+    color: #ffffff !important;
+}
+
+.hero-section.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
 .kisi-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kisi-container h1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.kisi-container h2 {
+    color: #0f1419;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #1da1f2;
+    padding-bottom: 5px;
+}
+
+/* Metin renkleri düzeltmesi */
+.kisi-container .card-title {
+    color: #0f1419 !important;
+}
+
+.kisi-container .form-label {
+    color: #0f1419 !important;
+}
+
+.kisi-container .text-muted {
+    color: #657786 !important;
+}
+
+.kisi-container .btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+/* Kategori navigasyonu */
+.kategori-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
 }
 
 .kisi-container .btn-link {
     text-decoration: none;
-    font-size: 1.2rem;
-    padding: 5px 10px;
-    color: #007bff;
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    color: #1da1f2;
+    border: 2px solid #1da1f2;
+    border-radius: 20px;
+    background-color: #fff;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 3px;
+}
+
+.kisi-container .btn-link:hover {
+    background-color: #1da1f2;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+    text-decoration: none;
 }
 
 .kisi-container .btn-link.active {
     font-weight: bold;
-    color: #0056b3;
+    background-color: #1da1f2;
+    color: #fff;
+}
+
+/* Kişi öğeleri */
+.kisi-item {
+    background-color: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .kisi-container .kisi-item:hover {
     background-color: #f8f9fa;
+    border-color: #1da1f2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.kisi-item h5 {
+    color: #1da1f2;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.kisi-item .kisi-bilgi {
+    color: #657786;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.kisi-item .kisi-bilgi strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.kisi-item .kategori-badge {
+    background-color: #e8f5fd;
+    color: #1da1f2;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Kişi detay sayfası */
+.kisi-detay-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.kisi-detay-container .kisi-baslik {
+    color: #1da1f2;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #1da1f2;
+    padding-bottom: 15px;
+}
+
+.kisi-detay-container .bilgi-kart {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #1da1f2;
+    margin-bottom: 20px;
+}
+
+.kisi-detay-container .bilgi-kart h4 {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.kisi-detay-container .bilgi-kart .detay-icerik {
+    color: #657786;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Form stilleri */
+.kisi-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.kisi-form-container h2 {
+    color: #1da1f2;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.kisi-form-container .form-group {
+    margin-bottom: 20px;
+}
+
+.kisi-form-container label {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.kisi-form-container .form-control {
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.kisi-form-container .form-control:focus {
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
+}
+
+.kisi-form-container .btn-primary {
+    background-color: #1da1f2;
+    border-color: #1da1f2;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.kisi-form-container .btn-primary:hover {
+    background-color: #1991db;
+    border-color: #1991db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+/* Select2 stilleri */
 .select2-container {
     width: 100% !important;
 }
 
+.select2-container--default .select2-selection--single {
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    height: 45px;
+    padding: 8px 12px;
+}
+
+.select2-container--default .select2-selection--single:focus {
+    border-color: #1da1f2;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 28px;
+    color: #333;
+}
+
+/* Quill editor stilleri */
 .quill-editor {
     width: 100%;
     min-height: 200px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
     background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.quill-editor:focus-within {
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
 }
 
 .quill-editor .ql-container {
     min-height: 150px;
     font-size: 1.1rem;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.quill-editor .ql-toolbar {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #e1e8ed;
 }
 
 .quill-editor .ql-editor {
-    padding: 12px;
+    padding: 15px;
     outline: none;
     cursor: text;
+    line-height: 1.6;
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .kisi-container,
+    .kisi-detay-container,
+    .kisi-form-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .kisi-container .btn-link {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+    
+    .kisi-detay-container .kisi-baslik {
+        font-size: 2rem;
+    }
+}
+
+/* Boş liste mesajı */
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #657786;
+    font-size: 1.2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.empty-message i {
+    font-size: 3rem;
+    color: #1da1f2;
+    margin-bottom: 15px;
+    display: block;
 }

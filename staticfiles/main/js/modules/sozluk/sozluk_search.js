@@ -41,7 +41,7 @@ export function initSozlukArama() {
         const query = sanitizeHTML(aramaInput.value.trim());
         
         if (!query) {
-            sonucListesi.innerHTML = '<p class="text-muted">Arama yapmak için bir kelime girin.</p>';
+            sonucListesi.innerHTML = '<p class="text-muted">Ji bo lêgerînê peyvekê binivîse.</p>';
             return;
         }
         
@@ -75,7 +75,7 @@ export function initSozlukArama() {
             
             if (data.kelimeler && Array.isArray(data.kelimeler)) {
                 if (data.kelimeler.length === 0 && reset) {
-                    sonucListesi.innerHTML = '<p class="text-muted">Sonuç bulunamadı.</p>';
+                    sonucListesi.innerHTML = '<p class="text-muted">Encam nehat dîtin.</p>';
                 } else {
                     const fragment = document.createDocumentFragment();
                     data.kelimeler.forEach(kelime => {
@@ -87,7 +87,7 @@ export function initSozlukArama() {
                                 <a href="/sozluk/kelime/${kelime.id}/" class="text-decoration-none">
                                     <strong>${sanitizeHTML(kelime.kelime)}</strong>
                                     <p class="text-muted small">${sanitizeHTML(kelime.detay)}</p>
-                                    <p class="text-muted small">Tür: ${sanitizeHTML(kelime.tur || 'Belirtilmemiş')}</p>
+                                    <p class="text-muted small">Cure: ${sanitizeHTML(kelime.tur || 'Nenaskirî')}</p>
                                 </a>
                                 ${kelime.is_owner ? `
                                     <div class="dropdown">
@@ -96,10 +96,10 @@ export function initSozlukArama() {
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <button class="dropdown-item edit-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-veri/${kelime.id}/" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                                                <button class="dropdown-item edit-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-veri/${kelime.id}/" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Sererast bike</button>
                                             </li>
                                             <li>
-                                                <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-sil/${kelime.id}/">Sil</button>
+                                                <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-sil/${kelime.id}/">Jê bibe</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -120,7 +120,7 @@ export function initSozlukArama() {
         } catch (error) {
             console.error('Arama hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Arama sırasında bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Di dema lêgerînê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
         } finally {
             loading = false;
             loadingDiv.style.display = 'none';
@@ -179,7 +179,7 @@ export function initTumKelimeler(autoLoad = false) {
             offset = 0;
             hasMore = true;
             seenIds.clear();
-            sonucListesi.innerHTML = '<p class="text-muted">Kelimeler yükleniyor...</p>';
+            sonucListesi.innerHTML = '<p class="text-muted">Peyv tên barkirin...</p>';
         }
 
         try {
@@ -193,7 +193,7 @@ export function initTumKelimeler(autoLoad = false) {
             console.log('Tüm kelimeler yanıtı:', data);
             if (data.kelimeler && Array.isArray(data.kelimeler)) {
                 if (data.kelimeler.length === 0 && reset) {
-                    sonucListesi.innerHTML = '<p class="text-muted">Kelime bulunamadı.</p>';
+                    sonucListesi.innerHTML = '<p class="text-muted">Peyv nehat dîtin.</p>';
                     hasMore = false;
                     return;
                 }
@@ -215,7 +215,7 @@ export function initTumKelimeler(autoLoad = false) {
                             <a href="/sozluk/kelime/${kelime.id}/" class="text-decoration-none">
                                 <strong>${sanitizeHTML(kelime.kelime)}</strong>
                                 <p class="text-muted small">${sanitizeHTML(kelime.detay)}</p>
-                                <p class="text-muted small">Tür: ${sanitizeHTML(kelime.tur || 'Belirtilmemiş')}</p>
+                                <p class="text-muted small">Cure: ${sanitizeHTML(kelime.tur || 'Nenaskirî')}</p>
                             </a>
                             ${kelime.is_owner ? `
                                 <div class="dropdown">
@@ -224,10 +224,10 @@ export function initTumKelimeler(autoLoad = false) {
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-veri/${kelime.id}/" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Düzenle</button>
+                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-veri/${kelime.id}/" data-bs-toggle="modal" data-bs-target="#editKelimeModal">Sererast bike</button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-sil/${kelime.id}/">Sil</button>
+                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="${kelime.id}" data-url="/sozluk/kelime-sil/${kelime.id}/">Jê bibe</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -251,7 +251,7 @@ export function initTumKelimeler(autoLoad = false) {
         } catch (error) {
             console.error('Tüm kelimeler yükleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Kelimeler yüklenirken bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Di dema barkirina peyvan de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
         } finally {
             loading = false;
             loadingDiv.style.display = 'none';
@@ -303,10 +303,10 @@ export function bindKelimeActions() {
         if (!url) {
             console.error('Silme URL’si eksik:', btn);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Silme işlemi için gerekli URL bulunamadı.';
+            errorDiv.textContent = 'Ji bo kiryara jêbirinê URL-ya pêwîst nehat dîtin.';
             return;
         }
-        if (!confirm('Bu kelimeyi silmek istediğinizden emin misiniz?')) return;
+        if (!confirm(window.i18n?.t('sozluk.confirm_delete_word') || 'Bu kelimeyi silmek istediğinizden emin misiniz?')) return;
         try {
             console.log(`Silme isteği: ${url}`);
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
@@ -323,16 +323,16 @@ export function bindKelimeActions() {
             const data = await response.json();
             console.log('Silme yanıtı:', data);
             if (data.success) {
-                alert('Kelime başarıyla silindi!');
+                alert(window.i18n?.t('sozluk.word_deleted_success') || 'Kelime başarıyla silindi!');
                 window.location.href = '/sozluk/';
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Kelime silinirken bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = 'Di dema jêbirina peyvê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
             }
         } catch (error) {
             console.error('Kelime silme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     }
 
@@ -342,7 +342,7 @@ export function bindKelimeActions() {
         const url = btn.getAttribute('data-url');
         if (!url) {
             console.error('Düzenleme verisi URL’si eksik:', btn);
-            alert('Düzenleme işlemi için gerekli URL bulunamadı.');
+            alert('Ji bo kiryara sererastkirinê URL-ya pêwîst nehat dîtin.');
             return;
         }
         try {
@@ -360,11 +360,11 @@ export function bindKelimeActions() {
                 form.querySelector('#detay').value = sanitizeHTML(data.detay) || '';
                 form.querySelector('#tur').value = sanitizeHTML(data.tur) || '';
             } else {
-                alert('Kelime verileri yüklenemedi.');
+                alert('Daneyên peyvê nehatin barkirin.');
             }
         } catch (error) {
             console.error('Kelime verisi yükleme hatası:', error);
-            alert('Kelime verileri yüklenemedi.');
+            alert('Daneyên peyvê nehatin barkirin.');
         }
     }
 
@@ -374,10 +374,10 @@ export function bindKelimeActions() {
         if (!url) {
             console.error('Detay silme URL’si eksik:', btn);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Detay silme işlemi için gerekli URL bulunamadı.';
+            errorDiv.textContent = 'Ji bo kiryara jêbirina detayê URL-ya pêwîst nehat dîtin.';
             return;
         }
-        if (!confirm('Bu detayı silmek istediğinizden emin misiniz?')) return;
+        if (!confirm(window.i18n?.t('sozluk.confirm_delete_detail') || 'Bu detayı silmek istediğinizden emin misiniz?')) return;
         try {
             console.log(`Detay silme isteği: ${url}`);
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
@@ -395,15 +395,15 @@ export function bindKelimeActions() {
             console.log('Detay silme yanıtı:', data);
             if (data.success) {
                 document.querySelector(`.detay-item[data-detay-id="${btn.dataset.detayId}"]`)?.remove();
-                alert('Detay başarıyla silindi!');
+                alert(window.i18n?.t('sozluk.detail_deleted_success') || 'Detay başarıyla silindi!');
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Detay silinirken bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = 'Di dema jêbirina detayê de çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
             }
         } catch (error) {
             console.error('Detay silme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = 'Çewtiyek çêbû, ji kerema xwe dîsa biceribîne.';
         }
     }
 
@@ -413,7 +413,7 @@ export function bindKelimeActions() {
         const url = btn.getAttribute('data-url');
         if (!url) {
             console.error('Detay verisi URL’si eksik:', btn);
-            alert('Detay düzenleme işlemi için gerekli URL bulunamadı.');
+            alert('Ji bo kiryara sererastkirina detayê URL-ya pêwîst nehat dîtin.');
             return;
         }
         try {
@@ -429,11 +429,11 @@ export function bindKelimeActions() {
                 form.action = `/sozluk/detay-duzenle/${detayId}/`;
                 form.querySelector('#detay').value = sanitizeHTML(data.detay) || '';
             } else {
-                alert('Detay verileri yüklenemedi.');
+                alert('Daneyên detayê nehatin barkirin.');
             }
         } catch (error) {
             console.error('Detay verisi yükleme hatası:', error);
-            alert('Detay verileri yüklenemedi.');
+            alert('Daneyên detayê nehatin barkirin.');
         }
     }
 }

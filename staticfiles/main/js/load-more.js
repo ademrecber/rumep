@@ -1,4 +1,5 @@
 import { initLikes, getCsrfToken } from "./like.js";
+import { initVoteButtons } from "./vote.js";
 import { initCopyLink } from "./copy-link.js";
 
 async function loadMorePosts() {
@@ -15,10 +16,10 @@ async function loadMorePosts() {
 
     try {
         const csrfToken = getCsrfToken();
-        if (!csrfToken) throw new Error('CSRF token bulunamadı');
+        if (!csrfToken) throw new Error(gettext('CSRF token bulunamadı'));
         console.log('CSRF Token:', csrfToken);
 
-        const url = `/load-more/?offset=${window.offset}`;
+        const url = `/load-more-topics/?offset=${window.offset}`;
         console.log(`Yükleniyor: url=${url}`);
 
         const response = await fetch(url, {
@@ -29,7 +30,7 @@ async function loadMorePosts() {
             }
         });
 
-        if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
+        if (!response.ok) throw new Error(gettext('Ağ hatası: %(status)s').replace('%(status)s', response.status));
 
         const data = await response.json();
         console.log('Gelen veri:', data);
@@ -58,37 +59,37 @@ async function loadMorePosts() {
                                 <ul class="dropdown-menu">
                                     ${isOwner ? `
                                         <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('${gettext('Bu postu silmek istediğinizden emin misiniz?')}');">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">${gettext('Sil')}</button>
                                             </form>
                                         </li>
                                     ` : ''}
                                     <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Yer işaretinden kaldırmak' : 'Yer işaretine eklemek'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
+                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? gettext('Yer işaretinden kaldır') : gettext('Yer işaretine ekle')} istediğinizden emin misiniz?');" data-post-id="${post.id}">
                                             <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle'}</button>
+                                            <button type="submit" class="dropdown-item">${bookmarked ? gettext('Yer İşaretinden Kaldır') : gettext('Yer İşaretine Ekle')}</button>
                                         </form>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Bağlantıyı Kopyala</button>
+                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">${gettext('Bağlantıyı Kopyala')}</button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <h5>${post.title || 'Başlıksız'}</h5>
+                        <h5>${post.title || ''}</h5>
                         <div class="post-text">
                             ${post.text.length > 400 || totalLines > 15 ? `
                                 <div class="text-preview">${post.text.substring(0, 100).replace(/\n/g, '<br>')}</div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                <button class="btn btn-link text-primary p-0 show-more-btn">${gettext('Daha fazla göster')}</button>
                                 <div class="full-text d-none">${post.text.split('\n').map(line => `<p>${line}</p>`).join('')}</div>
                             ` : post.text.split('\n').map(line => `<p>${line}</p>`).join('')}
                         </div>
                         ${post.link ? `<a href="/rmp/${post.link.slice(4)}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
                         ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
                         <div class="post-meta text-muted mt-2">
-                            <span>Beğeni: ${post.like_count}</span> | 
-                            <span>Yorum: ${post.comment_count}</span> | 
+                            <span>${gettext('Beğeni')}: ${post.like_count}</span> | 
+                            <span>${gettext('Yorum')}: ${post.comment_count}</span> | 
                             <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
                             <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
                         </div>
@@ -110,14 +111,14 @@ async function loadMorePosts() {
                                 <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
                             </form>
                             <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">Skor: ${post.total_score.toFixed(1)}</span>` : ''}
+                            ${post.total_score ? `<span class="text-muted ms-2">${gettext('Puan')}: ${post.total_score.toFixed(1)}</span>` : ''}
                         </div>
                     </div>
                 `;
                 fragment.appendChild(postDiv);
             });
             
-            const postContainer = document.querySelector('.post-container');
+            const postContainer = document.querySelector('.topic-container');
             if (postContainer) {
                 postContainer.appendChild(fragment);
                 initLikes();
@@ -140,7 +141,7 @@ async function loadMorePosts() {
     } catch (error) {
         console.error('Hata:', error);
         if (errorMessage) {
-            errorMessage.textContent = 'Postlar yüklenirken hata oluştu: ' + error.message;
+            errorMessage.textContent = gettext('Postlar yüklenirken hata oluştu: %(error)s').replace('%(error)s', error.message);
             errorMessage.style.display = 'block';
         }
         if (loadMoreBtn) loadMoreBtn.style.display = 'block';
@@ -198,7 +199,7 @@ function initBookmarks() {
                     
                     const button = this.querySelector('.bookmark-btn');
                     if (button) {
-                        button.textContent = data.bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle';
+                        button.textContent = data.bookmarked ? gettext('Yer İşaretinden Kaldır') : gettext('Yer İşaretine Ekle');
                         button.dataset.bookmarked = data.bookmarked ? 'true' : 'false';
                         console.log("Yer işareti butonu güncellendi:", button.textContent, "Bookmarked:", data.bookmarked);
                         if (isBookmarksTab) {
@@ -222,70 +223,12 @@ function initBookmarks() {
     });
 }
 
-function initVoteButtons() {
-    console.log("initVoteButtons çalışıyor");
-    
-    document.querySelectorAll('.vote-form').forEach(form => {
-        if (!form.dataset.listenerAdded) {
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                console.log("Oylama butonuna basıldı");
-                const id = this.dataset.postId || this.dataset.commentId;
-                const csrfToken = getCsrfToken();
-                if (!csrfToken) {
-                    console.error('CSRF token bulunamadı');
-                    return;
-                }
-                console.log("Gönderilen CSRF Token:", csrfToken, "Uzunluk:", csrfToken.length);
-
-                try {
-                    const url = this.dataset.postId ? `/vote-post/${id}/` : `/vote-comment/${id}/`;
-                    console.log("İstek gönderiliyor, url:", url);
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': csrfToken,
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: new FormData(this)
-                    });
-
-                    console.log("Sunucu yanıtı:", response.status);
-                    if (!response.ok) {
-                        const text = await response.text();
-                        throw new Error(`Sunucu hatası: ${response.status} - ${text}`);
-                    }
-
-                    const data = await response.json();
-                    console.log("Gelen veri:", data);
-                    
-                    const upBtn = this.querySelector('.upvote-btn');
-                    const downBtn = this.querySelector('.downvote-btn');
-                    if (upBtn) {
-                        upBtn.textContent = `${data.upvotes} ↑`;
-                        console.log("Up butonu güncellendi:", upBtn.textContent);
-                    } else {
-                        console.error("Up butonu bulunamadı, form:", this);
-                    }
-                    if (downBtn) {
-                        downBtn.textContent = `${data.downvotes} ↓`;
-                        console.log("Down butonu güncellendi:", downBtn.textContent);
-                    } else {
-                        console.error("Down butonu bulunamadı, form:", this);
-                    }
-                } catch (error) {
-                    console.error('Hata:', error);
-                }
-            });
-            form.dataset.listenerAdded = 'true';
-        }
-    });
-}
+// initVoteButtons fonksiyonu vote.js'den import ediliyor
 
 function initializePage() {
-    window.offset = 10;
-    window.hasMore = true;
-    window.loading = false;
+    window.offset = window.offset || 10;
+    window.hasMore = typeof window.hasMore === 'undefined' ? true : window.hasMore;
+    window.loading = window.loading || false;
 
     const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn) {
@@ -308,7 +251,7 @@ function initializePage() {
     window.removeEventListener('scroll', scrollHandler);
     window.addEventListener('scroll', scrollHandler);
 
-    const postContainer = document.querySelector('.post-container');
+    const postContainer = document.querySelector('.topic-container');
     if (postContainer) {
         const clickHandler = (e) => {
             if (e.target.classList.contains('show-more-btn')) {

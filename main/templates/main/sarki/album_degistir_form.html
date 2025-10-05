@@ -1,21 +1,22 @@
+{% load i18n %}
 <div class="modal fade" id="albumDegistirModal" tabindex="-1" aria-labelledby="albumDegistirModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="albumDegistirModalLabel">Albûmê Biguherîne</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
+                <h5 class="modal-title" id="albumDegistirModalLabel">{% trans "Albümü Değiştir" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
             </div>
             <div class="modal-body">
                 <form id="album-degistir-form">
                     {% csrf_token %}
                     <input type="hidden" id="sarki-id" name="sarki_id">
                     <div class="mb-3">
-                        <label for="album-select" class="form-label">Albûma Nû Hilbijêre</label>
+                        <label for="album-select" class="form-label">{% trans "Yeni Albüm Seç" %}</label>
                         <select id="album-select" name="album_id" class="form-select" required>
-                            <!-- Albümler JS ile doldurulacak -->
+                            <!-- {% trans "Albümler JS ile doldurulacak" %} -->
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Biguherîne</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Değiştir" %}</button>
                 </form>
             </div>
         </div>

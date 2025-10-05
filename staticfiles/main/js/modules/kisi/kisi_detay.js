@@ -1,4 +1,3 @@
-
 import { getCsrfToken } from '../../like.js';
 
 export function initDetayEkleForm() {
@@ -28,11 +27,11 @@ export function initDetayEkleForm() {
             const data = await response.json();
             console.log('Detay ekleme yanıtı:', data);
             if (data.success) {
-                alert('Detay başarıyla eklendi!');
+                alert(window.i18n?.t('kisi.detail_added_success') || 'Detay başarıyla eklendi!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.';
                 if (data.errors) {
                     for (const [field, message] of Object.entries(data.errors)) {
                         errorDiv.innerHTML += `<p>${message}</p>`;
@@ -42,7 +41,7 @@ export function initDetayEkleForm() {
         } catch (error) {
             console.error('Detay ekleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.';
         }
     });
 }
@@ -73,11 +72,11 @@ export function initEditDetayForm() {
                     form.action = `/kisi/detay-duzenle/${detayId}/`;
                     form.querySelector('#detay').value = data.detay;
                 } else {
-                    alert(data.error || 'Detay verisi alınırken hata oluştu.');
+                    alert(data.error || (window.i18n?.t('kisi.detail_fetch_error') || 'Detay verileri alınırken hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Detay verisi alma hatası:', error);
-                alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                alert(window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.');
             }
         });
     });
@@ -101,11 +100,11 @@ export function initEditDetayForm() {
             const data = await response.json();
             console.log('Detay düzenleme yanıtı:', data);
             if (data.success) {
-                alert('Detay başarıyla düzenlendi!');
+                alert(window.i18n?.t('kisi.detail_updated_success') || 'Detay başarıyla güncellendi!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+                errorDiv.textContent = window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.';
                 if (data.errors) {
                     for (const [field, message] of Object.entries(data.errors)) {
                         errorDiv.innerHTML += `<p>${message}</p>`;
@@ -115,7 +114,7 @@ export function initEditDetayForm() {
         } catch (error) {
             console.error('Detay düzenleme hatası:', error);
             errorDiv.classList.remove('d-none');
-            errorDiv.textContent = 'Bir hata oluştu, lütfen tekrar deneyin.';
+            errorDiv.textContent = window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.';
         }
     });
 }
@@ -123,7 +122,7 @@ export function initEditDetayForm() {
 export function initDetaySil() {
     document.querySelectorAll('.delete-detay-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
-            if (!confirm('Bu detayı silmek istediğinizden emin misiniz?')) return;
+            if (!confirm(window.i18n?.t('kisi.confirm_delete_detail') || 'Bu detayı silmek istediğinizden emin misiniz?')) return;
             const detayId = btn.dataset.detayId;
             const url = btn.dataset.url;
             try {
@@ -139,13 +138,13 @@ export function initDetaySil() {
                 console.log('Detay silme yanıtı:', data);
                 if (data.success) {
                     document.querySelector(`.detay-item[data-detay-id="${detayId}"]`).remove();
-                    alert('Detay başarıyla silindi!');
+                    alert(window.i18n?.t('kisi.detail_deleted_success') || 'Detay başarıyla silindi!');
                 } else {
-                    alert(data.error || 'Detay silinirken hata oluştu.');
+                    alert(data.error || (window.i18n?.t('kisi.detail_delete_error') || 'Detay silinirken hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Detay silme hatası:', error);
-                alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                alert(window.i18n?.t('common.error_try_again') || 'Bir hata oluştu, lütfen tekrar deneyin.');
             }
         });
     });

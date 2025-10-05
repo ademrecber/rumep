@@ -1,0 +1,188 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load post_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Arama" %}{% endblock %}
+{% block page_header %}{% trans "Arama" %}{% endblock %}
+
+{% block content %}
+    <!-- Search Header -->
+    <div class="search-header mb-4">
+        <form method="GET" class="search-form">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control form-control-lg" name="q" value="{{ query }}" 
+                       placeholder="{% trans 'Başlık, entry, kullanıcı ara...' %}" id="searchInput">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i> {% trans "Ara" %}
+                </button>
+            </div>
+            
+            <!-- Filters -->
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+                <select name="type" class="form-select" style="flex: 1; min-width: 150px;">
+                    <option value="all" {% if search_type == 'all' %}selected{% endif %}>{% trans "Tümü" %}</option>
+                    <option value="topics" {% if search_type == 'topics' %}selected{% endif %}>{% trans "Başlıklar" %}</option>
+                    <option value="entries" {% if search_type == 'entries' %}selected{% endif %}>{% trans "Entry'ler" %}</option>
+                    <option value="users" {% if search_type == 'users' %}selected{% endif %}>{% trans "Kullanıcılar" %}</option>
+                    <option value="hashtags" {% if search_type == 'hashtags' %}selected{% endif %}>{% trans "Hashtag'ler" %}</option>
+                </select>
+                <select name="date" class="form-select" style="flex: 1; min-width: 150px;">
+                    <option value="all" {% if date_filter == 'all' %}selected{% endif %}>{% trans "Tüm zamanlar" %}</option>
+                    <option value="today" {% if date_filter == 'today' %}selected{% endif %}>{% trans "Bugün" %}</option>
+                    <option value="week" {% if date_filter == 'week' %}selected{% endif %}>{% trans "Bu hafta" %}</option>
+                    <option value="month" {% if date_filter == 'month' %}selected{% endif %}>{% trans "Bu ay" %}</option>
+                    <option value="year" {% if date_filter == 'year' %}selected{% endif %}>{% trans "Bu yıl" %}</option>
+                </select>
+                <input type="text" class="form-control" name="user" value="{{ user_filter }}" 
+                       placeholder="{% trans 'Kullanıcı filtrele...' %}" style="flex: 1; min-width: 150px;">
+                <button type="submit" class="btn btn-outline-primary" style="min-width: 100px;">{% trans "Filtrele" %}</button>
+            </div>
+        </form>
+    </div>
+
+    {% if query %}
+    <!-- Search Results -->
+    <div class="search-results">
+        <div class="results-header mb-3">
+            <h5>{% blocktrans %}"{{ query }}" için {{ total_count }} sonuç bulundu{% endblocktrans %}</h5>
+        </div>
+
+        <!-- Topics -->
+        {% if topics %}
+        <div class="result-section mb-4">
+            <h6 class="section-title"><i class="bi bi-chat-square-text me-2"></i>{% trans "Başlıklar" %}</h6>
+            {% for topic in topics %}
+            <div class="card mb-2">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none">
+                                <strong>{{ topic.title }}</strong>
+                            </a>
+                            <div class="text-muted small">
+                                {{ topic.user.profile.nickname }} • {{ topic.entry_count }} {% trans "entry" %} • {{ topic.created_at|date:"d.m.Y" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Entries -->
+        {% if entries %}
+        <div class="result-section mb-4">
+            <h6 class="section-title"><i class="bi bi-chat-left-text me-2"></i>{% trans "Entry'ler" %}</h6>
+            {% for entry in entries %}
+            <div class="card mb-2">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <a href="{% url 'topic_detail' entry.topic.slug %}#entry-{{ entry.id }}" class="text-decoration-none">
+                                <strong>{{ entry.topic.title }}</strong>
+                            </a>
+                            <div class="entry-preview mt-1">
+                                {{ entry.content|render_emojis|safe|truncatechars:200 }}
+                            </div>
+                            <div class="text-muted small">
+                                {{ entry.user.profile.nickname }} • {{ entry.created_at|date:"d.m.Y H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Users -->
+        {% if users %}
+        <div class="result-section mb-4">
+            <h6 class="section-title"><i class="bi bi-person me-2"></i>{% trans "Kullanıcılar" %}</h6>
+            {% for user in users %}
+            <div class="card mb-2">
+                <div class="card-body py-2">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3" 
+                             style="width: 40px; height: 40px;">
+                            <i class="bi bi-person text-white"></i>
+                        </div>
+                        <div>
+                            <a href="{% url 'profile_detail' user.username %}" class="text-decoration-none">
+                                <strong>{{ user.nickname }}</strong>
+                            </a>
+                            <div class="text-muted small">@{{ user.username }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hashtags -->
+        {% if hashtags %}
+        <div class="result-section mb-4">
+            <h6 class="section-title"><i class="bi bi-hash me-2"></i>{% trans "Hashtag'ler" %}</h6>
+            {% for hashtag in hashtags %}
+            <div class="card mb-2">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{% url 'hashtag_detail' hashtag.slug %}" class="text-decoration-none">
+                                <strong>#{{ hashtag.name }}</strong>
+                            </a>
+                            <div class="text-muted small">{{ hashtag.usage_count }} {% trans "kullanım" %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if total_count == 0 %}
+        <div class="no-results text-center py-5">
+            <i class="bi bi-search display-1 text-muted"></i>
+            <h5 class="mt-3">{% trans "Sonuç bulunamadı" %}</h5>
+            <p class="text-muted">{% trans "Farklı anahtar kelimeler deneyin veya filtreleri değiştirin." %}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <!-- Search Tips -->
+    <div class="search-tips">
+        <div class="d-flex gap-3 flex-wrap">
+            <div class="card" style="flex: 1; min-width: 300px;">
+                <div class="card-body">
+                    <h6><i class="bi bi-lightbulb me-2"></i>{% trans "Arama İpuçları" %}</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li><strong>@kullanıcı</strong> - {% trans "Kullanıcı ara" %}</li>
+                        <li><strong>#hashtag</strong> - {% trans "Hashtag ara" %}</li>
+                        <li><strong>"tam cümle"</strong> - {% trans "Tam eşleşme" %}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card" style="flex: 1; min-width: 300px;">
+                <div class="card-body">
+                    <h6><i class="bi bi-filter me-2"></i>{% trans "Filtreler" %}</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li>{% trans "Tarih aralığı seçin" %}</li>
+                        <li>{% trans "İçerik türünü belirleyin" %}</li>
+                        <li>{% trans "Kullanıcıya göre filtreleyin" %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+<!-- Search Suggestions -->
+<div id="searchSuggestions" class="search-suggestions position-absolute bg-white border rounded shadow-sm" style="display: none; z-index: 1000;"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'main/js/search.js' %}"></script>
+{% endblock %}

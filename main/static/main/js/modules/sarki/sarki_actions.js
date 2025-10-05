@@ -2,7 +2,7 @@ export function initSarkiActions() {
     // Şarkı silme (detay sayfasında)
     document.querySelectorAll('.sarki-sil-btn').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Ma hûn ji vê stranê jêbirinê piştrast in?')) return;
+            if (!confirm(window.i18n?.t('sarki.confirm_delete_song') || 'Bu şarkıyı silmek istediğinizden emin misiniz?')) return;
             const sarkiId = button.getAttribute('data-sarki-id');
             const albumId = button.getAttribute('data-album-id');
             const silUrl = button.getAttribute('data-url-sil');
@@ -152,7 +152,7 @@ export function initSarkiActions() {
     // Berfirehî silme
     document.querySelectorAll('[data-action="detay-sil"]').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Ma hûn ji vê berfirehiyê jêbirinê piştrast in?')) return;
+            if (!confirm(window.i18n?.t('sarki.confirm_delete_detail') || 'Bu detayı silmek istediğinizden emin misiniz?')) return;
             const detayId = button.getAttribute('data-detay-id');
             try {
                 const response = await fetch(`/sarki/detay-sil/${detayId}/`, {

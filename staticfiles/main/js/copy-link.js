@@ -7,8 +7,8 @@ export function initCopyLink() {
     postCopyButtons.forEach(btn => {
         if (!btn.dataset.listenerAdded) {
             btn.addEventListener('click', () => {
-                const postId = btn.dataset.postId;
-                const postUrl = `${window.location.origin}/post/${postId}/`;
+                const postShortId = btn.dataset.postShortId;
+                const postUrl = `${window.location.origin}/rmp/${postShortId}/`;
                 navigator.clipboard.writeText(postUrl)
                     .then(() => {
                         console.log("Bağlantı kopyalandı:", postUrl);
@@ -17,7 +17,7 @@ export function initCopyLink() {
                     })
                     .catch(err => {
                         console.error("Kopyalama hatası:", err);
-                        alert("Bağlantı kopyalanamadı!");
+                        alert("Girêdan nehat kopîkirin!");
                     });
             });
             btn.dataset.listenerAdded = 'true';
@@ -30,14 +30,13 @@ export function initCopyLink() {
     critiqueCopyButtons.forEach(btn => {
         if (!btn.dataset.listenerAdded) {
             btn.addEventListener('click', () => {
-                const critiqueId = btn.dataset.critiqueId;
-                const postId = btn.dataset.postId;
-                if (!critiqueId || !postId) {
-                    console.error("Eksik veri: critiqueId veya postId bulunamadı", { critiqueId, postId });
-                    alert("Bağlantı kopyalanamadı!");
+                const postShortId = btn.dataset.postShortId;
+                if (!postShortId) {
+                    console.error("Eksik veri: postShortId bulunamadı", { postShortId });
+                    alert("Girêdan nehat kopîkirin!");
                     return;
                 }
-                const critiqueUrl = `${window.location.origin}/post/${postId}/#critique-${critiqueId}`;
+                const critiqueUrl = `${window.location.origin}/rmp/${postShortId}/`;
                 navigator.clipboard.writeText(critiqueUrl)
                     .then(() => {
                         console.log("Değerlendirme bağlantısı kopyalandı:", critiqueUrl);
@@ -46,7 +45,7 @@ export function initCopyLink() {
                     })
                     .catch(err => {
                         console.error("Değerlendirme kopyalama hatası:", err);
-                        alert("Bağlantı kopyalanamadı!");
+                        alert("Girêdan nehat kopîkirin!");
                     });
             });
             btn.dataset.listenerAdded = 'true';

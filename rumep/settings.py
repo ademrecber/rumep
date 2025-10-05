@@ -56,6 +56,13 @@ MIDDLEWARE = [
     'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
 ]
 
+# CSRF Settings
+CSRF_COOKIE_SECURE = True  # Production için True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_TRUSTED_ORIGINS = ['https://*.render.com']
+
 ROOT_URLCONF = 'rumep.urls'
 
 TEMPLATES = [
@@ -69,6 +76,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.notification_count',
+                'main.context_processors.user_role_context',
+                'main.context_processors.sidebar_data',
             ],
         },
     },
@@ -182,6 +192,25 @@ HUMANIZE_TIME_FORMAT = 'd M Y H:i'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
 GOOGLE_TAG_MANAGER_ID = os.getenv('GOOGLE_TAG_MANAGER_ID', '')
+
+# Security Settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Session Security
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 86400  # 24 saat
+
+# Social Auth Security
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['openid', 'email', 'profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_USE_DEPRECATED_API = False
 
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {

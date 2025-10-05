@@ -215,7 +215,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Toast notification */
+/* Enhanced toast notification */
 .toast-container {
   z-index: 1060;
 }
@@ -223,8 +223,261 @@
 .toast {
   background-color: var(--card-bg);
   border: none;
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-md);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid var(--primary-color);
+}
+
+.toast-header {
+  background: transparent;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.toast-body {
+  font-weight: 500;
+}
+
+/* Enhanced mobile critique section */
+.mobile-critique-section {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-critique-container {
+  border: 1px solid #e9ecef;
+}
+
+.mobile-critique-container:empty::before {
+  content: "Hêj nirxandin tune...";
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Enhanced critique form */
+.critique-form-card,
+.comment-form-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+}
+
+.critique-textarea,
+.comment-textarea {
+  border: 1px solid #e9ecef !important;
+  border-radius: 8px;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.critique-textarea:focus,
+.comment-textarea:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.char-count {
+  font-size: 0.75rem;
+}
+
+/* Enhanced period tabs */
+.period-tabs-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.period-tabs {
+  border: none;
+  gap: 4px;
+}
+
+.period-tabs .nav-link {
+  border-radius: 8px;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.period-tabs .nav-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: var(--primary-color);
+}
+
+.period-tabs .nav-link.active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+/* Enhanced critique cards */
+.enhanced-critique-card {
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-critique-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-color);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.enhanced-critique-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.enhanced-critique-card:hover::before {
+  transform: scaleY(1);
+}
+
+.critique-header {
+  border-bottom: 1px solid #f1f3f4;
+  padding-bottom: 12px;
+}
+
+.user-nickname {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.user-details {
+  font-size: 0.85rem;
+}
+
+.critique-meta {
+  font-size: 0.8rem;
+}
+
+.critique-meta i {
+  font-size: 0.75rem;
+  margin-right: 2px;
+}
+
+.critique-actions {
+  flex-shrink: 0;
+}
+
+.critique-content {
+  line-height: 1.6;
+}
+
+.critique-footer {
+  border-top: 1px solid #f1f3f4;
+  padding-top: 12px;
+}
+
+.post-reference a {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.post-reference a:hover {
+  text-decoration: underline;
+}
+
+.rating-display .badge {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+}
+
+/* Enhanced empty state */
+.empty-state {
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+/* Enhanced page header */
+.page-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Collapse icon animation */
+.collapse-icon {
+  transition: transform 0.3s ease;
+}
+
+[aria-expanded="true"] .collapse-icon {
+  transform: rotate(180deg);
+}
+
+/* Enhanced star rating */
+.star-rating-item:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(255, 193, 7, 0.4));
+}
+
+.star-rating-item.text-warning {
+  color: #ffc107 !important;
+  filter: drop-shadow(0 1px 2px rgba(255, 193, 7, 0.3));
+}
+
+/* Rating text updates */
+#rating-text {
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* Enhanced buttons */
+.vote-critique-btn {
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.vote-critique-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.user-rating {
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-rating:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Show more/less buttons */
+.show-more-btn,
+.show-less-btn {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 4px 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.show-more-btn:hover,
+.show-less-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4px 8px;
 }
 
 /* Responsive adjustments */
@@ -233,16 +486,105 @@
     font-size: 1.25rem;
   }
   
-  .nav-tabs .nav-link {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
+  .page-header {
+    padding: 15px;
+    text-align: left;
   }
   
-  .critique-item .card-body {
-    padding: 1rem;
+  .period-tabs .nav-link {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .period-tabs .nav-link i {
+    display: none;
+  }
+  
+  .enhanced-critique-card .card-body {
+    padding: 15px;
+  }
+  
+  .critique-header {
+    margin-bottom: 15px;
+  }
+  
+  .user-nickname {
+    font-size: 0.95rem;
+  }
+  
+  .user-details {
+    font-size: 0.8rem;
+  }
+  
+  .critique-actions {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  
+  .critique-actions .dropdown {
+    align-self: flex-end;
   }
   
   .star-rating-item {
     font-size: 1.5rem;
+    margin: 0 2px;
+  }
+  
+  .critique-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .critique-footer .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+  
+  .rating-display {
+    align-self: flex-start;
+  }
+  
+  /* Mobile form improvements */
+  .critique-form-card .card-body,
+  .comment-form-card .card-body {
+    padding: 15px;
+  }
+  
+  .critique-textarea,
+  .comment-textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .mobile-critique-section .card-body {
+    padding: 15px;
+  }
+  
+  .mobile-critique-container {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .period-tabs-container {
+    padding: 6px;
+  }
+  
+  .period-tabs .nav-link {
+    padding: 6px;
+    font-size: 0.75rem;
+  }
+  
+  .enhanced-critique-card .card-body {
+    padding: 12px;
+  }
+  
+  .star-rating-item {
+    font-size: 1.3rem;
+  }
+  
+  .modal-dialog {
+    margin: 10px;
   }
 }

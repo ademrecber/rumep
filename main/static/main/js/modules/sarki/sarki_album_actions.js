@@ -11,7 +11,7 @@ export function initSarkiAlbumActions() {
 
         button.addEventListener('click', async (e) => {
             e.preventDefault(); // Formun varsayılan gönderimini engelle
-            if (!confirm('Ma hûn ji vê albûmê jêbirinê piştrast in?')) return;
+            if (!confirm(window.i18n?.t('sarki.confirm_delete_album') || 'Bu albümü silmek istediğinizden emin misiniz?')) return;
             const albumId = form.getAttribute('data-album-id');
             try {
                 const response = await fetch(`/sarki/album-sil/${albumId}/`, {
@@ -26,11 +26,11 @@ export function initSarkiAlbumActions() {
                 if (data.success) {
                     location.reload(); // Sayfayı yenile
                 } else {
-                    alert(data.error || 'Çewtîyek çêbû.');
+                    alert(data.error || (window.i18n?.t('common.error_occurred') || 'Bir hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Albüm silme hatası:', error);
-                alert('Çewtîyek çêbû.');
+                alert(window.i18n?.t('common.error_occurred') || 'Bir hata oluştu.');
             }
         });
     });
@@ -69,11 +69,11 @@ export function initSarkiAlbumActions() {
                     const modal = new bootstrap.Modal(document.getElementById('albumDegistirModal'));
                     modal.show();
                 } else {
-                    alert(data.error || 'Agahiyên albûmê nehatin wergirtin.');
+                    alert(data.error || (window.i18n?.t('sarki.album_info_error') || 'Albüm bilgileri alınamadı.'));
                 }
             } catch (error) {
                 console.error('Albüm bilgileri alma hatası:', error);
-                alert('Çewtîyek çêbû.');
+                alert(window.i18n?.t('common.error_occurred') || 'Bir hata oluştu.');
             }
         });
     });
@@ -97,11 +97,11 @@ export function initSarkiAlbumActions() {
             if (data.success) {
                 location.reload(); // Sayfayı yenile
             } else {
-                alert(data.error || 'Albûm nehat guherandin.');
+                alert(data.error || (window.i18n?.t('sarki.album_change_error') || 'Albüm değiştirilemedi.'));
             }
         } catch (error) {
             console.error('Albüm değiştirme hatası:', error);
-            alert('Çewtîyek çêbû.');
+            alert(window.i18n?.t('common.error_occurred') || 'Bir hata oluştu.');
         }
     });
 }

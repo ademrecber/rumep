@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Gotinên Stranan - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Şarkı Sözleri" %} - Rumep{% endblock %}
+{% block page_header %}{% trans "Şarkı Sözleri" %}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -9,12 +11,12 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-music-note-list me-3"></i>Gotinên Stranan
+                        <i class="bi bi-music-note-list me-3"></i>{% trans "Şarkı Sözleri" %}
                     </h1>
-                    <p class="lead mb-4">Gotinên stranên Kurdî keşf bikin, stranên nû lê zêde bikin</p>
+                    <p class="lead mb-4">{% trans "Kürt şarkı sözlerini keşfedin, yeni şarkılar ekleyin" %}</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'sarki_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Strana Nû Lê Zêde Bike
+                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Şarkı Ekle" %}
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
                             <i class="bi bi-search me-2"></i>Stranê Lêbigere
@@ -24,7 +26,7 @@
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kisi_gruplari|length|default:"0" }}</h3>
-                        <p class="mb-0">Hejmara Hunermendan</p>
+                        <p class="mb-0">{% trans "Sanatçı Sayısı" %}</p>
                     </div>
                 </div>
             </div>
@@ -69,7 +71,7 @@
                     <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <a href="{% url 'sarki_sozleri' %}" 
                            class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           Hemû
+                           {% trans "Tümü" %}
                         </a>
                         {% for harf in harfler %}
                             <a href="?harf={{ harf }}" 
@@ -86,7 +88,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="mb-0">
-                        <i class="bi bi-people me-2"></i>Hunermend
+                        <i class="bi bi-people me-2"></i>{% trans "Sanatçılar" %}
                         <span class="badge bg-primary ms-2">{{ kisi_gruplari|length|default:"0" }}</span>
                     </h5>
                 </div>
@@ -137,7 +139,7 @@
                         {% empty %}
                             <div class="empty-state text-center py-5">
                                 <i class="bi bi-music-note-list display-1 text-muted mb-3"></i>
-                                <h4 class="text-muted">Hêj stran nehatiye zêdekirin</h4>
+                                <h4 class="text-muted">{% trans "Henüz şarkı eklenmemiş" %}</h4>
                                 <p class="text-muted mb-4">Bi vê tîpê dest pê dikin hunermend nehat dîtin.</p>
                                 <a href="{% url 'sarki_ekle' %}" class="btn btn-primary">
                                     <i class="bi bi-plus-circle me-2"></i>Stran Lê Zêde Bike
@@ -180,5 +182,4 @@
         console.log('Çewtiya barkirina modûlê:', error);
     }
 </script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
 {% endblock %}

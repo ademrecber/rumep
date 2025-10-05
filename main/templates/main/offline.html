@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'tr' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Offline" %} - Rumep</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .offline-container {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        p {
+            margin: 0 0 30px 0;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .tips h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+        }
+        .tips ul {
+            margin: 0;
+            padding-left: 20px;
+            text-align: left;
+        }
+        .tips li {
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <h1>{% trans "İnternet Bağlantısı Yok" %}</h1>
+        <p>{% trans "Şu anda çevrimdışısınız. İnternet bağlantınızı kontrol edin ve tekrar deneyin." %}</p>
+        
+        <button class="retry-btn" onclick="window.location.reload()">
+            🔄 {% trans "Tekrar Dene" %}
+        </button>
+        
+        <div class="tips">
+            <h3>💡 {% trans "İpuçları" %}</h3>
+            <ul>
+                <li>{% trans "Wi-Fi veya mobil veri bağlantınızı kontrol edin" %}</li>
+                <li>{% trans "Uçak modunu kapatın" %}</li>
+                <li>{% trans "Daha önce ziyaret ettiğiniz sayfalar cache'den yüklenebilir" %}</li>
+                <li>{% trans "İnternet bağlantısı geldiğinde otomatik olarak senkronize olacak" %}</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Auto retry when online
+        window.addEventListener('online', function() {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
+        
+        // Show online/offline status
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                document.querySelector('.retry-btn').style.background = 'rgba(76, 175, 80, 0.8)';
+                document.querySelector('.retry-btn').textContent = '✅ {% trans "Bağlantı Geldi - Yenile" %}';
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+    </script>
+</body>
+</html>

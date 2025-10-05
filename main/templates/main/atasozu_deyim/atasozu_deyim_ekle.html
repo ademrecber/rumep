@@ -1,16 +1,17 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Gotina Pêşiyan an Îdîom Lê Zêde Bike - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Gotina Pêşiyan an Îdîom Lê Zêde Bike" %} - Rumep{% endblock %}
 {% block content %}
 <div class="container twitter-container atasozu-deyim-container">
-    <h3>Gotina Pêşiyan an Îdîom Lê Zêde Bike</h3>
+    <h3>{% trans "Gotina Pêşiyan an Îdîom Lê Zêde Bike" %}</h3>
     <div class="card mb-3">
         <div class="card-body">
             <form id="atasozu-deyim-ekle-form" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
-                <button type="submit" class="btn btn-primary rounded-pill">Lê Zêde Bike</button>
+                <button type="submit" class="btn btn-primary rounded-pill">{% trans "Lê Zêde Bike" %}</button>
             </form>
         </div>
     </div>

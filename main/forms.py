@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comment, Critique, CritiqueVote, Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay, YerAdi, YerAdiDetay
+from .models import Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay, YerAdi, YerAdiDetay, Topic, Entry, Category, Profile
 import bleach
 import re
 from django.utils.translation import gettext_lazy as _
@@ -7,64 +7,87 @@ from django.utils.translation import gettext_lazy as _
 
 
 def clean_form_text(text, allowed_tags=['p', 'b', 'i']):
-    """Fonksiyona paqijkirina nivîsê ya hevpar."""
+    """Ortak metin temizleme fonksiyonu."""
     if not text.strip():
-        raise forms.ValidationError("Ev qad nikare vala be.")
+        raise forms.ValidationError(_("Bu alan boş olamaz."))
     return bleach.clean(text, tags=allowed_tags, strip=False)
 
-class PostForm(forms.ModelForm):
-    link = forms.URLField(required=False)
-
+class TopicForm(forms.ModelForm):
+    categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all().order_by('name'),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=False,
+        help_text=_('En fazla 3 kategori seçebilirsiniz.')
+    )
+    
     class Meta:
-        model = Post
-        fields = ['title', 'text', 'link']
+        model = Topic
+        fields = ['title', 'categories']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sernavê Nirxandinê'}),
-            'text': forms.Textarea(attrs={'class': 'form-control border-0 auto-grow', 'placeholder': 'Nirxandinekê parve bike...'}),
-            'link': forms.URLInput(attrs={'class': 'form-control border-0 mt-2', 'placeholder': 'Girêdanê lê zêde bike (bijarte)'})
+            'title': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': _('Başlık başlığını girin...'),
+                'maxlength': 200,
+                'id': 'id_title'
+            })
         }
+    
+    def clean_categories(self):
+        categories = self.cleaned_data.get('categories')
+        if categories and len(categories) > 3:
+            raise forms.ValidationError(_('En fazla 3 kategori seçebilirsiniz.'))
+        return categories
+    
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if not title or not title.strip():
+            raise forms.ValidationError(_('Başlık boş olamaz.'))
+        title = title.strip()
+        if len(title) < 3:
+            raise forms.ValidationError(_('Başlık en az 3 karakter olmalıdır.'))
+        
+        # Tüm Unicode harfler, sayılar ve boşluk kontrolü
+        invalid_chars = [c for c in title if not (c.isalnum() or c.isspace())]
+        if invalid_chars:
+            raise forms.ValidationError(_('Başlık sadece harf ve sayı içerebilir. Geçersiz karakterler: {}').format(''.join(set(invalid_chars))))
+        
+        if Topic.objects.filter(title__iexact=title).exists():
+            raise forms.ValidationError(_('Bu başlık zaten mevcut.'))
+        return title
 
-    def clean_text(self):
-        return clean_form_text(self.cleaned_data['text'], allowed_tags=['p', 'br', 'img'])
-
-class CommentForm(forms.ModelForm):
+class EntryForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        fields = ['text']
+        model = Entry
+        fields = ['content', 'link']
         widgets = {
-            'text': forms.Textarea(attrs={'class': 'form-control border-0 auto-grow', 'placeholder': 'Şîrove bike...', 'maxlength': 500})
+            'content': forms.Textarea(attrs={
+                'class': 'form-control border-0 auto-grow', 
+                'placeholder': _('Entry\'nizi yazın...'),
+                'maxlength': 10000,
+                'rows': 4,
+                'id': 'id_content'
+            }),
+            'link': forms.URLInput(attrs={
+                'class': 'form-control mt-2',
+                'placeholder': _('Bağlantı (isteğe bağlı)'),
+                'id': 'id_link'
+            })
         }
+    
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        if not content or not content.strip():
+            raise forms.ValidationError(_('Entry içeriği boş olamaz.'))
+        content = content.strip()
+        if len(content) < 10:
+            raise forms.ValidationError(_('Entry en az 10 karakter olmalıdır.'))
+        return clean_form_text(content, allowed_tags=['p', 'br', 'b', 'i', 'strong', 'em'])
 
-    def clean_text(self):
-        text = clean_form_text(self.cleaned_data['text'])
-        if len(text) > 500:
-            raise forms.ValidationError("Şîrove nikare ji 500 tîpan dirêjtir be.")
-        return text
 
-class CritiqueForm(forms.ModelForm):
-    class Meta:
-        model = Critique
-        fields = ['text']
-        widgets = {
-            'text': forms.Textarea(attrs={'class': 'form-control border-0 auto-grow', 'placeholder': 'Nirxandina xwe binivîse...', 'maxlength': 5000})
-        }
-
-    def clean_text(self):
-        text = clean_form_text(self.cleaned_data['text'], allowed_tags=['p', 'b', 'i', 'img'])
-        if len(text) > 5000:
-            raise forms.ValidationError("Nirxandin nikare ji 5000 tîpan dirêjtir be.")
-        return text
-
-class CritiqueVoteForm(forms.ModelForm):
-    rating = forms.IntegerField(min_value=1, max_value=10)
-
-    class Meta:
-        model = CritiqueVote
-        fields = ['rating']
 
 class SozlukForm(forms.ModelForm):
     tur = forms.ChoiceField(
-        choices=[('', 'Hilbijêre'), ('isim', 'Nav'), ('fiil', 'Lêker'), ('sifat', 'Sifet'), ('zarf', 'Zarf')],
+        choices=[('', _('Seçiniz')), ('isim', _('İsim')), ('fiil', _('Fiil')), ('sifat', _('Sıfat')), ('zarf', _('Zarf'))],
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -73,19 +96,19 @@ class SozlukForm(forms.ModelForm):
         model = Sozluk
         fields = ['kelime', 'detay', 'tur']
         widgets = {
-            'kelime': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Peyvê binivîse', 'required': True}),
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên peyvê binivîse', 'rows': 4, 'required': True}),
+            'kelime': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kelimeyi yazın'), 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Kelimenin detaylarını yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_kelime(self):
         kelime = self.cleaned_data.get('kelime')
         if not kelime.strip():
-            raise forms.ValidationError('Qada peyvê mecbûrî ye.')
+            raise forms.ValidationError(_('Kelime alanı zorunludur.'))
         if self.instance and self.instance.pk:
             if kelime.lower() == self.instance.kelime.lower():
                 return kelime
         if Sozluk.objects.filter(kelime__iexact=kelime).exists():
-            raise forms.ValidationError('Ev peyv jixwe di ferhengê de heye, ji kerema xwe peyveke cuda binivîse.')
+            raise forms.ValidationError(_('Bu kelime zaten sözlükte mevcut, lütfen farklı bir kelime yazın.'))
         return kelime
 
 class SozlukDetayForm(forms.ModelForm):
@@ -93,13 +116,13 @@ class SozlukDetayForm(forms.ModelForm):
         model = SozlukDetay
         fields = ['detay']
         widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên zêde binivîse', 'rows': 4, 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Ek detayları yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_detay(self):
         detay = self.cleaned_data.get('detay')
         if not detay.strip():
-            raise forms.ValidationError('Qada kîtekîtê mecbûrî ye.')
+            raise forms.ValidationError(_('Detay alanı zorunludur.'))
         return detay
 
 class SarkiDetayForm(forms.ModelForm):
@@ -107,13 +130,13 @@ class SarkiDetayForm(forms.ModelForm):
         model = SarkiDetay
         fields = ['detay']
         widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên zêde binivîse', 'rows': 4, 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Ek detayları yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_detay(self):
         detay = self.cleaned_data.get('detay')
         if not detay.strip():
-            raise forms.ValidationError('Qada kîtekîtê mecbûrî ye.')
+            raise forms.ValidationError(_('Detay alanı zorunludur.'))
         return detay
 
 class KisiForm(forms.ModelForm):
@@ -121,7 +144,7 @@ class KisiForm(forms.ModelForm):
         model = Kisi
         fields = ['ad', 'biyografi', 'kategoriler']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê kesê binivîse', 'required': True}),
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kişinin adını yazın'), 'required': True}),
             'biyografi': forms.Textarea(attrs={'class': 'form-control d-none', 'id': 'biyografi-hidden', 'required': True}),
             'kategoriler': forms.SelectMultiple(attrs={'class': 'form-control select2', 'required': True}),
         }
@@ -129,13 +152,13 @@ class KisiForm(forms.ModelForm):
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
-            raise forms.ValidationError('Qada navê mecbûrî ye.')
+            raise forms.ValidationError(_('Ad alanı zorunludur.'))
         return ad
 
     def clean_biyografi(self):
         biyografi = self.cleaned_data.get('biyografi')
         if not biyografi.strip():
-            raise forms.ValidationError('Qada biyografiyê mecbûrî ye.')
+            raise forms.ValidationError(_('Biyografi alanı zorunludur.'))
         return biyografi
     
 class KisiDetayForm(forms.ModelForm):
@@ -143,35 +166,35 @@ class KisiDetayForm(forms.ModelForm):
         model = KisiDetay
         fields = ['detay']
         widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên zêde binivîse', 'rows': 4, 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Ek detayları yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_detay(self):
         detay = self.cleaned_data.get('detay')
         if not detay.strip():
-            raise forms.ValidationError('Qada kîtekîtê mecbûrî ye.')
+            raise forms.ValidationError(_('Detay alanı zorunludur.'))
         return bleach.clean(detay, tags=['p', 'br', 'strong', 'em', 'ul', 'ol', 'li'], strip=True)  
 
 class AlbumForm(forms.ModelForm):
-    yil = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sala albûmê (bijarte)'}))
+    yil = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': _('Albüm yılı (isteğe bağlı)')}))
 
     class Meta:
         model = Album
-        fields = ['ad', 'yil']  # 'tur' alanı kaldırıldı
+        fields = ['ad', 'yil']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê albûmê binivîse', 'required': True}),
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Albüm adını yazın'), 'required': True}),
         }
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
-            raise forms.ValidationError('Navê albûmê mecbûrî ye.')
+            raise forms.ValidationError(_('Albüm adı zorunludur.'))
         return ad
 
 class SarkiForm(forms.ModelForm):
     link = forms.URLField(required=False)
     tur = forms.ChoiceField(
-        choices=[('', 'Cure Hilbijêre')] + Sarki._meta.get_field('tur').choices,
+        choices=[('', _('Tür Seçin'))] + Sarki._meta.get_field('tur').choices,
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -181,9 +204,9 @@ class SarkiForm(forms.ModelForm):
         fields = ['album', 'ad', 'sozler', 'link', 'tur']
         widgets = {
             'album': forms.Select(attrs={'class': 'form-control', 'required': True}),
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê stranê binivîse', 'required': True}),
-            'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Gotinên stranê binivîse', 'rows': 6, 'required': True}),
-            'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Girêdana stranê (bijarte)'})
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı adını yazın'), 'required': True}),
+            'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Şarkı sözlerini yazın'), 'rows': 6, 'required': True}),
+            'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı bağlantısı (isteğe bağlı)')})
         }
     
     def __init__(self, *args, **kwargs):
@@ -198,43 +221,43 @@ class SarkiForm(forms.ModelForm):
         album = cleaned_data.get('album')
         sozler = cleaned_data.get('sozler')
         if not ad or not ad.strip():
-            raise forms.ValidationError('Navê stranê mecbûrî ye.')
+            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
         if not album:
-            raise forms.ValidationError('Hilbijartina albûmê mecbûrî ye.')
+            raise forms.ValidationError(_('Albüm seçimi zorunludur.'))
         if not sozler or not sozler.strip():
-            raise forms.ValidationError('Gotinên stranê mecbûrî ne.')
+            raise forms.ValidationError(_('Şarkı sözleri zorunludur.'))
         if album:
             existing_songs = Sarki.objects.filter(album=album, ad__iexact=ad)
             if self.instance and self.instance.pk:
                 existing_songs = existing_songs.exclude(pk=self.instance.pk)
             if existing_songs.exists():
-                raise forms.ValidationError('Di vê albûmê de jixwe stranek bi heman navî heye.')
+                raise forms.ValidationError(_('Bu albümde aynı isimde bir şarkı zaten mevcut.'))
         return cleaned_data
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
-            raise forms.ValidationError('Navê stranê mecbûrî ye.')
+            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
         return ad
 
     def clean_album(self):
         album = self.cleaned_data.get('album')
         if not album:
-            raise forms.ValidationError('Hilbijartina albûmê mecbûrî ye.')
+            raise forms.ValidationError(_('Albüm seçimi zorunludur.'))
         return album
 
     def clean_sozler(self):
         sozler = self.cleaned_data.get('sozler')
         if not sozler.strip():
-            raise forms.ValidationError('Gotinên stranê mecbûrî ne.')
+            raise forms.ValidationError(_('Şarkı sözleri zorunludur.'))
         if len(sozler) > 5000:
-            raise forms.ValidationError('Gotinên stranê nikarin ji 5000 tîpan dirêjtir bin.')
+            raise forms.ValidationError(_('Şarkı sözleri 5000 karakterden uzun olamaz.'))
         return sozler
 
 class SarkiDuzenleForm(forms.ModelForm):
     link = forms.URLField(required=False)
     tur = forms.ChoiceField(
-        choices=[('', 'Cure Hilbijêre')] + Sarki._meta.get_field('tur').choices,
+        choices=[('', _('Tür Seçin'))] + Sarki._meta.get_field('tur').choices,
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -243,63 +266,62 @@ class SarkiDuzenleForm(forms.ModelForm):
         model = Sarki
         fields = ['ad', 'sozler', 'link', 'tur']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê stranê binivîse', 'required': True}),
-            'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Gotinên stranê binivîse', 'rows': 6, 'required': True}),
-            'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Girêdana stranê (bijarte)'})
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı adını yazın'), 'required': True}),
+            'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Şarkı sözlerini yazın'), 'rows': 6, 'required': True}),
+            'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı bağlantısı (isteğe bağlı)')})
         }
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
-            raise forms.ValidationError('Navê stranê mecbûrî ye.')
+            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
         if self.instance and self.instance.album:
             existing_songs = Sarki.objects.filter(album=self.instance.album, ad__iexact=ad)
             if self.instance.pk:
                 existing_songs = existing_songs.exclude(pk=self.instance.pk)
             if existing_songs.exists():
-                raise forms.ValidationError('Di vê albûmê de jixwe stranek bi heman navî heye.')
+                raise forms.ValidationError(_('Bu albümde aynı isimde bir şarkı zaten mevcut.'))
         return ad
 
     def clean_sozler(self):
         sozler = self.cleaned_data.get('sozler')
         if not sozler.strip():
-            raise forms.ValidationError('Gotinên stranê mecbûrî ne.')
+            raise forms.ValidationError(_('Şarkı sözleri zorunludur.'))
         return sozler
         
     
 class AtasozuDeyimForm(forms.Form):
     tur = forms.ChoiceField(
-        choices=[('atasozu', 'Gotina Pêşiyan'), ('deyim', 'Îdîom')],
+        choices=[('atasozu', _('Atasözü')), ('deyim', _('Deyim'))],
         widget=forms.Select(attrs={'class': 'form-control', 'required': True}),
-        label='Cure'
+        label=_('Tür')
     )
     kelime = forms.CharField(
-        max_length=500,  # max_length models.py ile uyumlu hale getirildi
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gotina pêşiyan an îdîomê binivîse', 'required': True}),
-        label='Gotina Pêşiyan/Îdîom'
+        max_length=500,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Atasözü veya deyimi yazın'), 'required': True}),
+        label=_('Atasözü/Deyim')
     )
     anlami = forms.CharField(
         max_length=500,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Wateyê binivîse', 'rows': 4, 'required': True}),
-        label='Wate'
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Anlamı yazın'), 'rows': 4, 'required': True}),
+        label=_('Anlam')
     )
     ornek = forms.CharField(
         max_length=500,
         required=False,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Bikaranîna mînak (bijarte)', 'rows': 4}),
-        label='Mînak'
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Örnek kullanım (isteğe bağlı)'), 'rows': 4}),
+        label=_('Örnek')
     )
 
     def clean_kelime(self):
         kelime = self.cleaned_data.get('kelime')
         if not kelime.strip():
-            raise forms.ValidationError('Qada Gotina Pêşiyan/Îdîom mecbûrî ye.')
-        # Katı harf kontrolünü kaldırdık, yalnızca var olan kayıt kontrolü yapıyoruz
+            raise forms.ValidationError(_('Atasözü/Deyim alanı zorunludur.'))
         tur = self.cleaned_data.get('tur')
         if tur == 'atasozu' and Atasozu.objects.filter(kelime__iexact=kelime).exists():
-            raise forms.ValidationError('Ev gotina pêşiyan jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+            raise forms.ValidationError(_('Bu atasözü zaten mevcut, lütfen farklı bir ifade yazın.'))
         if tur == 'deyim' and Deyim.objects.filter(kelime__iexact=kelime).exists():
-            raise forms.ValidationError('Ev îdîom jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+            raise forms.ValidationError(_('Bu deyim zaten mevcut, lütfen farklı bir ifade yazın.'))
         return kelime
 
     def clean_anlami(self):
@@ -316,24 +338,24 @@ class AtasozuDeyimAramaForm(forms.Form):
     query = forms.CharField(
         max_length=100,
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Peyv an wateyê lêbigere...'}),
-        label='Lêgerîn'
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kelime veya anlamı arayın...')}),
+        label=_('Arama')
     )
     tarih_baslangic = forms.DateField(
         required=False,
         widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-        label='Dîroka Destpêkê'
+        label=_('Başlangıç Tarihi')
     )
     tarih_bitis = forms.DateField(
         required=False,
         widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-        label='Dîroka Dawiyê'
+        label=_('Bitiş Tarihi')
     )
     kullanici = forms.CharField(
         max_length=30,
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Bikarhênerê zêdeker...'}),
-        label='Bikarhênerê Zêdeker'
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Ekleyen kullanıcı...')}),
+        label=_('Ekleyen Kullanıcı')
     )
 
     def clean_query(self):
@@ -349,31 +371,31 @@ class AtasozuDeyimDetayForm(forms.ModelForm):
         model = AtasozuDeyimDetay
         fields = ['detay']
         widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên zêde binivîse', 'rows': 4, 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Ek detayları yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_detay(self):
         detay = self.cleaned_data.get('detay')
         if not detay.strip():
-            raise forms.ValidationError('Qada kîtekîtê mecbûrî ye.')
+            raise forms.ValidationError(_('Detay alanı zorunludur.'))
         return bleach.clean(detay, tags=['p', 'b', 'i'], strip=True)
 
 class AtasozuDeyimDuzenleForm(forms.Form):
     kelime = forms.CharField(
-        max_length=500,  # max_length models.py ile uyumlu hale getirildi
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gotina pêşiyan an îdîomê binivîse', 'required': True}),
-        label='Gotina Pêşiyan/Îdîom'
+        max_length=500,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Atasözü veya deyimi yazın'), 'required': True}),
+        label=_('Atasözü/Deyim')
     )
     anlami = forms.CharField(
         max_length=500,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Wateyê binivîse', 'rows': 4, 'required': True}),
-        label='Wate'
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Anlamı yazın'), 'rows': 4, 'required': True}),
+        label=_('Anlam')
     )
     ornek = forms.CharField(
         max_length=500,
         required=False,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Bikaranîna mînak (bijarte)', 'rows': 4}),
-        label='Mînak'
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Örnek kullanım (isteğe bağlı)'), 'rows': 4}),
+        label=_('Örnek')
     )
 
     def __init__(self, *args, **kwargs):
@@ -387,20 +409,18 @@ class AtasozuDeyimDuzenleForm(forms.Form):
     def clean_kelime(self):
         kelime = self.cleaned_data.get('kelime')
         if not kelime.strip():
-            raise forms.ValidationError('Qada Gotina Pêşiyan/Îdîom mecbûrî ye.')
-        # Katı harf kontrolünü kaldırdık, yalnızca var olan kayıt kontrolü yapıyoruz
+            raise forms.ValidationError(_('Atasözü/Deyim alanı zorunludur.'))
         kelime = kelime.upper()
-        # Mevcut instance’ın kendi kelimesi hariç kontrol
         if self.instance:
             if Atasozu.objects.filter(kelime__iexact=kelime).exclude(id=self.instance.id).exists():
-                raise forms.ValidationError('Ev gotina pêşiyan jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+                raise forms.ValidationError(_('Bu atasözü zaten mevcut, lütfen farklı bir ifade yazın.'))
             if Deyim.objects.filter(kelime__iexact=kelime).exclude(id=self.instance.id).exists():
-                raise forms.ValidationError('Ev îdîom jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+                raise forms.ValidationError(_('Bu deyim zaten mevcut, lütfen farklı bir ifade yazın.'))
         else:
             if Atasozu.objects.filter(kelime__iexact=kelime).exists():
-                raise forms.ValidationError('Ev gotina pêşiyan jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+                raise forms.ValidationError(_('Bu atasözü zaten mevcut, lütfen farklı bir ifade yazın.'))
             if Deyim.objects.filter(kelime__iexact=kelime).exists():
-                raise forms.ValidationError('Ev îdîom jixwe heye, ji kerema xwe îfadeyeke cuda binivîse.')
+                raise forms.ValidationError(_('Bu deyim zaten mevcut, lütfen farklı bir ifade yazın.'))
         return kelime
 
     def clean_anlami(self):
@@ -419,30 +439,29 @@ class YerAdiForm(forms.ModelForm):
         model = YerAdi
         fields = ['ad', 'detay', 'kategori', 'bolge', 'enlem', 'boylam', 'parent']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Navê cihê binivîse', 'required': True}),
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Derbarê cihê de kîtekît binivîse', 'rows': 4}),
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Yer adını yazın'), 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Yer hakkında detay yazın'), 'rows': 4}),
             'kategori': forms.Select(attrs={'class': 'form-control', 'required': True, 'onchange': 'toggleParentField()'}),
             'bolge': forms.Select(attrs={'class': 'form-control', 'required': True}),
-            'enlem': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enlem (mînak: 37.7749)', 'step': 'any'}),
-            'boylam': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Boylam (mînak: 40.7128)', 'step': 'any'}),
+            'enlem': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': _('Enlem (örnek: 37.7749)'), 'step': 'any'}),
+            'boylam': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': _('Boylam (örnek: 40.7128)'), 'step': 'any'}),
             'parent': forms.Select(attrs={'class': 'form-control', 'id': 'id_parent'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Parent seçimini dinamik olarak JavaScript yönetecek
         self.fields['parent'].queryset = YerAdi.objects.all().order_by('ad')
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
         if not ad.strip():
-            raise forms.ValidationError('Qada navê cihê mecbûrî ye.')
+            raise forms.ValidationError(_('Yer adı alanı zorunludur.'))
         if not re.match(r'^[a-zçêîşû\s]+$', ad.lower()):
-            raise forms.ValidationError('Navê cihê tenê tîpên Kurdî dikare bigire (a-z, ç, ê, î, ş, û û valahî).')
+            raise forms.ValidationError(_('Yer adı sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk).'))
         ad_upper = ad.upper()
         if YerAdi.objects.filter(ad__iexact=ad_upper).exclude(pk=self.instance.pk if self.instance else None).exists():
             if not self.data.get('confirm_duplicate'):
-                raise forms.ValidationError('Ev navê cihê jixwe heye, ma hûn dixwazin berdewam bikin?', code='duplicate')
+                raise forms.ValidationError(_('Bu yer adı zaten mevcut, devam etmek istiyor musunuz?'), code='duplicate')
         return ad_upper
 
     def clean(self):
@@ -452,16 +471,16 @@ class YerAdiForm(forms.ModelForm):
         kategori = cleaned_data.get('kategori')
         parent = cleaned_data.get('parent')
         if (enlem is not None and boylam is None) or (enlem is None and boylam is not None):
-            raise forms.ValidationError('Enlem û boylam divê bi hev re bên nivîsandin.')
+            raise forms.ValidationError(_('Enlem ve boylam birlikte yazılmalıdır.'))
         if kategori != 'il' and not parent:
-            raise forms.ValidationError({'parent': 'Ji bo kategoriyên derveyî bajêr divê cihê têkildar bê hilbijartin.'})
+            raise forms.ValidationError({'parent': _('Şehir dışındaki kategoriler için ilgili yer seçilmelidir.')})
         if kategori == 'il' and parent:
-            raise forms.ValidationError({'parent': 'Ji bo kategoriya bajêr cihê têkildar nayê hilbijartin.'})
+            raise forms.ValidationError({'parent': _('Şehir kategorisi için ilgili yer seçilmez.')})
         if parent:
             if kategori == 'ilce' and parent.kategori != 'il':
-                raise forms.ValidationError({'parent': 'Navçe tenê dikare bi bajarekê ve bê girêdan.'})
+                raise forms.ValidationError({'parent': _('İlçe sadece bir şehirle bağlantılı olabilir.')})
             if kategori in ['kasaba', 'belde', 'koy'] and parent.kategori not in ['il', 'ilce']:
-                raise forms.ValidationError({'parent': 'Qesebe, belde an gund tenê dikarin bi bajêr an navçeyê ve bên girêdan.'})
+                raise forms.ValidationError({'parent': _('Kasaba, belde veya köy sadece şehir veya ilçe ile bağlantılı olabilir.')})
         return cleaned_data
 
 class YerAdiDetayForm(forms.ModelForm):
@@ -469,11 +488,11 @@ class YerAdiDetayForm(forms.ModelForm):
         model = YerAdiDetay
         fields = ['detay']
         widgets = {
-            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Kîtekîtên zêde binivîse', 'rows': 4, 'required': True}),
+            'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Ek detayları yazın'), 'rows': 4, 'required': True}),
         }
 
     def clean_detay(self):
         detay = self.cleaned_data.get('detay')
         if not detay.strip():
-            raise forms.ValidationError('Qada kîtekîtê mecbûrî ye.')
+            raise forms.ValidationError(_('Detay alanı zorunludur.'))
         return detay

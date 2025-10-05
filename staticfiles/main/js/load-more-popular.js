@@ -74,37 +74,37 @@ async function loadMorePopularPosts() {
                                 <ul class="dropdown-menu">
                                     ${isOwner ? `
                                         <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
+                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Ma tu bawer î ku dixwazî vê postê jê bibî?');">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
+                                                <button type="submit" class="dropdown-item text-danger">Jê bibe</button>
                                             </form>
                                         </li>
                                     ` : ''}
                                     <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Yer işaretinden kaldırmak' : 'Yer işaretine eklemek'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
+                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Ji nîşankirina cîhê derxistin' : 'Têxe nîşankirina cîhê'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
                                             <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle'}</button>
+                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Ji Nîşankirina Cîhê Derxîne' : 'Têxe Nîşankirina Cîhê'}</button>
                                         </form>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Bağlantıyı Kopyala</button>
+                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Girêdanê Kopî Bike</button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <h5>${post.title || 'Başlıksız'}</h5>
+                        <h5>${post.title || ''}</h5>
                         <div class="post-text">
                             ${processedText.length > 400 || totalLines > 15 ? `
                                 <div class="text-preview"><p>${processedText.substring(0, 100)}</p></div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Devamını gör</button>
+                                <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
                                 <div class="full-text d-none"><p>${processedText}</p></div>
                             ` : `<p>${processedText}</p>`}
                         </div>
                         ${post.link ? `<a href="${post.link}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
                         ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
                         <div class="post-meta text-muted mt-2">
-                            <span>Beğeni: ${post.like_count}</span> | 
-                            <span>Yorum: ${post.comment_count}</span> | 
+                            <span>Ecibandin: ${post.like_count}</span> | 
+                            <span>Şîrove: ${post.comment_count}</span> | 
                             <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
                             <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
                         </div>
@@ -126,7 +126,7 @@ async function loadMorePopularPosts() {
                                 <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
                             </form>
                             <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">Skor: ${post.total_score.toFixed(1)}</span>` : ''}
+                            ${post.total_score ? `<span class="text-muted ms-2">Pûan: ${post.total_score.toFixed(1)}</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -156,7 +156,7 @@ async function loadMorePopularPosts() {
     } catch (error) {
         console.error('Hata:', error);
         if (errorMessage) {
-            errorMessage.textContent = 'Postlar yüklenirken hata oluştu: ' + error.message;
+            errorMessage.textContent = 'Di dema barkirina postan de çewtiyek çêbû: ' + error.message;
             errorMessage.style.display = 'block';
         }
         if (loadMoreBtn) loadMoreBtn.style.display = 'block';
@@ -214,7 +214,7 @@ function initBookmarks() {
                     
                     const button = this.querySelector('.bookmark-btn');
                     if (button) {
-                        button.textContent = data.bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle';
+                        button.textContent = data.bookmarked ? 'Ji Nîşankirina Cîhê Derxîne' : 'Têxe Nîşankirina Cîhê';
                         button.dataset.bookmarked = data.bookmarked ? 'true' : 'false';
                         console.log("Yer işareti butonu güncellendi:", button.textContent, "Bookmarked:", data.bookmarked);
                         if (isBookmarksTab) {

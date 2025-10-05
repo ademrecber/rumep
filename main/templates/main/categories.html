@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load category_tags %}
+
+{% block title %}{% trans "Kategoriler" %}{% endblock %}
+
+{% block page_header %}{% trans "Kategoriler" %}{% endblock %}
+
+{% block content %}
+<div class="categories-content">
+    <div class="mb-4">
+        <p class="text-muted">{% trans "İlgilendiğiniz konulara göz atın" %}</p>
+    </div>
+    
+    <div class="categories-list">
+        {% for category in categories %}
+        <a href="{% url 'category_detail' category.slug %}" class="category-item">
+            <div class="category-info">
+                <span class="category-name">#{{ category.name|translate_category }}</span>
+                <span class="topic-count">{{ category.topic_count }}</span>
+            </div>
+        </a>
+        {% empty %}
+        <p class="text-muted text-center py-4">{% trans "Henüz kategori eklenmemiş." %}</p>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.category-item {
+    display: block;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.category-item:hover {
+    background: rgba(102, 126, 234, 0.05);
+    border-left: 3px solid #667eea;
+    padding-left: 17px;
+}
+
+.category-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-name {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.topic-count {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    min-width: 24px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .category-item {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+    }
+    
+    .category-item:hover {
+        padding-left: 13px;
+    }
+    
+    .category-name {
+        font-size: 0.95rem;
+    }
+    
+    .topic-count {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+    }
+}
+</style>
+{% endblock %}

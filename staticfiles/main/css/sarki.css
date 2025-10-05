@@ -1,65 +1,443 @@
+/* ŞARKI SÖZLERİ SAYFALARI */
+
+/* Genel metin renkleri */
+.card-title {
+    color: #0f1419 !important;
+}
+
+.form-label {
+    color: #0f1419 !important;
+}
+
+.text-primary {
+    color: #1da1f2 !important;
+}
+
+.text-muted {
+    color: #657786 !important;
+}
+
+.btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+/* Hero section renkleri */
+.hero-section .text-white {
+    color: #ffffff !important;
+}
+
+.hero-section h1 {
+    color: #ffffff !important;
+}
+
+.hero-section p {
+    color: #ffffff !important;
+}
+
+.hero-section .lead {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card h3 {
+    color: #ffffff !important;
+}
+
+.hero-section .stats-card p {
+    color: #ffffff !important;
+}
+
+.hero-section.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
 .sarki-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sarki-container h1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sarki-container h2 {
+    color: #0f1419;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #1da1f2;
+    padding-bottom: 5px;
+}
+
+/* Metin renkleri düzeltmesi */
+.sarki-container .card-title {
+    color: #0f1419 !important;
+}
+
+.sarki-container .form-label {
+    color: #0f1419 !important;
+}
+
+.sarki-container .text-muted {
+    color: #657786 !important;
+}
+
+.sarki-container .btn-primary {
+    background-color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+    color: #ffffff !important;
+}
+
+/* Harf navigasyonu */
+.harf-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
 }
 
 .sarki-container .btn-outline-primary {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 5px;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid #1da1f2;
+    color: #1da1f2;
+    background-color: #fff;
 }
 
 .sarki-container .btn-outline-primary:hover {
-    background-color: #f8f9fa;
+    background-color: #1da1f2;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+}
+
+.sarki-container .btn-outline-primary.active {
+    background-color: #1da1f2;
+    color: #fff;
+}
+
+/* Sanatçı, albüm ve şarkı öğeleri */
+.kisi-item,
+.album-item,
+.sarki-item {
+    background-color: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .sarki-container .kisi-item:hover,
 .sarki-container .album-item:hover,
 .sarki-container .sarki-item:hover {
     background-color: #f8f9fa;
-    transition: background-color 0.3s;
+    border-color: #1da1f2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.kisi-item h5,
+.album-item h5,
+.sarki-item h5 {
+    color: #1da1f2;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.kisi-item .sanatci-bilgi,
+.album-item .album-bilgi,
+.sarki-item .sarki-bilgi {
+    color: #657786;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.kisi-item .sanatci-bilgi strong,
+.album-item .album-bilgi strong,
+.sarki-item .sarki-bilgi strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Şarkı detay sayfası */
+.sarki-detay-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.sarki-detay-container .sarki-baslik {
+    color: #1da1f2;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.sarki-detay-container .sanatci-album {
+    color: #657786;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #1da1f2;
+    padding-bottom: 15px;
+}
+
+.sarki-detay-container .sozler-kart {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 4px solid #1da1f2;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.sarki-detay-container .sozler-kart .sozler {
+    color: #333;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    white-space: pre-line;
+    text-align: center;
+}
+
+/* Liste stilleri */
 .sarki-container .kisi-list,
 .sarki-container .album-list,
 .sarki-container .sarki-list {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .sarki-container .kisi-list h6,
 .sarki-container .album-list h6,
 .sarki-container .sarki-list h6 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #1da1f2;
+    padding-bottom: 8px;
 }
 
 .sarki-container .kisi-list ul,
 .sarki-container .album-list ul,
 .sarki-container .sarki-list ul {
-    padding-left: 20px;
+    padding-left: 0;
+    list-style: none;
 }
 
 .sarki-container .kisi-list li,
 .sarki-container .album-list li,
 .sarki-container .sarki-list li {
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #1da1f2;
+    transition: all 0.3s ease;
+}
+
+.sarki-container .kisi-list li:hover,
+.sarki-container .album-list li:hover,
+.sarki-container .sarki-list li:hover {
+    background-color: #e8f5fd;
+    transform: translateX(5px);
+}
+
+.sarki-container .kisi-list li a,
+.sarki-container .album-list li a,
+.sarki-container .sarki-list li a {
+    color: #1da1f2;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.sarki-container .kisi-list li a:hover,
+.sarki-container .album-list li a:hover,
+.sarki-container .sarki-list li a:hover {
+    color: #1991db;
+    text-decoration: underline;
+}
+
+/* Form stilleri */
+.sarki-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.sarki-form-container h2 {
+    color: #1da1f2;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.sarki-form-container .form-group {
+    margin-bottom: 20px;
+}
+
+.sarki-form-container label {
+    color: #333;
+    font-weight: 600;
     margin-bottom: 8px;
+    display: block;
+}
+
+.sarki-form-container .form-control {
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.sarki-form-container .form-control:focus {
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
 }
 
 .sarki-container .btn-primary {
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-weight: 500;
+    background-color: #1da1f2;
+    border-color: #1da1f2;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
+.sarki-container .btn-primary:hover {
+    background-color: #1991db;
+    border-color: #1991db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+/* Kart stilleri */
 .sarki-container .card {
+    border-radius: 12px;
+    border: 1px solid #e1e8ed;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.sarki-container .card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.sarki-container .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e1e8ed;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 15px 20px;
+}
+
+.sarki-container .card-body {
+    padding: 20px;
+}
+
+/* Albüm kartı */
+.album-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.album-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.album-card p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .sarki-container,
+    .sarki-detay-container,
+    .sarki-form-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .sarki-container .btn-outline-primary {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .sarki-detay-container .sarki-baslik {
+        font-size: 2rem;
+    }
+    
+    .sarki-detay-container .sozler-kart .sozler {
+        font-size: 1.1rem;
+    }
+}
+
+/* Boş liste mesajı */
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #657786;
+    font-size: 1.2rem;
+    background-color: #f8f9fa;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.empty-message i {
+    font-size: 3rem;
+    color: #1da1f2;
+    margin-bottom: 15px;
+    display: block;
 }

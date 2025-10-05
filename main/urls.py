@@ -1,49 +1,56 @@
 from django.urls import path
 from .views import views
 from .views import popular_views, profile_views
-from .views import post_views
 from .views import account_views
-from .views import home_views
-from .views import ai_views
+from .views import topic_views
+from .views import category_views
+from .views import follow_views
+from .views import hashtag_views
+from .views import bookmark_views
+from .views import search_views
+# from .views import ai_views  # Geçici olarak kapatıldı
 from .views import yer_adlari_views
+from .views import api_views
 
 
 handler404 = 'main.views.custom_404'
 urlpatterns = [
 
-    path('', home_views.home, name='home'),
+    path('', topic_views.home, name='home'),
+    path('create-topic/', topic_views.create_topic, name='create_topic'),
+    path('topic/<slug:slug>/', topic_views.topic_detail, name='topic_detail'),
+    path('topic/<slug:slug>/add-entry/', topic_views.add_entry, name='add_entry'),
+    path('topic/<slug:slug>/vote/', topic_views.vote_topic, name='vote_topic'),
+    path('entry/<int:entry_id>/like/', topic_views.like_entry, name='like_entry'),
+    path('entry/<int:entry_id>/vote/', topic_views.vote_entry, name='vote_entry'),
+    path('topic/<slug:slug>/edit/', topic_views.edit_topic, name='edit_topic'),
+    path('topic/<slug:slug>/delete/', topic_views.delete_topic, name='delete_topic'),
+    path('entry/<int:entry_id>/edit/', topic_views.edit_entry, name='edit_entry'),
+    path('entry/<int:entry_id>/delete/', topic_views.delete_entry, name='delete_entry'),
+    path('load-more-topics/', topic_views.load_more_topics, name='load_more_topics'),
     path('login/', views.login_page, name='login_page'),
     path('complete-profile/', views.complete_profile, name='complete_profile'),
-    path('delete-post/<uuid:post_id>/', views.delete_post, name='delete_post'),
-    path('post/<uuid:pk>/', views.post_detail, name='post_detail'),
-    path('search/', views.search, name='search'),
+
+    path('search/', search_views.advanced_search, name='search'),
+    path('search/suggestions/', search_views.search_suggestions, name='search_suggestions'),
+    path('search/quick/', search_views.quick_search, name='quick_search'),
+    path('global-search/', search_views.global_search, name='global_search'),
     path('profile/', views.profile, name='profile'),
     path('update-profile/', views.update_profile, name='update_profile'),
+    path('update-social-links/', profile_views.update_social_links, name='update_social_links'),
     path('update-visibility/', profile_views.update_visibility, name='update_visibility'),
-    path('load-more/', views.load_more, name='load_more'),
-    path('delete-comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
-    path('vote-post/<uuid:post_id>/', views.vote_post, name='vote_post'),
-    path('vote-comment/<int:comment_id>/', views.vote_comment, name='vote_comment'),
-    path('like-post/<uuid:post_id>/', views.like_post, name='like_post'),
-    path('bookmark-post/<uuid:post_id>/', post_views.bookmark_post, name='bookmark_post'),
+
     path('popular/', popular_views.popular, name='popular'),
     path('popular/<str:period>/', popular_views.popular, name='popular_period'),
     path('load-more-popular/', popular_views.load_more_popular, name='load_more_popular'),
-    path('add-critique/<uuid:post_id>/', views.add_critique, name='add_critique'),
-    path('list-critiques/', views.list_critiques, name='list_critiques'),
-    path('delete-critique/<uuid:critique_id>/', post_views.delete_critique, name='delete_critique'),
-    path('vote-critique/<uuid:critique_id>/', post_views.vote_critique, name='vote_critique'),
-    path('popular-critiques/', post_views.popular_critiques, name='popular_critiques'),
-    path('unlike-post/<uuid:post_id>/', views.unlike_post, name='unlike_post'),
+    path('load-more-agenda/', popular_views.load_more_agenda, name='load_more_agenda'),
+    path('gundem/', popular_views.agenda, name='agenda'),
 
-    path('remove-bookmark/<uuid:post_id>/', profile_views.remove_bookmark, name='remove_bookmark'),
-    path('profile-delete-comment/<int:comment_id>/', views.profile_delete_comment, name='profile_delete_comment'),
-    path('profile-delete-post/<uuid:post_id>/', views.profile_delete_post, name='profile_delete_post'),
-    path('profile-delete-critique/<uuid:critique_id>/', views.profile_delete_critique, name='profile_delete_critique'),
+
+
     path('profile/<str:username>/', profile_views.profile, name='profile_detail'),
 
-    path('rmp/<str:short_code>/', post_views.redirect_short_link, name='redirect_short_link'),
-    path('emojis/', post_views.get_emojis, name='get_emojis'),
+    path('emojis/', topic_views.get_emojis, name='get_emojis'),
 
     # Sozluk URL’leri
     path('sozluk/harf/<str:harf>/', views.sozluk_harf, name='sozluk_harf'),
@@ -126,7 +133,7 @@ urlpatterns = [
     path('katki/load-more-liderler/', views.load_more_liderler, name='load_more_liderler'),
 
     # AI URL’leri
-    path('enhance/', ai_views.process_text, name='enhance'),
+    # path('enhance/', ai_views.process_text, name='enhance'),  # Geçici olarak kapatıldı
 
     path('yer-adlari/', yer_adlari_views.yer_adlari_anasayfa, name='yer_adlari_anasayfa'),
     path('yer-adi/ekle/', yer_adlari_views.yer_adi_ekle, name='yer_adi_ekle'),
@@ -135,5 +142,39 @@ urlpatterns = [
     path('yer-adi/<int:yer_adi_id>/sil/', yer_adlari_views.yer_adi_sil, name='yer_adi_sil'),
     path('yer-adi-detay/<int:detay_id>/duzenle/', yer_adlari_views.yer_adi_detay_duzenle, name='yer_adi_detay_duzenle'),
     path('yer-adi-detay/<int:detay_id>/sil/', yer_adlari_views.yer_adi_detay_sil, name='yer_adi_detay_sil'),
+    
+    # Notification URLs
+    path('notifications/', views.notifications, name='notifications'),
+    path('notifications/<int:notification_id>/mark-read/', views.mark_as_read, name='mark_as_read'),
+    path('notifications/mark-all-read/', views.mark_all_as_read, name='mark_all_as_read'),
+    
+    # Category URLs
+    path('category/', category_views.categories, name='category_list'),
+    path('categories/', category_views.categories, name='categories'),
+    path('category/<slug:slug>/', category_views.category_detail, name='category_detail'),
+    
+    # Follow URLs
+    path('follow/<str:username>/', follow_views.toggle_follow, name='toggle_follow'),
+    
+    # Hashtag URLs
+    path('hashtag/<slug:slug>/', hashtag_views.hashtag_detail, name='hashtag_detail'),
+    path('trending/', hashtag_views.trending_hashtags, name='trending_hashtags'),
+    
+    # Bookmark URLs
+    path('bookmark/<int:entry_id>/', bookmark_views.toggle_bookmark, name='toggle_bookmark'),
+    path('bookmark-topic/<slug:topic_slug>/', bookmark_views.toggle_topic_bookmark, name='toggle_topic_bookmark'),
+    path('bookmarks/', bookmark_views.user_bookmarks, name='user_bookmarks'),
+    
+    # PWA URLs
+    path('offline/', views.offline_page, name='offline'),
+    
+    # API URLs
+    path('api/check-updates/', api_views.check_updates, name='api_check_updates'),
+    path('api/ai-suggest-topics/', api_views.ai_suggest_topics, name='api_ai_suggest_topics'),
+    path('api/ai-generate-hashtags/', api_views.ai_generate_hashtags, name='api_ai_generate_hashtags'),
+    path('api/trending-topics/', api_views.trending_topics, name='api_trending_topics'),
+    path('api/live-stats/', api_views.live_stats, name='api_live_stats'),
+    path('api/quick-vote/', api_views.quick_vote, name='api_quick_vote'),
+    path('api/search-suggestions/', api_views.search_suggestions, name='api_search_suggestions'),
 
 ]   

@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Kes - Rumep{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Kişiler" %} - Rumep{% endblock %}
+{% block page_header %}{% trans "Kişiler" %}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
@@ -9,12 +11,12 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-people-fill me-3"></i>Kes
+                        <i class="bi bi-people-fill me-3"></i>{% trans "Kişiler" %}
                     </h1>
-                    <p class="lead mb-4">Kesayetiyên dîrokî û çandî keşf bikin, kesên nû lê zêde bikin</p>
+                    <p class="lead mb-4">{% trans "Tarihi ve kültürel kişilikleri keşfedin, yeni kişiler ekleyin" %}</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <a href="{% url 'kisi_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Kesê Nû Lê Zêde Bike
+                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Kişi Ekle" %}
                         </a>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
                             <i class="bi bi-search me-2"></i>Kes Lêbigere
@@ -24,7 +26,7 @@
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kisiler.count|default:"0" }}</h3>
-                        <p class="mb-0">Hejmara Kesan</p>
+                        <p class="mb-0">{% trans "Kişi Sayısı" %}</p>
                     </div>
                 </div>
             </div>
@@ -42,7 +44,7 @@
                                 <i class="bi bi-search me-2"></i>Kes Lêbigere
                             </label>
                             <input type="text" name="q" class="form-control form-control-lg" 
-                                   placeholder="Kes lêbigere (nav, biyografî...)" 
+                                   placeholder="{% trans 'Kişi ara (ad, biyografi...)' %}" 
                                    value="{{ request.GET.q }}" id="search-input">
                         </div>
                         <div class="col-lg-4">
@@ -50,7 +52,7 @@
                                 <i class="bi bi-tags me-2"></i>Kategorî
                             </label>
                             <select name="kategori" class="form-select form-select-lg">
-                                <option value="">Hemû Kategorî</option>
+                                <option value="">{% trans "Tüm Kategoriler" %}</option>
                                 {% for kategori in kategoriler %}
                                     <option value="{{ kategori.slug }}" {% if request.GET.kategori == kategori.slug %}selected{% endif %}>
                                         {{ kategori.ad }}
@@ -72,16 +74,10 @@
         <div class="alphabet-section mb-4">
             <div class="card border-0 shadow-sm">
                 <div class="card-body py-3">
-                    <div class="d-flex flex-wrap gap-2 justify-content-center">
-                        <a href="{% url 'kisi_liste' %}" 
-                           class="btn btn-sm {% if not request.GET.harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           Hemû
-                        </a>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{% url 'kisi_liste' %}" class="text-decoration-none {% if not request.GET.harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{% trans "Tümü" %}</a>
                         {% for harf in harfler %}
-                            <a href="?harf={{ harf }}" 
-                               class="btn btn-sm {% if request.GET.harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                                {{ harf|upper }}
-                            </a>
+                            <a href="?harf={{ harf }}" class="text-decoration-none {% if request.GET.harf == harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{{ harf|upper }}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -93,7 +89,7 @@
                 <div class="card-header bg-white border-0 py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            <i class="bi bi-list-ul me-2"></i>Kes
+                            <i class="bi bi-list-ul me-2"></i>{% trans "Kişiler" %}
                             <span class="badge bg-primary ms-2">{{ kisiler.count|default:"0" }}</span>
                         </h5>
                         <div class="view-options">
@@ -160,7 +156,7 @@
                         {% empty %}
                             <div class="empty-state text-center py-5">
                                 <i class="bi bi-people display-1 text-muted mb-3"></i>
-                                <h4 class="text-muted">Kes nehat dîtin</h4>
+                                <h4 class="text-muted">{% trans "Kişi bulunamadı" %}</h4>
                                 <p class="text-muted mb-4">Li gorî krîterên we kes nehat dîtin.</p>
                                 <a href="{% url 'kisi_ekle' %}" class="btn btn-primary">
                                     <i class="bi bi-plus-circle me-2"></i>Kesê Lê Zêde Bike
@@ -233,5 +229,8 @@
         });
     });
 </script>
-<link rel="stylesheet" href="{% static 'main/css/yer_adlari/yer_adlari.css' %}">
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{% static 'main/css/kisi.css' %}" rel="stylesheet">
 {% endblock %}

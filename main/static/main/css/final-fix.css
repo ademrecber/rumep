@@ -1,0 +1,33 @@
+/* Final Sidebar Fix */
+@media (max-width: 768px) {
+    /* Sidebar overlay'ı tamamen kaldır */
+    .sidebar-overlay {
+        display: none !important;
+    }
+    
+    /* Sidebar'ı en üste çıkar */
+    .left-fixed-area {
+        z-index: 9999 !important;
+        background: white !important;
+    }
+    
+    /* Sidebar içeriğini zorla göster */
+    .left-fixed-area .d-none {
+        display: block !important;
+    }
+    
+    .left-fixed-area .d-md-block {
+        display: block !important;
+    }
+    
+    /* Nav linkleri görünür yap */
+    .sidebar .nav-link {
+        display: flex !important;
+        color: #333 !important;
+        padding: 12px 16px !important;
+    }
+    
+    .sidebar h2 a {
+        color: #333 !important;
+    }
+}

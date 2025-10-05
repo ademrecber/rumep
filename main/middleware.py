@@ -23,14 +23,11 @@ class UserLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        print(f"Middleware dixebite, bikarhêner: {request.user}")  # Çewtiyê dîtin
         if request.user.is_authenticated and hasattr(request.user, 'profile'):
             user_language = request.user.profile.preferred_language
-            print(f"Zimanê bikarhêner: {user_language}")  # Çewtiyê dîtin
             translation.activate(user_language)
             request.LANGUAGE_CODE = user_language
         else:
-            print(f"Zimanê bingehîn: {settings.LANGUAGE_CODE}")  # Çewtiyê dîtin
             translation.activate(settings.LANGUAGE_CODE)
             request.LANGUAGE_CODE = settings.LANGUAGE_CODE
         response = self.get_response(request)

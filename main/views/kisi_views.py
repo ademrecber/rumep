@@ -8,7 +8,7 @@ from ..forms import KisiForm, KisiDetayForm
 import bleach
 import logging
 import re
-from ..ai.utils import process_request
+# from ..ai.utils import process_request  # Geçici olarak kapatıldı
 
 logger = logging.getLogger(__name__)
 

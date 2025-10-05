@@ -11,10 +11,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@login_required
 @csrf_protect
 def sozluk_ana_sayfa(request):
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'success': False, 'error': 'Giriş yapmalısınız'}, status=401)
         form = SozlukForm(request.POST)
         if form.is_valid():
             sozluk = form.save(commit=False)

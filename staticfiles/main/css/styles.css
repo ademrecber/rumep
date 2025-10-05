@@ -16,4 +16,14 @@
     @import url('modern.css'); /* Modern design improvements */
     @import url('accessibility.css'); /* Accessibility improvements */
     @import url('ai.css'); /* AI widget styles */
+    @import url('sozluk.css'); /* Sözlük sayfası stilleri */
+    @import url('kisi.css'); /* Kişiler sayfası stilleri */
+    @import url('sarki.css'); /* Şarkı sözleri sayfası stilleri */
+    @import url('atasozu_deyim.css'); /* Atasözü ve deyimler sayfası stilleri */
+    @import url('yer_adlari_new.css'); /* Yer adları sayfası stilleri */
+    @import url('modern-tabs.css'); /* Modern tab tasarımı */
+    @import url('page-transitions.css'); /* Sayfa geçiş animasyonları */
+    @import url('modern-forms.css'); /* Modern form tasarımları */
+    @import url('modern-notifications.css'); /* Modern bildirimler */
+    @import url('modern-search.css'); /* Modern arama sonuçları */
 

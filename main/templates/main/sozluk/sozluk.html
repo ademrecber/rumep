@@ -1,20 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Ferhenga Kurdî{% endblock %}
+{% block title %}{% trans "Kürtçe Sözlük" %}{% endblock %}
+{% block page_header %}{% trans "Sözlük" %}{% endblock %}
 
-{% block meta_description %}Ferhenga Kurdî - Lêgerîna peyvan, zêdekirin û guherandin{% endblock %}
+{% block meta_description %}{% trans "Kürtçe Sözlük - Kelime arama, ekleme ve düzenleme" %}{% endblock %}
 
-{% block extra_head %}
-    <meta name="csrf-token" content="{% csrf_token %}">
-    <!-- Dictionary-specific resource hints -->
-    <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_loader.js' %}" as="script">
-    <link rel="preload" href="{% static 'main/js/modules/sozluk/sozluk_search.js' %}" as="script">
-    <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_form.js' %}">
-    <link rel="modulepreload" href="{% static 'main/js/modules/sozluk/sozluk_detay.js' %}">
-    <!-- Dictionary-specific styles -->
-    <link rel="stylesheet" href="{% static 'main/css/modern.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/sozluk.css' %}">
+{% block extra_css %}
+    <link href="{% static 'main/css/sozluk.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -25,22 +19,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-book-half me-3"></i>Ferhenga Kurdî
+                        <i class="bi bi-book-half me-3"></i>{% trans "Kürtçe Sözlük" %}
                     </h1>
-                    <p class="lead mb-4">Lêgerîna peyvan, zêdekirin û guherandin</p>
+                    <p class="lead mb-4">{% trans "Kelime arama, ekleme ve düzenleme" %}</p>
                     <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
                         <button class="btn btn-light btn-lg" onclick="focusAddForm()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>Peyva Nû Lê Zêde Bike
+                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Kelime Ekle" %}
                         </button>
                         <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Peyvê Lêbigere
+                            <i class="bi bi-search me-2"></i>{% trans "Kelime Ara" %}
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
                         <h3 class="h2 mb-2">{{ kelime_sayisi|default:"0" }}</h3>
-                        <p class="mb-0">Peyvên Giştî</p>
+                        <p class="mb-0">{% trans "Toplam Kelime" %}</p>
                     </div>
                 </div>
             </div>
@@ -54,14 +48,14 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-plus-circle-fill me-2 text-primary"></i>
-                    Peyva Nû Lê Zêde Bike
+                    {% trans "Yeni Kelime Ekle" %}
                 </h5>
                 <form id="sozluk-form" method="post" action="{% url 'sozluk_ana_sayfa' %}" class="needs-validation" novalidate>
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
                     <button type="submit" class="btn btn-primary rounded-pill">
-                        <i class="bi bi-plus-circle me-1"></i> Peyv Lê Zêde Bike
+                        <i class="bi bi-plus-circle me-1"></i> {% trans "Kelime Ekle" %}
                     </button>
                 </form>
             </div>
@@ -72,28 +66,28 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-search me-2 text-primary"></i>
-                    Peyvê Lêbigere
+                    {% trans "Kelime Ara" %}
                 </h5>
                 <form id="sozluk-arama-form" class="d-flex gap-2">
                     <div class="flex-grow-1">
                         <input type="text" 
                                id="arama-input" 
                                class="form-control" 
-                               placeholder="Peyvê lêbigere (mînak: av)" 
-                               aria-label="Lêgerîn"
+                               placeholder="{% trans 'Kelime ara (örnek: su)' %}" 
+                               aria-label="{% trans 'Arama' %}"
                                autocomplete="off">
                     </div>
                     <div>
-                        <select id="tur-filtresi" class="form-select" aria-label="Fîltra cureya peyvê">
-                            <option value="">Hemû Cure</option>
-                            <option value="isim">Nav</option>
-                            <option value="fiil">Lêker</option>
-                            <option value="sifat">Sifet</option>
-                            <option value="zarf">Zarf</option>
+                        <select id="tur-filtresi" class="form-select" aria-label="{% trans 'Kelime türü filtresi' %}">
+                            <option value="">{% trans "Tüm Türler" %}</option>
+                            <option value="isim">{% trans "İsim" %}</option>
+                            <option value="fiil">{% trans "Fiil" %}</option>
+                            <option value="sifat">{% trans "Sıfat" %}</option>
+                            <option value="zarf">{% trans "Zarf" %}</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary rounded-pill">
-                        <i class="bi bi-search me-1"></i> Lêbigere
+                        <i class="bi bi-search me-1"></i> {% trans "Ara" %}
                     </button>
                 </form>
             </div>
@@ -104,25 +98,14 @@
             <div class="card-body">
                 <h5 class="card-title mb-3">
                     <i class="bi bi-alphabet me-2 text-primary"></i>
-                    Tîp
+                    {% trans "Harf Seçimi" %}
                 </h5>
-                <nav aria-label="Navîgasyona alfabeyê">
-                    <div class="d-flex flex-wrap gap-1">
-                        <a id="tum-kelimeler-btn"
-                           href="{% url 'sozluk_ana_sayfa' %}" 
-                           class="btn btn-link text-primary m-1 {% if not request.GET.harf %}active{% endif %}"
-                           aria-label="Hemû peyv">
-                           Hemû
-                        </a>
-                        {% for harf in harfler %}
-                            <a href="{% url 'sozluk_harf' harf %}" 
-                               class="btn btn-link text-primary m-1 {% if request.GET.harf == harf %}active{% endif %}"
-                               aria-label="Peyvên ku bi tîpa {{ harf|upper }} dest pê dikin">
-                                {{ harf|upper }}
-                            </a>
-                        {% endfor %}
-                    </div>
-                </nav>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'sozluk_ana_sayfa' %}" class="text-decoration-none {% if not request.GET.harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{% trans "Tümü" %}</a>
+                    {% for harf in harfler %}
+                        <a href="{% url 'sozluk_harf' harf %}" class="text-decoration-none {% if request.GET.harf == harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{{ harf|upper }}</a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
@@ -132,17 +115,17 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title mb-0">
                         <i class="bi bi-book me-2 text-primary"></i>
-                        Hemû Peyv
+                        {% trans "Tüm Kelimeler" %}
                     </h5>
                 </div>
                 <div id="arama-sonuc-listesi" class="list-group list-group-flush">
                     <p class="text-muted">
-                        <i class="bi bi-hourglass-split me-2"></i>Peyv tên barkirin...
+                        <i class="bi bi-hourglass-split me-2"></i>{% trans "Kelimeler yükleniyor..." %}
                     </p>
                 </div>
                 <div id="loading" class="text-center mt-3 d-none">
                     <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Tê barkirin...</span>
+                        <span class="visually-hidden">{% trans "Yükleniyor..." %}</span>
                     </div>
                 </div>
                 <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert"></div>
@@ -155,15 +138,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editKelimeModalLabel">
-                            <i class="bi bi-pencil-square me-2"></i>Peyvê Biguherîne
+                            <i class="bi bi-pencil-square me-2"></i>{% trans "Kelimeyi Düzenle" %}
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Girtin"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
                     </div>
                     <div class="modal-body">
                         <form id="edit-kelime-form" method="post" class="needs-validation" novalidate>
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="kelime" class="form-label">Peyv</label>
+                                <label for="kelime" class="form-label">{% trans "Kelime" %}</label>
                                 <input type="text" 
                                        class="form-control" 
                                        id="kelime" 
@@ -171,35 +154,35 @@
                                        required
                                        autocomplete="off">
                                 <div class="invalid-feedback">
-                                    Ji kerema xwe peyvekê binivîsin.
+                                    {% trans "Lütfen bir kelime girin." %}
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="detay" class="form-label">Kîtekît</label>
+                                <label for="detay" class="form-label">{% trans "Açıklama" %}</label>
                                 <textarea class="form-control" 
                                           id="detay" 
                                           name="detay" 
                                           rows="4" 
                                           required></textarea>
                                 <div class="invalid-feedback">
-                                    Ji kerema xwe kîtekîta peyvê binivîsin.
+                                    {% trans "Lütfen kelimenin açıklamasını girin." %}
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="tur" class="form-label">Cure</label>
+                                <label for="tur" class="form-label">{% trans "Tür" %}</label>
                                 <select class="form-select" id="tur" name="tur">
-                                    <option value="">Hilbijêre</option>
-                                    <option value="isim">Nav</option>
-                                    <option value="fiil">Lêker</option>
-                                    <option value="sifat">Sifet</option>
-                                    <option value="zarf">Zarf</option>
+                                    <option value="">{% trans "Seçin" %}</option>
+                                    <option value="isim">{% trans "İsim" %}</option>
+                                    <option value="fiil">{% trans "Fiil" %}</option>
+                                    <option value="sifat">{% trans "Sıfat" %}</option>
+                                    <option value="zarf">{% trans "Zarf" %}</option>
                                 </select>
                             </div>
                             <div id="edit-form-errors" class="alert alert-danger d-none" role="alert"></div>
                             <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Betal</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "İptal" %}</button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-check2 me-1"></i>Tomar Bike
+                                    <i class="bi bi-check2 me-1"></i>{% trans "Kaydet" %}
                                 </button>
                             </div>
                         </form>

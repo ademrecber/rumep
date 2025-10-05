@@ -1,0 +1,198 @@
+/* Font Keyboard Styles */
+.font-selection .btn-group {
+    display: flex;
+}
+
+.font-selector {
+    flex: 1;
+}
+
+.character-keyboard {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 10px;
+    background: #f8f9fa;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.character-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.character-btn {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    font-size: 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.character-btn:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+
+.character-label {
+    font-size: 10px;
+    color: #6c757d;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.font-option {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    background: #f8f9fa;
+}
+
+.font-option:hover {
+    border-color: #0d6efd;
+    background: #e7f3ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+}
+
+.font-option.active {
+    border-color: #0d6efd;
+    background: #e7f3ff;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.font-preview {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 4px;
+    padding: 10px;
+    word-break: break-all;
+}
+
+.font-name {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.font-type {
+    font-size: 0.75rem;
+}
+
+.font-btn {
+    position: relative;
+}
+
+.font-btn:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Test area styles */
+#fontTestArea {
+    font-size: 16px;
+    line-height: 1.5;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    transition: font-family 0.3s ease;
+}
+
+#fontTestArea:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Modal customizations */
+#fontModal .modal-dialog {
+    max-width: 600px;
+}
+
+#fontModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .character-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+    }
+    
+    .character-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .character-label {
+        font-size: 9px;
+    }
+    
+    .font-selection .btn-group {
+        flex-direction: column;
+    }
+    
+    .font-selector {
+        margin-bottom: 5px;
+    }
+    
+    #fontModal .modal-dialog {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+    
+    .character-keyboard {
+        max-height: 250px;
+    }
+}
+
+/* Font button positioning */
+.font-btn {
+    border-radius: 4px;
+}
+
+.font-btn i {
+    font-size: 14px;
+}
+
+/* Animation for font changes */
+textarea {
+    transition: font-family 0.3s ease;
+}
+
+/* Special styles for custom fonts */
+.font-preview[style*="RumepLogosSVG"] {
+    color: #333;
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+}
+
+.font-preview[style*="RumepLogosCOLR"] {
+    background: linear-gradient(45deg, #fff3cd, #ffeaa7);
+}

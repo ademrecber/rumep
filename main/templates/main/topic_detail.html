@@ -1,0 +1,464 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load entry_tags %}
+{% load post_tags %}
+{% load i18n %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+{% block page_header %}{{ topic.title }}{% endblock %}
+
+{% block page_tabs %}
+<div class="page-title-area d-flex align-items-center">
+    <a href="javascript:history.back()" class="btn btn-link text-muted p-1 me-2 flex-shrink-0" title="{% trans 'Geri Dön' %}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+        <i class="bi bi-arrow-left fs-6"></i>
+    </a>
+    <h4 class="page-title mb-0 flex-grow-1">{{ topic.title }}</h4>
+</div>
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'main/css/emoji.css' %}" rel="stylesheet">
+<style>
+.btn-xs {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;
+}
+</style>
+<div class="container mt-4">
+    <!-- Başlık -->
+    <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+                <h1 class="mb-2">{{ topic.title }}</h1>
+                <small class="text-muted">
+                    {{ topic.user.profile.nickname }} {% trans "tarafından açıldı" %} • 
+                    {{ topic.created_at|date:"d.m.Y H:i" }} • 
+                    {{ topic.entry_count }} {% trans "entry" %} • 
+                    <span class="text-primary">#{{ topic.code }}</span>
+                </small>
+            </div>
+            {% if can_edit_topic %}
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'edit_topic' topic.slug %}">{% trans "Düzenle" %}</a></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'delete_topic' topic.slug %}">{% trans "Sil" %}</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        <div class="vote-buttons d-flex gap-1 align-items-center">
+            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+            </button>
+            <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+            </button>
+            {% if user.is_authenticated %}
+                <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
+                    <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Entry'ler -->
+    <div class="entries-container">
+        {% for entry in entries %}
+            <div class="entry-item mb-4 pb-3" id="entry-{{ entry.id }}">
+                <div class="entry-content mb-3">
+                    {{ entry.content|render_emojis|with_entry_font:entry|linebreaks }}
+                </div>
+                {% if entry.link %}
+                    <div class="entry-link mb-3">
+                        <a href="{{ entry.link }}" target="_blank" class="text-primary text-decoration-none">
+                            <i class="bi bi-link-45deg"></i> {{ entry.link }}
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="d-flex justify-content-between align-items-end mt-3">
+                    <div class="entry-actions d-flex gap-1 align-items-center">
+                        <button class="btn btn-link p-0 entry-vote-btn" data-entry-id="{{ entry.id }}" data-vote-type="up">
+                            <i class="bi bi-arrow-up{% if user in entry.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                        </button>
+                        <span class="entry-vote-score fw-bold" style="font-size: 0.9rem;">{{ entry.vote_score }}</span>
+                        <button class="btn btn-link p-0 entry-vote-btn" data-entry-id="{{ entry.id }}" data-vote-type="down">
+                            <i class="bi bi-arrow-down{% if user in entry.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                        </button>
+                        {% if user.is_authenticated %}
+                            <button class="btn btn-link p-0 ms-2 bookmark-btn {% if user in entry.bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-entry-id="{{ entry.id }}">
+                                <i class="bi {% if user in entry.bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                            </button>
+                        {% endif %}
+                        <div class="dropdown d-inline">
+                            <button class="btn btn-link p-0 text-muted ms-2" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-share"></i>
+                            </button>
+                            <ul class="dropdown-menu share-dropdown">
+                                <li>
+                                    <button class="dropdown-item share-btn share-twitter twitter" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-twitter share-icon"></i>
+                                        {% trans "Twitter'da Paylaş" %}
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item share-btn share-whatsapp whatsapp" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-whatsapp share-icon"></i>
+                                        {% trans "WhatsApp'ta Paylaş" %}
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item share-btn share-telegram telegram" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-telegram share-icon"></i>
+                                        {% trans "Telegram'da Paylaş" %}
+                                    </button>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item share-btn share-copy copy-link" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-link-45deg share-icon"></i>
+                                        {% trans "Linki Kopyala" %}
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item share-btn share-copy-code copy-code" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-hash share-icon"></i>
+                                        {% trans "Kodu Kopyala" %}
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item share-btn share-qr qr-code" data-entry-code="{{ entry.code }}">
+                                        <i class="bi bi-qr-code share-icon"></i>
+                                        {% trans "QR Kod" %}
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        {% if user.is_authenticated and entry.user == user %}
+                            <a href="{% url 'edit_entry' entry.id %}" class="btn btn-link p-0 text-muted ms-2">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'delete_entry' entry.id %}" class="btn btn-link p-0 text-danger ms-1" onclick="return confirm('{% trans "Bu entry\'yi silmek istediğinizden emin misiniz?" %}')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="text-end me-2">
+                            <a href="{% url 'profile_detail' entry.user.profile.username %}" class="fw-bold text-decoration-none" style="font-size: 0.9rem; color: #8b5cf6;">{{ entry.user.profile.nickname }}</a>
+                            <small class="text-muted d-block">{{ entry.created_at|date:"d.m.Y H:i" }}</small>
+                        </div>
+                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                            <i class="bi bi-person text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% empty %}
+            <div class="text-center text-muted py-4">
+                {% trans "Bu başlıkta henüz entry yok." %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Sayfalama -->
+    {% if entries.has_other_pages %}
+        <nav aria-label="Entry pagination">
+            <ul class="pagination justify-content-center">
+                {% if entries.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">{% trans "İlk" %}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ entries.previous_page_number }}">{% trans "Önceki" %}</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">{{ entries.number }} / {{ entries.paginator.num_pages }}</span>
+                </li>
+                
+                {% if entries.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ entries.next_page_number }}">{% trans "Sonraki" %}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ entries.paginator.num_pages }}">{% trans "Son" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+    <!-- Entry Ekleme Formu -->
+    {% if user.is_authenticated and user.profile %}
+        <div class="entry-form-container">
+            <h5><i class="bi bi-pencil-square"></i>{% trans "Entry Ekle" %}</h5>
+            <form method="post" action="{% url 'add_entry' topic.slug %}" id="entryForm">
+                {% csrf_token %}
+                <input type="hidden" name="font_family" id="fontFamilyInput" value="">
+                <div class="form-group mb-3">
+                    <textarea name="content" id="id_content" class="form-control modern-textarea" placeholder="{% trans 'Düşüncelerinizi paylaşın... Bu konuda ne düşünüyorsunuz?' %}" required></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="url" name="link" class="form-control modern-input" placeholder="{% trans 'İsteğe bağlı: Bir link ekleyin' %}">
+                </div>
+                {% if entry_form.non_field_errors %}
+                    <div class="alert alert-danger">{{ entry_form.non_field_errors }}</div>
+                {% endif %}
+                <div class="form-actions">
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="id_content">
+                            <i class="bi bi-emoji-smile"></i> {% trans "Emojiler" %}
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="char-counter" id="charCount">10000</span>
+                        <button type="submit" class="submit-btn">{% trans "Paylaş" %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Emoji Modal -->
+<div class="modal fade" id="emojiModal" tabindex="-1" aria-labelledby="emojiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emojiModalLabel">{% trans "Emoji" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
+            </div>
+            <div class="modal-body">
+                <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Textarea auto-resize
+    const textarea = document.querySelector('textarea[name="content"]');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+            
+            const charCount = document.getElementById('charCount');
+            if (charCount) {
+                charCount.textContent = 10000 - this.value.length;
+            }
+        });
+    }
+
+    // Like functionality
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const entryId = this.dataset.entryId;
+            const isLiked = this.dataset.liked === 'true';
+            
+            fetch('/entry/' + entryId + '/like/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked !== undefined) {
+                    this.dataset.liked = data.liked;
+                    const icon = this.querySelector('i');
+                    const count = this.querySelector('.like-count');
+                    
+                    if (data.liked) {
+                        icon.className = 'fas fa-heart';
+                        this.classList.remove('btn-outline-primary');
+                        this.classList.add('btn-primary');
+                    } else {
+                        icon.className = 'fas fa-heart-o';
+                        this.classList.remove('btn-primary');
+                        this.classList.add('btn-outline-primary');
+                    }
+                    
+                    count.textContent = data.like_count;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+    
+    // Emoji functionality
+    let currentTextarea = null;
+    
+    // Emoji modal event listeners
+    document.getElementById('emojiModal').addEventListener('show.bs.modal', function(e) {
+        currentTextarea = document.querySelector('#entryForm textarea[name="content"]');
+        loadEmojis();
+    });
+    
+    // Emoji button click handler
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('.font-btn') || e.target.closest('.font-btn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const button = e.target.matches('.font-btn') ? e.target : e.target.closest('.font-btn');
+            const textareaId = button.getAttribute('data-textarea');
+            currentTextarea = document.getElementById(textareaId);
+            
+            const emojiModal = new bootstrap.Modal(document.getElementById('emojiModal'));
+            emojiModal.show();
+        }
+    });
+    
+    function loadEmojis() {
+        const emojiKeyboard = document.getElementById('emojiKeyboard');
+        if (emojiKeyboard.children.length === 0) {
+            fetch('/emojis/')
+                .then(response => response.json())
+                .then(emojis => {
+                    emojis.forEach(emoji => {
+                        const emojiBtn = document.createElement('button');
+                        emojiBtn.type = 'button';
+                        emojiBtn.className = 'btn btn-light m-1';
+                        emojiBtn.innerHTML = `<img src="/static/emojis/${emoji.name}.svg" alt="${emoji.name}" width="24">`;
+                        emojiBtn.onclick = () => insertEmoji(emoji.shortcode);
+                        emojiKeyboard.appendChild(emojiBtn);
+                    });
+                })
+                .catch(error => {
+                    console.error('Emoji yükleme hatası:', error);
+                });
+        }
+    }
+    
+    function insertEmoji(emoji) {
+        if (currentTextarea) {
+            const start = currentTextarea.selectionStart;
+            const end = currentTextarea.selectionEnd;
+            currentTextarea.value = currentTextarea.value.substring(0, start) + emoji + currentTextarea.value.substring(end);
+            currentTextarea.focus();
+            currentTextarea.setSelectionRange(start + emoji.length, start + emoji.length);
+            bootstrap.Modal.getInstance(document.getElementById('emojiModal')).hide();
+        }
+    }
+    
+    // Entry vote functionality
+    document.querySelectorAll('.entry-vote-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const entryId = this.dataset.entryId;
+            const voteType = this.dataset.voteType;
+            
+            fetch(`/entry/${entryId}/vote/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `vote_type=${voteType}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.vote_score !== undefined) {
+                    const entryCard = this.closest('.entry-card');
+                    const scoreElement = entryCard.querySelector('.entry-vote-score');
+                    const upBtn = entryCard.querySelector('[data-vote-type="up"]');
+                    const downBtn = entryCard.querySelector('[data-vote-type="down"]');
+                    
+                    scoreElement.textContent = data.vote_score;
+                    
+                    // Update button states
+                    if (voteType === 'up') {
+                        const icon = upBtn.querySelector('i');
+                        if (data.voted) {
+                            icon.className = 'bi bi-arrow-up-circle-fill';
+                        } else {
+                            icon.className = 'bi bi-arrow-up';
+                        }
+                        // Reset down button
+                        downBtn.querySelector('i').className = 'bi bi-arrow-down';
+                    } else {
+                        const icon = downBtn.querySelector('i');
+                        if (data.voted) {
+                            icon.className = 'bi bi-arrow-down-circle-fill';
+                        } else {
+                            icon.className = 'bi bi-arrow-down';
+                        }
+                        // Reset up button
+                        upBtn.querySelector('i').className = 'bi bi-arrow-up';
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+    
+    // Topic vote functionality
+    document.querySelectorAll('.vote-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const topicSlug = this.dataset.topicSlug;
+            const voteType = this.dataset.voteType;
+            
+            fetch(`/topic/${topicSlug}/vote/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `vote_type=${voteType}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.vote_score !== undefined) {
+                    const scoreElement = document.querySelector('.vote-score');
+                    const upBtn = document.querySelector('[data-vote-type="up"]');
+                    const downBtn = document.querySelector('[data-vote-type="down"]');
+                    
+                    scoreElement.textContent = data.vote_score;
+                    
+                    // Update button states
+                    if (voteType === 'up') {
+                        const icon = upBtn.querySelector('i');
+                        if (data.voted) {
+                            icon.className = 'bi bi-arrow-up-circle-fill';
+                        } else {
+                            icon.className = 'bi bi-arrow-up';
+                        }
+                        // Reset down button
+                        downBtn.querySelector('i').className = 'bi bi-arrow-down';
+                    } else {
+                        const icon = downBtn.querySelector('i');
+                        if (data.voted) {
+                            icon.className = 'bi bi-arrow-down-circle-fill';
+                        } else {
+                            icon.className = 'bi bi-arrow-down';
+                        }
+                        // Reset up button
+                        upBtn.querySelector('i').className = 'bi bi-arrow-up';
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+    
+    // Global fonksiyonlar
+    window.insertEmoji = insertEmoji;
+});
+</script>
+<script src="{% static 'main/js/auto-links.js' %}"></script>
+<script src="{% static 'main/js/bookmarks.js' %}"></script>
+<script src="{% static 'main/js/share.js' %}"></script>
+<script src="{% static 'main/js/emoji-keyboard.js' %}"></script>
+{% endblock %}

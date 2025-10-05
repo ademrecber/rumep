@@ -9,7 +9,7 @@ function initShowMore() {
                     if (preview && fullText) {
                         preview.classList.add('d-none');
                         fullText.classList.remove('d-none');
-                        this.classList.add('d-none'); // "Devamını gör" gizle
+                        this.classList.add('d-none'); // "Zêdetir bibîne" gizle
                         const lessBtn = parent.querySelector('.show-less-btn');
                         if (lessBtn) lessBtn.classList.remove('d-none');
                     }
@@ -27,7 +27,7 @@ function initShowMore() {
                     if (preview && fullText) {
                         preview.classList.remove('d-none');
                         fullText.classList.add('d-none');
-                        this.classList.add('d-none'); // "Daha az gör" gizle
+                        this.classList.add('d-none'); // "Kêmtir bibîne" gizle
                         const moreBtn = parent.querySelector('.show-more-btn');
                         if (moreBtn) moreBtn.classList.remove('d-none');
                     }

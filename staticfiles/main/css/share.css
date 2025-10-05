@@ -1,0 +1,123 @@
+/* Share Buttons Styles */
+.share-dropdown {
+    min-width: 200px;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.share-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.share-btn.twitter {
+    color: #1da1f2;
+}
+
+.share-btn.whatsapp {
+    color: #25d366;
+}
+
+.share-btn.telegram {
+    color: #0088cc;
+}
+
+.share-btn.copy-link {
+    color: #6c757d;
+}
+
+.share-btn.qr-code {
+    color: #495057;
+}
+
+/* QR Code Modal */
+.qr-code-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.qr-code-container canvas {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+/* Share Icon */
+.share-icon {
+    font-size: 1.1rem;
+}
+
+/* Toast for copy success */
+.toast-share {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Bookmark Button Styles */
+.bookmark-btn.text-warning {
+    color: #ffc107 !important;
+}
+
+.bookmark-btn.text-warning:hover {
+    color: #ffca2c !important;
+}
+
+.bookmark-btn.text-muted {
+    color: #6c757d !important;
+}
+
+.bookmark-btn.text-muted:hover {
+    color: #495057 !important;
+}
+
+/* Modal Fixes for Mobile */
+.modal.show {
+    z-index: 1055 !important;
+}
+
+#emojiModal {
+    z-index: 1060 !important;
+}
+
+#emojiModal .modal-backdrop {
+    z-index: 1059 !important;
+}
+
+/* Share dropdown fixes */
+.share-dropdown {
+    min-width: 200px;
+    z-index: 1070;
+    background: white;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .share-dropdown {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 9999 !important;
+        max-width: 90vw;
+    }
+}
+
+/* Prevent modal backdrop conflicts */
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+.modal-backdrop + .modal-backdrop {
+    display: none !important;
+}

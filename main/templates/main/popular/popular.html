@@ -1,159 +1,271 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load post_tags %}
-{% block title %}{{ period|title }} Yên Herî Populer{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Gündem" %}{% endblock %}
+
+{% block page_header %}{% trans "Gündem" %}{% endblock %}
+
+{% block page_tabs %}
+<div class="d-flex p-3" style="gap: 0;">
+    <a href="?tab=topics" class="flex-fill text-center py-2 text-decoration-none {% if not active_tab or active_tab == 'topics' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-fire me-1"></i>{% trans "Trend Başlıklar" %}
+    </a>
+    <a href="?tab=writers" class="flex-fill text-center py-2 text-decoration-none {% if active_tab == 'writers' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-people me-1"></i>{% trans "Aktif Yazarlar" %}
+    </a>
+    <a href="?tab=categories" class="flex-fill text-center py-2 text-decoration-none {% if active_tab == 'categories' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-tags me-1"></i>{% trans "Kategoriler" %}
+    </a>
+</div>
+{% endblock %}
+
 {% block content %}
-    <div class="container twitter-container" id="post-list">
-        {% include 'main/popular/_tabs.html' with active_period=period %}
-        <h2 id="period-title">{{ period|title }} Yên Herî Populer</h2>
-        <div class="post-container">
-            {% for post in posts %}
-                <div class="card mb-2 tweet-card fade-in" id="post-{{ post.id }}">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <p class="mb-1">
-                                <strong>{{ post.user.profile.nickname }}</strong> 
-                                <span class="text-muted"><a href="{% url 'profile_detail' post.user.profile.username %}" class="text-muted text-decoration-none">@{{ post.user.profile.username }}</a> · {{ post.short_id }} · {{ post.created_at|timesince }}</span>
-                            </p>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    {% if post.user == user %}
-                                        <li>
-                                            <form method="post" action="{% url 'delete_post' post.id %}" class="m-0" onsubmit="return confirm('Ma hûn ji vê postê jêbirinê piştrast in?');">
-                                                {% csrf_token %}
-                                                <button type="submit" class="dropdown-item text-danger">Jêbirin</button>
-                                            </form>
-                                        </li>
+
+
+
+<div class="popular-content">
+        <!-- Gündem Başlıkları -->
+        <div class="tab-content {% if active_tab != 'topics' %}d-none{% endif %}" id="topics-tab">
+            <!-- Zaman Filtreleri -->
+            <div class="period-tabs mb-4 text-center">
+                <div class="btn-group btn-group-sm" role="group">
+                    <a href="?tab=topics&period=today" class="btn {% if active_period == 'today' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bugün</a>
+                    <a href="?tab=topics&period=weekly" class="btn {% if active_period == 'weekly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bu Hafta</a>
+                    <a href="?tab=topics&period=monthly" class="btn {% if active_period == 'monthly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bu Ay</a>
+                    <a href="?tab=topics&period=all-time" class="btn {% if active_period == 'all-time' %}btn-primary{% else %}btn-outline-primary{% endif %}">Tüm Zamanlar</a>
+                </div>
+            </div>
+            <div class="topic-container">
+                {% for topic in trending_topics %}
+                    {% with first_entry=topic.entries.first %}
+                        <div class="topic-item mb-4">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                                        <h5 class="mb-1">{{ topic.title }}</h5>
+                                    </a>
+                                    
+                                    {% if first_entry %}
+                                    <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                                        {% if first_entry.content|length > 790 %}
+                                            {{ first_entry.content|slice:":790"|render_emojis|with_entry_font:first_entry }}
+                                            <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...{% trans "devamını gör" %}</a>
+                                        {% else %}
+                                            {{ first_entry.content|render_emojis|with_entry_font:first_entry }}
+                                        {% endif %}
+                                    </div>
                                     {% endif %}
-                                    <li>
-                                        <form method="post" action="{% url 'bookmark_post' post.id %}?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('{% if request.user in post.bookmarks.all %}Ji nîşankirina cîhê derxistin{% else %}Têxistina nîşankirina cîhê{% endif %} hûn piştrast in?');" data-post-id="{{ post.id }}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="dropdown-item">
-                                                {% if request.user in post.bookmarks.all %}Ji Nîşankirina Cîhê Derxistin{% else %}Têxistina Nîşankirina Cîhê{% endif %}
-                                            </button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="{{ post.id }}">Girêdanê Kopî Bike</button>
-                                    </li>
-                                </ul>
+                                    
+                                    <small class="text-muted">
+                                        {{ topic.daily_entry_count }} {% trans "entry" %} ({% trans "son 24 saat" %}) • 
+                                        {{ topic.user.profile.nickname }} {% trans "tarafından açıldı" %} •
+                                        {{ topic.created_at|date:"d.m.Y H:i" }}
+                                    </small>
+                                    
+
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">{{ topic.daily_entry_count }}</span>
+                                </div>
                             </div>
                         </div>
-                        <h5>{{ post.title|default:'' }}</h5>
-                        <div class="post-text">
-                            {% if post.text|length > 500 or post.text|count_lines > 15 %}
-                                <div class="text-preview"><p>{{ post.text|render_emojis|truncatechars:100|linebreaks|safe }}</p></div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
-                                <div class="full-text d-none"><p>{{ post.text|render_emojis|linebreaks|safe }}</p></div>
-                            {% else %}
-                                <p>{{ post.text|render_emojis|linebreaks|safe }}</p>
+                    {% endwith %}
+                {% empty %}
+                    <p class="text-muted p-3">{% trans "Henüz gündem başlığı yok." %}</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Aktif Yazarlar -->
+        <div class="tab-content {% if active_tab != 'writers' %}d-none{% endif %}" id="writers-tab">
+            <div class="writers-container">
+                {% for writer in active_writers %}
+                <div class="writer-item mb-4 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-person text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">
+                                        <a href="{% url 'profile_detail' writer.username %}" class="text-decoration-none text-dark">
+                                            {{ writer.nickname }}
+                                        </a>
+                                        {% if writer.user_role != 'user' %}
+                                            <span class="badge bg-warning text-dark ms-1">{{ writer.get_user_role_display }}</span>
+                                        {% endif %}
+                                    </h6>
+                                    <small class="text-muted">@{{ writer.username }}</small>
+                                </div>
+                            </div>
+                            {% if writer.biography %}
+                                <p class="text-muted mb-2" style="font-size: 0.9rem;">{{ writer.biography|truncatechars:100 }}</p>
                             {% endif %}
+                            <div class="stats d-flex gap-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-chat-dots me-1"></i>{{ writer.topic_count|default:0 }} başlık
+                                </small>
+                                <small class="text-muted">
+                                    <i class="bi bi-file-text me-1"></i>{{ writer.entry_count|default:0 }} entry
+                                </small>
+                                <small class="text-muted">
+                                    <i class="bi bi-star me-1"></i>{{ writer.katki_puani }} puan
+                                </small>
+                            </div>
                         </div>
-                        {% if post.link %}
-                            <a href="{{ post.link }}" target="_blank" class="text-muted mt-2 d-block">{{ post.link }}</a>
+                        {% if user.is_authenticated and user != writer.user %}
+                        <button class="btn btn-outline-primary btn-sm follow-btn" data-username="{{ writer.username }}">
+                            <i class="bi bi-person-plus me-1"></i>{% trans "Takip Et" %}
+                        </button>
                         {% endif %}
-                        {% if post.embed_code %}
-                            <div class="social-embed">{{ post.embed_code|safe }}</div>
-                        {% endif %}
-                        <div class="post-meta text-muted mt-2">
-                            <span>Ecibandin: {{ post.like_count }}</span> | 
-                            <span>Şîrove: {{ post.comments.count }}</span> | 
-                            <span><i class="bi bi-list-ul"></i> {{ post.critique_count }}</span> | 
-                            <span><i class="bi bi-bar-chart"></i> {{ post.views }}</span>
-                        </div>
-                        <div class="post-actions mt-2">
-                            <form method="post" action="{% url 'like_post' post.id %}" class="like-form d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-link like-btn {% if request.user in post.likes.all %}liked{% endif %}" data-post-id="{{ post.id }}">
-                                    <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i> {{ post.like_count }}
-                                </button>
-                            </form>
-                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                                {% csrf_token %}
-                                <input type="hidden" name="vote" value="up">
-                                <button type="submit" class="btn btn-link text-success p-0 upvote-btn">{{ post.upvotes }} ↑</button>
-                            </form>
-                            <form method="post" action="{% url 'vote_post' post.id %}" class="vote-form d-inline" data-post-id="{{ post.id }}">
-                                {% csrf_token %}
-                                <input type="hidden" name="vote" value="down">
-                                <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">{{ post.downvotes }} ↓</button>
-                            </form>
-                            <a href="{% url 'post_detail' post.id %}" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            <span class="text-muted ms-2">Pûan: {{ post.total_score|floatformat:1 }}</span>
-                        </div>
                     </div>
                 </div>
-            {% empty %}
-                <p class="text-muted p-3">Hêj nirxandina populer tune.</p>
-            {% endfor %}
+                {% empty %}
+                    <p class="text-muted p-3">{% trans "Henüz aktif yazar yok." %}</p>
+                {% endfor %}
+            </div>
         </div>
-        <div id="loading" class="text-center mt-3" style="display: none;">Tê barkirin...</div>
-        <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">Zêdetir Barkirin</button>
-        <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
-        <!-- Toast Mesajı -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Agahî</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Girtin"></button>
-                </div>
-                <div class="toast-body">
-                    Girêdan hate kopîkirin!
-                </div>
+        
+        <!-- Kategoriler -->
+        <div class="tab-content {% if active_tab != 'categories' %}d-none{% endif %}" id="categories-tab">
+            <div class="categories-container">
+                {% for category in popular_categories %}
+                    <div class="category-item mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="{% url 'category_detail' category.slug %}" class="text-decoration-none text-dark">
+                                        #{{ category.name }}
+                                    </a>
+                                </h6>
+                                {% if category.description %}
+                                    <small class="text-muted">{{ category.description }}</small>
+                                {% endif %}
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary">{{ category.topic_count }}</span>
+                                <small class="text-muted d-block">{% trans "başlık" %}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted p-3">{% trans "Henüz kategori yok." %}</p>
+                {% endfor %}
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block extra_scripts %}
-    <script type="module" src="{% static 'main/js/load-more-popular.js' %}"></script>
-    <script type="module" src="{% static 'main/js/copy-link.js' %}"></script>
-    <script type="module">
-        import { loadMorePopularPosts } from "{% static 'main/js/load-more-popular.js' %}";
-
-        // Function to process all emoji shortcodes in the current page
-        function processPageEmojis() {
-            document.querySelectorAll('.post-text p').forEach(element => {
-                const html = element.innerHTML;
-                if (html.includes('<img src="/static/emojis/')) {
-                    // Convert HTML entities back to actual HTML
-                    const decodedHtml = html
-                        .replace(/</g, '<')
-                        .replace(/>/g, '>')
-                        .replace(/"/g, '"');
-                    element.innerHTML = decodedHtml;
-                }
-            });
-        }
-
-        window.currentPeriod = '{{ period }}';
-        window.offset = 10;
-        window.hasMore = true;
-        window.loading = false;
-
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Process emojis on initial page load
-            processPageEmojis();
             
-            document.querySelectorAll('#popular-tabs .nav-link').forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log('Guherîna tabê:', this.dataset.period);
-                    document.querySelectorAll('#popular-tabs .nav-link').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-
-                    window.currentPeriod = this.dataset.period;
-                    window.offset = 0;
-                    window.hasMore = true;
-
-                    document.querySelector('.post-container').innerHTML = '';
-                    document.getElementById('period-title').textContent = 
-                        `${window.currentPeriod.charAt(0).toUpperCase() + window.currentPeriod.slice(1)} Yên Herî Populer`;
-
-                    loadMorePopularPosts();
+            // Show more/less functionality
+            document.querySelectorAll('.show-more-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.entry-card');
+                    const preview = card.querySelector('.text-preview');
+                    const fullText = card.querySelector('.full-text');
+                    
+                    if (preview) preview.classList.add('d-none');
+                    if (fullText) fullText.classList.remove('d-none');
+                    this.classList.add('d-none');
+                });
+            });
+            
+            // Topic vote functionality
+            document.querySelectorAll('.vote-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const topicSlug = this.dataset.topicSlug;
+                    const voteType = this.dataset.voteType;
+                    
+                    fetch(`/topic/${topicSlug}/vote/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `vote_type=${voteType}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.vote_score !== undefined) {
+                            const card = this.closest('.topic-item');
+                            const scoreElement = card.querySelector('.vote-score');
+                            const upBtn = card.querySelector('[data-vote-type="up"]');
+                            const downBtn = card.querySelector('[data-vote-type="down"]');
+                            
+                            scoreElement.textContent = data.vote_score;
+                            
+                            if (voteType === 'up') {
+                                const icon = upBtn.querySelector('i');
+                                if (data.voted) {
+                                    icon.className = 'bi bi-arrow-up-circle-fill text-success';
+                                } else {
+                                    icon.className = 'bi bi-arrow-up';
+                                }
+                                downBtn.querySelector('i').className = 'bi bi-arrow-down';
+                            } else {
+                                const icon = downBtn.querySelector('i');
+                                if (data.voted) {
+                                    icon.className = 'bi bi-arrow-down-circle-fill text-danger';
+                                } else {
+                                    icon.className = 'bi bi-arrow-down';
+                                }
+                                upBtn.querySelector('i').className = 'bi bi-arrow-up';
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+            
+            // Entry vote functionality
+            document.querySelectorAll('.entry-vote-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const entryId = this.dataset.entryId;
+                    const voteType = this.dataset.voteType;
+                    
+                    fetch(`/entry/${entryId}/vote/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `vote_type=${voteType}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.vote_score !== undefined) {
+                            const entryCard = this.closest('.entry-item');
+                            const scoreElement = entryCard.querySelector('.entry-vote-score');
+                            const upBtn = entryCard.querySelector('[data-vote-type="up"]');
+                            const downBtn = entryCard.querySelector('[data-vote-type="down"]');
+                            
+                            scoreElement.textContent = data.vote_score;
+                            
+                            if (voteType === 'up') {
+                                const icon = upBtn.querySelector('i');
+                                if (data.voted) {
+                                    icon.className = 'bi bi-arrow-up-circle-fill text-success';
+                                } else {
+                                    icon.className = 'bi bi-arrow-up';
+                                }
+                                downBtn.querySelector('i').className = 'bi bi-arrow-down';
+                            } else {
+                                const icon = downBtn.querySelector('i');
+                                if (data.voted) {
+                                    icon.className = 'bi bi-arrow-down-circle-fill text-danger';
+                                } else {
+                                    icon.className = 'bi bi-arrow-down';
+                                }
+                                upBtn.querySelector('i').className = 'bi bi-arrow-up';
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
                 });
             });
         });

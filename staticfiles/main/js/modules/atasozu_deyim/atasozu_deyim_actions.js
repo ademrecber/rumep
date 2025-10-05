@@ -5,7 +5,7 @@ export function initAtasozuDeyimActions() {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const tur = form.getAttribute('data-tur');
-            const mesaj = `Bu ${tur === 'atasozu' ? 'atasözünü' : 'deyimi'} silmek istediğinizden emin misiniz?`;
+            const mesaj = gettext('Bu %(type)s silmek istediğinizden emin misiniz?').replace('%(type)s', tur === 'atasozu' ? gettext('atasözünü') : gettext('deyimi'));
             if (!confirm(mesaj)) {
                 return;
             }
@@ -23,11 +23,11 @@ export function initAtasozuDeyimActions() {
                     // Silme işlemi başarılı, liste sayfasına yönlendir
                     window.location.href = `/atasozu-deyim/?sekme=${tur}`;
                 } else {
-                    alert(data.error || 'Silme işlemi sırasında bir hata oluştu.');
+                    alert(data.error || gettext('Silme işlemi sırasında hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Silme hatası:', error);
-                alert('Bir hata oluştu, lütfen tekrar deneyin.');
+                alert(gettext('Hata oluştu, lütfen tekrar deneyin.'));
             }
         });
     });
@@ -66,7 +66,7 @@ export function initAtasozuDeyimActions() {
                 } else {
                     // Hata mesajını konsola yazdır
                     console.error('Detay ekleme hatası (tam yanıt):', data);
-                    let errorMessage = 'Detay eklenemedi. Hata: ';
+                    let errorMessage = gettext('Detay eklenemedi. Hata: ');
                     if (data.error) {
                         console.log('Hata (error):', data.error);
                         errorMessage += data.error;
@@ -80,14 +80,14 @@ export function initAtasozuDeyimActions() {
                             });
                         }
                     } else {
-                        errorMessage += 'Bilinmeyen bir hata oluştu.';
+                        errorMessage += gettext('Bilinmeyen hata oluştu.');
                     }
                     alert(errorMessage);
                 }
             } catch (error) {
                 // Catch bloğuna düşerse, hatayı konsola yazdır
                 console.error('Fetch hatası:', error);
-                alert('Bir hata oluştu: ' + error.message);
+                alert(gettext('Hata oluştu: %(error)s').replace('%(error)s', error.message));
             }
         });
     }
@@ -106,11 +106,11 @@ export function initAtasozuDeyimActions() {
                     document.getElementById('detay-duzenle-text').value = data.data.detay;
                     modal.show();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || gettext('Hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Detay verisi alınamadı:', error);
-                alert('Bir hata oluştu.');
+                alert(gettext('Hata oluştu.'));
             }
         });
     });
@@ -134,9 +134,9 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = gettext('Hata oluştu.');
                     if (data.errors) {
-                        errorMessage = 'Hatalar:\n';
+                        errorMessage = gettext('Hata:') + '\n';
                         for (const [field, errors] of Object.entries(data.errors)) {
                             errors.forEach(error => {
                                 errorMessage += `${field}: ${error}\n`;
@@ -147,7 +147,7 @@ export function initAtasozuDeyimActions() {
                 }
             } catch (error) {
                 console.error('Detay düzenleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert(gettext('Hata oluştu.'));
             }
         });
     }
@@ -155,7 +155,7 @@ export function initAtasozuDeyimActions() {
     // Detay silme
     document.querySelectorAll('[data-action="detay-sil"]').forEach(button => {
         button.addEventListener('click', async () => {
-            if (!confirm('Bu detayı silmek istediğinizden emin misiniz?')) return;
+            if (!confirm(gettext('Bu detayı silmek istediğinizden emin misiniz?'))) return;
             const detayId = button.getAttribute('data-detay-id');
             try {
                 const response = await fetch(`/atasozu-deyim/detay/${detayId}/sil/`, {
@@ -168,11 +168,11 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || gettext('Hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Detay silme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert(gettext('Hata oluştu.'));
             }
         });
     });
@@ -195,11 +195,11 @@ export function initAtasozuDeyimActions() {
                     document.getElementById('duzenle-ornek').value = data.form.ornek;
                     modal.show();
                 } else {
-                    alert(data.error || 'Bir hata oluştu.');
+                    alert(data.error || gettext('Hata oluştu.'));
                 }
             } catch (error) {
                 console.error('Düzenleme verisi alınamadı:', error);
-                alert('Bir hata oluştu.');
+                alert(gettext('Hata oluştu.'));
             }
         });
     });
@@ -224,9 +224,9 @@ export function initAtasozuDeyimActions() {
                 if (data.success) {
                     location.reload();
                 } else {
-                    let errorMessage = 'Bir hata oluştu.';
+                    let errorMessage = gettext('Hata oluştu.');
                     if (data.errors) {
-                        errorMessage = 'Hatalar:\n';
+                        errorMessage = gettext('Hata:') + '\n';
                         for (const [field, errors] of Object.entries(data.errors)) {
                             errors.forEach(error => {
                                 errorMessage += `${field}: ${error}\n`;
@@ -237,7 +237,7 @@ export function initAtasozuDeyimActions() {
                 }
             } catch (error) {
                 console.error('Düzenleme hatası:', error);
-                alert('Bir hata oluştu.');
+                alert(gettext('Hata oluştu.'));
             }
         });
     }

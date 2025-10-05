@@ -8,8 +8,6 @@ from .base import profile_required
 import bleach
 from django.conf import settings
 
-@login_required
-@profile_required
 def yer_adlari_anasayfa(request):
     harf = request.GET.get('harf', '').upper()
     kategori = request.GET.get('kategori', '')
@@ -76,14 +74,14 @@ def yer_adi_ekle(request):
     }
     return render(request, 'main/yer_adlari/yer_adi_ekle.html', context)
 
-@login_required
-@profile_required
 @csrf_protect
 def yer_adi_detay(request, yer_adi_id):
     yer_adi = get_object_or_404(YerAdi, id=yer_adi_id)
     detaylar = YerAdiDetay.objects.filter(yer_adi=yer_adi).order_by('-eklenme_tarihi')
     
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login_page')
         form = YerAdiDetayForm(request.POST)
         if form.is_valid() and request.user != yer_adi.kullanici:
             detay = form.save(commit=False)

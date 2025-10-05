@@ -62,7 +62,7 @@ export function initAlbumEkle() {
             const data = await response.json();
             if (data.success) {
                 form.reset();
-                alert('Albûm bi serkeftî hate zêdekirin!');
+                alert(window.i18n?.t('sarki.album_added_success') || 'Albüm başarıyla eklendi!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');
@@ -103,7 +103,7 @@ export function initSarkiEkle() {
             const data = await response.json();
             if (data.success) {
                 form.reset();
-                alert('Stran bi serkeftî hate zêdekirin!');
+                alert(window.i18n?.t('sarki.song_added_success') || 'Şarkı başarıyla eklendi!');
                 window.location.reload();
             } else {
                 errorDiv.classList.remove('d-none');

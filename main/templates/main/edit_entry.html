@@ -1,0 +1,100 @@
+{% extends 'main/base.html' %}
+{% load entry_tags %}
+{% load i18n %}
+{% block title %}{% trans "Entry Düzenle" %}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{% trans "Entry Düzenle" %}</h5>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="font_family" id="fontFamilyInput" value="{{ entry.font_family|default:'' }}">
+                <div class="form-group mb-3">
+                    <label for="{{ form.content.id_for_label }}">{% trans "İçerik" %}</label>
+                    {{ form.content }}
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="{{ form.content.id_for_label }}">
+                            <i class="bi bi-fonts"></i> {% trans "Font" %}
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="insertLinkToEntry()">
+                            <i class="bi bi-link-45deg"></i> {% trans "Link" %}
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="{{ form.link.id_for_label }}">{% trans "Link" %}</label>
+                    {{ form.link }}
+                </div>
+                {% if form.errors %}
+                    <div class="alert alert-danger">{{ form.errors }}</div>
+                {% endif %}
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">{% trans "Kaydet" %}</button>
+                    <a href="{% url 'topic_detail' entry.topic.slug %}" class="btn btn-secondary">{% trans "İptal" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Emoji Modal -->
+<div class="modal fade" id="emojiModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Emoji" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function insertLinkToEntry() {
+    const textarea = document.querySelector('textarea[name="content"]');
+    if (textarea) {
+        const url = prompt('{% trans "Link URL girin:" %}');
+        if (url) {
+            const linkText = `[link]${url}[/link]`;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.substring(0, start) + linkText + textarea.value.substring(end);
+            textarea.focus();
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('emojiModal').addEventListener('show.bs.modal', function() {
+        const emojiKeyboard = document.getElementById('emojiKeyboard');
+        if (emojiKeyboard.children.length === 0) {
+            fetch('/emojis/')
+                .then(response => response.json())
+                .then(emojis => {
+                    emojis.forEach(emoji => {
+                        const emojiBtn = document.createElement('button');
+                        emojiBtn.type = 'button';
+                        emojiBtn.className = 'btn btn-light m-1';
+                        emojiBtn.innerHTML = `<img src="/static/emojis/${emoji.name}.svg" alt="${emoji.name}" width="24">`;
+                        emojiBtn.onclick = () => {
+                            const textarea = document.querySelector('textarea[name="content"]');
+                            if (textarea) {
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                textarea.value = textarea.value.substring(0, start) + emoji.shortcode + textarea.value.substring(end);
+                                textarea.focus();
+                                bootstrap.Modal.getInstance(document.getElementById('emojiModal')).hide();
+                            }
+                        };
+                        emojiKeyboard.appendChild(emojiBtn);
+                    });
+                });
+        }
+    });
+});
+</script>
+{% endblock %}

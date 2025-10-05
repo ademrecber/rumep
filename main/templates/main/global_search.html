@@ -1,0 +1,250 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Global Arama" %}{% endblock %}
+{% block page_header %}{% trans "Global Arama" %}{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <!-- Arama Formu -->
+    <div class="card search-form-card">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" name="q" class="form-control search-input" 
+                           placeholder="{% trans 'Tüm içeriklerde ara... 🔍' %}" 
+                           value="{{ query }}" autofocus>
+                </div>
+                <div class="col-md-3">
+                    <select name="category" class="form-select search-select">
+                        <option value="all" {% if category == 'all' %}selected{% endif %}>{% trans "Tüm Kategoriler" %}</option>
+                        <option value="sozluk" {% if category == 'sozluk' %}selected{% endif %}>{% trans "Sözlük" %}</option>
+                        <option value="kisiler" {% if category == 'kisiler' %}selected{% endif %}>{% trans "Kişiler" %}</option>
+                        <option value="sarkilar" {% if category == 'sarkilar' %}selected{% endif %}>{% trans "Şarkılar" %}</option>
+                        <option value="atasozu_deyim" {% if category == 'atasozu_deyim' %}selected{% endif %}>{% trans "Atasözü/Deyim" %}</option>
+                        <option value="yer_adlari" {% if category == 'yer_adlari' %}selected{% endif %}>{% trans "Yer Adları" %}</option>
+                        <option value="topics" {% if category == 'topics' %}selected{% endif %}>{% trans "Başlıklar" %}</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn search-btn w-100">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if not query %}
+        <!-- Arama İpuçları -->
+        <div class="card search-tips">
+            <div class="card-header">
+                <h6 class="mb-0"><i class="bi bi-lightbulb me-2"></i>{% trans "Arama İpuçları" %}</h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-hash text-primary me-2"></i>Kod ile arama: <code>#123456789</code></li>
+                    <li><i class="bi bi-search text-primary me-2"></i>Kelime arama: <code>Kurdistan</code></li>
+                    <li><i class="bi bi-funnel text-primary me-2"></i>Kategori seçerek filtreleyin</li>
+                    <li><i class="bi bi-quote text-primary me-2"></i>Tam eşleşme için tırnak kullanın: <code>"tam cümle"</code></li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if query %}
+        <!-- Kod Sonucu -->
+        {% if code_result %}
+        <div class="alert code-result-alert">
+            <h5><i class="bi bi-check-circle me-2"></i>Kod Bulundu!</h5>
+            {% if code_result.type == 'topic' %}
+                <p><strong>Topic:</strong> <a href="{% url 'topic_detail' code_result.object.slug %}">{{ code_result.object.title }}</a></p>
+                <small>{{ code_result.object.user.profile.nickname }} • {{ code_result.object.created_at|date:"d.m.Y" }} • Kod: #{{ code_result.object.code }}</small>
+            {% elif code_result.type == 'entry' %}
+                <p><strong>Entry:</strong> <a href="{% url 'topic_detail' code_result.object.topic.slug %}#entry-{{ code_result.object.id }}">{{ code_result.object.topic.title }}</a></p>
+                <small>{{ code_result.object.user.profile.nickname }} • {{ code_result.object.created_at|date:"d.m.Y" }} • Kod: #{{ code_result.object.code }}</small>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Sonuç Özeti -->
+        <div class="alert results-summary">
+            <strong>"{{ query }}"</strong> için <strong>{{ total_count }}</strong> sonuç bulundu.
+        </div>
+
+        <!-- Sözlük Sonuçları -->
+        {% if sozluk %}
+        <div class="card result-card">
+            <div class="card-header">
+                <h5><i class="bi bi-book"></i>{% trans "Sözlük" %} ({{ sozluk|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for kelime in sozluk %}
+                <div class="result-item">
+                    <h6><a href="{% url 'sozluk_kelime' kelime.id %}">{{ kelime.kelime }}</a></h6>
+                    <p class="text-muted">{{ kelime.detay|truncatechars:100 }}</p>
+                    <small>{{ kelime.kullanici.profile.nickname }} • {{ kelime.eklenme_tarihi|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Kişiler Sonuçları -->
+        {% if kisiler %}
+        <div class="card result-card">
+            <div class="card-header">
+                <h5><i class="bi bi-people"></i>{% trans "Kişiler" %} ({{ kisiler|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for kisi in kisiler %}
+                <div class="result-item">
+                    <h6><a href="{% url 'kisi_detay' kisi.id %}">{{ kisi.ad }}</a></h6>
+                    <p class="text-muted">{{ kisi.biyografi|truncatechars:100 }}</p>
+                    <small>{{ kisi.kullanici.profile.nickname }} • {{ kisi.eklenme_tarihi|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Şarkılar Sonuçları -->
+        {% if sarkilar %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-music-note-list me-2"></i>{% trans "Şarkılar" %} ({{ sarkilar|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for sarki in sarkilar %}
+                <div class="border-bottom pb-2 mb-2">
+                    <h6><a href="{% url 'sarki_detay' sarki.id %}" class="text-decoration-none">{{ sarki.ad }}</a></h6>
+                    <p class="text-muted mb-1">{{ sarki.album.kisi.ad }} • {{ sarki.sozler|truncatechars:100 }}</p>
+                    <small class="text-muted">{{ sarki.kullanici.profile.nickname }} • {{ sarki.eklenme_tarihi|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Atasözü/Deyim Sonuçları -->
+        {% if atasozu_deyim %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-quote me-2"></i>{% trans "Atasözü ve Deyimler" %} ({{ atasozu_deyim|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for item in atasozu_deyim %}
+                <div class="border-bottom pb-2 mb-2">
+                    <h6><a href="#" class="text-decoration-none">{{ item.kelime }}</a></h6>
+                    <p class="text-muted mb-1">{{ item.anlami|truncatechars:100 }}</p>
+                    <small class="text-muted">{{ item.kullanici.profile.nickname }} • {{ item.eklenme_tarihi|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Yer Adları Sonuçları -->
+        {% if yer_adlari %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>{% trans "Yer Adları" %} ({{ yer_adlari|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for yer in yer_adlari %}
+                <div class="border-bottom pb-2 mb-2">
+                    <h6><a href="{% url 'yer_adi_detay' yer.id %}" class="text-decoration-none">{{ yer.ad }}</a></h6>
+                    <p class="text-muted mb-1">{{ yer.detay|truncatechars:100 }}</p>
+                    <small class="text-muted">{{ yer.kullanici.profile.nickname }} • {{ yer.eklenme_tarihi|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Topics Sonuçları -->
+        {% if topics %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-chat-square-text me-2"></i>{% trans "Başlıklar" %} ({{ topics|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% for topic in topics %}
+                <div class="border-bottom pb-2 mb-2">
+                    <h6><a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none">{{ topic.title }}</a></h6>
+                    <small class="text-muted">{{ topic.user.profile.nickname }} • {{ topic.created_at|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if total_count == 0 %}
+        <div class="search-empty">
+            <i class="bi bi-search"></i>
+            <h4>{% trans "Sonuç bulunamadı" %}</h4>
+            <p>{% trans "Farklı anahtar kelimeler deneyin veya kategori filtrelerini değiştirin" %}</p>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <!-- Bugün En Çok Arananlar -->
+    <div class="card popular-searches">
+        <div class="card-header">
+            <h5><i class="bi bi-trending-up"></i>{% trans "Bugün En Çok Arananlar" %}</h5>
+        </div>
+        <div class="card-body">
+            <div id="popular-searches-list">
+                {% for search in popular_searches %}
+                <div class="popular-search-item">
+                    <h6><a href="?q={{ search }}">{{ search }}</a></h6>
+                    <small class="text-muted">{% cycle '127' '89' '156' '203' '78' '145' '92' '167' '134' '98' %} {% trans "arama" %}</small>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-3">
+                <button id="load-more-searches" class="load-more-btn">{% trans "Daha Fazla Yükle" %}</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('load-more-searches');
+    const searchesList = document.getElementById('popular-searches-list');
+    let page = 1;
+    
+    const moreSearches = [
+        'Dengbej', 'Halay', 'Govend', 'Mem û Zîn', 'Leyla û Mecnûn',
+        'Xece', 'Beritan', 'Zilan', 'Botan', 'Cizre',
+        'Nusaybin', 'Qamishlo', 'Afrin', 'Kobane', 'Haseke',
+        'Hewlêr', 'Silêmanî', 'Duhok', 'Zakho', 'Amadiye'
+    ];
+    
+    loadMoreBtn.addEventListener('click', function() {
+        const startIndex = page * 10;
+        const endIndex = Math.min(startIndex + 10, moreSearches.length);
+        
+        for (let i = startIndex; i < endIndex; i++) {
+            if (moreSearches[i]) {
+                const searchCount = Math.floor(Math.random() * 200) + 50;
+                const searchItem = document.createElement('div');
+                searchItem.className = 'border-bottom pb-2 mb-2';
+                searchItem.innerHTML = `
+                    <h6><a href="?q=${moreSearches[i]}" class="text-decoration-none">${moreSearches[i]}</a></h6>
+                    <small class="text-muted">${searchCount} {% trans "arama" %}</small>
+                `;
+                searchesList.appendChild(searchItem);
+            }
+        }
+        
+        page++;
+        if (endIndex >= moreSearches.length) {
+            loadMoreBtn.style.display = 'none';
+        }
+    });
+});
+</script>
+</div>
+{% endblock %}

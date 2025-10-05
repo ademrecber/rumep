@@ -1,0 +1,107 @@
+/* Sosyal Medya Bağlantıları */
+.social-links {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    color: white;
+}
+
+/* Platform Renkleri */
+.social-link.website {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.social-link.instagram {
+    background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+}
+
+.social-link.twitter {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+}
+
+.social-link.facebook {
+    background: linear-gradient(135deg, #3b5998 0%, #2d4373 100%);
+}
+
+.social-link.youtube {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+}
+
+.social-link.tiktok {
+    background: linear-gradient(135deg, #000000 0%, #ff0050 100%);
+}
+
+.social-link.linkedin {
+    background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+}
+
+.social-link.github {
+    background: linear-gradient(135deg, #333333 0%, #24292e 100%);
+}
+
+/* Mobil Responsive */
+@media (max-width: 768px) {
+    .social-links {
+        justify-content: center;
+        margin-top: 16px;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* Hover Efektleri */
+.social-link.website:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(135deg, #fcb045 0%, #fd1d1d 50%, #833ab4 100%);
+}
+
+.social-link.twitter:hover {
+    background: linear-gradient(135deg, #0d8bd9 0%, #1da1f2 100%);
+}
+
+.social-link.facebook:hover {
+    background: linear-gradient(135deg, #2d4373 0%, #3b5998 100%);
+}
+
+.social-link.youtube:hover {
+    background: linear-gradient(135deg, #cc0000 0%, #ff0000 100%);
+}
+
+.social-link.tiktok:hover {
+    background: linear-gradient(135deg, #ff0050 0%, #000000 100%);
+}
+
+.social-link.linkedin:hover {
+    background: linear-gradient(135deg, #005885 0%, #0077b5 100%);
+}
+
+.social-link.github:hover {
+    background: linear-gradient(135deg, #24292e 0%, #333333 100%);
+}
