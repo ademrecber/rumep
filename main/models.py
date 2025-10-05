@@ -264,7 +264,7 @@ class Profile(models.Model):
         default='tr',
         blank=True
     )
-    dark_mode = models.BooleanField(default=False, verbose_name=_('Karanlık Mod'))
+
 
     def clean(self):
         import re

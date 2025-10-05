@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0020_profile_dark_mode'),
+        ('main', '0019_notification_category'),
     ]
 
     operations = [

@@ -245,31 +245,7 @@
     }
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #1a1a1a;
-        --text-color: #ffffff;
-        --card-bg: #2d2d2d;
-        --border-color: #404040;
-    }
-    
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
-    
-    .card {
-        background-color: var(--card-bg);
-        border-color: var(--border-color);
-    }
-    
-    .form-control {
-        background-color: var(--card-bg);
-        border-color: var(--border-color);
-        color: var(--text-color);
-    }
-}
+
 
 /* Accessibility */
 .sr-only {
