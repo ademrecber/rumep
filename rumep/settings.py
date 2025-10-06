@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6c683f6c9f2d3b1d4f8121e8e4424f37f55213fceee0d73ec77f3ea69b77b3d9'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -89,12 +89,13 @@ WSGI_APPLICATION = 'rumep.wsgi.application'
 # Database
 DATABASES = {
          'default': {
-             'ENGINE': 'django.db.backends.postgresql',
-             'NAME': 'rumep_db_vdej',
-             'USER': 'rumep_user',
-             'PASSWORD': 'WrvpvyG3nbrdOoq3D4mu9PZ8rwWVg85p',
-             'HOST': 'dpg-d13141be5dus73cskem0-a',
-             'PORT': '5432',
+             'ENGINE': '',
+             'DB_NAME': '',
+             'DB_USER': '',
+             'DB_PASSWORD': '',
+             'DB_HOST': '',
+             'DB_PORT': '',
+             'DATABASE_URL': ''
          }
      }
 
@@ -152,8 +153,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '814379266897-eph7ljgj320ro93fdj50gfbhvldldpm0.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 
 LOGIN_URL = '/login/'
@@ -257,6 +258,7 @@ CONTENT_SECURITY_POLICY = {
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
             "https://ep1.adtrafficquality.google",
+            "https://cdn.jsdelivr.net",
         ],
         'frame-src': [
             "'self'",
