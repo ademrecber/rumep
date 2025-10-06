@@ -88,7 +88,7 @@
         <!-- Action Buttons -->
         <div class="profile-actions">
             {% if user.is_authenticated and user != profile.user %}
-                <button class="action-btn primary" id="followBtn" data-username="{{ profile.username }}">
+                <button class="action-btn primary follow-btn" data-username="{{ profile.username }}">
                     <i class="bi bi-person-plus"></i>
                     <span>{% if is_following %}{% trans "Takibi Bırak" %}{% else %}{% trans "Takip Et" %}{% endif %}</span>
                 </button>
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         followBtn.addEventListener('click', function() {
             const username = this.dataset.username;
             
-            fetch(`/follow/${username}/`, {
+            fetch(`/toggle-follow/${username}/`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),

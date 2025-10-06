@@ -258,7 +258,7 @@
                                 </div>
                             </div>
                             {% if user.is_authenticated and user != author.user %}
-                            <button class="btn btn-sm btn-outline-primary">{% trans "Takip Et" %}</button>
+                            <button class="btn btn-sm btn-outline-primary follow-btn" data-username="{{ author.username }}">{% trans "Takip Et" %}</button>
                             {% endif %}
                         </div>
                         {% empty %}
@@ -401,6 +401,7 @@
 
     <script src="{% static 'main/js/base.js' %}"></script>
     <script src="{% static 'main/js/bootstrap-features.js' %}"></script>
+    <script src="{% static 'main/js/follow.js' %}"></script>
     {% block extra_scripts %}{% endblock %}
     <!-- Bootstrap with SRI -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
