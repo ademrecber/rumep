@@ -155,6 +155,7 @@ urlpatterns = [
     
     # Follow URLs
     path('follow/<str:username>/', follow_views.toggle_follow, name='toggle_follow'),
+    path('toggle-follow/<str:username>/', follow_views.toggle_follow, name='toggle_follow'),
     
     # Hashtag URLs
     path('hashtag/<slug:slug>/', hashtag_views.hashtag_detail, name='hashtag_detail'),
