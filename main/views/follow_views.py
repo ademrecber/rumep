@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_protect
+
 from django.contrib.auth.models import User
 from ..models import Follow, Topic, Entry
 from .base import profile_required
@@ -9,7 +9,6 @@ from .notification_views import create_notification
 
 @login_required
 @profile_required
-@csrf_protect
 def toggle_follow(request, username):
     if request.method == 'POST':
         target_user = get_object_or_404(User, username=username)
