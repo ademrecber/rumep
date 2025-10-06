@@ -43,7 +43,13 @@ def complete_profile(request):
             return render(request, 'main/complete_profile.html', {'error': 'Bu takma ad zaten alınmış.'})
         if Profile.objects.filter(username=username).exists():
             return render(request, 'main/complete_profile.html', {'error': 'Bu kullanıcı adı zaten alınmış.'})
-        Profile.objects.create(user=request.user, nickname=nickname, username=username, preferred_language=preferred_language)
+        Profile.objects.create(
+            user=request.user, 
+            nickname=nickname, 
+            username=username, 
+            preferred_language=preferred_language,
+            dark_mode=False
+        )
         return redirect('home')
     return render(request, 'main/complete_profile.html')
 

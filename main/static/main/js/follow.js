@@ -50,7 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Takip işlemi hatası:', error);
-                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                if (error.message.includes('404')) {
+                    alert('Kullanıcı bulunamadı.');
+                } else {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
             })
             .finally(() => {
                 this.disabled = false;

@@ -13,9 +13,9 @@ from .notification_views import create_notification
 def toggle_follow(request, username):
     if request.method == 'POST':
         try:
-            target_user = get_object_or_404(User, username=username)
-        except:
-            return JsonResponse({'error': 'Kullanıcı bulunamadı'}, status=404)
+            target_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'Kullanıcı bulunamadı', 'success': False}, status=200)
         
         if target_user == request.user:
             return JsonResponse({'error': 'Kendinizi takip edemezsiniz'}, status=400)
