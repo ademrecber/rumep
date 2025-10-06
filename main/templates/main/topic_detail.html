@@ -64,8 +64,12 @@
                 </div>
                 {% if entry.link %}
                     <div class="entry-link mb-3">
-                        <a href="{{ entry.link }}" target="_blank" class="text-primary text-decoration-none">
-                            <i class="bi bi-link-45deg"></i> {{ entry.link }}
+                        <a href="{{ entry.link }}" target="_blank" class="text-primary text-decoration-none d-inline-flex align-items-center" style="max-width: 100%; overflow: hidden;">
+                            <i class="bi bi-link-45deg me-1"></i>
+                            <span class="text-truncate" style="max-width: 200px;" title="{{ entry.link }}">
+                                {% load entry_tags %}
+                                {{ entry.link|extract_domain }}
+                            </span>
                         </a>
                     </div>
                 {% endif %}

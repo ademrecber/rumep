@@ -46,11 +46,6 @@ class TopicForm(forms.ModelForm):
         if len(title) < 3:
             raise forms.ValidationError(_('Başlık en az 3 karakter olmalıdır.'))
         
-        # Tüm Unicode harfler, sayılar ve boşluk kontrolü
-        invalid_chars = [c for c in title if not (c.isalnum() or c.isspace())]
-        if invalid_chars:
-            raise forms.ValidationError(_('Başlık sadece harf ve sayı içerebilir. Geçersiz karakterler: {}').format(''.join(set(invalid_chars))))
-        
         if Topic.objects.filter(title__iexact=title).exists():
             raise forms.ValidationError(_('Bu başlık zaten mevcut.'))
         return title

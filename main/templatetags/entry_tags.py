@@ -1,5 +1,6 @@
 from django import template
 import re
+from urllib.parse import urlparse
 
 register = template.Library()
 
@@ -40,3 +41,18 @@ def render_custom_emojis(content):
             )
     
     return content
+
+@register.filter
+def extract_domain(url):
+    """URL'den domain adını çıkarır"""
+    if not url:
+        return url
+    
+    try:
+        parsed = urlparse(url)
+        domain = parsed.netloc
+        if domain.startswith('www.'):
+            domain = domain[4:]
+        return domain if domain else url
+    except:
+        return url
