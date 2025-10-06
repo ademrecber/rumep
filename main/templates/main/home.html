@@ -168,7 +168,8 @@
                     </div>
                     {% endif %}
 
-                    <div class="d-flex justify-content-between align-items-end mt-3">
+                    <!-- Desktop Layout -->
+                    <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
                         <div class="vote-buttons d-flex gap-1 align-items-center">
                             <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
                                 <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
@@ -238,6 +239,82 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Mobile Layout -->
+                    <div class="d-block d-md-none mt-3">
+                        <div class="mobile-topic-actions" data-topic-id="{{ topic.id }}">
+                            <div class="topic-info-container">
+                                <div class="topic-user-info">
+                                    <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
+                                    <small class="text-muted ms-2">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
+                                    <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
+                                </div>
+                                <button class="mobile-actions-toggle" data-topic-id="{{ topic.id }}">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                            <div class="mobile-actions-panel" data-topic-id="{{ topic.id }}">
+                                <div class="actions-content">
+                                    <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                        <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                                    </button>
+                                    <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                                    <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                        <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                                    </button>
+                                    {% if user.is_authenticated %}
+                                        <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
+                                            <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                                        </button>
+                                    {% endif %}
+                                    <div class="dropdown d-inline ms-2">
+                                        <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                        <ul class="dropdown-menu share-dropdown">
+                                            <li>
+                                                <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-twitter share-icon"></i>
+                                                    {% trans "Twitter'da Paylaş" %}
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-whatsapp share-icon"></i>
+                                                    {% trans "WhatsApp'ta Paylaş" %}
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-telegram share-icon"></i>
+                                                    {% trans "Telegram'da Paylaş" %}
+                                                </button>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-link-45deg share-icon"></i>
+                                                    {% trans "Linki Kopyala" %}
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-hash share-icon"></i>
+                                                    {% trans "Kodu Kopyala" %}
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
+                                                    <i class="bi bi-qr-code share-icon"></i>
+                                                    {% trans "QR Kod" %}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="text-center mb-3">
@@ -277,7 +354,8 @@
                                 </div>
                                 {% endif %}
 
-                                <div class="d-flex justify-content-between align-items-end mt-3">
+                                <!-- Desktop Layout -->
+                                <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
                                     <div class="vote-buttons d-flex gap-1 align-items-center">
                                         <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
                                             <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
@@ -342,6 +420,82 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!-- Mobile Layout -->
+                                <div class="d-block d-md-none mt-3">
+                                    <div class="mobile-topic-actions" data-topic-id="{{ topic.id }}">
+                                        <div class="topic-info-container">
+                                            <div class="topic-user-info">
+                                                <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
+                                                <small class="text-muted ms-2">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
+                                                <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
+                                            </div>
+                                            <button class="mobile-actions-toggle" data-topic-id="{{ topic.id }}">
+                                                <i class="bi bi-three-dots"></i>
+                                            </button>
+                                        </div>
+                                        <div class="mobile-actions-panel" data-topic-id="{{ topic.id }}">
+                                            <div class="actions-content">
+                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
+                                                    <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
+                                                </button>
+                                                <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
+                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
+                                                    <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
+                                                </button>
+                                                {% if user.is_authenticated %}
+                                                    <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
+                                                        <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
+                                                    </button>
+                                                {% endif %}
+                                                <div class="dropdown d-inline ms-2">
+                                                    <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                                                        <i class="bi bi-share"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu share-dropdown">
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-twitter share-icon"></i>
+                                                                {% trans "Twitter'da Paylaş" %}
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-whatsapp share-icon"></i>
+                                                                {% trans "WhatsApp'ta Paylaş" %}
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-telegram share-icon"></i>
+                                                                {% trans "Telegram'da Paylaş" %}
+                                                            </button>
+                                                        </li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-link-45deg share-icon"></i>
+                                                                {% trans "Linki Kopyala" %}
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-hash share-icon"></i>
+                                                                {% trans "Kodu Kopyala" %}
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
+                                                                <i class="bi bi-qr-code share-icon"></i>
+                                                                {% trans "QR Kod" %}
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="text-center mb-3">
@@ -376,10 +530,158 @@
 <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">{% trans "Daha Fazla Yükle" %}</button>
 <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
 
+<style>
+/* Mobile Topic Actions */
+.mobile-topic-actions {
+    position: relative;
+    overflow: hidden;
+}
+
+.topic-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.topic-user-info {
+    flex: 1;
+    text-align: center;
+}
+
+.mobile-actions-toggle {
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.mobile-actions-toggle:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.mobile-actions-panel {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(248, 249, 250, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.3s ease;
+    border-radius: 8px;
+}
+
+.mobile-actions-panel.active {
+    right: 0;
+}
+
+.topic-info-container.shifted {
+    transform: translateX(-100%);
+}
+
+.actions-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+}
+
+.actions-content .btn {
+    font-size: 1.1rem;
+}
+
+.actions-content .vote-score {
+    min-width: 24px;
+    text-align: center;
+}
+
+/* Smooth transitions */
+.mobile-topic-actions * {
+    transition: all 0.3s ease;
+}
+</style>
+
 <script type="module" src="{% static 'main/js/load-more.js' %}"></script>
 <script src="{% static 'main/js/home.js' %}"></script>
 <script src="{% static 'main/js/auto-links.js' %}"></script>
 <script src="{% static 'main/js/share.js' %}"></script>
 <script src="{% static 'main/js/bookmarks.js' %}"></script>
 <script src="{% static 'main/js/emoji-keyboard.js' %}"></script>
+
+<script>
+// Mobile Topic Actions JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    let activePanel = null;
+    
+    // Toggle button click handler
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mobile-actions-toggle')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const button = e.target.closest('.mobile-actions-toggle');
+            const topicId = button.dataset.topicId;
+            const container = button.closest('.mobile-topic-actions');
+            const infoContainer = container.querySelector('.topic-info-container');
+            const panel = container.querySelector('.mobile-actions-panel');
+            
+            // Close any other open panel
+            if (activePanel && activePanel !== panel) {
+                closePanel(activePanel);
+            }
+            
+            // Toggle current panel
+            if (panel.classList.contains('active')) {
+                closePanel(panel);
+            } else {
+                openPanel(panel, infoContainer);
+            }
+        }
+        // Close panel when clicking outside
+        else if (!e.target.closest('.mobile-actions-panel')) {
+            if (activePanel) {
+                closePanel(activePanel);
+            }
+        }
+    });
+    
+    function openPanel(panel, infoContainer) {
+        // Close any other open panel first
+        if (activePanel && activePanel !== panel) {
+            closePanel(activePanel);
+        }
+        
+        panel.classList.add('active');
+        infoContainer.classList.add('shifted');
+        activePanel = panel;
+    }
+    
+    function closePanel(panel) {
+        if (!panel) return;
+        
+        const container = panel.closest('.mobile-topic-actions');
+        const infoContainer = container.querySelector('.topic-info-container');
+        
+        panel.classList.remove('active');
+        infoContainer.classList.remove('shifted');
+        
+        if (activePanel === panel) {
+            activePanel = null;
+        }
+    }
+});
+</script>
 {% endblock %}
