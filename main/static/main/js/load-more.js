@@ -1,6 +1,8 @@
-import { initLikes, getCsrfToken } from "./like.js";
-import { initVoteButtons } from "./vote.js";
 import { initCopyLink } from "./copy-link.js";
+
+function getCsrfToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]')?.value || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+}
 
 async function loadMorePosts() {
     if (window.loading || !window.hasMore) return;
@@ -16,7 +18,7 @@ async function loadMorePosts() {
 
     try {
         const csrfToken = getCsrfToken();
-        if (!csrfToken) throw new Error(gettext('CSRF token bulunamadı'));
+        if (!csrfToken) throw new Error('CSRF token bulunamadı');
         console.log('CSRF Token:', csrfToken);
 
         const url = `/load-more-topics/?offset=${window.offset}`;
@@ -30,7 +32,7 @@ async function loadMorePosts() {
             }
         });
 
-        if (!response.ok) throw new Error(gettext('Ağ hatası: %(status)s').replace('%(status)s', response.status));
+        if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
 
         const data = await response.json();
         console.log('Gelen veri:', data);
@@ -40,11 +42,11 @@ async function loadMorePosts() {
             data.posts.forEach(post => {
                 const liked = post.liked ? 'liked' : '';
                 const bookmarked = post.bookmarked ? 'bookmarked' : '';
-                const isOwner = post.is_owner !== undefined ? post.is_owner : false; // is_owner yoksa false varsay
+                const isOwner = post.is_owner !== undefined ? post.is_owner : false;
                 const postDiv = document.createElement('div');
                 postDiv.className = 'card mb-2 tweet-card';
                 postDiv.id = `post-${post.id}`;
-                const totalLines = post.text.split(/(\n)/).length;
+                const totalLines = post.text.split(/(\\n)/).length;
                 postDiv.innerHTML = `
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
@@ -59,20 +61,20 @@ async function loadMorePosts() {
                                 <ul class="dropdown-menu">
                                     ${isOwner ? `
                                         <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('${gettext('Bu postu silmek istediğinizden emin misiniz?')}');">
+                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
                                                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">${gettext('Sil')}</button>
+                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
                                             </form>
                                         </li>
                                     ` : ''}
                                     <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? gettext('Yer işaretinden kaldır') : gettext('Yer işaretine ekle')} istediğinizden emin misiniz?');" data-post-id="${post.id}">
+                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Yer işaretinden kaldır' : 'Yer işaretine ekle'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
                                             <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? gettext('Yer İşaretinden Kaldır') : gettext('Yer İşaretine Ekle')}</button>
+                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle'}</button>
                                         </form>
                                     </li>
                                     <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">${gettext('Bağlantıyı Kopyala')}</button>
+                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Bağlantıyı Kopyala</button>
                                     </li>
                                 </ul>
                             </div>
@@ -80,16 +82,16 @@ async function loadMorePosts() {
                         <h5>${post.title || ''}</h5>
                         <div class="post-text">
                             ${post.text.length > 400 || totalLines > 15 ? `
-                                <div class="text-preview">${post.text.substring(0, 100).replace(/\n/g, '<br>')}</div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">${gettext('Daha fazla göster')}</button>
-                                <div class="full-text d-none">${post.text.split('\n').map(line => `<p>${line}</p>`).join('')}</div>
-                            ` : post.text.split('\n').map(line => `<p>${line}</p>`).join('')}
+                                <div class="text-preview">${post.text.substring(0, 100).replace(/\\n/g, '<br>')}</div>
+                                <button class="btn btn-link text-primary p-0 show-more-btn">Daha fazla göster</button>
+                                <div class="full-text d-none">${post.text.split('\\n').map(line => `<p>${line}</p>`).join('')}</div>
+                            ` : post.text.split('\\n').map(line => `<p>${line}</p>`).join('')}
                         </div>
                         ${post.link ? `<a href="/rmp/${post.link.slice(4)}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
                         ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
                         <div class="post-meta text-muted mt-2">
-                            <span>${gettext('Beğeni')}: ${post.like_count}</span> | 
-                            <span>${gettext('Yorum')}: ${post.comment_count}</span> | 
+                            <span>Beğeni: ${post.like_count}</span> | 
+                            <span>Yorum: ${post.comment_count}</span> | 
                             <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
                             <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
                         </div>
@@ -111,7 +113,7 @@ async function loadMorePosts() {
                                 <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
                             </form>
                             <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">${gettext('Puan')}: ${post.total_score.toFixed(1)}</span>` : ''}
+                            ${post.total_score ? `<span class="text-muted ms-2">Puan: ${post.total_score.toFixed(1)}</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -121,10 +123,8 @@ async function loadMorePosts() {
             const postContainer = document.querySelector('.topic-container');
             if (postContainer) {
                 postContainer.appendChild(fragment);
-                initLikes();
-                initVoteButtons();
                 initBookmarks();
-                initCopyLink(); // Dinamik yüklenen postlar için kopyalama olayını bağla
+                initCopyLink();
             }
 
             window.offset += 10;
@@ -141,7 +141,7 @@ async function loadMorePosts() {
     } catch (error) {
         console.error('Hata:', error);
         if (errorMessage) {
-            errorMessage.textContent = gettext('Postlar yüklenirken hata oluştu: %(error)s').replace('%(error)s', error.message);
+            errorMessage.textContent = `Postlar yüklenirken hata oluştu: ${error.message}`;
             errorMessage.style.display = 'block';
         }
         if (loadMoreBtn) loadMoreBtn.style.display = 'block';
@@ -199,7 +199,7 @@ function initBookmarks() {
                     
                     const button = this.querySelector('.bookmark-btn');
                     if (button) {
-                        button.textContent = data.bookmarked ? gettext('Yer İşaretinden Kaldır') : gettext('Yer İşaretine Ekle');
+                        button.textContent = data.bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle';
                         button.dataset.bookmarked = data.bookmarked ? 'true' : 'false';
                         console.log("Yer işareti butonu güncellendi:", button.textContent, "Bookmarked:", data.bookmarked);
                         if (isBookmarksTab) {
@@ -222,8 +222,6 @@ function initBookmarks() {
         }
     });
 }
-
-// initVoteButtons fonksiyonu vote.js'den import ediliyor
 
 function initializePage() {
     window.offset = window.offset || 10;
@@ -269,8 +267,6 @@ function initializePage() {
         console.error('Post container bulunamadı');
     }
 
-    initLikes();
-    initVoteButtons();
     initBookmarks();
     initCopyLink();
 }

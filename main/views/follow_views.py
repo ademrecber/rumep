@@ -12,7 +12,10 @@ from .notification_views import create_notification
 @csrf_exempt
 def toggle_follow(request, username):
     if request.method == 'POST':
-        target_user = get_object_or_404(User, username=username)
+        try:
+            target_user = get_object_or_404(User, username=username)
+        except:
+            return JsonResponse({'error': 'Kullanıcı bulunamadı'}, status=404)
         
         if target_user == request.user:
             return JsonResponse({'error': 'Kendinizi takip edemezsiniz'}, status=400)

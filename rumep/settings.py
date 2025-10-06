@@ -61,7 +61,7 @@ CSRF_COOKIE_SECURE = True  # Production için True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_TRUSTED_ORIGINS = ['https://*.render.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.render.com', 'https://rumep.net']
 
 ROOT_URLCONF = 'rumep.urls'
 
