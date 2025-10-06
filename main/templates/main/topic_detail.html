@@ -12,7 +12,8 @@
     <a href="javascript:history.back()" class="btn btn-link text-muted p-1 me-2 flex-shrink-0" title="{% trans 'Geri Dön' %}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
         <i class="bi bi-arrow-left fs-6"></i>
     </a>
-    <h4 class="page-title mb-0 flex-grow-1">{{ topic.title }}</h4>
+    <h6 class="page-title mb-0 flex-grow-1 d-block d-md-none">{{ topic.title }}</h6>
+    <h4 class="page-title mb-0 flex-grow-1 d-none d-md-block">{{ topic.title }}</h4>
 </div>
 {% endblock %}
 
@@ -41,8 +42,8 @@
             </div>
             {% if can_edit_topic %}
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-three-dots"></i>
+                    <button class="btn btn-link p-1 text-muted" type="button" data-bs-toggle="dropdown" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'edit_topic' topic.slug %}">{% trans "Düzenle" %}</a></li>
@@ -51,20 +52,7 @@
                 </div>
             {% endif %}
         </div>
-        <div class="vote-buttons d-flex gap-1 align-items-center">
-            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
-                <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
-            </button>
-            <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
-            <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
-                <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
-            </button>
-            {% if user.is_authenticated %}
-                <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
-                    <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
-                </button>
-            {% endif %}
-        </div>
+
     </div>
 
     <!-- Entry'ler -->
@@ -198,7 +186,14 @@
 
     <!-- Entry Ekleme Formu -->
     {% if user.is_authenticated and user.profile %}
-        <div class="entry-form-container">
+        <!-- Mobil için Entry Ekle Butonu -->
+        <div class="d-block d-md-none mb-3">
+            <button class="btn btn-primary w-100" type="button" id="mobileEntryToggle">
+                <i class="bi bi-pencil-square"></i> {% trans "Entry Ekle" %}
+            </button>
+        </div>
+        
+        <div class="entry-form-container d-none d-md-block" id="entryFormContainer">
             <h5><i class="bi bi-pencil-square"></i>{% trans "Entry Ekle" %}</h5>
             <form method="post" action="{% url 'add_entry' topic.slug %}" id="entryForm">
                 {% csrf_token %}
@@ -216,6 +211,10 @@
                     <div class="d-flex gap-2 mt-2">
                         <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="id_content">
                             <i class="bi bi-emoji-smile"></i> {% trans "Emojiler" %}
+                        </button>
+                        <!-- Mobil için Kapat Butonu -->
+                        <button type="button" class="btn btn-outline-secondary btn-sm d-block d-md-none" id="mobileEntryClose">
+                            <i class="bi bi-x"></i> {% trans "Kapat" %}
                         </button>
                     </div>
                     <div class="d-flex align-items-center gap-3">
@@ -452,6 +451,29 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error:', error));
         });
     });
+    
+    // Mobil entry form toggle
+    const mobileEntryToggle = document.getElementById('mobileEntryToggle');
+    const mobileEntryClose = document.getElementById('mobileEntryClose');
+    const entryFormContainer = document.getElementById('entryFormContainer');
+    
+    if (mobileEntryToggle) {
+        mobileEntryToggle.addEventListener('click', function() {
+            entryFormContainer.classList.remove('d-none');
+            entryFormContainer.classList.add('d-block');
+            mobileEntryToggle.style.display = 'none';
+        });
+    }
+    
+    if (mobileEntryClose) {
+        mobileEntryClose.addEventListener('click', function() {
+            entryFormContainer.classList.remove('d-block');
+            entryFormContainer.classList.add('d-none');
+            if (mobileEntryToggle) {
+                mobileEntryToggle.style.display = 'block';
+            }
+        });
+    }
     
     // Global fonksiyonlar
     window.insertEmoji = insertEmoji;
