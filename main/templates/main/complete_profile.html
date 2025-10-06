@@ -72,6 +72,15 @@
                             <small class="text-muted">{% trans "Benzersiz kullanıcı adı (harf, rakam ve alt çizgi kullanabilirsiniz)" %}</small>
                         </div>
                         
+                        <div class="form-floating">
+                            <select class="form-select" id="preferred_language" name="preferred_language">
+                                <option value="tr">Türkçe</option>
+                                <option value="ku">Kürtçe</option>
+                                <option value="en">English</option>
+                            </select>
+                            <label for="preferred_language">{% trans "Tercih Edilen Dil" %}</label>
+                        </div>
+                        
                         <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-primary btn-lg">{% trans "Profilini Tamamla" %}</button>
                         </div>
