@@ -585,6 +585,13 @@
     z-index: 1;
 }
 
+/* Modal açıkken panel'i gizle */
+.modal.show ~ * .mobile-actions-panel.active,
+body.modal-open .mobile-actions-panel.active {
+    z-index: -1;
+    opacity: 0.3;
+}
+
 .mobile-actions-panel.active {
     right: 0;
 }
@@ -658,6 +665,28 @@ document.addEventListener('DOMContentLoaded', function() {
             if (activePanel) {
                 closePanel(activePanel);
             }
+        }
+    });
+    
+    // Modal açıldığında panel'i kapat
+    document.addEventListener('show.bs.modal', function() {
+        if (activePanel) {
+            closePanel(activePanel);
+        }
+    });
+    
+    // Dropdown açıldığında z-index ayarla
+    document.addEventListener('show.bs.dropdown', function(e) {
+        const dropdown = e.target.closest('.dropdown');
+        if (dropdown && dropdown.closest('.mobile-actions-panel')) {
+            dropdown.style.zIndex = '9999';
+        }
+    });
+    
+    document.addEventListener('hide.bs.dropdown', function(e) {
+        const dropdown = e.target.closest('.dropdown');
+        if (dropdown && dropdown.closest('.mobile-actions-panel')) {
+            dropdown.style.zIndex = '';
         }
     });
     
