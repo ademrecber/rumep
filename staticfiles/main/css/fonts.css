@@ -1,11 +1,11 @@
-/* RumepLogosSVG fontu */
+/* RumepLogosSVG fontu - Android uyumlu */
 @font-face {
     font-family: 'RumepLogosSVG';
-    src: url('/static/fonts/RumepLogosSVG.woff2') format('woff2'),
-         url('/static/fonts/RumepLogosSVG.ttf') format('truetype');
+    src: url('/static/fonts/RumepLogosSVG.ttf') format('truetype'),
+         url('/static/fonts/RumepLogosSVG.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 
 /* RumepLogosCOLR fontu */
@@ -14,7 +14,7 @@
     src: url('/static/fonts/RumepLogosCOLR.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 
 /* Font fallback classes */
