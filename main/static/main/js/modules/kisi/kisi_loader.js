@@ -29,7 +29,20 @@ export function initKisiForm() {
             placeholder: window.i18n?.t('kisi.biography_placeholder') || 'Biyografiyi buraya yazın...',
             readOnly: false
         });
+        
+        // Editor'ı aktif hale getir
+        setTimeout(() => {
+            quill.enable(true);
+            quill.focus();
+            console.log('Quill editor aktif hale getirildi ve focus verildi');
+        }, 100);
         console.log('Quill düzenleyici başlatıldı, yazılabilir mod aktif.');
+        
+        // Editor'a tıklanınca focus ver
+        document.getElementById('biyografi-editor').addEventListener('click', () => {
+            quill.focus();
+            console.log('Editor tıklandı, focus verildi');
+        });
 
         // Quill içeriği değiştiğinde log
         quill.on('text-change', () => {
