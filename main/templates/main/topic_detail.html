@@ -198,20 +198,12 @@
         </div>
         
         <div class="entry-form-container d-none d-md-block" id="entryFormContainer">
-            <h5><i class="bi bi-pencil-square"></i>{% trans "Entry Ekle" %}</h5>
             <form method="post" action="{% url 'add_entry' topic.slug %}" id="entryForm">
                 {% csrf_token %}
                 <input type="hidden" name="font_family" id="fontFamilyInput" value="">
-                <div class="form-group mb-3">
-                    <textarea name="content" id="id_content" class="form-control modern-textarea" placeholder="{% trans 'Düşüncelerinizi paylaşın... Bu konuda ne düşünüyorsunuz?' %}" required></textarea>
-                </div>
-                <div class="form-group mb-3">
-                    <input type="url" name="link" class="form-control modern-input" placeholder="{% trans 'İsteğe bağlı: Bir link ekleyin' %}">
-                </div>
-                {% if entry_form.non_field_errors %}
-                    <div class="alert alert-danger">{{ entry_form.non_field_errors }}</div>
-                {% endif %}
-                <div class="form-actions">
+                <div class="form-group mb-2">
+                    <label for="id_content" class="form-label">{% trans "Entry" %}</label>
+                    <textarea name="content" id="id_content" class="form-control border-0 auto-grow" placeholder="{% trans 'Entry\'nizi yazın...' %}" maxlength="10000" rows="4" required></textarea>
                     <div class="d-flex gap-2 mt-2">
                         <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="id_content">
                             <i class="bi bi-emoji-smile"></i> {% trans "Emojiler" %}
@@ -221,10 +213,17 @@
                             <i class="bi bi-x"></i> {% trans "Kapat" %}
                         </button>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="char-counter" id="charCount">10000</span>
-                        <button type="submit" class="submit-btn">{% trans "Paylaş" %}</button>
-                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="id_link" class="form-label">{% trans "Bağlantı (isteğe bağlı)" %}</label>
+                    <input type="url" name="link" id="id_link" class="form-control mt-2" placeholder="{% trans 'Bağlantı (isteğe bağlı)' %}">
+                </div>
+                {% if entry_form.non_field_errors %}
+                    <div class="alert alert-danger mt-2">{{ entry_form.non_field_errors }}</div>
+                {% endif %}
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="text-muted" id="charCount">10000</span>
+                    <button type="submit" class="btn btn-primary">{% trans "Entry Ekle" %}</button>
                 </div>
             </form>
         </div>

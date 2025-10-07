@@ -1,50 +1,57 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% load entry_tags %}
 {% load i18n %}
 {% block title %}{% trans "Entry Düzenle" %}{% endblock %}
+
+{% block page_tabs %}
+<div class="page-title-area d-flex align-items-center">
+    <a href="{% url 'topic_detail' entry.topic.slug %}" class="btn btn-link text-muted p-1 me-2 flex-shrink-0" title="{% trans 'Geri Dön' %}" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+        <i class="bi bi-arrow-left fs-6"></i>
+    </a>
+    <h4 class="page-title mb-0 flex-grow-1">{% trans "Entry Düzenle" %}</h4>
+</div>
+{% endblock %}
+
 {% block content %}
+<link href="{% static 'main/css/emoji.css' %}" rel="stylesheet">
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{% trans "Entry Düzenle" %}</h5>
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="font_family" id="fontFamilyInput" value="{{ entry.font_family|default:'' }}">
-                <div class="form-group mb-3">
-                    <label for="{{ form.content.id_for_label }}">{% trans "İçerik" %}</label>
-                    {{ form.content }}
-                    <div class="d-flex gap-2 mt-2">
-                        <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="{{ form.content.id_for_label }}">
-                            <i class="bi bi-fonts"></i> {% trans "Font" %}
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="insertLinkToEntry()">
-                            <i class="bi bi-link-45deg"></i> {% trans "Link" %}
-                        </button>
-                    </div>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="{{ form.link.id_for_label }}">{% trans "Link" %}</label>
-                    {{ form.link }}
-                </div>
-                {% if form.errors %}
-                    <div class="alert alert-danger">{{ form.errors }}</div>
-                {% endif %}
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">{% trans "Kaydet" %}</button>
-                    <a href="{% url 'topic_detail' entry.topic.slug %}" class="btn btn-secondary">{% trans "İptal" %}</a>
-                </div>
-            </form>
+    <form method="post" id="entryEditForm">
+        {% csrf_token %}
+        <input type="hidden" name="font_family" id="fontFamilyInput" value="{{ entry.font_family|default:'' }}">
+        <div class="form-group mb-2">
+            <label for="{{ form.content.id_for_label }}" class="form-label w-100">{% trans "Entry" %}</label>
+            {{ form.content }}
+            <div class="d-flex gap-2 mt-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm font-btn" data-textarea="{{ form.content.id_for_label }}">
+                    <i class="bi bi-emoji-smile"></i> {% trans "Emojiler" %}
+                </button>
+            </div>
         </div>
-    </div>
+        <div class="form-group mb-2">
+            <label for="{{ form.link.id_for_label }}" class="form-label">{% trans "Bağlantı (isteğe bağlı)" %}</label>
+            {{ form.link }}
+        </div>
+        {% if form.errors %}
+            <div class="alert alert-danger mt-2">{{ form.errors }}</div>
+        {% endif %}
+        <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="text-muted" id="charCount">10000</span>
+            <div class="d-flex gap-2">
+                <a href="{% url 'topic_detail' entry.topic.slug %}" class="btn btn-secondary">{% trans "İptal" %}</a>
+                <button type="submit" class="btn btn-primary">{% trans "Kaydet" %}</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- Emoji Modal -->
-<div class="modal fade" id="emojiModal" tabindex="-1">
+<div class="modal fade" id="emojiModal" tabindex="-1" aria-labelledby="emojiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{% trans "Emoji" %}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="emojiModalLabel">{% trans "Emoji" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Kapat' %}"></button>
             </div>
             <div class="modal-body">
                 <div id="emojiKeyboard" class="d-flex flex-wrap justify-content-center"></div>
@@ -54,22 +61,56 @@
 </div>
 
 <script>
-function insertLinkToEntry() {
+document.addEventListener('DOMContentLoaded', function() {
+    // Textarea auto-resize
     const textarea = document.querySelector('textarea[name="content"]');
     if (textarea) {
-        const url = prompt('{% trans "Link URL girin:" %}');
-        if (url) {
-            const linkText = `[link]${url}[/link]`;
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            textarea.value = textarea.value.substring(0, start) + linkText + textarea.value.substring(end);
-            textarea.focus();
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+            
+            const charCount = document.getElementById('charCount');
+            if (charCount) {
+                charCount.textContent = 10000 - this.value.length;
+            }
+        });
+        
+        // Initial resize
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+        
+        // Initial char count
+        const charCount = document.getElementById('charCount');
+        if (charCount) {
+            charCount.textContent = 10000 - textarea.value.length;
         }
     }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('emojiModal').addEventListener('show.bs.modal', function() {
+    
+    // Emoji functionality
+    let currentTextarea = null;
+    
+    // Emoji modal event listeners
+    document.getElementById('emojiModal').addEventListener('show.bs.modal', function(e) {
+        currentTextarea = document.querySelector('#entryEditForm textarea[name="content"]');
+        loadEmojis();
+    });
+    
+    // Emoji button click handler
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('.font-btn') || e.target.closest('.font-btn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const button = e.target.matches('.font-btn') ? e.target : e.target.closest('.font-btn');
+            const textareaId = button.getAttribute('data-textarea');
+            currentTextarea = document.getElementById(textareaId);
+            
+            const emojiModal = new bootstrap.Modal(document.getElementById('emojiModal'));
+            emojiModal.show();
+        }
+    });
+    
+    function loadEmojis() {
         const emojiKeyboard = document.getElementById('emojiKeyboard');
         if (emojiKeyboard.children.length === 0) {
             fetch('/emojis/')
@@ -80,21 +121,37 @@ document.addEventListener('DOMContentLoaded', function() {
                         emojiBtn.type = 'button';
                         emojiBtn.className = 'btn btn-light m-1';
                         emojiBtn.innerHTML = `<img src="/static/emojis/${emoji.name}.svg" alt="${emoji.name}" width="24">`;
-                        emojiBtn.onclick = () => {
-                            const textarea = document.querySelector('textarea[name="content"]');
-                            if (textarea) {
-                                const start = textarea.selectionStart;
-                                const end = textarea.selectionEnd;
-                                textarea.value = textarea.value.substring(0, start) + emoji.shortcode + textarea.value.substring(end);
-                                textarea.focus();
-                                bootstrap.Modal.getInstance(document.getElementById('emojiModal')).hide();
-                            }
-                        };
+                        emojiBtn.onclick = () => insertEmoji(emoji.shortcode);
                         emojiKeyboard.appendChild(emojiBtn);
                     });
+                })
+                .catch(error => {
+                    console.error('Emoji yükleme hatası:', error);
                 });
         }
-    });
+    }
+    
+    function insertEmoji(emoji) {
+        if (currentTextarea) {
+            const start = currentTextarea.selectionStart;
+            const end = currentTextarea.selectionEnd;
+            currentTextarea.value = currentTextarea.value.substring(0, start) + emoji + currentTextarea.value.substring(end);
+            currentTextarea.focus();
+            currentTextarea.setSelectionRange(start + emoji.length, start + emoji.length);
+            
+            // Update char count
+            const charCount = document.getElementById('charCount');
+            if (charCount) {
+                charCount.textContent = 10000 - currentTextarea.value.length;
+            }
+            
+            bootstrap.Modal.getInstance(document.getElementById('emojiModal')).hide();
+        }
+    }
+    
+    // Global fonksiyonlar
+    window.insertEmoji = insertEmoji;
 });
 </script>
+<script src="{% static 'main/js/emoji-keyboard.js' %}"></script>
 {% endblock %}
