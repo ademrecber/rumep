@@ -582,6 +582,7 @@
     justify-content: center;
     transition: right 0.3s ease;
     border-radius: 8px;
+    z-index: 1;
 }
 
 .mobile-actions-panel.active {
@@ -650,8 +651,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 openPanel(panel, infoContainer);
             }
         }
-        // Close panel when clicking outside
-        else if (!e.target.closest('.mobile-actions-panel')) {
+        // Close panel when clicking outside (but not when clicking on dropdowns or modals)
+        else if (!e.target.closest('.mobile-actions-panel') && 
+                 !e.target.closest('.dropdown-menu') && 
+                 !e.target.closest('.modal')) {
             if (activePanel) {
                 closePanel(activePanel);
             }
@@ -682,6 +685,68 @@ document.addEventListener('DOMContentLoaded', function() {
             activePanel = null;
         }
     }
+    
+    // Vote functionality for mobile panels
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mobile-actions-panel .vote-btn')) {
+            e.preventDefault();
+            const button = e.target.closest('.vote-btn');
+            const topicSlug = button.dataset.topicSlug;
+            const voteType = button.dataset.voteType;
+            
+            fetch(`/topic/${topicSlug}/vote/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `vote_type=${voteType}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.vote_score !== undefined) {
+                    // Update both desktop and mobile vote displays
+                    const topicCard = button.closest('.topic-card');
+                    const allScoreElements = topicCard.querySelectorAll('.vote-score');
+                    const allUpBtns = topicCard.querySelectorAll('[data-vote-type="up"]');
+                    const allDownBtns = topicCard.querySelectorAll('[data-vote-type="down"]');
+                    
+                    // Update score
+                    allScoreElements.forEach(el => el.textContent = data.vote_score);
+                    
+                    // Update button states
+                    if (voteType === 'up') {
+                        allUpBtns.forEach(btn => {
+                            const icon = btn.querySelector('i');
+                            if (data.voted) {
+                                icon.className = 'bi bi-arrow-up-circle-fill text-success';
+                            } else {
+                                icon.className = 'bi bi-arrow-up';
+                            }
+                        });
+                        // Reset down buttons
+                        allDownBtns.forEach(btn => {
+                            btn.querySelector('i').className = 'bi bi-arrow-down';
+                        });
+                    } else {
+                        allDownBtns.forEach(btn => {
+                            const icon = btn.querySelector('i');
+                            if (data.voted) {
+                                icon.className = 'bi bi-arrow-down-circle-fill text-danger';
+                            } else {
+                                icon.className = 'bi bi-arrow-down';
+                            }
+                        });
+                        // Reset up buttons
+                        allUpBtns.forEach(btn => {
+                            btn.querySelector('i').className = 'bi bi-arrow-up';
+                        });
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
 });
 </script>
 {% endblock %}
