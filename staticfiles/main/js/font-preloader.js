@@ -1,84 +1,28 @@
-// Enhanced Font Preloader - Cross-platform support
+// Font Preloader - Ensure fonts are loaded before use
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect platform
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
-    const isMobile = isIOS || isAndroid;
+    // Preload custom fonts
+    const fonts = [
+        new FontFace('RumepLogosSVG', 'url(/static/fonts/RumepLogosSVG.woff2)'),
+        new FontFace('RumepLogosSVG', 'url(/static/fonts/RumepLogosSVG.ttf)'),
+        new FontFace('RumepLogosCOLR', 'url(/static/fonts/RumepLogosCOLR.ttf)')
+    ];
     
-    // Add loading class to body
-    document.body.classList.add('font-loading');
-    
-    // Platform-specific font loading
-    const fonts = [];
-    
-    if (isMobile) {
-        // Mobile: Only load TTF for better compatibility
-        fonts.push(
-            new FontFace('RumepLogosSVG', 'url(/static/fonts/RumepLogosSVG.ttf)', {
-                unicodeRange: 'U+E000-E00F, U+F000-F0FF'
-            })
-        );
-        
-        // iOS specific handling
-        if (isIOS) {
-            console.log('iOS detected: Loading TTF only');
-        }
-    } else {
-        // Desktop: Load both WOFF2 and COLR
-        fonts.push(
-            new FontFace('RumepLogosSVG', 'url(/static/fonts/RumepLogosSVG.woff2)', {
-                unicodeRange: 'U+E000-E00F, U+F000-F0FF'
-            }),
-            new FontFace('RumepLogosSVG', 'url(/static/fonts/RumepLogosSVG.ttf)', {
-                unicodeRange: 'U+E000-E00F, U+F000-F0FF'
-            }),
-            new FontFace('RumepLogosCOLR', 'url(/static/fonts/RumepLogosCOLR.ttf)', {
-                unicodeRange: 'U+E000-E00F, U+F000-F0FF'
-            })
-        );
-    }
-    
-    // Load fonts with mobile-specific timeout
-    const timeout = isMobile ? 5000 : 3000; // Longer timeout for mobile
-    
-    const fontPromises = fonts.map(font => {
-        return Promise.race([
-            font.load(),
-            new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('Font load timeout')), timeout)
-            )
-        ]).then(loadedFont => {
+    // Load fonts
+    fonts.forEach(font => {
+        font.load().then(loadedFont => {
             document.fonts.add(loadedFont);
-            console.log(`✓ RumepFont loaded: ${loadedFont.family}`);
-            
-            // Mobile-specific font validation
-            if (isMobile) {
-                validateMobileFont(loadedFont);
-            }
-            
-            return loadedFont;
+            console.log(`Font loaded: ${loadedFont.family}`);
         }).catch(error => {
-            console.warn(`✗ RumepFont loading failed: ${font.family}`, error);
-            
-            // Show debug info on mobile
-            if (isMobile && window.location.search.includes('debug=font')) {
-                showMobileFontDebug(font.family, error);
-            }
-            
-            return null;
+            console.warn(`Font loading failed: ${font.family}`, error);
         });
     });
     
-    // Wait for fonts or timeout
-    Promise.allSettled(fontPromises).then(() => {
-        document.body.classList.remove('font-loading');
-        document.body.classList.add('font-loaded');
+    // Check if fonts are ready
+    document.fonts.ready.then(() => {
+        console.log('All fonts loaded');
         
-        // Apply fonts to elements
+        // Apply fonts to elements that need them
         applyFontsToElements();
-        
-        // Check font support after loading
-        setTimeout(checkFontSupport, 500);
     });
     
     function applyFontsToElements() {
@@ -101,89 +45,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Fallback for very slow connections
+    // Font fallback check
     setTimeout(() => {
-        if (document.body.classList.contains('font-loading')) {
-            document.body.classList.remove('font-loading');
-            document.body.classList.add('font-loaded');
-            console.warn('Font loading timeout, using fallback');
+        checkFontFallback();
+    }, 2000);
+    
+    function checkFontFallback() {
+        const testElement = document.createElement('span');
+        testElement.style.fontFamily = 'RumepLogosSVG';
+        testElement.style.fontSize = '20px';
+        testElement.textContent = String.fromCharCode(0xE000);
+        testElement.style.position = 'absolute';
+        testElement.style.visibility = 'hidden';
+        
+        document.body.appendChild(testElement);
+        
+        // Check if font is actually loaded
+        const computedStyle = window.getComputedStyle(testElement);
+        const actualFont = computedStyle.fontFamily;
+        
+        if (!actualFont.includes('RumepLogosSVG')) {
+            console.warn('Custom fonts not loaded properly, using fallback');
+            showFontWarning();
         }
-    }, 5000);
-    
-    function checkFontSupport() {
-        // Test multiple RumepLogosSVG characters
-        const testChars = [0xE000, 0xE001, 0xE002, 0xE003];
-        let fontsWorking = 0;
         
-        testChars.forEach((charCode, index) => {
-            const testElement = document.createElement('span');
-            testElement.style.fontFamily = 'RumepLogosSVG';
-            testElement.style.fontSize = '24px';
-            testElement.textContent = String.fromCharCode(charCode);
-            testElement.style.position = 'absolute';
-            testElement.style.visibility = 'hidden';
-            testElement.style.left = '-9999px';
-            
-            document.body.appendChild(testElement);
-            
-            setTimeout(() => {
-                const computedStyle = window.getComputedStyle(testElement);
-                const actualFont = computedStyle.fontFamily;
-                
-                if (actualFont.includes('RumepLogosSVG')) {
-                    fontsWorking++;
-                    console.log(`✓ RumepFont char ${charCode.toString(16)} working`);
-                } else {
-                    console.warn(`✗ RumepFont char ${charCode.toString(16)} not working`);
-                }
-                
-                document.body.removeChild(testElement);
-                
-                // Final check after all characters tested
-                if (index === testChars.length - 1) {
-                    if (fontsWorking === 0) {
-                        console.error('RumepLogosSVG fonts completely failed');
-                        if (window.location.search.includes('debug=font')) {
-                            showMobileFontDebug('RumepLogosSVG', 'No characters rendering');
-                        }
-                    } else if (fontsWorking < testChars.length) {
-                        console.warn(`RumepLogosSVG partially working: ${fontsWorking}/${testChars.length}`);
-                    } else {
-                        console.log('✓ All RumepLogosSVG characters working!');
-                    }
-                }
-            }, 200 + (index * 50));
-        });
-    }
-    
-    function validateMobileFont(font) {
-        // Mobile-specific font validation
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        ctx.font = '20px ' + font.family;
-        const testChar = String.fromCharCode(0xE000);
-        const metrics = ctx.measureText(testChar);
-        
-        if (metrics.width > 0) {
-            console.log(`✓ Mobile font validation passed for ${font.family}`);
-        } else {
-            console.warn(`✗ Mobile font validation failed for ${font.family}`);
-        }
-    }
-    
-    function showMobileFontDebug(fontName, error) {
-        const debug = document.createElement('div');
-        debug.className = 'debug-font';
-        debug.innerHTML = `
-            <strong>Font Debug:</strong><br>
-            Font: ${fontName}<br>
-            Error: ${error}<br>
-            UA: ${navigator.userAgent.substring(0, 50)}...
-        `;
-        document.body.appendChild(debug);
-        
-        setTimeout(() => debug.remove(), 10000);
+        document.body.removeChild(testElement);
     }
     
     function showFontWarning() {
