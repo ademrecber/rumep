@@ -93,10 +93,7 @@
             <button class="btn btn-link text-dark p-0" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
                 <i class="bi bi-list fs-4"></i>
             </button>
-            <h5 class="mb-0 fw-bold text-primary d-flex align-items-center">
-                <img src="{% static 'img/rumep.png' %}" alt="Rumep" style="width: 20px; height: 20px; margin-right: 6px;">
-                Rumep
-            </h5>
+            <h5 class="mb-0 fw-bold text-primary">Rumep</h5>
             <div class="d-flex align-items-center gap-2">
                 {% if user.is_authenticated %}
                     <a href="{% url 'notifications' %}" class="btn btn-link text-dark p-0 position-relative">
@@ -115,10 +112,7 @@
     <!-- Modern Offcanvas Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title d-flex align-items-center" id="sidebarOffcanvasLabel">
-                <img src="{% static 'img/rumep.png' %}" alt="Rumep" style="width: 18px; height: 18px; margin-right: 6px;">
-                Rumep
-            </h5>
+            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Rumep</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
@@ -147,12 +141,7 @@
             <div class="col-xl-3 col-lg-3 d-none d-md-block left-fixed-area p-0">
                 <div class="sidebar" id="sidebar">
                 <div class="d-flex justify-content-between align-items-center p-3">
-                    <h2 class="mb-0">
-                        <a href="/" class="text-dark text-decoration-none d-flex align-items-center">
-                            <img src="{% static 'img/rumep.png' %}" alt="Rumep" style="width: 24px; height: 24px; margin-right: 8px;">
-                            Rumep
-                        </a>
-                    </h2>
+                    <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
                     <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()" title="{% trans 'Kapat' %}">
                         <i class="bi bi-x-lg"></i>
                     </button>
