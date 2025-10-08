@@ -15,3 +15,9 @@ def custom_404(request, exception):
 
 def offline_page(request):
     return render(request, 'main/offline.html')
+
+def csrf_failure(request, reason=""):
+    from django.http import JsonResponse
+    if request.content_type == 'application/json':
+        return JsonResponse({'error': 'CSRF token missing or incorrect'}, status=403)
+    return render(request, 'main/csrf_failure.html', {'reason': reason}, status=403)

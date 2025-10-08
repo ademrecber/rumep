@@ -204,6 +204,13 @@
 <script>
 // CSRF token alma fonksiyonu
 function getCookie(name) {
+    // Önce meta tag'den dene
+    const metaToken = document.querySelector('meta[name="csrf-token"]');
+    if (metaToken) {
+        return metaToken.getAttribute('content');
+    }
+    
+    // Sonra cookie'den dene
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');

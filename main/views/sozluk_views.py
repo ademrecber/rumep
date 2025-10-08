@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from ..models import Sozluk, SozlukDetay
 from ..forms import SozlukForm, SozlukDetayForm
+from .base import profile_required
 import bleach
 import logging
 
@@ -16,6 +17,8 @@ def sozluk_ana_sayfa(request):
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return JsonResponse({'success': False, 'error': 'Giriş yapmalısınız'}, status=401)
+        if not request.user.is_staff and (not hasattr(request.user, 'profile') or not request.user.profile.nickname):
+            return JsonResponse({'success': False, 'error': 'Profil tamamlanmalı'}, status=403)
         form = SozlukForm(request.POST)
         if form.is_valid():
             sozluk = form.save(commit=False)
@@ -115,7 +118,7 @@ def sozluk_kelime(request, kelime_id):
     })
 
 @login_required
-@csrf_protect
+@profile_required
 def sozluk_kelime_sil(request, kelime_id):
     try:
         kelime = get_object_or_404(Sozluk, id=kelime_id)
@@ -130,7 +133,7 @@ def sozluk_kelime_sil(request, kelime_id):
         return JsonResponse({'success': False, 'error': 'Kelime bulunamadı.'}, status=404)
 
 @login_required
-@csrf_protect
+@profile_required
 def sozluk_kelime_duzenle(request, kelime_id):
     kelime = get_object_or_404(Sozluk, id=kelime_id)
     if kelime.kullanici != request.user:
@@ -167,7 +170,7 @@ def sozluk_kelime_veri(request, kelime_id):
     })
 
 @login_required
-@csrf_protect
+@profile_required
 def sozluk_detay_ekle(request, kelime_id):
     kelime = get_object_or_404(Sozluk, id=kelime_id)
     if kelime.kullanici == request.user:
@@ -189,7 +192,7 @@ def sozluk_detay_ekle(request, kelime_id):
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 @login_required
-@csrf_protect
+@profile_required
 def sozluk_detay_sil(request, detay_id):
     detay = get_object_or_404(SozlukDetay, id=detay_id)
     if detay.kullanici != request.user:
@@ -201,7 +204,7 @@ def sozluk_detay_sil(request, detay_id):
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 @login_required
-@csrf_protect
+@profile_required
 def sozluk_detay_duzenle(request, detay_id):
     detay = get_object_or_404(SozlukDetay, id=detay_id)
     if detay.kullanici != request.user:

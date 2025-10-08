@@ -63,7 +63,6 @@ def home(request):
 
 @login_required
 @profile_required
-@csrf_protect
 @require_http_methods(["POST"])
 @rate_limit(max_requests=3, window_seconds=60)
 def create_topic(request):
@@ -187,7 +186,6 @@ def topic_detail(request, slug):
 
 @login_required
 @profile_required
-@csrf_protect
 @require_http_methods(["POST"])
 @rate_limit(max_requests=5, window_seconds=60)
 def add_entry(request, slug):
@@ -406,7 +404,6 @@ def delete_entry(request, entry_id):
 
 @login_required
 @profile_required
-@csrf_protect
 def vote_topic(request, slug):
     if request.method == 'POST':
         topic = get_object_or_404(Topic, slug=slug)
@@ -454,7 +451,6 @@ def vote_topic(request, slug):
 
 @login_required
 @profile_required
-@csrf_protect
 def vote_entry(request, entry_id):
     if request.method == 'POST':
         entry = get_object_or_404(Entry, id=entry_id)

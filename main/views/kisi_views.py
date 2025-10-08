@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ValidationError
 from ..models import Kisi, Kategori, KisiDetay
 from ..forms import KisiForm, KisiDetayForm
+from .base import profile_required
 import bleach
 import logging
 import re
@@ -13,7 +14,7 @@ import re
 logger = logging.getLogger(__name__)
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_ekle(request):
     if request.method == 'POST':
         form = KisiForm(request.POST)
@@ -146,7 +147,7 @@ def kisi_detay(request, kisi_id):
     })
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_sil(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
     if kisi.kullanici != request.user:
@@ -156,7 +157,7 @@ def kisi_sil(request, kisi_id):
     return JsonResponse({'success': True})
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_detay_ekle(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
     if kisi.kullanici == request.user:
@@ -177,7 +178,7 @@ def kisi_detay_ekle(request, kisi_id):
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_detay_sil(request, detay_id):
     detay = get_object_or_404(KisiDetay, id=detay_id)
     if detay.kullanici != request.user:
@@ -189,7 +190,7 @@ def kisi_detay_sil(request, detay_id):
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_detay_duzenle(request, detay_id):
     detay = get_object_or_404(KisiDetay, id=detay_id)
     if detay.kullanici != request.user:
@@ -208,7 +209,7 @@ def kisi_detay_duzenle(request, detay_id):
     return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)
 
 @login_required
-@csrf_protect
+@profile_required
 def kisi_detay_veri(request, detay_id):
     detay = get_object_or_404(KisiDetay, id=detay_id)
     if detay.kullanici != request.user:

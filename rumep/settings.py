@@ -58,10 +58,11 @@ MIDDLEWARE = [
 
 # CSRF Settings
 CSRF_COOKIE_SECURE = True  # Production için True
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False  # JavaScript erişimi için False
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_TRUSTED_ORIGINS = ['https://*.render.com', 'https://rumep.net']
+CSRF_FAILURE_VIEW = 'main.views.csrf_failure'
 
 ROOT_URLCONF = 'rumep.urls'
 

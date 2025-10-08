@@ -7,6 +7,7 @@ from django.db.models import Q, Count
 from django.core.exceptions import ValidationError
 from ..models import Kisi, Album, Sarki, SarkiDetay
 from ..forms import AlbumForm, SarkiForm, SarkiDetayForm, SarkiDuzenleForm
+from .base import profile_required
 import logging
 
 logger = logging.getLogger(__name__)
@@ -85,7 +86,7 @@ def sarki_ara(request):
     return JsonResponse({'sarkilar': data})
 
 @login_required
-@csrf_protect
+@profile_required
 def sarki_ekle(request):
     kisi_id = request.GET.get('kisi_id')
     kisi = None
@@ -141,7 +142,7 @@ def sarki_ekle(request):
     })
 
 @login_required
-@csrf_protect
+@profile_required
 def sarki_album_ekle(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
     album_form = AlbumForm()
@@ -195,7 +196,7 @@ def sarki_detay(request, sarki_id):
     })
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_sil(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
@@ -206,7 +207,7 @@ def sarki_sil(request, sarki_id):
     return JsonResponse({'success': True})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_album_sil(request, album_id):
     album = get_object_or_404(Album, id=album_id)
@@ -222,7 +223,7 @@ def sarki_album_sil(request, album_id):
     return JsonResponse({'success': True})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_detay_ekle(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
@@ -249,7 +250,7 @@ def sarki_detay_veri(request, detay_id):
     return JsonResponse({'success': True, 'data': data})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_detay_duzenle(request, detay_id):
     detay = get_object_or_404(SarkiDetay, id=detay_id)
@@ -263,7 +264,7 @@ def sarki_detay_duzenle(request, detay_id):
     return JsonResponse({'success': False, 'errors': form.errors.as_json()})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_detay_sil(request, detay_id):
     detay = get_object_or_404(SarkiDetay, id=detay_id)
@@ -288,7 +289,7 @@ def sarki_album_degistir_veri(request, sarki_id):
     return JsonResponse({'success': True, 'data': data})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_album_degistir(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
@@ -305,7 +306,7 @@ def sarki_album_degistir(request, sarki_id):
 
 
 @login_required
-@csrf_protect
+@profile_required
 def sarki_duzenle(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
     if sarki.kullanici != request.user:
@@ -329,7 +330,7 @@ def sarki_duzenle(request, sarki_id):
     return JsonResponse({'success': True, 'data': data})
 
 @login_required
-@csrf_protect
+@profile_required
 @require_POST
 def sarki_duzenle_kaydet(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
