@@ -49,9 +49,6 @@ def home(request):
     if tab == 'category' and category_slug:
         category_topics = topics
     
-    # Debug: Render öncesi kontrol
-    print(f"Rendering home with {len(topics)} topics")
-    
     return render(request, 'main/home.html', {
         'topics': topics,
         'topic_form': topic_form,
