@@ -77,65 +77,65 @@ def create_topic(request):
                 topic.user = request.user
                 topic.save()
                 topic_form.save_m2m()  # ManyToMany kategorileri kaydet
-            
-            # İlk entry'yi oluştur
-            entry = entry_form.save(commit=False)
-            entry.topic = topic
-            entry.user = request.user
-            
-            # Save font family if provided
-            font_family = request.POST.get('font_family')
-            if font_family:
-                entry.font_family = font_family
-            
-            entry.save()
-            
-            # Hashtag işleme
-            from ..models import Profile, Hashtag, HashtagUsage
-            import re
-            
-            # Hashtag'leri bul ve kaydet
-            hashtag_pattern = r'#([a-zA-Z0-9_\u00C0-\u017F]+)'
-            hashtag_names = re.findall(hashtag_pattern, entry.content)
-            
-            for hashtag_name in hashtag_names:
-                hashtag_name = hashtag_name.lower()
-                hashtag, created = Hashtag.objects.get_or_create(
-                    name=hashtag_name,
-                    defaults={'slug': hashtag_name}
-                )
                 
-                # Kullanım kaydı oluştur
-                HashtagUsage.objects.get_or_create(
-                    hashtag=hashtag,
-                    entry=entry,
-                    topic=topic,
-                    user=request.user
-                )
+                # İlk entry'yi oluştur
+                entry = entry_form.save(commit=False)
+                entry.topic = topic
+                entry.user = request.user
                 
-                # Kullanım sayısını artır
-                hashtag.increment_usage()
-            
-            # Mention edilen kullanıcılara bildirim gönder
-            mention_pattern = r'@([a-zA-Z0-9_]+)'
-            mentioned_usernames = re.findall(mention_pattern, entry.content)
-            
-            for username in mentioned_usernames:
-                try:
-                    mentioned_profile = Profile.objects.get(username=username)
-                    if mentioned_profile.user != request.user:
-                        from .notification_views import create_notification
-                        create_notification(
-                            user=mentioned_profile.user,
-                            notification_type='mention',
-                            message=f'{request.user.profile.nickname} sizi yeni bir başlıkta bahsetti: {topic.title}',
-                            from_user=request.user,
-                            related_topic=topic,
-                            related_entry=entry
-                        )
-                except Profile.DoesNotExist:
-                    continue
-            
+                # Save font family if provided
+                font_family = request.POST.get('font_family')
+                if font_family:
+                    entry.font_family = font_family
+                
+                entry.save()
+                
+                # Hashtag işleme
+                from ..models import Profile, Hashtag, HashtagUsage
+                import re
+                
+                # Hashtag'leri bul ve kaydet
+                hashtag_pattern = r'#([a-zA-Z0-9_\u00C0-\u017F]+)'
+                hashtag_names = re.findall(hashtag_pattern, entry.content)
+                
+                for hashtag_name in hashtag_names:
+                    hashtag_name = hashtag_name.lower()
+                    hashtag, created = Hashtag.objects.get_or_create(
+                        name=hashtag_name,
+                        defaults={'slug': hashtag_name}
+                    )
+                    
+                    # Kullanım kaydı oluştur
+                    HashtagUsage.objects.get_or_create(
+                        hashtag=hashtag,
+                        entry=entry,
+                        topic=topic,
+                        user=request.user
+                    )
+                    
+                    # Kullanım sayısını artır
+                    hashtag.increment_usage()
+                
+                # Mention edilen kullanıcılara bildirim gönder
+                mention_pattern = r'@([a-zA-Z0-9_]+)'
+                mentioned_usernames = re.findall(mention_pattern, entry.content)
+                
+                for username in mentioned_usernames:
+                    try:
+                        mentioned_profile = Profile.objects.get(username=username)
+                        if mentioned_profile.user != request.user:
+                            from .notification_views import create_notification
+                            create_notification(
+                                user=mentioned_profile.user,
+                                notification_type='mention',
+                                message=f'{request.user.profile.nickname} sizi yeni bir başlıkta bahsetti: {topic.title}',
+                                from_user=request.user,
+                                related_topic=topic,
+                                related_entry=entry
+                            )
+                    except Profile.DoesNotExist:
+                        continue
+                
                 messages.success(request, 'Başlık başarıyla oluşturuldu!')
                 return redirect('topic_detail', slug=topic.slug)
                 
@@ -184,38 +184,27 @@ def topic_detail(request, slug):
 @login_required
 @profile_required
 @require_http_methods(["POST"])
-@rate_limit(max_requests=5, window_seconds=60)
+@rate_limit(max_requests=15, window_seconds=60)
 def add_entry(request, slug):
     if request.method == 'POST':
         topic = get_object_or_404(Topic, slug=slug)
         entry_form = EntryForm(request.POST)
         
         if entry_form.is_valid():
-            # Basit duplicate check - son 5 dakikada aynı içerik var mı?
-            from datetime import timedelta
-            recent_time = timezone.now() - timedelta(minutes=5)
-            recent_entry = Entry.objects.filter(
-                user=request.user,
-                content=entry_form.cleaned_data['content'],
-                created_at__gte=recent_time
-            ).exists()
-            if recent_entry:
-                messages.error(request, 'Aynı içeriği kısa süre önce paylaştınız.')
-                return redirect('topic_detail', slug=topic.slug)
-            
-            entry = entry_form.save(commit=False)
-            entry.topic = topic
-            entry.user = request.user
-            
-            # Save font family if provided
-            font_family = request.POST.get('font_family')
-            if font_family:
-                entry.font_family = font_family
-            
-            entry.save()
-            
-            # Topic'in updated_at'ini güncelle
-            topic.save()
+            try:
+                entry = entry_form.save(commit=False)
+                entry.topic = topic
+                entry.user = request.user
+                
+                # Save font family if provided
+                font_family = request.POST.get('font_family')
+                if font_family:
+                    entry.font_family = font_family
+                
+                entry.save()
+                
+                # Topic'in updated_at'ini güncelle
+                topic.save()
             
             # Hashtag işleme
             from ..models import Profile, Hashtag, HashtagUsage
@@ -274,7 +263,15 @@ def add_entry(request, slug):
                     related_topic=topic,
                     related_entry=entry
                 )
-            
+                
+                messages.success(request, 'Entry başarıyla eklendi!')
+                return redirect('topic_detail', slug=topic.slug)
+                
+            except Exception as e:
+                messages.error(request, f'Entry eklenirken hata: {str(e)}')
+                return redirect('topic_detail', slug=topic.slug)
+        else:
+            messages.error(request, 'Entry formu geçersiz.')
             return redirect('topic_detail', slug=topic.slug)
     
     return redirect('topic_detail', slug=slug)
