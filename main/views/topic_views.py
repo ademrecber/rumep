@@ -64,33 +64,19 @@ def home(request):
 @login_required
 @profile_required
 @require_http_methods(["POST"])
-@rate_limit(max_requests=3, window_seconds=60)
+@rate_limit(max_requests=10, window_seconds=60)
 def create_topic(request):
     if request.method == 'POST':
         topic_form = TopicForm(request.POST)
         entry_form = EntryForm(request.POST)
         
         if topic_form.is_valid() and entry_form.is_valid():
-            # Basit duplicate check
-            recent_topics = Topic.objects.filter(
-                user=request.user, 
-                title=topic_form.cleaned_data['title']
-            ).exists()
-            if recent_topics:
-                messages.error(request, 'Bu başlık zaten mevcut.')
-                topics = Topic.objects.with_related()[:10]
-                return render(request, 'main/home.html', {
-                    'topics': topics,
-                    'topic_form': topic_form,
-                    'entry_form': entry_form,
-                    'user': request.user,
-                })
-            
-            # Başlığı oluştur
-            topic = topic_form.save(commit=False)
-            topic.user = request.user
-            topic.save()
-            topic_form.save_m2m()  # ManyToMany kategorileri kaydet
+            try:
+                # Başlığı oluştur
+                topic = topic_form.save(commit=False)
+                topic.user = request.user
+                topic.save()
+                topic_form.save_m2m()  # ManyToMany kategorileri kaydet
             
             # İlk entry'yi oluştur
             entry = entry_form.save(commit=False)
@@ -150,7 +136,18 @@ def create_topic(request):
                 except Profile.DoesNotExist:
                     continue
             
-            return redirect('topic_detail', slug=topic.slug)
+                messages.success(request, 'Başlık başarıyla oluşturuldu!')
+                return redirect('topic_detail', slug=topic.slug)
+                
+            except Exception as e:
+                messages.error(request, f'Başlık oluşturulurken hata: {str(e)}')
+                topics = Topic.objects.with_related()[:10]
+                return render(request, 'main/home.html', {
+                    'topics': topics,
+                    'topic_form': topic_form,
+                    'entry_form': entry_form,
+                    'user': request.user,
+                })
         else:
             # Hataları göster
             topics = Topic.objects.select_related('user').prefetch_related('entries').order_by('-updated_at')[:10]

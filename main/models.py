@@ -292,6 +292,9 @@ class Profile(models.Model):
     def is_super_admin(self):
         return self.user_role == 'super_admin'
     
+    def is_staff_or_admin(self):
+        return self.user.is_staff or self.is_admin()
+    
     def can_edit_content(self, content_user):
         """İçeriği düzenleyebilir mi?"""
         return (self.user == content_user or 

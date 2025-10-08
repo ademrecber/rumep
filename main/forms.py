@@ -46,8 +46,10 @@ class TopicForm(forms.ModelForm):
         if len(title) < 3:
             raise forms.ValidationError(_('Başlık en az 3 karakter olmalıdır.'))
         
-        if Topic.objects.filter(title__iexact=title).exists():
-            raise forms.ValidationError(_('Bu başlık zaten mevcut.'))
+        # Duplicate check'i sadece edit modunda değilse yap
+        if not self.instance or not self.instance.pk:
+            if Topic.objects.filter(title__iexact=title).exists():
+                raise forms.ValidationError(_('Bu başlık zaten mevcut.'))
         return title
 
 class EntryForm(forms.ModelForm):

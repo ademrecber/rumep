@@ -13,7 +13,11 @@ def rate_limit(max_requests=10, window_seconds=60, key_func=None):
             if key_func:
                 key = key_func(request)
             else:
-                key = f"rate_limit:{request.META.get('REMOTE_ADDR', 'unknown')}"
+                # Kullanıcı bazlı rate limiting
+                if hasattr(request, 'user') and request.user.is_authenticated:
+                    key = f"rate_limit:user:{request.user.id}:{view_func.__name__}"
+                else:
+                    key = f"rate_limit:ip:{request.META.get('REMOTE_ADDR', 'unknown')}:{view_func.__name__}"
             
             # Mevcut istek sayısını kontrol et
             current_requests = cache.get(key, 0)
