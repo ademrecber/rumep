@@ -42,7 +42,13 @@ class TopicForm(forms.ModelForm):
         title = self.cleaned_data.get('title')
         if not title or not title.strip():
             raise forms.ValidationError(_('Başlık boş olamaz.'))
-        return title.strip()
+        title = title.strip()
+        if len(title) < 1:
+            raise forms.ValidationError(_('Başlık gerekli.'))
+        # XSS koruması
+        import bleach
+        title = bleach.clean(title, tags=[], strip=True)
+        return title
 
 class EntryForm(forms.ModelForm):
     class Meta:
@@ -67,7 +73,10 @@ class EntryForm(forms.ModelForm):
         content = self.cleaned_data.get('content')
         if not content or not content.strip():
             raise forms.ValidationError(_('Entry içeriği boş olamaz.'))
-        return clean_form_text(content.strip(), allowed_tags=['p', 'br', 'b', 'i', 'strong', 'em'])
+        content = content.strip()
+        if len(content) < 1:
+            raise forms.ValidationError(_('Entry içeriği gerekli.'))
+        return clean_form_text(content, allowed_tags=['p', 'br', 'b', 'i', 'strong', 'em'])
 
 
 

@@ -6,17 +6,19 @@ def profile_required(view_func):
         if not request.user.is_authenticated:
             return redirect('login_page')
         
-        # Profil otomatik oluştur
-        try:
-            if not hasattr(request.user, 'profile'):
+        # Profil otomatik oluştur (güvenli)
+        if not hasattr(request.user, 'profile'):
+            try:
                 from ..models import Profile
-                Profile.objects.create(
+                Profile.objects.get_or_create(
                     user=request.user,
-                    nickname=request.user.username,
-                    username=request.user.username
+                    defaults={
+                        'nickname': request.user.username,
+                        'username': request.user.username
+                    }
                 )
-        except:
-            pass
+            except Exception:
+                pass
             
         return view_func(request, *args, **kwargs)
     return wrapper

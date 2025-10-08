@@ -60,6 +60,7 @@ def home(request):
     })
 
 @login_required
+@profile_required
 def create_topic(request):
     if request.method != 'POST':
         return redirect('home')
@@ -89,6 +90,7 @@ def create_topic(request):
         return redirect('home')
 
 @login_required
+@profile_required
 def add_entry(request, slug):
     if request.method != 'POST':
         return redirect('topic_detail', slug=slug)
