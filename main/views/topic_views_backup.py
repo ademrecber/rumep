@@ -59,6 +59,8 @@ def home(request):
         'user': request.user,
     })
 
+# from ..utils.rate_limiter import rate_limit_decorator, check_duplicate_content
+
 @login_required
 @profile_required
 def create_topic(request):
@@ -92,35 +94,6 @@ def create_topic(request):
         messages.error(request, 'Hata oluştu. Tekrar deneyin.')
         return redirect('home')
 
-@login_required
-@profile_required
-def add_entry(request, slug):
-    if request.method != 'POST':
-        return redirect('topic_detail', slug=slug)
-        
-    topic = get_object_or_404(Topic, slug=slug)
-    entry_form = EntryForm(request.POST)
-    
-    if not entry_form.is_valid():
-        messages.error(request, 'Entry formu geçersiz.')
-        return redirect('topic_detail', slug=slug)
-    
-    try:
-        entry = entry_form.save(commit=False)
-        entry.topic = topic
-        entry.user = request.user
-        entry.save()
-        
-        # Topic güncelle
-        topic.save()
-        
-        messages.success(request, 'Entry eklendi!')
-        return redirect('topic_detail', slug=topic.slug)
-        
-    except Exception as e:
-        messages.error(request, 'Hata oluştu. Tekrar deneyin.')
-        return redirect('topic_detail', slug=topic.slug)
-
 def topic_detail(request, slug):
     topic = get_object_or_404(Topic.objects.with_related(), slug=slug)
     entries = Entry.objects.with_related().filter(topic=topic).order_by('created_at')
@@ -141,6 +114,101 @@ def topic_detail(request, slug):
         'entry_form': entry_form,
         'can_edit_topic': can_edit_topic,
     })
+
+@login_required
+@profile_required
+@require_http_methods(["POST"])
+@rate_limit(max_requests=30, window_seconds=60)
+def add_entry(request, slug):
+    if request.method == 'POST':
+        topic = get_object_or_404(Topic, slug=slug)
+        entry_form = EntryForm(request.POST)
+        
+        if entry_form.is_valid():
+            try:
+                entry = entry_form.save(commit=False)
+                entry.topic = topic
+                entry.user = request.user
+                
+                # Save font family if provided
+                font_family = request.POST.get('font_family')
+                if font_family:
+                    entry.font_family = font_family
+                
+                entry.save()
+                
+                # Topic'in updated_at'ini güncelle
+                topic.save()
+                
+                # Hashtag işleme
+                from ..models import Profile, Hashtag, HashtagUsage
+                import re
+            
+                # Hashtag'leri bul ve kaydet
+                hashtag_pattern = r'#([a-zA-Z0-9_\u00C0-\u017F]+)'
+                hashtag_names = re.findall(hashtag_pattern, entry.content)
+                
+                for hashtag_name in hashtag_names:
+                    hashtag_name = hashtag_name.lower()
+                    hashtag, created = Hashtag.objects.get_or_create(
+                        name=hashtag_name,
+                        defaults={'slug': hashtag_name}
+                    )
+                    
+                    # Kullanım kaydı oluştur
+                    HashtagUsage.objects.get_or_create(
+                        hashtag=hashtag,
+                        entry=entry,
+                        topic=topic,
+                        user=request.user
+                    )
+                    
+                    # Kullanım sayısını artır
+                    hashtag.increment_usage()
+                
+                # Mention edilen kullanıcılara bildirim gönder
+                mention_pattern = r'@([a-zA-Z0-9_]+)'
+                mentioned_usernames = re.findall(mention_pattern, entry.content)
+                
+                for username in mentioned_usernames:
+                    try:
+                        mentioned_profile = Profile.objects.get(username=username)
+                        if mentioned_profile.user != request.user:
+                            from .notification_views import create_notification
+                            create_notification(
+                                user=mentioned_profile.user,
+                                notification_type='mention',
+                                message=f'{request.user.profile.nickname} sizi bir entry\'de bahsetti: {topic.title}',
+                                from_user=request.user,
+                                related_topic=topic,
+                                related_entry=entry
+                            )
+                    except Profile.DoesNotExist:
+                        continue
+                
+                # Bildirim oluştur (başlık sahibine)
+                if topic.user != request.user:
+                    from .notification_views import create_notification
+                    create_notification(
+                        user=topic.user,
+                        notification_type='topic_entry',
+                        message=f'{request.user.profile.nickname} başlığınıza entry yazdı: {topic.title}',
+                        from_user=request.user,
+                        related_topic=topic,
+                        related_entry=entry
+                    )
+                
+                messages.success(request, 'Entry başarıyla eklendi!')
+                return redirect('topic_detail', slug=topic.slug)
+                
+            except Exception as e:
+                messages.error(request, f'Entry eklenirken hata: {str(e)}')
+                return redirect('topic_detail', slug=topic.slug)
+        else:
+            messages.error(request, 'Entry formu geçersiz.')
+            return redirect('topic_detail', slug=topic.slug)
+    
+    return redirect('topic_detail', slug=slug)
 
 @login_required
 @profile_required
@@ -174,7 +242,7 @@ def load_more_topics(request):
             'id': topic.id,
             'title': topic.title,
             'slug': topic.slug,
-            'user': topic.user.profile.nickname if hasattr(topic.user, 'profile') else topic.user.username,
+            'user': topic.user.profile.nickname,
             'created_at': topic.created_at.strftime('%d.%m.%Y %H:%M'),
             'entry_count': topic.entry_count(),
         })
@@ -275,15 +343,26 @@ def vote_topic(request, slug):
                 voted = False
             else:
                 topic.upvotes.add(request.user)
-                topic.downvotes.remove(request.user)
+                topic.downvotes.remove(request.user)  # Remove downvote if exists
                 voted = True
+                
+                # Bildirim oluştur (upvote alındığında)
+                if topic.user != request.user:
+                    from .notification_views import create_notification
+                    create_notification(
+                        user=topic.user,
+                        notification_type='vote_received',
+                        message=f'{request.user.profile.nickname} başlığınıza upvote verdi: {topic.title}',
+                        from_user=request.user,
+                        related_topic=topic
+                    )
         elif vote_type == 'down':
             if request.user in topic.downvotes.all():
                 topic.downvotes.remove(request.user)
                 voted = False
             else:
                 topic.downvotes.add(request.user)
-                topic.upvotes.remove(request.user)
+                topic.upvotes.remove(request.user)  # Remove upvote if exists
                 voted = True
         else:
             return JsonResponse({'error': 'Invalid vote type'}, status=400)
@@ -311,15 +390,27 @@ def vote_entry(request, entry_id):
                 voted = False
             else:
                 entry.upvotes.add(request.user)
-                entry.downvotes.remove(request.user)
+                entry.downvotes.remove(request.user)  # Remove downvote if exists
                 voted = True
+                
+                # Bildirim oluştur (upvote alındığında)
+                if entry.user != request.user:
+                    from .notification_views import create_notification
+                    create_notification(
+                        user=entry.user,
+                        notification_type='vote_received',
+                        message=f'{request.user.profile.nickname} entry\'nize upvote verdi',
+                        from_user=request.user,
+                        related_topic=entry.topic,
+                        related_entry=entry
+                    )
         elif vote_type == 'down':
             if request.user in entry.downvotes.all():
                 entry.downvotes.remove(request.user)
                 voted = False
             else:
                 entry.downvotes.add(request.user)
-                entry.upvotes.remove(request.user)
+                entry.upvotes.remove(request.user)  # Remove upvote if exists
                 voted = True
         else:
             return JsonResponse({'error': 'Invalid vote type'}, status=400)

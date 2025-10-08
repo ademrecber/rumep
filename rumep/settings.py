@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'csp.middleware.CSPMiddleware',  # django-csp middleware'ini ekleyin
     'main.middleware.SocialAuthExceptionMiddleware',
     'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
+    'main.middleware.CSRFFailureMiddleware',  # CSRF hata yönetimi
 ]
 
 # CSRF Settings
@@ -61,6 +62,8 @@ CSRF_COOKIE_SECURE = True  # Production için True
 CSRF_COOKIE_HTTPONLY = False  # JavaScript erişimi için False
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_AGE = 3600  # 1 saat
+CSRF_TOKEN_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 CSRF_TRUSTED_ORIGINS = ['https://*.render.com', 'https://rumep.net']
 CSRF_FAILURE_VIEW = 'main.views.views.csrf_failure'
 

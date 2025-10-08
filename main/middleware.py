@@ -33,3 +33,18 @@ class UserLanguageMiddleware:
         response = self.get_response(request)
         translation.deactivate()
         return response
+
+class CSRFFailureMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        return response
+
+    def process_exception(self, request, exception):
+        from django.middleware.csrf import CsrfViewMiddleware
+        if isinstance(exception, Exception) and 'CSRF' in str(exception):
+            messages.error(request, 'Güvenlik hatası. Lütfen sayfayı yenileyin.')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        return None

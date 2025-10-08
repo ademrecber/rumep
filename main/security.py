@@ -23,8 +23,11 @@ def rate_limit(max_requests=10, window_seconds=60, key_func=None):
             current_requests = cache.get(key, 0)
             
             if current_requests >= max_requests:
-                response = HttpResponse("Çok fazla istek. Lütfen bekleyin.", status=429)
-                return response
+                from django.contrib import messages
+                from django.shortcuts import redirect
+                if hasattr(request, 'META') and request.META.get('HTTP_REFERER'):
+                    return redirect(request.META.get('HTTP_REFERER'))
+                return redirect('/')
             
             # İstek sayısını artır
             cache.set(key, current_requests + 1, window_seconds)
