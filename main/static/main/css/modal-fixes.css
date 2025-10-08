@@ -1,0 +1,41 @@
+/* Modal Z-Index Düzeltmeleri */
+.modal {
+    z-index: 9999 !important;
+}
+
+.modal-backdrop {
+    z-index: 9998 !important;
+}
+
+/* Sekmelerin z-index'ini düşür */
+.top-tabs-area,
+.nav-tabs,
+.page-tabs {
+    z-index: 1 !important;
+    position: relative;
+}
+
+/* Mobile header z-index */
+.mobile-header {
+    z-index: 100 !important;
+}
+
+/* Bottom nav z-index */
+.bottom-nav {
+    z-index: 100 !important;
+}
+
+/* Dropdown z-index modal içinde */
+.modal .dropdown-menu {
+    z-index: 10000 !important;
+}
+
+/* Offcanvas z-index */
+.offcanvas {
+    z-index: 1050 !important;
+}
+
+/* Toast z-index */
+.toast-container {
+    z-index: 11000 !important;
+}

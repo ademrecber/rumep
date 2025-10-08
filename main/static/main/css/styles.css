@@ -26,4 +26,5 @@
     @import url('modern-forms.css'); /* Modern form tasarımları */
     @import url('modern-notifications.css'); /* Modern bildirimler */
     @import url('modern-search.css'); /* Modern arama sonuçları */
+    @import url('modal-fixes.css'); /* Modal z-index düzeltmeleri */
 
