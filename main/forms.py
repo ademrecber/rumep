@@ -42,10 +42,7 @@ class TopicForm(forms.ModelForm):
         title = self.cleaned_data.get('title')
         if not title or not title.strip():
             raise forms.ValidationError(_('Başlık boş olamaz.'))
-        title = title.strip()
-        if len(title) < 3:
-            raise forms.ValidationError(_('Başlık en az 3 karakter olmalıdır.'))
-        return title
+        return title.strip()
 
 class EntryForm(forms.ModelForm):
     class Meta:
@@ -70,10 +67,7 @@ class EntryForm(forms.ModelForm):
         content = self.cleaned_data.get('content')
         if not content or not content.strip():
             raise forms.ValidationError(_('Entry içeriği boş olamaz.'))
-        content = content.strip()
-        if len(content) < 10:
-            raise forms.ValidationError(_('Entry en az 10 karakter olmalıdır.'))
-        return clean_form_text(content, allowed_tags=['p', 'br', 'b', 'i', 'strong', 'em'])
+        return clean_form_text(content.strip(), allowed_tags=['p', 'br', 'b', 'i', 'strong', 'em'])
 
 
 
