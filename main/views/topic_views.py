@@ -205,64 +205,64 @@ def add_entry(request, slug):
                 
                 # Topic'in updated_at'ini güncelle
                 topic.save()
-            
-            # Hashtag işleme
-            from ..models import Profile, Hashtag, HashtagUsage
-            import re
-            
-            # Hashtag'leri bul ve kaydet
-            hashtag_pattern = r'#([a-zA-Z0-9_\u00C0-\u017F]+)'
-            hashtag_names = re.findall(hashtag_pattern, entry.content)
-            
-            for hashtag_name in hashtag_names:
-                hashtag_name = hashtag_name.lower()
-                hashtag, created = Hashtag.objects.get_or_create(
-                    name=hashtag_name,
-                    defaults={'slug': hashtag_name}
-                )
                 
-                # Kullanım kaydı oluştur
-                HashtagUsage.objects.get_or_create(
-                    hashtag=hashtag,
-                    entry=entry,
-                    topic=topic,
-                    user=request.user
-                )
+                # Hashtag işleme
+                from ..models import Profile, Hashtag, HashtagUsage
+                import re
+            
+                # Hashtag'leri bul ve kaydet
+                hashtag_pattern = r'#([a-zA-Z0-9_\u00C0-\u017F]+)'
+                hashtag_names = re.findall(hashtag_pattern, entry.content)
                 
-                # Kullanım sayısını artır
-                hashtag.increment_usage()
-            
-            # Mention edilen kullanıcılara bildirim gönder
-            mention_pattern = r'@([a-zA-Z0-9_]+)'
-            mentioned_usernames = re.findall(mention_pattern, entry.content)
-            
-            for username in mentioned_usernames:
-                try:
-                    mentioned_profile = Profile.objects.get(username=username)
-                    if mentioned_profile.user != request.user:
-                        from .notification_views import create_notification
-                        create_notification(
-                            user=mentioned_profile.user,
-                            notification_type='mention',
-                            message=f'{request.user.profile.nickname} sizi bir entry\'de bahsetti: {topic.title}',
-                            from_user=request.user,
-                            related_topic=topic,
-                            related_entry=entry
-                        )
-                except Profile.DoesNotExist:
-                    continue
-            
-            # Bildirim oluştur (başlık sahibine)
-            if topic.user != request.user:
-                from .notification_views import create_notification
-                create_notification(
-                    user=topic.user,
-                    notification_type='topic_entry',
-                    message=f'{request.user.profile.nickname} başlığınıza entry yazdı: {topic.title}',
-                    from_user=request.user,
-                    related_topic=topic,
-                    related_entry=entry
-                )
+                for hashtag_name in hashtag_names:
+                    hashtag_name = hashtag_name.lower()
+                    hashtag, created = Hashtag.objects.get_or_create(
+                        name=hashtag_name,
+                        defaults={'slug': hashtag_name}
+                    )
+                    
+                    # Kullanım kaydı oluştur
+                    HashtagUsage.objects.get_or_create(
+                        hashtag=hashtag,
+                        entry=entry,
+                        topic=topic,
+                        user=request.user
+                    )
+                    
+                    # Kullanım sayısını artır
+                    hashtag.increment_usage()
+                
+                # Mention edilen kullanıcılara bildirim gönder
+                mention_pattern = r'@([a-zA-Z0-9_]+)'
+                mentioned_usernames = re.findall(mention_pattern, entry.content)
+                
+                for username in mentioned_usernames:
+                    try:
+                        mentioned_profile = Profile.objects.get(username=username)
+                        if mentioned_profile.user != request.user:
+                            from .notification_views import create_notification
+                            create_notification(
+                                user=mentioned_profile.user,
+                                notification_type='mention',
+                                message=f'{request.user.profile.nickname} sizi bir entry\'de bahsetti: {topic.title}',
+                                from_user=request.user,
+                                related_topic=topic,
+                                related_entry=entry
+                            )
+                    except Profile.DoesNotExist:
+                        continue
+                
+                # Bildirim oluştur (başlık sahibine)
+                if topic.user != request.user:
+                    from .notification_views import create_notification
+                    create_notification(
+                        user=topic.user,
+                        notification_type='topic_entry',
+                        message=f'{request.user.profile.nickname} başlığınıza entry yazdı: {topic.title}',
+                        from_user=request.user,
+                        related_topic=topic,
+                        related_entry=entry
+                    )
                 
                 messages.success(request, 'Entry başarıyla eklendi!')
                 return redirect('topic_detail', slug=topic.slug)
