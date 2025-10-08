@@ -60,7 +60,6 @@ def home(request):
     })
 
 @login_required
-@profile_required
 def create_topic(request):
     if request.method != 'POST':
         return redirect('home')
@@ -69,7 +68,6 @@ def create_topic(request):
     entry_form = EntryForm(request.POST)
     
     if not (topic_form.is_valid() and entry_form.is_valid()):
-        messages.error(request, 'Form hataları var. Lütfen kontrol edin.')
         return redirect('home')
     
     try:
@@ -85,15 +83,12 @@ def create_topic(request):
         entry.user = request.user
         entry.save()
         
-        messages.success(request, 'Başlık oluşturuldu!')
         return redirect('topic_detail', slug=topic.slug)
         
     except Exception as e:
-        messages.error(request, 'Hata oluştu. Tekrar deneyin.')
         return redirect('home')
 
 @login_required
-@profile_required
 def add_entry(request, slug):
     if request.method != 'POST':
         return redirect('topic_detail', slug=slug)
@@ -102,7 +97,6 @@ def add_entry(request, slug):
     entry_form = EntryForm(request.POST)
     
     if not entry_form.is_valid():
-        messages.error(request, 'Entry formu geçersiz.')
         return redirect('topic_detail', slug=slug)
     
     try:
@@ -114,11 +108,9 @@ def add_entry(request, slug):
         # Topic güncelle
         topic.save()
         
-        messages.success(request, 'Entry eklendi!')
         return redirect('topic_detail', slug=topic.slug)
         
     except Exception as e:
-        messages.error(request, 'Hata oluştu. Tekrar deneyin.')
         return redirect('topic_detail', slug=topic.slug)
 
 def topic_detail(request, slug):
@@ -143,7 +135,6 @@ def topic_detail(request, slug):
     })
 
 @login_required
-@profile_required
 def like_entry(request, entry_id):
     if request.method == 'POST':
         entry = get_object_or_404(Entry, id=entry_id)
@@ -174,7 +165,7 @@ def load_more_topics(request):
             'id': topic.id,
             'title': topic.title,
             'slug': topic.slug,
-            'user': topic.user.profile.nickname if hasattr(topic.user, 'profile') else topic.user.username,
+            'user': getattr(topic.user, 'username', 'Anonim'),
             'created_at': topic.created_at.strftime('%d.%m.%Y %H:%M'),
             'entry_count': topic.entry_count(),
         })
@@ -185,7 +176,6 @@ def load_more_topics(request):
     })
 
 @login_required
-@profile_required
 def agenda(request):
     # En çok entry'si olan başlıkları getir (gündem)
     topics = Topic.objects.annotate(
@@ -198,7 +188,6 @@ def agenda(request):
     })
 
 @login_required
-@profile_required
 @csrf_protect
 def edit_topic(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
@@ -216,7 +205,6 @@ def edit_topic(request, slug):
     return render(request, 'main/edit_topic.html', {'form': form, 'topic': topic})
 
 @login_required
-@profile_required
 @csrf_protect
 def delete_topic(request, slug):
     topic = get_object_or_404(Topic, slug=slug)
@@ -230,7 +218,6 @@ def delete_topic(request, slug):
     return render(request, 'main/confirm_delete_topic.html', {'topic': topic})
 
 @login_required
-@profile_required
 @csrf_protect
 def edit_entry(request, entry_id):
     entry = get_object_or_404(Entry, id=entry_id)
@@ -248,7 +235,6 @@ def edit_entry(request, entry_id):
     return render(request, 'main/edit_entry.html', {'form': form, 'entry': entry})
 
 @login_required
-@profile_required
 @csrf_protect
 def delete_entry(request, entry_id):
     entry = get_object_or_404(Entry, id=entry_id)
@@ -263,7 +249,6 @@ def delete_entry(request, entry_id):
     return render(request, 'main/confirm_delete_entry.html', {'entry': entry})
 
 @login_required
-@profile_required
 def vote_topic(request, slug):
     if request.method == 'POST':
         topic = get_object_or_404(Topic, slug=slug)
@@ -299,7 +284,6 @@ def vote_topic(request, slug):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
-@profile_required
 def vote_entry(request, entry_id):
     if request.method == 'POST':
         entry = get_object_or_404(Entry, id=entry_id)
