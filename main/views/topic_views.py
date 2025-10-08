@@ -35,7 +35,7 @@ def home(request):
             topics = Topic.objects.none()
     else:
         # Tüm topic'ler - optimized queryset kullan
-        topics = Topic.objects.with_related()[:10]
+        topics = Topic.objects.with_related().order_by('-created_at')[:10]
     
     # Kategoriler sekmesi için kategorileri getir
     all_categories = Category.objects.all().order_by('name')
@@ -48,6 +48,9 @@ def home(request):
     category_topics = None
     if tab == 'category' and category_slug:
         category_topics = topics
+    
+    # Debug: Render öncesi kontrol
+    print(f"Rendering home with {len(topics)} topics")
     
     return render(request, 'main/home.html', {
         'topics': topics,

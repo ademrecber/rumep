@@ -26,7 +26,7 @@
 
 
 <!-- Create Topic Modal -->
-<div class="modal fade" id="createTopicModal" tabindex="-1" aria-labelledby="createTopicModalLabel" aria-hidden="true" style="z-index: 9999;">
+<div class="modal fade" id="createTopicModal" tabindex="-1" aria-labelledby="createTopicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -585,25 +585,11 @@
     z-index: 1;
 }
 
-/* Modal z-index düzeltmeleri */
-.modal {
-    z-index: 9999 !important;
-}
-
-.modal-backdrop {
-    z-index: 9998 !important;
-}
-
 /* Modal açıkken panel'i gizle */
 .modal.show ~ * .mobile-actions-panel.active,
 body.modal-open .mobile-actions-panel.active {
     z-index: -1;
     opacity: 0.3;
-}
-
-/* Sekmelerin z-index'ini düşür */
-.nav-tabs, .page-tabs {
-    z-index: 1 !important;
 }
 
 .mobile-actions-panel.active {
