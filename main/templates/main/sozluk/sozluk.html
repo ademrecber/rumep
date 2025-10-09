@@ -90,6 +90,13 @@
                             <option value="zarf">{% trans "Zarf" %}</option>
                         </select>
                     </div>
+                    <div>
+                        <select id="dil-filtresi" class="form-select" aria-label="{% trans 'Dil filtresi' %}">
+                            <option value="">{% trans "Tüm Diller" %}</option>
+                            <option value="turkce">{% trans "Türkçesi Olan" %}</option>
+                            <option value="ingilizce">{% trans "İngilizcesi Olan" %}</option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary rounded-pill">
                         <i class="bi bi-search me-1"></i> {% trans "Ara" %}
                     </button>

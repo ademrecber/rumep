@@ -82,6 +82,7 @@ def sozluk_harf_yukle(request):
 def sozluk_ara(request):
     query = request.GET.get('q', '').strip()
     tur = request.GET.get('tur', '').strip()
+    dil = request.GET.get('dil', '').strip()
     offset = int(request.GET.get('offset', 0))
     limit = 20
 
@@ -94,6 +95,10 @@ def sozluk_ara(request):
         )
     if tur:
         kelimeler = kelimeler.filter(tur=tur)
+    if dil == 'turkce':
+        kelimeler = kelimeler.filter(turkce_karsiligi__isnull=False).exclude(turkce_karsiligi='')
+    elif dil == 'ingilizce':
+        kelimeler = kelimeler.filter(ingilizce_karsiligi__isnull=False).exclude(ingilizce_karsiligi='')
     
     kelimeler = kelimeler.order_by('kelime')[offset:offset + limit]
     data = [{

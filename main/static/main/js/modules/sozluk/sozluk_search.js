@@ -9,6 +9,7 @@ export function initSozlukArama() {
     const form = document.getElementById('sozluk-arama-form');
     const aramaInput = document.getElementById('arama-input');
     const turFiltresi = document.getElementById('tur-filtresi');
+    const dilFiltresi = document.getElementById('dil-filtresi');
     const sonucListesi = document.getElementById('arama-sonuc-listesi');
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error-message');
@@ -64,8 +65,8 @@ export function initSozlukArama() {
         errorDiv.classList.add('d-none');
 
         try {
-            console.log(`Arama isteği: /sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&offset=${offset}`);
-            const response = await fetch(`/sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&offset=${offset}`, {
+            console.log(`Arama isteği: /sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&dil=${encodeURIComponent(dilFiltresi?.value || '')}&offset=${offset}`);
+            const response = await fetch(`/sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&dil=${encodeURIComponent(dilFiltresi?.value || '')}&offset=${offset}`, {
                 method: 'GET',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -139,6 +140,13 @@ export function initSozlukArama() {
         console.log('Tür filtresi değişti:', turFiltresi.value);
         loadAramaSonuclari(true);
     });
+
+    if (dilFiltresi) {
+        dilFiltresi.addEventListener('change', () => {
+            console.log('Dil filtresi değişti:', dilFiltresi.value);
+            loadAramaSonuclari(true);
+        });
+    }
 
     aramaInput.addEventListener('input', (e) => {
         console.log('Arama input tetiklendi:', e.target.value);
