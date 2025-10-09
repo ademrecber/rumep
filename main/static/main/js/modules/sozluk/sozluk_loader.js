@@ -85,11 +85,11 @@ export async function initSozlukForm() {
                     const module = await import("./sozluk_search.js");
                     await module.initTumKelimeler(true);
                 } catch (importError) {
-                    handleError(importError, errorDiv, '${window.i18n?.t('sozluk.word_list_update_error') || 'Kelime listesi güncellenemedi.'}');
+                    handleError(importError, errorDiv, 'Kelime listesi güncellenemedi.');
                 }
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>${window.i18n?.t('sozluk.word_add_error') || 'Kelime eklenirken hata oluştu, lütfen tekrar deneyin.'}</p>';
+                errorDiv.innerHTML = '<p>Kelime eklenirken hata oluştu, lütfen tekrar deneyin.</p>';
             }
         } catch (error) {
             handleError(error, errorDiv);
@@ -141,7 +141,7 @@ export function initSozlukLoader(harf) {
             renderKelimeler(data);
 
         } catch (error) {
-            handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.word_load_error') || 'Kelimeler yüklenirken hata oluştu.'}');
+            handleError(error, elements.errorDiv, 'Kelimeler yüklenirken hata oluştu.');
         } finally {
             state.loading = false;
             elements.loadingDiv.style.display = 'none';
@@ -171,7 +171,7 @@ export function initSozlukLoader(harf) {
             .then(module => module.bindKelimeActions())
             .catch(error => {
                 console.error('Action binding failed:', error);
-                handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.action_binding_error') || 'Eylem bağlama başarısız oldu.'}');
+                handleError(error, elements.errorDiv, 'Eylem bağlama başarısız oldu.');
             });
     };
 

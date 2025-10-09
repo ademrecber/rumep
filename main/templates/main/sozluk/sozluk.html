@@ -248,6 +248,11 @@
                 search: initSozlukArama(),
                 words: initTumKelimeler(true)
             };
+            
+            // Auto-load all words on page load
+            setTimeout(() => {
+                initTumKelimeler(true);
+            }, 100);
 
             // Initialize forms
             initSozlukForm();
