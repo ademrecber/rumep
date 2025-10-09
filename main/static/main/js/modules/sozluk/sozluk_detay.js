@@ -9,13 +9,16 @@ export function initDetayEkleForm() {
         errorDiv.innerHTML = '';
 
         const formData = new FormData(form);
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+        console.log('CSRF Token:', csrfToken);
+        console.log('Form Data:', Object.fromEntries(formData));
         try {
             console.log(`Detay ekleme isteği: ${form.action}`);
             const response = await fetch(form.action, {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content || ''
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
                 },
                 body: formData
             });
@@ -53,7 +56,7 @@ export function initEditDetayForm() {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content || ''
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
                 },
                 body: formData
             });

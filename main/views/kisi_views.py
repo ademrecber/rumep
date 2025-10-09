@@ -92,8 +92,12 @@ def kisi_liste(request):
     harf = request.GET.get('harf', None)
     kategori_slug = request.GET.get('kategori', None)
     query = request.GET.get('q', None)
+    
+    # Güvenlik: Sadece geçerli harflere izin ver
+    valid_harfler = ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']
+    
     kisiler = Kisi.objects.all()
-    if harf and harf.lower() in ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']:
+    if harf and len(harf) == 1 and harf.lower() in valid_harfler:
         kisiler = kisiler.filter(ad__istartswith=harf)
     if kategori_slug:
         kisiler = kisiler.filter(kategoriler__slug=kategori_slug)
@@ -112,13 +116,21 @@ def kisi_liste(request):
 
 @csrf_protect
 def kisi_liste_yukle(request):
-    offset = int(request.GET.get('offset', 0))
+    try:
+        offset = int(request.GET.get('offset', 0))
+    except (ValueError, TypeError):
+        offset = 0
+    
     limit = 20
     harf = request.GET.get('harf', None)
     kategori_slug = request.GET.get('kategori', None)
     query = request.GET.get('q', None)
+    
+    # Güvenlik: Sadece geçerli harflere izin ver
+    valid_harfler = ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']
+    
     kisiler = Kisi.objects.all()
-    if harf and harf.lower() in ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']:
+    if harf and len(harf) == 1 and harf.lower() in valid_harfler:
         kisiler = kisiler.filter(ad__istartswith=harf)
     if kategori_slug:
         kisiler = kisiler.filter(kategoriler__slug=kategori_slug)

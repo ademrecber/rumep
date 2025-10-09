@@ -47,7 +47,8 @@ def sozluk_ana_sayfa(request):
     })
 
 def sozluk_harf(request, harf):
-    if harf.lower() not in ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']:
+    valid_harfler = ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']
+    if not harf or len(harf) != 1 or harf.lower() not in valid_harfler:
         return redirect('sozluk_ana_sayfa')
     kelimeler = Sozluk.objects.filter(kelime__istartswith=harf).order_by('kelime')[:20]
     return render(request, 'main/sozluk/sozluk_harf.html', {'harf': harf, 'kelimeler': kelimeler, 'user': request.user})
@@ -55,9 +56,15 @@ def sozluk_harf(request, harf):
 @csrf_protect
 def sozluk_harf_yukle(request):
     harf = request.GET.get('harf')
-    offset = int(request.GET.get('offset', 0))
+    try:
+        offset = int(request.GET.get('offset', 0))
+    except (ValueError, TypeError):
+        offset = 0
+    
     limit = 20
-    if harf.lower() not in ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']:
+    valid_harfler = ['a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z']
+    
+    if not harf or len(harf) != 1 or harf.lower() not in valid_harfler:
         return JsonResponse({'error': 'Geçersiz harf'}, status=400)
     kelimeler = Sozluk.objects.filter(kelime__istartswith=harf).order_by('kelime')[offset:offset + limit]
     data = [{
@@ -97,7 +104,10 @@ def sozluk_ara(request):
 
 @csrf_protect
 def sozluk_tum_kelimeler(request):
-    offset = int(request.GET.get('offset', 0))
+    try:
+        offset = int(request.GET.get('offset', 0))
+    except (ValueError, TypeError):
+        offset = 0
     limit = 20
     kelimeler = Sozluk.objects.all().order_by('kelime')[offset:offset + limit]
     data = [{
