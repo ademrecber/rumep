@@ -26,6 +26,10 @@ def sozluk_ana_sayfa(request):
             sozluk.kelime = bleach.clean(sozluk.kelime, tags=[], strip=True).lower()
             sozluk.detay = bleach.clean(sozluk.detay, tags=['p', 'br'], strip=True)
             sozluk.tur = bleach.clean(sozluk.tur, tags=[], strip=True)
+            if sozluk.turkce_karsiligi:
+                sozluk.turkce_karsiligi = bleach.clean(sozluk.turkce_karsiligi, tags=[], strip=True)
+            if sozluk.ingilizce_karsiligi:
+                sozluk.ingilizce_karsiligi = bleach.clean(sozluk.ingilizce_karsiligi, tags=[], strip=True)
             try:
                 sozluk.save()
                 logger.info(f"Kelime eklendi: {sozluk.kelime}, Kullanıcı: {request.user.username}")
@@ -146,6 +150,10 @@ def sozluk_kelime_duzenle(request, kelime_id):
             sozluk.kelime = bleach.clean(sozluk.kelime, tags=[], strip=True).lower()
             sozluk.detay = bleach.clean(sozluk.detay, tags=['p', 'br'], strip=True)
             sozluk.tur = bleach.clean(sozluk.tur, tags=[], strip=True)
+            if sozluk.turkce_karsiligi:
+                sozluk.turkce_karsiligi = bleach.clean(sozluk.turkce_karsiligi, tags=[], strip=True)
+            if sozluk.ingilizce_karsiligi:
+                sozluk.ingilizce_karsiligi = bleach.clean(sozluk.ingilizce_karsiligi, tags=[], strip=True)
             try:
                 sozluk.save()
                 logger.info(f"Kelime düzenlendi: {sozluk.kelime}, Kullanıcı: {request.user.username}")
@@ -166,15 +174,15 @@ def sozluk_kelime_veri(request, kelime_id):
         'success': True,
         'kelime': kelime.kelime,
         'detay': kelime.detay,
-        'tur': kelime.tur
+        'tur': kelime.tur,
+        'turkce_karsiligi': kelime.turkce_karsiligi or '',
+        'ingilizce_karsiligi': kelime.ingilizce_karsiligi or ''
     })
 
 @login_required
 @profile_required
 def sozluk_detay_ekle(request, kelime_id):
     kelime = get_object_or_404(Sozluk, id=kelime_id)
-    if kelime.kullanici == request.user:
-        return JsonResponse({'success': False, 'error': 'Kendi kelimenize ek detay ekleyemezsiniz.'}, status=403)
     if request.method == 'POST':
         form = SozlukDetayForm(request.POST)
         if form.is_valid():

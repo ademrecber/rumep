@@ -331,6 +331,8 @@ class Profile(models.Model):
 class Sozluk(models.Model):
     kelime = models.CharField(max_length=50, db_index=True, unique=True)
     detay = models.TextField(max_length=500)
+    turkce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('Türkçe Karşılığı'))
+    ingilizce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('İngilizce Karşılığı'))
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
     tur = models.CharField(

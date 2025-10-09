@@ -94,10 +94,25 @@ class SarkiAdmin(admin.ModelAdmin):
 
 @admin.register(Sozluk)
 class SozlukAdmin(admin.ModelAdmin):
-    list_display = ('kelime', 'tur', 'kullanici', 'eklenme_tarihi')
+    list_display = ('kelime', 'turkce_karsiligi', 'ingilizce_karsiligi', 'tur', 'kullanici', 'eklenme_tarihi')
     list_filter = ('tur', 'eklenme_tarihi')
-    search_fields = ('kelime', 'detay', 'kullanici__username')
+    search_fields = ('kelime', 'detay', 'turkce_karsiligi', 'ingilizce_karsiligi', 'kullanici__username')
     date_hierarchy = 'eklenme_tarihi'
+    
+    fieldsets = (
+        ('Kelime Bilgileri', {
+            'fields': ('kelime', 'detay', 'tur')
+        }),
+        ('Çeviriler', {
+            'fields': ('turkce_karsiligi', 'ingilizce_karsiligi'),
+            'classes': ('collapse',)
+        }),
+        ('Diğer', {
+            'fields': ('kullanici', 'eklenme_tarihi'),
+            'classes': ('collapse',)
+        }),
+    )
+    readonly_fields = ('eklenme_tarihi',)
 
 @admin.register(Atasozu)
 class AtasozuAdmin(admin.ModelAdmin):

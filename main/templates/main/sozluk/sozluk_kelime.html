@@ -49,6 +49,12 @@
             </div>
             <div class="card-body p-4">
                 <p><strong>{% trans "Açıklama:" %}</strong> {{ kelime.detay }}</p>
+                {% if kelime.turkce_karsiligi %}
+                    <p><strong>{% trans "Türkçe Karşılığı:" %}</strong> {{ kelime.turkce_karsiligi }}</p>
+                {% endif %}
+                {% if kelime.ingilizce_karsiligi %}
+                    <p><strong>{% trans "İngilizce Karşılığı:" %}</strong> {{ kelime.ingilizce_karsiligi }}</p>
+                {% endif %}
                 <p><strong>{% trans "Tür:" %}</strong> {{ kelime.tur|default:'Belirtilmemiş' }}</p>
                 <p><strong>{% trans "Ekleyen:" %}</strong> <a href="{% url 'profile_detail' kelime.kullanici.profile.username %}">{{ kelime.kullanici.profile.nickname }}</a> (@{{ kelime.kullanici.profile.username }})</p>
                 <p><strong>{% trans "Eklenme Tarihi:" %}</strong> {{ kelime.eklenme_tarihi }}</p>
@@ -68,9 +74,7 @@
                     <i class="bi bi-plus-square me-2 text-primary"></i>
                     {% trans "Açıklama Ekle" %}
                 </h5>
-                {% if kelime.kullanici == user %}
-                    <p class="text-muted">{% trans "Kendi kelimenize açıklama ekleyemezsiniz." %}</p>
-                {% else %}
+                {% if user.is_authenticated %}
                     <form id="detay-ekle-form" method="post" action="{% url 'sozluk_detay_ekle' kelime.id %}">
                         {% csrf_token %}
                         {{ detay_form.as_p }}
@@ -128,6 +132,14 @@
                             <div class="mb-3">
                                 <label for="detay" class="form-label">{% trans "Açıklama" %}</label>
                                 <textarea class="form-control" id="detay" name="detay" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="turkce_karsiligi" class="form-label">{% trans "Türkçe Karşılığı" %}</label>
+                                <input type="text" class="form-control" id="turkce_karsiligi" name="turkce_karsiligi" placeholder="{% trans 'Türkçe karşılığı (isteğe bağlı)' %}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ingilizce_karsiligi" class="form-label">{% trans "İngilizce Karşılığı" %}</label>
+                                <input type="text" class="form-control" id="ingilizce_karsiligi" name="ingilizce_karsiligi" placeholder="{% trans 'İngilizce karşılığı (isteğe bağlı)' %}">
                             </div>
                             <div class="mb-3">
                                 <label for="tur" class="form-label">{% trans "Tür" %}</label>

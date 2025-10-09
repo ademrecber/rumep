@@ -89,10 +89,12 @@ class SozlukForm(forms.ModelForm):
 
     class Meta:
         model = Sozluk
-        fields = ['kelime', 'detay', 'tur']
+        fields = ['kelime', 'detay', 'turkce_karsiligi', 'ingilizce_karsiligi', 'tur']
         widgets = {
             'kelime': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kelimeyi yazın'), 'required': True}),
             'detay': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Kelimenin detaylarını yazın'), 'rows': 4, 'required': True}),
+            'turkce_karsiligi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Türkçe karşılığı (isteğe bağlı)')}),
+            'ingilizce_karsiligi': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('İngilizce karşılığı (isteğe bağlı)')}),
         }
 
     def clean_kelime(self):
@@ -105,6 +107,18 @@ class SozlukForm(forms.ModelForm):
         if Sozluk.objects.filter(kelime__iexact=kelime).exists():
             raise forms.ValidationError(_('Bu kelime zaten sözlükte mevcut, lütfen farklı bir kelime yazın.'))
         return kelime
+
+    def clean_turkce_karsiligi(self):
+        turkce = self.cleaned_data.get('turkce_karsiligi', '')
+        if turkce:
+            return turkce.strip()
+        return turkce
+
+    def clean_ingilizce_karsiligi(self):
+        ingilizce = self.cleaned_data.get('ingilizce_karsiligi', '')
+        if ingilizce:
+            return ingilizce.strip()
+        return ingilizce
 
 class SozlukDetayForm(forms.ModelForm):
     class Meta:

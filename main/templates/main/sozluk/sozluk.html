@@ -169,6 +169,24 @@
                                 </div>
                             </div>
                             <div class="mb-3">
+                                <label for="turkce_karsiligi" class="form-label">{% trans "Türkçe Karşılığı" %}</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="turkce_karsiligi" 
+                                       name="turkce_karsiligi" 
+                                       placeholder="{% trans 'Türkçe karşılığı (isteğe bağlı)' %}"
+                                       autocomplete="off">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ingilizce_karsiligi" class="form-label">{% trans "İngilizce Karşılığı" %}</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="ingilizce_karsiligi" 
+                                       name="ingilizce_karsiligi" 
+                                       placeholder="{% trans 'İngilizce karşılığı (isteğe bağlı)' %}"
+                                       autocomplete="off">
+                            </div>
+                            <div class="mb-3">
                                 <label for="tur" class="form-label">{% trans "Tür" %}</label>
                                 <select class="form-select" id="tur" name="tur">
                                     <option value="">{% trans "Seçin" %}</option>
