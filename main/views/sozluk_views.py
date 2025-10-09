@@ -71,6 +71,8 @@ def sozluk_harf_yukle(request):
         'id': kelime.id,
         'kelime': kelime.kelime,
         'detay': kelime.detay[:100] + ('...' if len(kelime.detay) > 100 else ''),
+        'turkce_karsiligi': kelime.turkce_karsiligi or '',
+        'ingilizce_karsiligi': kelime.ingilizce_karsiligi or '',
         'is_owner': kelime.kullanici == request.user
     } for kelime in kelimeler]
     has_more = Sozluk.objects.filter(kelime__istartswith=harf).count() > offset + limit
@@ -86,7 +88,10 @@ def sozluk_ara(request):
     kelimeler = Sozluk.objects.all()
     if query:
         query = query.upper()  # Veri tabanında kelimeler büyük harfli
-        kelimeler = kelimeler.filter(Q(kelime__istartswith=query) | Q(kelime__icontains=query))
+        kelimeler = kelimeler.filter(
+            Q(kelime__istartswith=query) | Q(kelime__icontains=query) |
+            Q(turkce_karsiligi__icontains=query) | Q(ingilizce_karsiligi__icontains=query)
+        )
     if tur:
         kelimeler = kelimeler.filter(tur=tur)
     
@@ -96,6 +101,8 @@ def sozluk_ara(request):
         'kelime': kelime.kelime,
         'detay': kelime.detay[:100] + ('...' if len(kelime.detay) > 100 else ''),
         'tur': kelime.tur,
+        'turkce_karsiligi': kelime.turkce_karsiligi or '',
+        'ingilizce_karsiligi': kelime.ingilizce_karsiligi or '',
         'is_owner': kelime.kullanici == request.user
     } for kelime in kelimeler]
     has_more = Sozluk.objects.filter(Q(kelime__istartswith=query) | Q(kelime__icontains=query) & Q(tur=tur) if tur else Q(kelime__istartswith=query) | Q(kelime__icontains=query)).count() > offset + limit
@@ -115,6 +122,8 @@ def sozluk_tum_kelimeler(request):
         'kelime': kelime.kelime,
         'detay': kelime.detay[:100] + ('...' if len(kelime.detay) > 100 else ''),
         'tur': kelime.tur,
+        'turkce_karsiligi': kelime.turkce_karsiligi or '',
+        'ingilizce_karsiligi': kelime.ingilizce_karsiligi or '',
         'is_owner': kelime.kullanici == request.user
     } for kelime in kelimeler]
     has_more = Sozluk.objects.count() > offset + limit
