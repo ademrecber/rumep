@@ -120,8 +120,20 @@ def sozluk_tum_kelimeler(request):
         offset = int(request.GET.get('offset', 0))
     except (ValueError, TypeError):
         offset = 0
+    
+    dil = request.GET.get('dil', '').strip()
+    tur = request.GET.get('tur', '').strip()
     limit = 20
-    kelimeler = Sozluk.objects.all().order_by('kelime')[offset:offset + limit]
+    
+    kelimeler = Sozluk.objects.all()
+    if dil == 'turkce':
+        kelimeler = kelimeler.filter(turkce_karsiligi__isnull=False).exclude(turkce_karsiligi='')
+    elif dil == 'ingilizce':
+        kelimeler = kelimeler.filter(ingilizce_karsiligi__isnull=False).exclude(ingilizce_karsiligi='')
+    if tur:
+        kelimeler = kelimeler.filter(tur=tur)
+    
+    kelimeler = kelimeler.order_by('kelime')[offset:offset + limit]
     data = [{
         'id': kelime.id,
         'kelime': kelime.kelime,
@@ -131,7 +143,16 @@ def sozluk_tum_kelimeler(request):
         'ingilizce_karsiligi': kelime.ingilizce_karsiligi or '',
         'is_owner': kelime.kullanici == request.user
     } for kelime in kelimeler]
-    has_more = Sozluk.objects.count() > offset + limit
+    # has_more hesaplama - aynı filtreleri uygula
+    total_kelimeler = Sozluk.objects.all()
+    if dil == 'turkce':
+        total_kelimeler = total_kelimeler.filter(turkce_karsiligi__isnull=False).exclude(turkce_karsiligi='')
+    elif dil == 'ingilizce':
+        total_kelimeler = total_kelimeler.filter(ingilizce_karsiligi__isnull=False).exclude(ingilizce_karsiligi='')
+    if tur:
+        total_kelimeler = total_kelimeler.filter(tur=tur)
+    
+    has_more = total_kelimeler.count() > offset + limit
     return JsonResponse({'kelimeler': data, 'has_more': has_more})
 
 def sozluk_kelime(request, kelime_id):
