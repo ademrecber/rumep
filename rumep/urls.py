@@ -13,9 +13,36 @@ def ads_txt_view(request):
 
 def robots_txt_view(request):
     robots_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'robots.txt')
-    with open(robots_txt_path, 'r') as f:
-        content = f.read()
-    return HttpResponse(content, content_type='text/plain')
+    try:
+        with open(robots_txt_path, 'r') as f:
+            content = f.read()
+        return HttpResponse(content, content_type='text/plain')
+    except FileNotFoundError:
+        # Fallback robots.txt content
+        content = """User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rumep.net/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /profile/edit/
+Disallow: /api/
+
+# Allow important pages
+Allow: /sozluk/
+Allow: /kisi/
+Allow: /sarki/
+Allow: /atasozu-deyim/
+Allow: /yer-adlari/
+Allow: /popular/
+
+# Crawl delay
+Crawl-delay: 1"""
+        return HttpResponse(content, content_type='text/plain')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
