@@ -44,10 +44,18 @@ Allow: /popular/
 Crawl-delay: 1"""
         return HttpResponse(content, content_type='text/plain')
 
+def block_malicious_requests(request):
+    return HttpResponse('Not Found', status=404)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ads.txt', ads_txt_view, name='ads_txt'),
     path('robots.txt', robots_txt_view, name='robots_txt'),
+    # Block common attack vectors
+    path('xmlrpc.php', block_malicious_requests),
+    path('wp-admin/', block_malicious_requests),
+    path('wp-login.php', block_malicious_requests),
+    path('wp-config.php', block_malicious_requests),
     path('', include('main.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
     path('logout/', LogoutView.as_view(), name='logout'),

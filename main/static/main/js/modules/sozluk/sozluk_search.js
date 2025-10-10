@@ -282,14 +282,16 @@ export function initTumKelimeler(autoLoad = false) {
     const turFiltresi = document.getElementById('tur-filtresi');
     const dilFiltresi = document.getElementById('dil-filtresi');
     
-    if (turFiltresi) {
+    if (turFiltresi && !turFiltresi.hasAttribute('data-tum-kelimeler-listener')) {
+        turFiltresi.setAttribute('data-tum-kelimeler-listener', 'true');
         turFiltresi.addEventListener('change', () => {
             console.log('Tür filtresi değişti (tüm kelimeler):', turFiltresi.value);
             loadTumKelimeler(true);
         });
     }
     
-    if (dilFiltresi) {
+    if (dilFiltresi && !dilFiltresi.hasAttribute('data-tum-kelimeler-listener')) {
+        dilFiltresi.setAttribute('data-tum-kelimeler-listener', 'true');
         dilFiltresi.addEventListener('change', () => {
             console.log('Dil filtresi değişti (tüm kelimeler):', dilFiltresi.value);
             loadTumKelimeler(true);
