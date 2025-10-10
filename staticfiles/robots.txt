@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rumep.net/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /profile/edit/
+Disallow: /api/
+
+# Allow important pages
+Allow: /sozluk/
+Allow: /kisi/
+Allow: /sarki/
+Allow: /atasozu-deyim/
+Allow: /yer-adlari/
+Allow: /popular/
+
+# Crawl delay
+Crawl-delay: 1

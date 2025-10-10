@@ -11,9 +11,16 @@ def ads_txt_view(request):
         content = f.read()
     return HttpResponse(content, content_type='text/plain')
 
+def robots_txt_view(request):
+    robots_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'robots.txt')
+    with open(robots_txt_path, 'r') as f:
+        content = f.read()
+    return HttpResponse(content, content_type='text/plain')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ads.txt', ads_txt_view, name='ads_txt'),
+    path('robots.txt', robots_txt_view, name='robots_txt'),
     path('', include('main.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
     path('logout/', LogoutView.as_view(), name='logout'),
