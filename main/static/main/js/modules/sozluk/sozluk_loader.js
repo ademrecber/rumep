@@ -129,7 +129,7 @@ export function initSozlukLoader(harf) {
                 return;
             }
 
-            const response = await fetch(`/sozluk/harf-yukle/?harf=${harf}&offset=${state.offset}`, {
+            const response = await fetch(`/sozluk/tum-kelimeler/?offset=${state.offset}`, {
                 method: 'GET',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });

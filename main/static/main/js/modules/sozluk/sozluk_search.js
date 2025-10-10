@@ -162,13 +162,12 @@ export function initSozlukArama() {
 }
 
 export function initTumKelimeler(autoLoad = false) {
-    const tumKelimelerBtn = document.getElementById('tum-kelimeler-btn');
     const sonucListesi = document.getElementById('arama-sonuc-listesi');
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error-message');
 
-    if (!tumKelimelerBtn || !sonucListesi || !loadingDiv || !errorDiv) {
-        console.error('Tüm kelimeler elemanları eksik:', { tumKelimelerBtn, sonucListesi, loadingDiv, errorDiv });
+    if (!sonucListesi || !loadingDiv || !errorDiv) {
+        console.error('Tüm kelimeler elemanları eksik:', { sonucListesi, loadingDiv, errorDiv });
         return;
     }
 
@@ -266,9 +265,7 @@ export function initTumKelimeler(autoLoad = false) {
         }
     };
 
-    tumKelimelerBtn.addEventListener('click', () => {
-        loadTumKelimeler(true);
-    });
+    // tumKelimelerBtn event listener kaldırıldı - otomatik yükleme kullanılıyor
 
     if (autoLoad) {
         loadTumKelimeler(true);

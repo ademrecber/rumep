@@ -72,34 +72,38 @@
                     <i class="bi bi-search me-2 text-primary"></i>
                     {% trans "Kelime Ara" %}
                 </h5>
-                <form id="sozluk-arama-form" class="d-flex gap-2">
-                    <div class="flex-grow-1">
-                        <input type="text" 
-                               id="arama-input" 
-                               class="form-control" 
-                               placeholder="{% trans 'Kelime ara (örnek: su)' %}" 
-                               aria-label="{% trans 'Arama' %}"
-                               autocomplete="off">
+                <form id="sozluk-arama-form">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-6">
+                            <input type="text" 
+                                   id="arama-input" 
+                                   class="form-control" 
+                                   placeholder="{% trans 'Kelime ara (örnek: su)' %}" 
+                                   aria-label="{% trans 'Arama' %}"
+                                   autocomplete="off">
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select id="tur-filtresi" class="form-select" aria-label="{% trans 'Kelime türü filtresi' %}">
+                                <option value="">{% trans "Tüm Türler" %}</option>
+                                <option value="isim">{% trans "İsim" %}</option>
+                                <option value="fiil">{% trans "Fiil" %}</option>
+                                <option value="sifat">{% trans "Sıfat" %}</option>
+                                <option value="zarf">{% trans "Zarf" %}</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-2">
+                            <select id="dil-filtresi" class="form-select" aria-label="{% trans 'Dil filtresi' %}">
+                                <option value="">{% trans "Tüm Diller" %}</option>
+                                <option value="turkce">{% trans "Türkçesi Olan" %}</option>
+                                <option value="ingilizce">{% trans "İngilizcesi Olan" %}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search me-1"></i> {% trans "Ara" %}
+                            </button>
+                        </div>
                     </div>
-                    <div>
-                        <select id="tur-filtresi" class="form-select" aria-label="{% trans 'Kelime türü filtresi' %}">
-                            <option value="">{% trans "Tüm Türler" %}</option>
-                            <option value="isim">{% trans "İsim" %}</option>
-                            <option value="fiil">{% trans "Fiil" %}</option>
-                            <option value="sifat">{% trans "Sıfat" %}</option>
-                            <option value="zarf">{% trans "Zarf" %}</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select id="dil-filtresi" class="form-select" aria-label="{% trans 'Dil filtresi' %}">
-                            <option value="">{% trans "Tüm Diller" %}</option>
-                            <option value="turkce">{% trans "Türkçesi Olan" %}</option>
-                            <option value="ingilizce">{% trans "İngilizcesi Olan" %}</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary rounded-pill">
-                        <i class="bi bi-search me-1"></i> {% trans "Ara" %}
-                    </button>
                 </form>
             </div>
         </div>
