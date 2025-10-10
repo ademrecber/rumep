@@ -186,7 +186,7 @@ export function initTumKelimeler(autoLoad = false) {
             offset = 0;
             hasMore = true;
             seenIds.clear();
-            sonucListesi.innerHTML = '<p class="text-muted">Peyv tên barkirin...</p>';
+            sonucListesi.innerHTML = '';
         }
 
         try {
@@ -298,7 +298,7 @@ export function initTumKelimeler(autoLoad = false) {
 
     const scrollHandler = () => {
         if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !loading && hasMore) {
-            loadTumKelimeler();
+            loadTumKelimeler(false); // false = reset yapma
         }
     };
     window.addEventListener('scroll', scrollHandler);
