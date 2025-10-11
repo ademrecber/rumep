@@ -7,9 +7,14 @@ import os
 
 def ads_txt_view(request):
     ads_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'ads.txt')
-    with open(ads_txt_path, 'r') as f:
-        content = f.read()
-    return HttpResponse(content, content_type='text/plain')
+    try:
+        with open(ads_txt_path, 'r') as f:
+            content = f.read()
+        return HttpResponse(content, content_type='text/plain')
+    except FileNotFoundError:
+        # Fallback ads.txt content
+        content = "google.com, pub-4275159020382475, DIRECT, f08c47fec0942fa0"
+        return HttpResponse(content, content_type='text/plain')
 
 def robots_txt_view(request):
     robots_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'robots.txt')
