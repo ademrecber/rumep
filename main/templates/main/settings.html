@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Ayarlar" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2><i class="bi bi-gear me-2"></i>{% trans "Ayarlar" %}</h2>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-shield-lock me-2"></i>{% trans "Gizlilik" %}
+                            </h5>
+                            <p class="card-text">{% trans "Hesap gizlilik ayarlarınızı yönetin" %}</p>
+                            <a href="{% url 'privacy_settings' %}" class="btn btn-primary">
+                                {% trans "Ayarları Düzenle" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-bell me-2"></i>{% trans "Bildirimler" %}
+                            </h5>
+                            <p class="card-text">{% trans "Bildirim tercihlerinizi ayarlayın" %}</p>
+                            <a href="{% url 'notification_settings' %}" class="btn btn-primary">
+                                {% trans "Ayarları Düzenle" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-fonts me-2"></i>{% trans "Fontlar" %}
+                            </h5>
+                            <p class="card-text">{% trans "Proje fontlarını indirin" %}</p>
+                            <a href="https://rumep.net/fonts/" target="_blank" class="btn btn-primary">
+                                {% trans "Fontları İndir" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-person me-2"></i>{% trans "Profil" %}
+                            </h5>
+                            <p class="card-text">{% trans "Profil bilgilerinizi güncelleyin" %}</p>
+                            <a href="{% url 'profile' %}" class="btn btn-primary">
+                                {% trans "Profili Düzenle" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

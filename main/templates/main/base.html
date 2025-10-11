@@ -132,6 +132,12 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> Navên Cîhan</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><hr class="my-2"></li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'user_settings' %}active{% endif %}" href="{% url 'user_settings' %}"><i class="bi bi-gear me-2"></i> Mîhengî</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -193,6 +199,12 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item d-none d-md-block"><hr class="my-2"></li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'user_settings' %}active{% endif %}" href="{% url 'user_settings' %}"><i class="bi bi-gear me-2"></i> {% trans "Ayarlar" %}</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 
                 {% if user.is_authenticated and user.profile and request.resolver_match.url_name == 'home' %}

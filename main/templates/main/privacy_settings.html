@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Gizlilik Ayarları" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{% trans "Gizlilik Ayarları" %}</h2>
+            
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="is_private" id="is_private" 
+                                   {% if user.profile.is_private %}checked{% endif %}>
+                            <label class="form-check-label" for="is_private">
+                                {% trans "Hesabımı gizli yap" %}
+                            </label>
+                            <div class="form-text">{% trans "Gizli hesaplar sadece takipçiler tarafından görülebilir" %}</div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="show_email" id="show_email"
+                                   {% if user.profile.show_email %}checked{% endif %}>
+                            <label class="form-check-label" for="show_email">
+                                {% trans "E-posta adresimi göster" %}
+                            </label>
+                            <div class="form-text">{% trans "E-posta adresiniz profilinizde görünür" %}</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">{% trans "Kaydet" %}</button>
+                        <a href="{% url 'user_settings' %}" class="btn btn-secondary">{% trans "Geri" %}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

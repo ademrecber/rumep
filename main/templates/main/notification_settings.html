@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Bildirim Ayarları" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{% trans "Bildirim Ayarları" %}</h2>
+            
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="email_notifications" id="email_notifications"
+                                   {% if user.profile.email_notifications %}checked{% endif %}>
+                            <label class="form-check-label" for="email_notifications">
+                                {% trans "E-posta bildirimleri" %}
+                            </label>
+                            <div class="form-text">{% trans "Önemli bildirimler e-posta ile gönderilir" %}</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">{% trans "Kaydet" %}</button>
+                        <a href="{% url 'user_settings' %}" class="btn btn-secondary">{% trans "Geri" %}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

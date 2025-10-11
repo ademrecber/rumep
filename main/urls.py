@@ -12,6 +12,7 @@ from .views import search_views
 from .views import yer_adlari_views
 from .views import api_views
 from .views import font_views
+from .views import settings_views
 
 
 handler404 = 'main.views.custom_404'
@@ -182,5 +183,10 @@ urlpatterns = [
     # Font URLs
     path('fonts/', font_views.font_list, name='font_list'),
     path('fonts/download/<str:font_name>/', font_views.download_font, name='download_font'),
+    
+    # Settings URLs
+    path('settings/', settings_views.user_settings, name='user_settings'),
+    path('settings/privacy/', settings_views.privacy_settings, name='privacy_settings'),
+    path('settings/notifications/', settings_views.notification_settings, name='notification_settings'),
 
 ]   
