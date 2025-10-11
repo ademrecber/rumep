@@ -174,7 +174,7 @@ async function loadMorePosts() {
 function initializePage() {
     window.offset = window.offset || 10;
     window.hasMore = typeof window.hasMore === 'undefined' ? true : window.hasMore;
-    window.loading = window.loading || false;
+    window.loading = false;
     
     console.log('Sayfa başlatıldı - offset:', window.offset, 'hasMore:', window.hasMore, 'loading:', window.loading);
 
