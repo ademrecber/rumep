@@ -21,3 +21,9 @@ def csrf_failure(request, reason=""):
     if request.content_type == 'application/json':
         return JsonResponse({'error': 'CSRF token missing or incorrect'}, status=403)
     return render(request, 'main/csrf_failure.html', {'reason': reason}, status=403)
+
+def privacy_policy(request):
+    return render(request, 'main/privacy.html')
+
+def terms_of_service(request):
+    return render(request, 'main/terms.html')

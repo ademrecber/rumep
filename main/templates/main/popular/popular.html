@@ -75,6 +75,23 @@
                     <p class="text-muted p-3">{% trans "Henüz gündem başlığı yok." %}</p>
                 {% endfor %}
             </div>
+            
+            <!-- Loading ve Load More -->
+            <div id="loading" class="mt-3" style="display: none;">
+                {% for i in "123" %}
+                <div class="topic-item mb-4">
+                    <div class="placeholder-glow">
+                        <span class="placeholder col-8 mb-2"></span>
+                        <span class="placeholder col-4 mb-3"></span>
+                        <span class="placeholder col-12 mb-1"></span>
+                        <span class="placeholder col-10 mb-1"></span>
+                        <span class="placeholder col-6"></span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="load-more-btn" class="btn btn-primary mt-3" style="display: block;">{% trans "Daha Fazla Yükle" %}</button>
+            <div id="error-message" class="text-danger mt-3" style="display: none;"></div>
         </div>
         
         <!-- Aktif Yazarlar -->
@@ -159,8 +176,112 @@
 {% endblock %}
 
 {% block extra_scripts %}
+    <script type="module" src="{% static 'main/js/load-more.js' %}"></script>
     <script>
+        // Popular sayfa için Load More fonksiyonları
+        window.offset = 20; // İlk 20 yüklendi
+        window.hasMore = true;
+        window.loading = false;
+        
+        function getCsrfToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]')?.value || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        }
+        
+        async function loadMorePopular() {
+            if (window.loading || !window.hasMore) return;
+            
+            window.loading = true;
+            const loadingDiv = document.getElementById('loading');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (loadingDiv) loadingDiv.style.display = 'block';
+            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+            if (errorMessage) errorMessage.style.display = 'none';
+            
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const period = urlParams.get('period') || 'today';
+                const url = `/load-more-popular/?offset=${window.offset}&period=${period}`;
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': getCsrfToken()
+                    }
+                });
+                
+                if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
+                
+                const data = await response.json();
+                
+                if (data.posts && Array.isArray(data.posts)) {
+                    const fragment = document.createDocumentFragment();
+                    data.posts.forEach(topic => {
+                        const topicDiv = document.createElement('div');
+                        topicDiv.className = 'topic-item mb-4';
+                        topicDiv.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <a href="/topic/${topic.short_id}/" class="text-decoration-none text-dark">
+                                        <h5 class="mb-1">${topic.title}</h5>
+                                    </a>
+                                    
+                                    ${topic.text ? `
+                                    <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                                        ${topic.text.length > 790 ? 
+                                            topic.text.substring(0, 790) + '<a href="/topic/' + topic.short_id + '/" class="text-primary text-decoration-none">...devamını gör</a>' : 
+                                            topic.text
+                                        }
+                                    </div>
+                                    ` : ''}
+                                    
+                                    <small class="text-muted">
+                                        ${topic.daily_entry_count || topic.comment_count} entry • 
+                                        ${topic.nickname} tarafından açıldı •
+                                        ${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}
+                                    </small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">${topic.daily_entry_count || topic.comment_count}</span>
+                                </div>
+                            </div>
+                        `;
+                        fragment.appendChild(topicDiv);
+                    });
+                    
+                    const topicContainer = document.querySelector('.topic-container');
+                    if (topicContainer) {
+                        topicContainer.appendChild(fragment);
+                    }
+                    
+                    window.offset += 10;
+                    window.hasMore = data.has_more;
+                }
+                
+                if (loadMoreBtn) {
+                    loadMoreBtn.style.display = window.hasMore ? 'block' : 'none';
+                }
+            } catch (error) {
+                console.error('Hata:', error);
+                if (errorMessage) {
+                    errorMessage.textContent = `Yükleme hatası: ${error.message}`;
+                    errorMessage.style.display = 'block';
+                }
+                if (loadMoreBtn) loadMoreBtn.style.display = 'block';
+            } finally {
+                window.loading = false;
+                if (loadingDiv) loadingDiv.style.display = 'none';
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
+            // Load More butonu
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', loadMorePopular);
+            }
             
             // Show more/less functionality
             document.querySelectorAll('.show-more-btn').forEach(btn => {

@@ -188,5 +188,9 @@ urlpatterns = [
     path('settings/', settings_views.user_settings, name='user_settings'),
     path('settings/privacy/', settings_views.privacy_settings, name='privacy_settings'),
     path('settings/notifications/', settings_views.notification_settings, name='notification_settings'),
+    
+    # Legal pages
+    path('privacy/', views.privacy_policy, name='privacy_policy'),
+    path('terms/', views.terms_of_service, name='terms_of_service'),
 
 ]   

@@ -80,13 +80,13 @@ function loadMoreAgenda() {
     fetch(`/load-more-agenda/?offset=${offset}`)
         .then(response => response.json())
         .then(data => {
-            if (data.topics && data.topics.length > 0) {
-                data.topics.forEach(topic => {
+            if (data.posts && data.posts.length > 0) {
+                data.posts.forEach(topic => {
                     const topicHtml = createTopicHtml(topic);
                     document.querySelector('.agenda-container').insertAdjacentHTML('beforeend', topicHtml);
                 });
                 addVoteListeners();
-                offset += data.topics.length;
+                offset += data.posts.length;
                 hasMore = data.has_more;
             } else {
                 hasMore = false;
@@ -107,31 +107,31 @@ function loadMoreAgenda() {
 }
 
 function createTopicHtml(topic) {
-    const firstEntryPreview = topic.first_entry_content ? 
-        (topic.first_entry_content.length > 790 ? 
-            `${topic.first_entry_content}<a href="/topic/${topic.slug}/" class="text-primary text-decoration-none">...devamını gör</a>` : 
-            topic.first_entry_full) : '';
+    const firstEntryPreview = topic.text ? 
+        (topic.text.length > 790 ? 
+            `${topic.text.substring(0, 790)}<a href="/topic/${topic.short_id}/" class="text-primary text-decoration-none">...devamını gör</a>` : 
+            topic.text) : '';
     
     return `<div class="card mb-2 agenda-item">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="flex-grow-1">
-                    <a href="/topic/${topic.slug}/" class="text-decoration-none text-dark">
+                    <a href="/topic/${topic.short_id}/" class="text-decoration-none text-dark">
                         <h5 class="card-title mb-1">${topic.title}</h5>
                     </a>
                     ${firstEntryPreview ? `<div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">${firstEntryPreview}</div>` : ''}
                     <small class="text-muted">
                         ${topic.daily_entry_count} entry (son 24 saat) • 
-                        ${topic.user_nickname} tarafından açıldı •
-                        ${topic.created_at}
+                        ${topic.nickname} tarafından açıldı •
+                        ${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}
                     </small>
                     <div class="vote-buttons d-flex gap-1 align-items-center mt-2">
-                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.slug}" data-vote-type="up">
-                            <i class="bi bi-arrow-up${topic.user_upvoted ? '-circle-fill text-success' : ''}"></i>
+                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="up">
+                            <i class="bi bi-arrow-up"></i>
                         </button>
-                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">${topic.vote_score}</span>
-                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.slug}" data-vote-type="down">
-                            <i class="bi bi-arrow-down${topic.user_downvoted ? '-circle-fill text-danger' : ''}"></i>
+                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">${topic.upvotes - topic.downvotes}</span>
+                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="down">
+                            <i class="bi bi-arrow-down"></i>
                         </button>
                     </div>
                 </div>

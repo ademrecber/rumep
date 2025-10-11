@@ -88,63 +88,54 @@ def load_more_popular(request):
     if period == 'today':
         start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
         end_date = now
-    elif period == 'yesterday':
-        yesterday = now - timedelta(days=1)
-        start_date = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_date = yesterday.replace(hour=23, minute=59, second=59, microsecond=999999)
     elif period == 'weekly':
         start_date = now - timedelta(days=7)
         end_date = now
     elif period == 'monthly':
         start_date = now - timedelta(days=30)
         end_date = now
-    else:
-        # Default to all entries if period is not recognized
-        entries_query = Entry.objects.select_related('user', 'topic').annotate(
-            like_count=models.Count('likes')
-        ).order_by('-like_count', '-created_at')
-        entries = entries_query[offset:offset + limit]
-        data = [{
-            'id': entry.id,
-            'nickname': bleach.clean(entry.user.profile.nickname, tags=[], strip=True),
-            'username': bleach.clean(entry.user.profile.username, tags=[], strip=True),
-            'topic_title': entry.topic.title,
-            'topic_slug': entry.topic.slug,
-            'content': render_emojis(bleach.clean(entry.content, tags=['p', 'br', 'b', 'i', 'strong', 'em'], strip=False)),
-            'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M'),
-            'timesince': (timezone.now() - entry.created_at).total_seconds() / 3600,
-            'like_count': entry.like_count(),
-            'liked': request.user.is_authenticated and entry.likes.filter(id=request.user.id).exists(),
-            'is_owner': entry.user_id == request.user.id
-        } for entry in entries]
-        has_more = entries_query.count() > offset + limit
-        return JsonResponse({'entries': data, 'has_more': has_more}, status=200)
-
-    entries_query = Entry.objects.select_related('user', 'topic').annotate(
-        like_count=models.Count('likes')
-    ).filter(
-        created_at__gte=start_date,
-        created_at__lte=end_date
-    ).order_by('-like_count', '-created_at')
-
-    entries = entries_query[offset:offset + limit]
-
-    data = [{
-        'id': entry.id,
-        'nickname': bleach.clean(entry.user.profile.nickname, tags=[], strip=True),
-        'username': bleach.clean(entry.user.profile.username, tags=[], strip=True),
-        'topic_title': entry.topic.title,
-        'topic_slug': entry.topic.slug,
-        'content': render_emojis(bleach.clean(entry.content, tags=['p', 'br', 'b', 'i', 'strong', 'em'], strip=False)),
-        'created_at': entry.created_at.strftime('%Y-%m-%d %H:%M'),
-        'timesince': (timezone.now() - entry.created_at).total_seconds() / 3600,
-        'like_count': entry.like_count(),
-        'liked': request.user.is_authenticated and entry.likes.filter(id=request.user.id).exists(),
-        'is_owner': entry.user_id == request.user.id
-    } for entry in entries]
+    else:  # all-time
+        start_date = None
+        end_date = None
     
-    has_more = entries_query.count() > offset + limit
-    return JsonResponse({'entries': data, 'has_more': has_more}, status=200)
+    # Topic'ler için zaman bazlı filtreleme
+    if start_date and end_date:
+        topics_query = Topic.objects.select_related('user').filter(
+            entries__created_at__gte=start_date,
+            entries__created_at__lte=end_date
+        ).annotate(
+            period_entry_count=models.Count('entries', filter=models.Q(entries__created_at__gte=start_date, entries__created_at__lte=end_date))
+        ).filter(period_entry_count__gt=0).order_by('-period_entry_count', '-updated_at')
+    else:
+        topics_query = Topic.objects.select_related('user').annotate(
+            total_entry_count=models.Count('entries')
+        ).filter(total_entry_count__gt=0).order_by('-total_entry_count', '-updated_at')
+    
+    topics = topics_query[offset:offset + limit]
+    
+    posts_data = []
+    for topic in topics:
+        # İlk entry'yi al (varsa)
+        first_entry = topic.entries.first()
+        entry_text = first_entry.content if first_entry else ''
+        
+        posts_data.append({
+            'id': topic.id,
+            'title': topic.title,
+            'text': entry_text,
+            'nickname': getattr(topic.user.profile, 'nickname', topic.user.username) if hasattr(topic.user, 'profile') else topic.user.username,
+            'username': topic.user.username,
+            'short_id': topic.slug,
+            'created_at': topic.created_at.isoformat(),
+            'comment_count': topic.entry_count(),
+            'upvotes': topic.upvote_count() if hasattr(topic, 'upvote_count') else 0,
+            'downvotes': topic.downvote_count() if hasattr(topic, 'downvote_count') else 0,
+            'is_owner': topic.user == request.user if request.user.is_authenticated else False,
+            'daily_entry_count': getattr(topic, 'period_entry_count', getattr(topic, 'total_entry_count', 0))
+        })
+    
+    has_more = topics_query.count() > offset + limit
+    return JsonResponse({'posts': posts_data, 'has_more': has_more}, status=200)
 
 def agenda(request):
     """Son 24 saatte en çok entry yazılan başlıkları göster"""
@@ -182,20 +173,26 @@ def load_more_agenda(request):
     
     topics = topics_query[offset:offset + limit]
     
-    data = [{
-        'id': topic.id,
-        'title': topic.title,
-        'slug': topic.slug,
-        'daily_entry_count': topic.daily_entry_count,
-        'entry_count': topic.entry_count(),
-        'vote_score': topic.vote_score(),
-        'user_nickname': topic.user.profile.nickname,
-        'created_at': topic.created_at.strftime('%d.%m.%Y %H:%M'),
-        'first_entry_content': topic.entries.first().content[:790] if topic.entries.first() else '',
-        'first_entry_full': topic.entries.first().content if topic.entries.first() else '',
-        'user_upvoted': request.user in topic.upvotes.all() if request.user.is_authenticated else False,
-        'user_downvoted': request.user in topic.downvotes.all() if request.user.is_authenticated else False
-    } for topic in topics]
+    posts_data = []
+    for topic in topics:
+        # İlk entry'yi al (varsa)
+        first_entry = topic.entries.first()
+        entry_text = first_entry.content if first_entry else ''
+        
+        posts_data.append({
+            'id': topic.id,
+            'title': topic.title,
+            'text': entry_text,
+            'nickname': getattr(topic.user.profile, 'nickname', topic.user.username) if hasattr(topic.user, 'profile') else topic.user.username,
+            'username': topic.user.username,
+            'short_id': topic.slug,
+            'created_at': topic.created_at.isoformat(),
+            'comment_count': topic.entry_count(),
+            'upvotes': topic.upvote_count() if hasattr(topic, 'upvote_count') else 0,
+            'downvotes': topic.downvote_count() if hasattr(topic, 'downvote_count') else 0,
+            'is_owner': topic.user == request.user if request.user.is_authenticated else False,
+            'daily_entry_count': topic.daily_entry_count
+        })
     
     has_more = topics_query.count() > offset + limit
-    return JsonResponse({'topics': data, 'has_more': has_more}, status=200)
+    return JsonResponse({'posts': posts_data, 'has_more': has_more}, status=200)

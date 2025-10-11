@@ -322,6 +322,18 @@
                 </div>
             {% endif %}
             
+            <!-- Legal Links -->
+            <div class="card mb-3">
+                <div class="card-body p-3">
+                    <h6 class="card-title mb-3">{% trans "Yasal" %}</h6>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{% url 'privacy_policy' %}" class="text-decoration-none small">{% trans "Gizlilik Politikası" %}</a>
+                        <a href="{% url 'terms_of_service' %}" class="text-decoration-none small">{% trans "Kullanım Şartları" %}</a>
+                        <a href="mailto:info@rumep.net" class="text-decoration-none small">{% trans "İletişim" %}</a>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Yardım Accordion -->
             <div class="card mb-3">
                 <div class="card-body p-3">

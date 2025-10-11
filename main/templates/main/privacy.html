@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Gizlilik Politikası" %}{% endblock %}
+{% block page_header %}{% trans "Gizlilik Politikası" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body p-4">
+                    <h1 class="mb-4">{% trans "Gizlilik Politikası" %}</h1>
+                    
+                    <h3>{% trans "Bilgi Toplama" %}</h3>
+                    <p>Rumep olarak, kullanıcılarımızın gizliliğini korumayı taahhüt ediyoruz. Bu politika, hangi bilgileri topladığımızı ve nasıl kullandığımızı açıklar.</p>
+                    
+                    <h3>{% trans "Toplanan Bilgiler" %}</h3>
+                    <ul>
+                        <li>Hesap oluştururken verdiğiniz bilgiler (kullanıcı adı, e-posta)</li>
+                        <li>Platform üzerinde paylaştığınız içerikler</li>
+                        <li>Site kullanım istatistikleri (Google Analytics)</li>
+                    </ul>
+                    
+                    <h3>{% trans "Bilgilerin Kullanımı" %}</h3>
+                    <p>Topladığımız bilgiler şu amaçlarla kullanılır:</p>
+                    <ul>
+                        <li>Hesap yönetimi ve kimlik doğrulama</li>
+                        <li>İçerik moderasyonu</li>
+                        <li>Site performansını iyileştirme</li>
+                        <li>Yasal yükümlülüklerin yerine getirilmesi</li>
+                    </ul>
+                    
+                    <h3>{% trans "Çerezler" %}</h3>
+                    <p>Sitemiz, kullanıcı deneyimini iyileştirmek için çerezler kullanır. Bu çerezler oturum yönetimi ve site analitikleri için gereklidir.</p>
+                    
+                    <h3>{% trans "Üçüncü Taraf Hizmetler" %}</h3>
+                    <p>Google Analytics ve Google AdSense gibi üçüncü taraf hizmetler kullanıyoruz. Bu hizmetlerin kendi gizlilik politikaları vardır.</p>
+                    
+                    <h3>{% trans "İletişim" %}</h3>
+                    <p>Gizlilik politikası hakkında sorularınız için: <a href="mailto:info@rumep.net">info@rumep.net</a></p>
+                    
+                    <p class="text-muted mt-4"><small>Son güncelleme: {{ "now"|date:"d.m.Y" }}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

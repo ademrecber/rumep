@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Kullanım Şartları" %}{% endblock %}
+{% block page_header %}{% trans "Kullanım Şartları" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body p-4">
+                    <h1 class="mb-4">{% trans "Kullanım Şartları" %}</h1>
+                    
+                    <h3>{% trans "Genel Kurallar" %}</h3>
+                    <p>Rumep platformunu kullanarak aşağıdaki kurallara uymayı kabul ediyorsunuz:</p>
+                    
+                    <h3>{% trans "İçerik Kuralları" %}</h3>
+                    <ul>
+                        <li>Paylaştığınız içerikler yasal olmalıdır</li>
+                        <li>Telif hakkı ihlali yapılamaz</li>
+                        <li>Nefret söylemi ve hakaret yasaktır</li>
+                        <li>Spam ve reklam içerikleri yasaktır</li>
+                    </ul>
+                    
+                    <h3>{% trans "Hesap Sorumluluğu" %}</h3>
+                    <p>Kullanıcılar hesaplarının güvenliğinden sorumludur. Şifrenizi güvenli tutun ve başkalarıyla paylaşmayın.</p>
+                    
+                    <h3>{% trans "Moderasyon" %}</h3>
+                    <p>Platform yöneticileri, kurallara uymayan içerikleri kaldırma ve hesapları askıya alma hakkına sahiptir.</p>
+                    
+                    <h3>{% trans "Fikri Mülkiyet" %}</h3>
+                    <p>Paylaştığınız içeriklerin telif haklarına saygı gösterilmelidir. Kendi oluşturduğunuz içerikler üzerindeki haklarınız korunur.</p>
+                    
+                    <h3>{% trans "Sorumluluk Reddi" %}</h3>
+                    <p>Platform, kullanıcı içeriklerinden sorumlu değildir. İçerikler kullanıcıların kendi görüşlerini yansıtır.</p>
+                    
+                    <h3>{% trans "İletişim" %}</h3>
+                    <p>Kullanım şartları hakkında sorularınız için: <a href="mailto:info@rumep.net">info@rumep.net</a></p>
+                    
+                    <p class="text-muted mt-4"><small>Son güncelleme: {{ "now"|date:"d.m.Y" }}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
