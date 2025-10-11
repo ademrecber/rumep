@@ -5,12 +5,19 @@ function getCsrfToken() {
 }
 
 async function loadMorePosts() {
-    if (window.loading || !window.hasMore) return;
+    console.log('loadMorePosts çağrıldı, loading:', window.loading, 'hasMore:', window.hasMore, 'offset:', window.offset);
+    
+    if (window.loading || !window.hasMore) {
+        console.log('Yükleme durdu - loading:', window.loading, 'hasMore:', window.hasMore);
+        return;
+    }
 
     window.loading = true;
     const loadingDiv = document.getElementById('loading');
     const loadMoreBtn = document.getElementById('load-more-btn');
     const errorMessage = document.getElementById('error-message');
+    
+    console.log('UI elementleri:', {loadingDiv, loadMoreBtn, errorMessage});
     
     if (loadingDiv) loadingDiv.style.display = 'block';
     if (loadMoreBtn) loadMoreBtn.style.display = 'none';
@@ -22,7 +29,7 @@ async function loadMorePosts() {
         console.log('CSRF Token:', csrfToken);
 
         const url = `/load-more-topics/?offset=${window.offset}`;
-        console.log(`Yükleniyor: url=${url}`);
+        console.log(`İstek gönderiliyor: ${url}`);
 
         const response = await fetch(url, {
             method: 'GET',
@@ -32,10 +39,11 @@ async function loadMorePosts() {
             }
         });
 
+        console.log('Response status:', response.status, 'ok:', response.ok);
         if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
 
         const data = await response.json();
-        console.log('Gelen veri:', data);
+        console.log('Gelen veri:', data, 'posts sayısı:', data.posts?.length);
 
         if (data.posts && Array.isArray(data.posts)) {
             const fragment = document.createDocumentFragment();
@@ -167,6 +175,8 @@ function initializePage() {
     window.offset = window.offset || 10;
     window.hasMore = typeof window.hasMore === 'undefined' ? true : window.hasMore;
     window.loading = window.loading || false;
+    
+    console.log('Sayfa başlatıldı - offset:', window.offset, 'hasMore:', window.hasMore, 'loading:', window.loading);
 
     const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn) {
