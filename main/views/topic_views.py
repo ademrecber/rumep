@@ -161,19 +161,29 @@ def load_more_topics(request):
     
     topics = Topic.objects.with_related()[offset:offset+limit]
     
-    topics_data = []
+    posts_data = []
     for topic in topics:
-        topics_data.append({
+        # İlk entry'yi al (varsa)
+        first_entry = topic.entries.first()
+        entry_text = first_entry.content if first_entry else ''
+        
+        # JavaScript'in beklediği veri yapısı
+        posts_data.append({
             'id': topic.id,
             'title': topic.title,
-            'slug': topic.slug,
-            'user': getattr(topic.user, 'username', 'Anonim'),
-            'created_at': topic.created_at.strftime('%d.%m.%Y %H:%M'),
-            'entry_count': topic.entry_count(),
+            'text': entry_text,
+            'nickname': getattr(topic.user.profile, 'nickname', topic.user.username) if hasattr(topic.user, 'profile') else topic.user.username,
+            'username': topic.user.username,
+            'short_id': topic.slug,
+            'created_at': topic.created_at.isoformat(),
+            'comment_count': topic.entry_count(),
+            'upvotes': topic.upvote_count() if hasattr(topic, 'upvote_count') else 0,
+            'downvotes': topic.downvote_count() if hasattr(topic, 'downvote_count') else 0,
+            'is_owner': topic.user == request.user if request.user.is_authenticated else False
         })
     
     return JsonResponse({
-        'topics': topics_data,
+        'posts': posts_data,
         'has_more': len(topics) == limit
     })
 
