@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Fontlar" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>{% trans "Rumep Fontları" %}</h2>
+            <p class="text-muted">{% trans "Projemizde kullanılan fontları indirebilirsiniz" %}</p>
+            
+            <div class="row">
+                {% for font in fonts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ font.name }}</h5>
+                            <p class="card-text">{{ font.description }}</p>
+                            <p class="text-muted">
+                                <small>{% trans "Format" %}: {{ font.format }}</small>
+                            </p>
+                            <a href="{% url 'download_font' font.file %}" 
+                               class="btn btn-primary">
+                                <i class="fas fa-download"></i> {% trans "İndir" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-4">
+                <h4>{% trans "Kullanım Talimatları" %}</h4>
+                <div class="alert alert-info">
+                    <h6>{% trans "CSS'de Kullanım:" %}</h6>
+                    <pre><code>@font-face {
+    font-family: 'RumepLogos';
+    src: url('RumepLogosSVG.woff2') format('woff2'),
+         url('RumepLogosSVG.ttf') format('truetype');
+}
+
+.rumep-icon {
+    font-family: 'RumepLogos', sans-serif;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

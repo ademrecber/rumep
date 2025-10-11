@@ -11,6 +11,7 @@ from .views import search_views
 # from .views import ai_views  # Geçici olarak kapatıldı
 from .views import yer_adlari_views
 from .views import api_views
+from .views import font_views
 
 
 handler404 = 'main.views.custom_404'
@@ -177,5 +178,9 @@ urlpatterns = [
     path('api/live-stats/', api_views.live_stats, name='api_live_stats'),
     path('api/quick-vote/', api_views.quick_vote, name='api_quick_vote'),
     path('api/search-suggestions/', api_views.search_suggestions, name='api_search_suggestions'),
+    
+    # Font URLs
+    path('fonts/', font_views.font_list, name='font_list'),
+    path('fonts/download/<str:font_name>/', font_views.download_font, name='download_font'),
 
 ]   
