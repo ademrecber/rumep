@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # Sadece bir kez
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sitemaps',  # Sitemap için eklendi
     'social_django',
     'csp',
     'main',
