@@ -53,7 +53,8 @@ async function loadMorePopularPosts() {
                 const bookmarked = post.bookmarked ? 'bookmarked' : '';
                 const isOwner = post.is_owner !== undefined ? post.is_owner : false;
                 const postDiv = document.createElement('div');
-                postDiv.className = 'card mb-2 tweet-card';
+                postDiv.className = 'card mb-2 topic-card fade-in border-0';
+                postDiv.style.boxShadow = 'none !important';
                 postDiv.id = `post-${post.id}`;
                 const totalLines = post.text.split(/(\n)/).length;
                 
@@ -62,78 +63,138 @@ async function loadMorePopularPosts() {
                 
                 postDiv.innerHTML = `
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <p class="mb-1">
-                                <strong>${post.nickname}</strong>
-                                <span class="text-muted"><a href="/profile/${post.username}/" class="text-muted text-decoration-none">@${post.username}</a> · ${post.short_id} · ${new Date(post.created_at).toLocaleString()}</span>
-                            </p>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots"></i>
+                        <a href="/topic/${post.short_id}/" class="text-decoration-none text-dark">
+                            <h5 class="card-title mb-2">${post.title}</h5>
+                        </a>
+                        <!-- Kategori Badges -->
+                        <div class="mb-2">
+                            ${post.categories ? post.categories.map(cat => `<span class="badge rounded-pill bg-primary me-1 mb-1" style="font-size: 0.7rem;">${cat.name}</span>`).join('') : ''}
+                        </div>
+
+                        ${post.text ? `
+                        <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                            ${processedText.length > 790 ? 
+                                processedText.substring(0, 790) + '<a href="/topic/' + post.short_id + '/" class="text-primary text-decoration-none">...devamını gör</a>' : 
+                                processedText
+                            }
+                        </div>
+                        ` : ''}
+
+                        <!-- Desktop Layout -->
+                        <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
+                            <div class="vote-buttons d-flex gap-1 align-items-center">
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${post.short_id}" data-vote-type="up">
+                                    <i class="bi bi-arrow-up"></i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    ${isOwner ? `
+                                <span class="vote-score fw-bold" style="font-size: 0.9rem;">${post.upvotes - post.downvotes}</span>
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${post.short_id}" data-vote-type="down">
+                                    <i class="bi bi-arrow-down"></i>
+                                </button>
+                                <small class="text-muted ms-2">${post.comment_count} entry</small>
+                                ${isOwner ? `
+                                    <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${post.short_id}">
+                                        <i class="bi bi-bookmark"></i>
+                                    </button>
+                                ` : ''}
+                                <div class="dropdown d-inline ms-2">
+                                    <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                    <ul class="dropdown-menu share-dropdown">
                                         <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Ma tu bawer î ku dixwazî vê postê jê bibî?');">
-                                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Jê bibe</button>
-                                            </form>
+                                            <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-twitter share-icon"></i>
+                                                Twitter'da Paylaş
+                                            </button>
                                         </li>
-                                    ` : ''}
-                                    <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Ji nîşankirina cîhê derxistin' : 'Têxe nîşankirina cîhê'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
-                                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Ji Nîşankirina Cîhê Derxîne' : 'Têxe Nîşankirina Cîhê'}</button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Girêdanê Kopî Bike</button>
-                                    </li>
-                                </ul>
+                                        <li>
+                                            <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-whatsapp share-icon"></i>
+                                                WhatsApp'ta Paylaş
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-telegram share-icon"></i>
+                                                Telegram'da Paylaş
+                                            </button>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-link-45deg share-icon"></i>
+                                                Linki Kopyala
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-hash share-icon"></i>
+                                                Kodu Kopyala
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="${post.short_id}">
+                                                <i class="bi bi-qr-code share-icon"></i>
+                                                QR Kod
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="text-end me-2">
+                                    <a href="/profile/${post.username}/" class="username-link">${post.nickname}</a>
+                                    <small class="text-muted d-block">${new Date(post.created_at).toLocaleDateString('tr-TR')} ${new Date(post.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                </div>
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-person text-white"></i>
+                                </div>
                             </div>
                         </div>
-                        <h5>${post.title || ''}</h5>
-                        <div class="post-text">
-                            ${processedText.length > 400 || totalLines > 15 ? `
-                                <div class="text-preview"><p>${processedText.substring(0, 100)}</p></div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Zêdetir bibîne</button>
-                                <div class="full-text d-none"><p>${processedText}</p></div>
-                            ` : `<p>${processedText}</p>`}
-                        </div>
-                        ${post.link ? `<a href="${post.link}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
-                        ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
-                        <div class="post-meta text-muted mt-2">
-                            <span>Ecibandin: ${post.like_count}</span> | 
-                            <span>Şîrove: ${post.comment_count}</span> | 
-                            <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
-                            <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
-                        </div>
-                        <div class="post-actions mt-2">
-                            <form method="post" action="/like-post/${post.id}/" class="like-form d-inline">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <button type="submit" class="btn btn-link like-btn ${liked}" data-post-id="${post.id}">
-                                    <i class="bi ${liked ? 'bi-heart-fill' : 'bi-heart'}"></i> ${post.like_count}
-                                </button>
-                            </form>
-                            <form method="post" action="/vote-post/${post.id}/" class="vote-form d-inline" data-post-id="${post.id}">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <input type="hidden" name="vote" value="up">
-                                <button type="submit" class="btn btn-link text-success p-0 upvote-btn">${post.upvotes} ↑</button>
-                            </form>
-                            <form method="post" action="/vote-post/${post.id}/" class="vote-form d-inline" data-post-id="${post.id}">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <input type="hidden" name="vote" value="down">
-                                <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
-                            </form>
-                            <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">Pûan: ${post.total_score.toFixed(1)}</span>` : ''}
+                        
+                        <!-- Mobile Layout -->
+                        <div class="d-block d-md-none mt-3">
+                            <div class="mobile-topic-actions" data-topic-id="${post.id}">
+                                <div class="topic-info-container">
+                                    <div class="topic-user-info">
+                                        <a href="/profile/${post.username}/" class="username-link">${post.nickname}</a>
+                                        <small class="text-muted ms-2">${new Date(post.created_at).toLocaleDateString('tr-TR')} ${new Date(post.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                        <small class="text-muted ms-2">${post.comment_count} entry</small>
+                                    </div>
+                                    <button class="mobile-actions-toggle" data-topic-id="${post.id}">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                </div>
+                                <div class="mobile-actions-panel" data-topic-id="${post.id}">
+                                    <div class="actions-content">
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${post.short_id}" data-vote-type="up">
+                                            <i class="bi bi-arrow-up"></i>
+                                        </button>
+                                        <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">${post.upvotes - post.downvotes}</span>
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${post.short_id}" data-vote-type="down">
+                                            <i class="bi bi-arrow-down"></i>
+                                        </button>
+                                        ${isOwner ? `
+                                            <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${post.short_id}">
+                                                <i class="bi bi-bookmark"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
+                // Divider ekle
+                const dividerDiv = document.createElement('div');
+                dividerDiv.className = 'text-center mb-3';
+                dividerDiv.innerHTML = '<hr class="topic-divider">';
+                
                 fragment.appendChild(postDiv);
+                fragment.appendChild(dividerDiv);
             });
             
-            const postContainer = document.querySelector('.post-container');
+            const postContainer = document.querySelector('.topic-container');
             if (postContainer) {
                 postContainer.appendChild(fragment);
                 initLikes();
@@ -324,11 +385,11 @@ function initializePage() {
     window.removeEventListener('scroll', scrollHandler);
     window.addEventListener('scroll', scrollHandler);
 
-    const postContainer = document.querySelector('.post-container');
+    const postContainer = document.querySelector('.topic-container');
     if (postContainer) {
         const clickHandler = (e) => {
             if (e.target.classList.contains('show-more-btn')) {
-                const postDiv = e.target.closest('.tweet-card');
+                const postDiv = e.target.closest('.topic-card');
                 const preview = postDiv.querySelector('.text-preview');
                 const fullText = postDiv.querySelector('.full-text');
                 if (preview) preview.classList.add('d-none');
