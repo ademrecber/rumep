@@ -1,16 +1,23 @@
-import { initCopyLink } from "./copy-link.js";
+
 
 function getCsrfToken() {
     return document.querySelector('[name=csrfmiddlewaretoken]')?.value || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 }
 
 async function loadMorePosts() {
-    if (window.loading || !window.hasMore) return;
+    console.log('loadMorePosts çağrıldı, loading:', window.loading, 'hasMore:', window.hasMore, 'offset:', window.offset);
+    
+    if (window.loading || !window.hasMore) {
+        console.log('Yükleme durdu - loading:', window.loading, 'hasMore:', window.hasMore);
+        return;
+    }
 
     window.loading = true;
     const loadingDiv = document.getElementById('loading');
     const loadMoreBtn = document.getElementById('load-more-btn');
     const errorMessage = document.getElementById('error-message');
+    
+    console.log('UI elementleri:', {loadingDiv, loadMoreBtn, errorMessage});
     
     if (loadingDiv) loadingDiv.style.display = 'block';
     if (loadMoreBtn) loadMoreBtn.style.display = 'none';
@@ -22,7 +29,7 @@ async function loadMorePosts() {
         console.log('CSRF Token:', csrfToken);
 
         const url = `/load-more-topics/?offset=${window.offset}`;
-        console.log(`Yükleniyor: url=${url}`);
+        console.log(`İstek gönderiliyor: ${url}`);
 
         const response = await fetch(url, {
             method: 'GET',
@@ -32,99 +39,110 @@ async function loadMorePosts() {
             }
         });
 
+        console.log('Response status:', response.status, 'ok:', response.ok);
         if (!response.ok) throw new Error(`Ağ hatası: ${response.status}`);
 
         const data = await response.json();
-        console.log('Gelen veri:', data);
+        console.log('Gelen veri:', data, 'posts sayısı:', data.posts?.length);
 
         if (data.posts && Array.isArray(data.posts)) {
             const fragment = document.createDocumentFragment();
-            data.posts.forEach(post => {
-                const liked = post.liked ? 'liked' : '';
-                const bookmarked = post.bookmarked ? 'bookmarked' : '';
-                const isOwner = post.is_owner !== undefined ? post.is_owner : false;
-                const postDiv = document.createElement('div');
-                postDiv.className = 'card mb-2 tweet-card';
-                postDiv.id = `post-${post.id}`;
-                const totalLines = post.text.split(/(\\n)/).length;
-                postDiv.innerHTML = `
+            data.posts.forEach(topic => {
+                const isOwner = topic.is_owner !== undefined ? topic.is_owner : false;
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'card mb-2 topic-card fade-in border-0';
+                topicDiv.id = `topic-${topic.id}`;
+                topicDiv.style.boxShadow = 'none !important';
+                
+                topicDiv.innerHTML = `
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <p class="mb-1">
-                                <strong>${post.nickname}</strong>
-                                <span class="text-muted"><a href="/profile/${post.username}/" class="text-muted text-decoration-none">@${post.username}</a> · ${post.short_id} · ${new Date(post.created_at).toLocaleString()}</span>
-                            </p>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots"></i>
+                        <a href="/topic/${topic.short_id}/" class="text-decoration-none text-dark">
+                            <h5 class="card-title mb-2">${topic.title}</h5>
+                        </a>
+                        
+                        ${topic.text ? `
+                        <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                            ${topic.text.length > 790 ? 
+                                topic.text.substring(0, 790) + '<a href="/topic/' + topic.short_id + '/" class="text-primary text-decoration-none">...devamını gör</a>' : 
+                                topic.text
+                            }
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Desktop Layout -->
+                        <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
+                            <div class="vote-buttons d-flex gap-1 align-items-center">
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="up">
+                                    <i class="bi bi-arrow-up"></i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    ${isOwner ? `
-                                        <li>
-                                            <form method="post" action="/delete-post/${post.id}/" class="m-0" onsubmit="return confirm('Bu postu silmek istediğinizden emin misiniz?');">
-                                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                                <button type="submit" class="dropdown-item text-danger">Sil</button>
-                                            </form>
-                                        </li>
-                                    ` : ''}
-                                    <li>
-                                        <form method="post" action="/bookmark-post/${post.id}/?tab=posts" class="bookmark-form m-0" onsubmit="return confirm('${bookmarked ? 'Yer işaretinden kaldır' : 'Yer işaretine ekle'} istediğinizden emin misiniz?');" data-post-id="${post.id}">
-                                            <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                            <button type="submit" class="dropdown-item">${bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle'}</button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item copy-link-btn" data-post-id="${post.id}">Bağlantıyı Kopyala</button>
-                                    </li>
-                                </ul>
+                                <span class="vote-score fw-bold" style="font-size: 0.9rem;">${topic.upvotes - topic.downvotes}</span>
+                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="down">
+                                    <i class="bi bi-arrow-down"></i>
+                                </button>
+                                <small class="text-muted ms-2">${topic.comment_count} entry</small>
+                                ${isOwner ? `
+                                    <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${topic.short_id}">
+                                        <i class="bi bi-bookmark"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="text-end me-2">
+                                    <a href="/profile/${topic.username}/" class="username-link">${topic.nickname}</a>
+                                    <small class="text-muted d-block">${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                </div>
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-person text-white"></i>
+                                </div>
                             </div>
                         </div>
-                        <h5>${post.title || ''}</h5>
-                        <div class="post-text">
-                            ${post.text.length > 400 || totalLines > 15 ? `
-                                <div class="text-preview">${post.text.substring(0, 100).replace(/\\n/g, '<br>')}</div>
-                                <button class="btn btn-link text-primary p-0 show-more-btn">Daha fazla göster</button>
-                                <div class="full-text d-none">${post.text.split('\\n').map(line => `<p>${line}</p>`).join('')}</div>
-                            ` : post.text.split('\\n').map(line => `<p>${line}</p>`).join('')}
-                        </div>
-                        ${post.link ? `<a href="/rmp/${post.link.slice(4)}" target="_blank" class="text-muted mt-2 d-block">${post.link}</a>` : ''}
-                        ${post.embed_code ? `<div class="social-embed">${post.embed_code}</div>` : ''}
-                        <div class="post-meta text-muted mt-2">
-                            <span>Beğeni: ${post.like_count}</span> | 
-                            <span>Yorum: ${post.comment_count}</span> | 
-                            <span><i class="bi bi-list-ul"></i> ${post.critique_count}</span> | 
-                            <span><i class="bi bi-bar-chart"></i> ${post.views}</span>
-                        </div>
-                        <div class="post-actions mt-2">
-                            <form method="post" action="/like-post/${post.id}/" class="like-form d-inline">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <button type="submit" class="btn btn-link like-btn ${liked}" data-post-id="${post.id}">
-                                    <i class="bi ${liked ? 'bi-heart-fill' : 'bi-heart'}"></i> ${post.like_count}
-                                </button>
-                            </form>
-                            <form method="post" action="/vote-post/${post.id}/" class="vote-form d-inline" data-post-id="${post.id}">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <input type="hidden" name="vote" value="up">
-                                <button type="submit" class="btn btn-link text-success p-0 upvote-btn">${post.upvotes} ↑</button>
-                            </form>
-                            <form method="post" action="/vote-post/${post.id}/" class="vote-form d-inline" data-post-id="${post.id}">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-                                <input type="hidden" name="vote" value="down">
-                                <button type="submit" class="btn btn-link text-danger p-0 downvote-btn">${post.downvotes} ↓</button>
-                            </form>
-                            <a href="/post/${post.id}/" class="btn btn-link text-muted"><i class="bi bi-arrow-right"></i></a>
-                            ${post.total_score ? `<span class="text-muted ms-2">Puan: ${post.total_score.toFixed(1)}</span>` : ''}
+                        
+                        <!-- Mobile Layout -->
+                        <div class="d-block d-md-none mt-3">
+                            <div class="mobile-topic-actions" data-topic-id="${topic.id}">
+                                <div class="topic-info-container">
+                                    <div class="topic-user-info">
+                                        <a href="/profile/${topic.username}/" class="username-link">${topic.nickname}</a>
+                                        <small class="text-muted ms-2">${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                        <small class="text-muted ms-2">${topic.comment_count} entry</small>
+                                    </div>
+                                    <button class="mobile-actions-toggle" data-topic-id="${topic.id}">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                </div>
+                                <div class="mobile-actions-panel" data-topic-id="${topic.id}">
+                                    <div class="actions-content">
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="up">
+                                            <i class="bi bi-arrow-up"></i>
+                                        </button>
+                                        <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">${topic.upvotes - topic.downvotes}</span>
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="down">
+                                            <i class="bi bi-arrow-down"></i>
+                                        </button>
+                                        ${isOwner ? `
+                                            <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${topic.short_id}">
+                                                <i class="bi bi-bookmark"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
-                fragment.appendChild(postDiv);
+                
+                // Divider ekle
+                const dividerDiv = document.createElement('div');
+                dividerDiv.className = 'text-center mb-3';
+                dividerDiv.innerHTML = '<hr class="topic-divider">';
+                
+                fragment.appendChild(topicDiv);
+                fragment.appendChild(dividerDiv);
             });
             
-            const postContainer = document.querySelector('.topic-container');
-            if (postContainer) {
-                postContainer.appendChild(fragment);
-                initBookmarks();
-                initCopyLink();
+            const topicContainer = document.querySelector('.topic-container');
+            if (topicContainer) {
+                topicContainer.appendChild(fragment);
             }
 
             window.offset += 10;
@@ -151,82 +169,14 @@ async function loadMorePosts() {
     }
 }
 
-function initBookmarks() {
-    console.log("initBookmarks başlatıldı");
-    
-    document.querySelectorAll('.bookmark-form').forEach(form => {
-        if (!form.dataset.listenerAdded) {
-            console.log("Yeni bookmark formu bulundu, ID:", form.dataset.postId);
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const postId = this.dataset.postId;
-                console.log("Yer işareti formu gönderildi, post ID:", postId);
-                
-                if (!postId || postId === 'undefined') {
-                    console.error("Post ID tanımlı değil, action:", this.action);
-                    return;
-                }
 
-                const csrfToken = getCsrfToken();
-                if (!csrfToken) {
-                    console.error('CSRF token bulunamadı');
-                    return;
-                }
-                console.log("Gönderilen CSRF Token:", csrfToken);
-
-                try {
-                    const isBookmarksTab = window.location.href.includes('tab=bookmarks');
-                    const url = isBookmarksTab ? `/remove-bookmark/${postId}/` : `/bookmark-post/${postId}/`;
-                    console.log("İstek gönderiliyor, url:", url);
-
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': csrfToken,
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: new FormData(this)
-                    });
-
-                    console.log("Sunucu yanıtı, durum:", response.status);
-                    if (!response.ok) {
-                        const text = await response.text();
-                        throw new Error(`Sunucu hatası: ${response.status} - ${text}`);
-                    }
-
-                    const data = await response.json();
-                    console.log("Gelen veri:", data);
-                    
-                    const button = this.querySelector('.bookmark-btn');
-                    if (button) {
-                        button.textContent = data.bookmarked ? 'Yer İşaretinden Kaldır' : 'Yer İşaretine Ekle';
-                        button.dataset.bookmarked = data.bookmarked ? 'true' : 'false';
-                        console.log("Yer işareti butonu güncellendi:", button.textContent, "Bookmarked:", data.bookmarked);
-                        if (isBookmarksTab) {
-                            const postCard = this.closest('.card');
-                            if (postCard) {
-                                console.log("Post listeden kaldırılıyor:", postCard.id);
-                                postCard.remove();
-                            }
-                        }
-                    } else {
-                        console.error("Bookmark butonu bulunamadı, form:", this);
-                    }
-                } catch (error) {
-                    console.error('Yer işareti hatası:', error);
-                }
-            });
-            form.dataset.listenerAdded = 'true';
-        } else {
-            console.log("Zaten dinleyici eklenmiş, form ID:", form.dataset.postId);
-        }
-    });
-}
 
 function initializePage() {
     window.offset = window.offset || 10;
     window.hasMore = typeof window.hasMore === 'undefined' ? true : window.hasMore;
-    window.loading = window.loading || false;
+    window.loading = false;
+    
+    console.log('Sayfa başlatıldı - offset:', window.offset, 'hasMore:', window.hasMore, 'loading:', window.loading);
 
     const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn) {
@@ -267,8 +217,7 @@ function initializePage() {
         console.error('Post container bulunamadı');
     }
 
-    initBookmarks();
-    initCopyLink();
+
 }
 
 if (document.readyState === 'loading') {

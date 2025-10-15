@@ -5,11 +5,13 @@ const sanitizeHTML = (str) => {
     return div.innerHTML;
 };
 
-const createKelimeTemplate = ({ id, kelime, detay, is_owner }) => `
+const createKelimeTemplate = ({ id, kelime, detay, turkce_karsiligi, ingilizce_karsiligi, is_owner }) => `
     <div class="d-flex justify-content-between align-items-start">
         <a href="/sozluk/kelime/${id}/" class="text-decoration-none">
             <strong>${sanitizeHTML(kelime)}</strong>
             <p class="text-muted small">${sanitizeHTML(detay)}</p>
+            ${turkce_karsiligi ? `<p class="text-info small"><i class="bi bi-translate me-1"></i>Türkçe: ${sanitizeHTML(turkce_karsiligi)}</p>` : ''}
+            ${ingilizce_karsiligi ? `<p class="text-success small"><i class="bi bi-globe me-1"></i>İngilizce: ${sanitizeHTML(ingilizce_karsiligi)}</p>` : ''}
         </a>
         ${is_owner ? `
             <div class="dropdown">
@@ -61,7 +63,7 @@ export async function initSozlukForm() {
 
         try {
             const formData = new FormData(form);
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('[name=csrfmiddlewaretoken]')?.value;
             if (!csrfToken) {
                 throw new Error('CSRF token bulunamadı. Lütfen sayfayı yenileyin.');
             }
@@ -83,11 +85,11 @@ export async function initSozlukForm() {
                     const module = await import("./sozluk_search.js");
                     await module.initTumKelimeler(true);
                 } catch (importError) {
-                    handleError(importError, errorDiv, '${window.i18n?.t('sozluk.word_list_update_error') || 'Kelime listesi güncellenemedi.'}');
+                    handleError(importError, errorDiv, 'Kelime listesi güncellenemedi.');
                 }
             } else {
                 errorDiv.classList.remove('d-none');
-                errorDiv.innerHTML = '<p>${window.i18n?.t('sozluk.word_add_error') || 'Kelime eklenirken hata oluştu, lütfen tekrar deneyin.'}</p>';
+                errorDiv.innerHTML = '<p>Kelime eklenirken hata oluştu, lütfen tekrar deneyin.</p>';
             }
         } catch (error) {
             handleError(error, errorDiv);
@@ -105,7 +107,7 @@ export function initSozlukLoader(harf) {
     };
 
     const elements = {
-        kelimeList: document.getElementById('kelime-list'),
+        kelimeList: document.getElementById('arama-sonuc-listesi'),
         loadingDiv: document.getElementById('loading'),
         errorDiv: document.getElementById('error-message')
     };
@@ -127,7 +129,7 @@ export function initSozlukLoader(harf) {
                 return;
             }
 
-            const response = await fetch(`/sozluk/harf-yukle/?harf=${harf}&offset=${state.offset}`, {
+            const response = await fetch(`/sozluk/tum-kelimeler/?offset=${state.offset}`, {
                 method: 'GET',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -139,7 +141,7 @@ export function initSozlukLoader(harf) {
             renderKelimeler(data);
 
         } catch (error) {
-            handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.word_load_error') || 'Kelimeler yüklenirken hata oluştu.'}');
+            handleError(error, elements.errorDiv, 'Kelimeler yüklenirken hata oluştu.');
         } finally {
             state.loading = false;
             elements.loadingDiv.style.display = 'none';
@@ -169,7 +171,7 @@ export function initSozlukLoader(harf) {
             .then(module => module.bindKelimeActions())
             .catch(error => {
                 console.error('Action binding failed:', error);
-                handleError(error, elements.errorDiv, '${window.i18n?.t('sozluk.action_binding_error') || 'Eylem bağlama başarısız oldu.'}');
+                handleError(error, elements.errorDiv, 'Eylem bağlama başarısız oldu.');
             });
     };
 

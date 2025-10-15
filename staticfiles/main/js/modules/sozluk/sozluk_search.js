@@ -9,6 +9,7 @@ export function initSozlukArama() {
     const form = document.getElementById('sozluk-arama-form');
     const aramaInput = document.getElementById('arama-input');
     const turFiltresi = document.getElementById('tur-filtresi');
+    const dilFiltresi = document.getElementById('dil-filtresi');
     const sonucListesi = document.getElementById('arama-sonuc-listesi');
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error-message');
@@ -64,8 +65,8 @@ export function initSozlukArama() {
         errorDiv.classList.add('d-none');
 
         try {
-            console.log(`Arama isteği: /sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&offset=${offset}`);
-            const response = await fetch(`/sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&offset=${offset}`, {
+            console.log(`Arama isteği: /sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&dil=${encodeURIComponent(dilFiltresi?.value || '')}&offset=${offset}`);
+            const response = await fetch(`/sozluk/ara/?q=${encodeURIComponent(query)}&tur=${encodeURIComponent(turFiltresi.value)}&dil=${encodeURIComponent(dilFiltresi?.value || '')}&offset=${offset}`, {
                 method: 'GET',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -140,6 +141,13 @@ export function initSozlukArama() {
         loadAramaSonuclari(true);
     });
 
+    if (dilFiltresi) {
+        dilFiltresi.addEventListener('change', () => {
+            console.log('Dil filtresi değişti:', dilFiltresi.value);
+            loadAramaSonuclari(true);
+        });
+    }
+
     aramaInput.addEventListener('input', (e) => {
         console.log('Arama input tetiklendi:', e.target.value);
         debouncedArama();
@@ -154,13 +162,12 @@ export function initSozlukArama() {
 }
 
 export function initTumKelimeler(autoLoad = false) {
-    const tumKelimelerBtn = document.getElementById('tum-kelimeler-btn');
     const sonucListesi = document.getElementById('arama-sonuc-listesi');
     const loadingDiv = document.getElementById('loading');
     const errorDiv = document.getElementById('error-message');
 
-    if (!tumKelimelerBtn || !sonucListesi || !loadingDiv || !errorDiv) {
-        console.error('Tüm kelimeler elemanları eksik:', { tumKelimelerBtn, sonucListesi, loadingDiv, errorDiv });
+    if (!sonucListesi || !loadingDiv || !errorDiv) {
+        console.error('Tüm kelimeler elemanları eksik:', { sonucListesi, loadingDiv, errorDiv });
         return;
     }
 
@@ -179,12 +186,17 @@ export function initTumKelimeler(autoLoad = false) {
             offset = 0;
             hasMore = true;
             seenIds.clear();
-            sonucListesi.innerHTML = '<p class="text-muted">Peyv tên barkirin...</p>';
+            sonucListesi.innerHTML = '';
         }
 
         try {
-            console.log(`Tüm kelimeler isteği: /sozluk/tum-kelimeler/?offset=${offset}`);
-            const response = await fetch(`/sozluk/tum-kelimeler/?offset=${offset}`, {
+            const turFiltresi = document.getElementById('tur-filtresi');
+            const dilFiltresi = document.getElementById('dil-filtresi');
+            const turValue = turFiltresi?.value || '';
+            const dilValue = dilFiltresi?.value || '';
+            
+            console.log(`Tüm kelimeler isteği: /sozluk/tum-kelimeler/?offset=${offset}&tur=${turValue}&dil=${dilValue}`);
+            const response = await fetch(`/sozluk/tum-kelimeler/?offset=${offset}&tur=${encodeURIComponent(turValue)}&dil=${encodeURIComponent(dilValue)}`, {
                 method: 'GET',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -215,6 +227,8 @@ export function initTumKelimeler(autoLoad = false) {
                             <a href="/sozluk/kelime/${kelime.id}/" class="text-decoration-none">
                                 <strong>${sanitizeHTML(kelime.kelime)}</strong>
                                 <p class="text-muted small">${sanitizeHTML(kelime.detay)}</p>
+                                ${kelime.turkce_karsiligi ? `<p class="text-info small"><i class="bi bi-translate me-1"></i>Türkçe: ${sanitizeHTML(kelime.turkce_karsiligi)}</p>` : ''}
+                                ${kelime.ingilizce_karsiligi ? `<p class="text-success small"><i class="bi bi-globe me-1"></i>İngilizce: ${sanitizeHTML(kelime.ingilizce_karsiligi)}</p>` : ''}
                                 <p class="text-muted small">Cure: ${sanitizeHTML(kelime.tur || 'Nenaskirî')}</p>
                             </a>
                             ${kelime.is_owner ? `
@@ -258,17 +272,35 @@ export function initTumKelimeler(autoLoad = false) {
         }
     };
 
-    tumKelimelerBtn.addEventListener('click', () => {
-        loadTumKelimeler(true);
-    });
+    // tumKelimelerBtn event listener kaldırıldı - otomatik yükleme kullanılıyor
 
     if (autoLoad) {
         loadTumKelimeler(true);
     }
+    
+    // Filtre değişikliklerini dinle
+    const turFiltresi = document.getElementById('tur-filtresi');
+    const dilFiltresi = document.getElementById('dil-filtresi');
+    
+    if (turFiltresi && !turFiltresi.hasAttribute('data-tum-kelimeler-listener')) {
+        turFiltresi.setAttribute('data-tum-kelimeler-listener', 'true');
+        turFiltresi.addEventListener('change', () => {
+            console.log('Tür filtresi değişti (tüm kelimeler):', turFiltresi.value);
+            loadTumKelimeler(true);
+        });
+    }
+    
+    if (dilFiltresi && !dilFiltresi.hasAttribute('data-tum-kelimeler-listener')) {
+        dilFiltresi.setAttribute('data-tum-kelimeler-listener', 'true');
+        dilFiltresi.addEventListener('change', () => {
+            console.log('Dil filtresi değişti (tüm kelimeler):', dilFiltresi.value);
+            loadTumKelimeler(true);
+        });
+    }
 
     const scrollHandler = () => {
         if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !loading && hasMore) {
-            loadTumKelimeler();
+            loadTumKelimeler(false); // false = reset yapma
         }
     };
     window.addEventListener('scroll', scrollHandler);

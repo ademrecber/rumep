@@ -76,12 +76,21 @@ def sitemap_xml_view(request):
 def block_malicious_requests(request):
     return HttpResponse('Not Found', status=404)
 
+def favicon_view(request):
+    favicon_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'favicon.ico')
+    try:
+        with open(favicon_path, 'rb') as f:
+            return HttpResponse(f.read(), content_type='image/x-icon')
+    except FileNotFoundError:
+        return HttpResponse(status=404)
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ads.txt', ads_txt_view, name='ads_txt'),
     path('robots.txt', robots_txt_view, name='robots_txt'),
+    path('favicon.ico', favicon_view, name='favicon'),
     path('sitemap.xml', sitemap_xml_view, name='sitemap_xml'),
     # Block common attack vectors
     path('xmlrpc.php', block_malicious_requests),
