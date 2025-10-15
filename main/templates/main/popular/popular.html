@@ -219,38 +219,96 @@
                 if (data.posts && Array.isArray(data.posts)) {
                     const fragment = document.createDocumentFragment();
                     data.posts.forEach(topic => {
+                        const isOwner = topic.is_owner !== undefined ? topic.is_owner : false;
                         const topicDiv = document.createElement('div');
-                        topicDiv.className = 'topic-item mb-4';
+                        topicDiv.className = 'card mb-2 topic-card fade-in border-0';
+                        topicDiv.id = `topic-${topic.id}`;
+                        topicDiv.style.boxShadow = 'none !important';
+                        
                         topicDiv.innerHTML = `
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="flex-grow-1">
-                                    <a href="/topic/${topic.short_id}/" class="text-decoration-none text-dark">
-                                        <h5 class="mb-1">${topic.title}</h5>
-                                    </a>
-                                    
-                                    ${topic.text ? `
-                                    <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
-                                        ${topic.text.length > 790 ? 
-                                            topic.text.substring(0, 790) + '<a href="/topic/' + topic.short_id + '/" class="text-primary text-decoration-none">...devamını gör</a>' : 
-                                            topic.text
-                                        }
-                                    </div>
-                                    ` : ''}
-                                    
-                                    <small class="text-muted">
-                                        ${topic.daily_entry_count || topic.comment_count} entry (son 24 saat) • 
-                                        ${topic.nickname} tarafından açıldı •
-                                        ${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}
-                                    </small>
-                                    
-
+                            <div class="card-body">
+                                <a href="/topic/${topic.short_id}/" class="text-decoration-none text-dark">
+                                    <h5 class="card-title mb-2">${topic.title}</h5>
+                                </a>
+                                
+                                ${topic.text ? `
+                                <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
+                                    ${topic.text.length > 790 ? 
+                                        topic.text.substring(0, 790) + '<a href="/topic/' + topic.short_id + '/" class="text-primary text-decoration-none">...devamını gör</a>' : 
+                                        topic.text
+                                    }
                                 </div>
-                                <div class="text-end">
-                                    <span class="badge bg-primary">${topic.daily_entry_count || topic.comment_count}</span>
+                                ` : ''}
+                                
+                                <!-- Desktop Layout -->
+                                <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
+                                    <div class="vote-buttons d-flex gap-1 align-items-center">
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="up">
+                                            <i class="bi bi-arrow-up"></i>
+                                        </button>
+                                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">${topic.upvotes - topic.downvotes}</span>
+                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="down">
+                                            <i class="bi bi-arrow-down"></i>
+                                        </button>
+                                        <small class="text-muted ms-2">${topic.daily_entry_count || topic.comment_count} entry</small>
+                                        ${isOwner ? `
+                                            <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${topic.short_id}">
+                                                <i class="bi bi-bookmark"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-end me-2">
+                                            <a href="/profile/${topic.username}/" class="username-link">${topic.nickname}</a>
+                                            <small class="text-muted d-block">${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                        </div>
+                                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <i class="bi bi-person text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Mobile Layout -->
+                                <div class="d-block d-md-none mt-3">
+                                    <div class="mobile-topic-actions" data-topic-id="${topic.id}">
+                                        <div class="topic-info-container">
+                                            <div class="topic-user-info">
+                                                <a href="/profile/${topic.username}/" class="username-link">${topic.nickname}</a>
+                                                <small class="text-muted ms-2">${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}</small>
+                                                <small class="text-muted ms-2">${topic.daily_entry_count || topic.comment_count} entry</small>
+                                            </div>
+                                            <button class="mobile-actions-toggle" data-topic-id="${topic.id}">
+                                                <i class="bi bi-three-dots"></i>
+                                            </button>
+                                        </div>
+                                        <div class="mobile-actions-panel" data-topic-id="${topic.id}">
+                                            <div class="actions-content">
+                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="up">
+                                                    <i class="bi bi-arrow-up"></i>
+                                                </button>
+                                                <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">${topic.upvotes - topic.downvotes}</span>
+                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="${topic.short_id}" data-vote-type="down">
+                                                    <i class="bi bi-arrow-down"></i>
+                                                </button>
+                                                ${isOwner ? `
+                                                    <button class="btn btn-link p-0 ms-2 topic-bookmark-btn text-muted" data-topic-slug="${topic.short_id}">
+                                                        <i class="bi bi-bookmark"></i>
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         `;
+                        
+                        // Divider ekle
+                        const dividerDiv = document.createElement('div');
+                        dividerDiv.className = 'text-center mb-3';
+                        dividerDiv.innerHTML = '<hr class="topic-divider">';
+                        
                         fragment.appendChild(topicDiv);
+                        fragment.appendChild(dividerDiv);
                     });
                     
                     const topicContainer = document.querySelector('.topic-container');
