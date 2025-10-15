@@ -238,10 +238,12 @@
                                     ` : ''}
                                     
                                     <small class="text-muted">
-                                        ${topic.daily_entry_count || topic.comment_count} entry • 
+                                        ${topic.daily_entry_count || topic.comment_count} entry (son 24 saat) • 
                                         ${topic.nickname} tarafından açıldı •
                                         ${new Date(topic.created_at).toLocaleDateString('tr-TR')} ${new Date(topic.created_at).toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})}
                                     </small>
+                                    
+
                                 </div>
                                 <div class="text-end">
                                     <span class="badge bg-primary">${topic.daily_entry_count || topic.comment_count}</span>
