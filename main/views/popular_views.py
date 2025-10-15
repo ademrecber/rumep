@@ -117,7 +117,13 @@ def load_more_popular(request):
     for topic in topics:
         # İlk entry'yi al (varsa)
         first_entry = topic.entries.first()
-        entry_text = first_entry.content if first_entry else ''
+        entry_text = ''
+        if first_entry:
+            # Template filter'ları uygula
+            from ..templatetags.post_tags import render_emojis, with_entry_font
+            processed_text = render_emojis(first_entry.content)
+            processed_text = with_entry_font(processed_text, first_entry)
+            entry_text = processed_text
         
         posts_data.append({
             'id': topic.id,
@@ -177,7 +183,13 @@ def load_more_agenda(request):
     for topic in topics:
         # İlk entry'yi al (varsa)
         first_entry = topic.entries.first()
-        entry_text = first_entry.content if first_entry else ''
+        entry_text = ''
+        if first_entry:
+            # Template filter'ları uygula
+            from ..templatetags.post_tags import render_emojis, with_entry_font
+            processed_text = render_emojis(first_entry.content)
+            processed_text = with_entry_font(processed_text, first_entry)
+            entry_text = processed_text
         
         posts_data.append({
             'id': topic.id,
