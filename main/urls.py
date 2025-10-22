@@ -13,6 +13,7 @@ from .views import yer_adlari_views
 from .views import api_views
 from .views import font_views
 from .views import settings_views
+from .views import categories_views
 
 
 handler404 = 'main.views.custom_404'
@@ -154,6 +155,9 @@ urlpatterns = [
     path('category/', category_views.categories, name='category_list'),
     path('categories/', category_views.categories, name='categories'),
     path('category/<slug:slug>/', category_views.category_detail, name='category_detail'),
+    
+    # Categories page
+    path('kategoriler/', categories_views.categories_view, name='categories_page'),
     
     # Follow URLs
     path('follow/<str:username>/', follow_views.toggle_follow, name='toggle_follow'),
