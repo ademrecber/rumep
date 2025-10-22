@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count
-from main.models import Kelime, Kisi, SarkiSozu, AtasozuDeyim, YerAdi
+from main.models import Sozluk, Kisi, Sarki, Atasozu, Deyim, YerAdi
 
 def categories_view(request):
     """Kategoriler sayfası - tüm kategorilerin linkleri ve içerik sayıları"""
@@ -12,7 +12,7 @@ def categories_view(request):
             'description': 'Kürtçe-Türkçe Sözlük',
             'icon': 'bi-book',
             'url': 'sozluk_ana_sayfa',
-            'count': Kelime.objects.count(),
+            'count': Sozluk.objects.count(),
             'color': '#667eea'
         },
         {
@@ -28,7 +28,7 @@ def categories_view(request):
             'description': 'Şarkı Sözleri',
             'icon': 'bi-music-note-list',
             'url': 'sarki_sozleri',
-            'count': SarkiSozu.objects.count(),
+            'count': Sarki.objects.count(),
             'color': '#f093fb'
         },
         {
@@ -36,7 +36,7 @@ def categories_view(request):
             'description': 'Atasözleri ve Deyimler',
             'icon': 'bi-quote',
             'url': 'atasozu_deyim',
-            'count': AtasozuDeyim.objects.count(),
+            'count': Atasozu.objects.count() + Deyim.objects.count(),
             'color': '#f5576c'
         },
         {
