@@ -398,13 +398,6 @@
             <i class="bi bi-search"></i>
             <span class="nav-label">{% trans "Ara" %}</span>
         </a>
-        <a href="{% url 'notifications' %}" class="nav-item {% if request.resolver_match.url_name == 'notifications' %}active{% endif %} position-relative">
-            <i class="bi bi-bell"></i>
-            <span class="nav-label">{% trans "Bildirim" %}</span>
-            {% if user.is_authenticated and unread_notifications_count > 0 %}
-                <span class="notification-dot"></span>
-            {% endif %}
-        </a>
         <a href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login_page' %}{% endif %}" class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
             <i class="bi bi-person-fill"></i>
             <span class="nav-label">{% trans "Profil" %}</span>
