@@ -64,14 +64,10 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="biyografi-editor" class="form-label fw-semibold">
+                                <label for="{{ form.biyografi.id_for_label }}" class="form-label fw-semibold">
                                     <i class="bi bi-journal-text me-1"></i>{% trans "Biyografi" %}
-                                    <button type="button" id="aiEnhanceBioButton" class="btn btn-link p-0 ms-2" title="Bi AI-ê pêşve bixin">
-                                        <i class="bi bi-magic"></i>
-                                    </button>
                                 </label>
-                                <div id="biyografi-editor" class="quill-editor" style="min-height: 200px;"></div>
-                                <input type="hidden" name="biyografi" id="biyografi-hidden" required>
+                                {{ form.biyografi }}
                             </div>
                             
                             <div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
