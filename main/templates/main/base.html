@@ -185,6 +185,9 @@
                     </li>
                     <li class="nav-item d-none d-md-block"><hr class="my-2"></li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'categories_view' %}active{% endif %}" href="{% url 'categories_page' %}"><i class="bi bi-brightness-high me-2"></i> Çand</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
                     </li>
                     <li class="nav-item">
