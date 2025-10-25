@@ -1,6 +1,6 @@
 from django.contrib import admin
 from main.models import (
-    Profile, Kategori, Kisi, Album, Sarki, Sozluk, Atasozu, Deyim, Katki,
+    Profile, Kategori, Kisi, Album, Sarki, SarkiGrubu, Sozluk, Atasozu, Deyim, Katki,
     AIProviderConfig, YerAdi, YerAdiDetay, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay,
     Topic, Entry, Category, Follow, Notification, Hashtag, HashtagUsage, Bookmark, TopicBookmark
 )
@@ -85,12 +85,22 @@ class AlbumAdmin(admin.ModelAdmin):
     search_fields = ('ad', 'kisi__ad', 'kullanici__username')
     date_hierarchy = 'eklenme_tarihi'
 
-@admin.register(Sarki)
-class SarkiAdmin(admin.ModelAdmin):
-    list_display = ('ad', 'album', 'tur', 'kullanici', 'eklenme_tarihi')
-    list_filter = ('tur', 'eklenme_tarihi')
+@admin.register(SarkiGrubu)
+class SarkiGrubuAdmin(admin.ModelAdmin):
+    list_display = ('ad', 'album', 'kullanici', 'eklenme_tarihi')
+    list_filter = ('eklenme_tarihi',)
     search_fields = ('ad', 'album__ad', 'kullanici__username')
     date_hierarchy = 'eklenme_tarihi'
+
+@admin.register(Sarki)
+class SarkiAdmin(admin.ModelAdmin):
+    list_display = ('sarki_grubu', 'dil', 'get_album')
+    list_filter = ('dil',)
+    search_fields = ('sarki_grubu__ad', 'sarki_grubu__album__ad')
+    
+    def get_album(self, obj):
+        return obj.sarki_grubu.album.ad
+    get_album.short_description = 'Albüm'
 
 @admin.register(Sozluk)
 class SozlukAdmin(admin.ModelAdmin):
@@ -161,7 +171,7 @@ class SozlukDetayAdmin(admin.ModelAdmin):
 class SarkiDetayAdmin(admin.ModelAdmin):
     list_display = ('sarki', 'kullanici', 'eklenme_tarihi')
     list_filter = ('eklenme_tarihi',)
-    search_fields = ('sarki__ad', 'detay', 'kullanici__username')
+    search_fields = ('sarki__sarki_grubu__ad', 'detay', 'kullanici__username')
     date_hierarchy = 'eklenme_tarihi'
 
 @admin.register(AtasozuDeyimDetay)

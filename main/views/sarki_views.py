@@ -5,8 +5,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST, require_GET
 from django.db.models import Q, Count
 from django.core.exceptions import ValidationError
-from ..models import Kisi, Album, Sarki, SarkiDetay
-from ..forms import AlbumForm, SarkiForm, SarkiDetayForm, SarkiDuzenleForm
+from ..models import Kisi, Album, Sarki, SarkiGrubu, SarkiDetay
+from ..forms import AlbumForm, SarkiForm, SarkiGrubuForm, SarkiDetayForm, SarkiDuzenleForm
 from .base import profile_required
 import logging
 
@@ -19,26 +19,26 @@ def sarki_sozleri(request):
     kisi_gruplari = []
     if harf:
         kisiler = Kisi.objects.filter(
-            Q(ad__istartswith=harf) & Q(albumler__sarkilar__isnull=False)
+            Q(ad__istartswith=harf) & Q(albumler__sarki_gruplari__dil_versiyonlari__isnull=False)
         ).distinct().order_by('ad').annotate(
             album_sayisi=Count('albumler', distinct=True),
-            sarki_sayisi=Count('albumler__sarkilar', distinct=True)
+            sarki_sayisi=Count('albumler__sarki_gruplari__dil_versiyonlari', distinct=True)
         )
         if kisiler.exists():
             kisi_gruplari.append((harf, kisiler))
     else:
         for h in harfler:
             kisiler = Kisi.objects.filter(
-                Q(ad__istartswith=h) & Q(albumler__sarkilar__isnull=False)
+                Q(ad__istartswith=h) & Q(albumler__sarki_gruplari__dil_versiyonlari__isnull=False)
             ).distinct().order_by('ad').annotate(
                 album_sayisi=Count('albumler', distinct=True),
-                sarki_sayisi=Count('albumler__sarkilar', distinct=True)
+                sarki_sayisi=Count('albumler__sarki_gruplari__dil_versiyonlari', distinct=True)
             )
             if kisiler.exists():
                 kisi_gruplari.append((h, kisiler))
     
-    # Türleri al (boş olmayanlar, Sarki modelinden)
-    turler = Sarki.objects.exclude(tur='').values_list('tur', flat=True).distinct().order_by('tur')
+    # Türleri al - şimdilik boş bırakıyoruz çünkü tür alanı kaldırıldı
+    turler = []
     
     return render(request, 'main/sarki/sarki_sozleri.html', {
         'harfler': harfler,
@@ -52,10 +52,15 @@ def sarki_sozleri(request):
 @csrf_protect
 def sarki_kisi_ara(request):
     query = request.GET.get('q', '').strip().lower()
-    kisiler = Kisi.objects.filter(ad__istartswith=query).order_by('ad')[:20]
+    # Sadece kişi ve grup türündeki kayıtları getir (kurum hariç)
+    kisiler = Kisi.objects.filter(
+        ad__istartswith=query,
+        kisi_turu__in=['kisi', 'grup']
+    ).order_by('ad')[:20]
     data = [{
         'id': kisi.id,
         'ad': kisi.ad,
+        'kisi_turu': kisi.get_kisi_turu_display(),
         'biyografi': kisi.biyografi[:100] + ('...' if len(kisi.biyografi) > 100 else '')
     } for kisi in kisiler]
     return JsonResponse({'kisiler': data})
@@ -65,25 +70,22 @@ def sarki_kisi_ara(request):
 @csrf_protect
 def sarki_ara(request):
     query = request.GET.get('q', '').strip()
-    tur = request.GET.get('tur', '').strip()
-    sarkilar = Sarki.objects.all()
+    sarki_gruplari = SarkiGrubu.objects.all()
     
     if query:
-        sarkilar = sarkilar.filter(
-            Q(ad__icontains=query) | Q(sozler__icontains=query)
-        )
-    if tur:
-        sarkilar = sarkilar.filter(tur__iexact=tur)
+        sarki_gruplari = sarki_gruplari.filter(
+            Q(ad__icontains=query) | Q(dil_versiyonlari__sozler__icontains=query)
+        ).distinct()
     
-    sarkilar = sarkilar.order_by('ad')[:20]
+    sarki_gruplari = sarki_gruplari.order_by('ad')[:20]
     data = [{
-        'id': sarki.id,
-        'ad': sarki.ad,
-        'album': sarki.album.ad,
-        'kisi': sarki.album.kisi.ad,
-        'sozler': sarki.sozler[:100] + ('...' if len(sarki.sozler) > 100 else '')
-    } for sarki in sarkilar]
-    return JsonResponse({'sarkilar': data})
+        'id': sarki_grubu.id,
+        'ad': sarki_grubu.ad,
+        'album': sarki_grubu.album.ad,
+        'kisi': sarki_grubu.album.kisi.ad,
+        'dil_sayisi': sarki_grubu.dil_versiyonlari.count()
+    } for sarki_grubu in sarki_gruplari]
+    return JsonResponse({'sarki_gruplari': data})
 
 @login_required
 @profile_required
@@ -96,7 +98,16 @@ def sarki_ekle(request):
         albumler = Album.objects.filter(kisi=kisi).order_by('ad')
     
     album_form = AlbumForm()
-    sarki_form = SarkiForm()
+    sarki_grup_form = SarkiGrubuForm()
+    sarki_grubu = None
+    dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
+    mevcut_diller = []
+    
+    # Eğer sarki_grubu_id varsa, mevcut şarkı grubunu al
+    sarki_grubu_id = request.GET.get('sarki_grubu_id')
+    if sarki_grubu_id:
+        sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
+        mevcut_diller = list(sarki_grubu.dil_versiyonlari.values_list('dil', flat=True))
     
     if request.method == 'POST':
         if 'album_submit' in request.POST:
@@ -112,33 +123,38 @@ def sarki_ekle(request):
                 except ValidationError as e:
                     return JsonResponse({'success': False, 'error': str(e)}, status=400)
             return JsonResponse({'success': False, 'errors': album_form.errors.as_json()})
-        elif 'sarki_submit' in request.POST:
-            logger.debug(f"Form gönderilen veri: {request.POST}")
-            sarki_form = SarkiForm(request.POST)
+        elif 'sarki_grup_submit' in request.POST:
             album_id = request.POST.get('album')
-            logger.debug(f"Album ID: {album_id}")
-            if album_id:
-                if sarki_form.is_valid():
-                    album = get_object_or_404(Album, id=album_id)
-                    sarki = sarki_form.save(commit=False)
-                    sarki.album = album
-                    sarki.kullanici = request.user
-                    sarki.save()
-                    logger.info(f"Şarkı eklendi: {sarki.ad}, Kullanıcı: {request.user.username}")
-                    return JsonResponse({'success': True})
-                else:
-                    logger.error(f"Şarkı ekleme hatası: Form geçersiz. Hatalar: {sarki_form.errors}")
-                    logger.error(f"Form gönderilen veri tekrar: {request.POST}")
-                    return JsonResponse({'success': False, 'errors': sarki_form.errors.as_json()})
-            else:
-                logger.error("Albüm ID eksik.")
-                return JsonResponse({'success': False, 'errors': '{"album": [{"message": "Albüm seçimi zorunludur.", "code": "required"}]}'})
+            ad = request.POST.get('ad')
+            if album_id and ad:
+                album = get_object_or_404(Album, id=album_id)
+                sarki_grubu = SarkiGrubu.objects.create(
+                    album=album,
+                    ad=ad,
+                    kullanici=request.user
+                )
+                return redirect(f'/sarki/ekle/?kisi_id={kisi.id}&sarki_grubu_id={sarki_grubu.id}')
+        elif 'sarki_submit' in request.POST:
+            sarki_grubu_id = request.POST.get('sarki_grubu_id')
+            dil = request.POST.get('dil')
+            sozler = request.POST.get('sozler')
+            if sarki_grubu_id and dil and sozler:
+                sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
+                Sarki.objects.create(
+                    sarki_grubu=sarki_grubu,
+                    dil=dil,
+                    sozler=sozler
+                )
+                return redirect(f'/sarki/ekle/?kisi_id={kisi.id}&sarki_grubu_id={sarki_grubu.id}')
     
     return render(request, 'main/sarki/sarki_ekle.html', {
         'kisi': kisi,
         'albumler': albumler,
         'album_form': album_form,
-        'sarki_form': sarki_form
+        'sarki_grup_form': sarki_grup_form,
+        'sarki_grubu': sarki_grubu,
+        'dil_secenekleri': dil_secenekleri,
+        'mevcut_diller': mevcut_diller
     })
 
 @login_required
@@ -179,10 +195,10 @@ def sarki_album_liste(request, kisi_id):
 @csrf_protect
 def sarki_liste(request, album_id):
     album = get_object_or_404(Album, id=album_id)
-    sarkilar = Sarki.objects.filter(album=album).order_by('ad')
+    sarki_gruplari = SarkiGrubu.objects.filter(album=album).prefetch_related('dil_versiyonlari').order_by('ad')
     return render(request, 'main/sarki/sarki_liste.html', {
         'album': album,
-        'sarkilar': sarkilar
+        'sarki_gruplari': sarki_gruplari
     })
 
 @login_required
@@ -200,10 +216,10 @@ def sarki_detay(request, sarki_id):
 @require_POST
 def sarki_sil(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
-    if sarki.kullanici != request.user:
+    if sarki.sarki_grubu.kullanici != request.user:
         return JsonResponse({'success': False, 'error': 'Bu şarkıyı silme yetkiniz yok.'}, status=403)
     sarki.delete()
-    logger.info(f"Şarkı silindi: {sarki.ad}, Kullanıcı: {request.user.username}")
+    logger.info(f"Şarkı silindi: {sarki.sarki_grubu.ad}, Kullanıcı: {request.user.username}")
     return JsonResponse({'success': True})
 
 @login_required
@@ -309,23 +325,20 @@ def sarki_album_degistir(request, sarki_id):
 @profile_required
 def sarki_duzenle(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
-    if sarki.kullanici != request.user:
+    if sarki.sarki_grubu.kullanici != request.user:
         return JsonResponse({'success': False, 'error': 'Bu şarkıyı düzenleme yetkiniz yok.'}, status=403)
     
     if request.method == 'POST':
-        form = SarkiDuzenleForm(request.POST, instance=sarki)  # SarkiDuzenleForm kullanıyoruz
+        form = SarkiDuzenleForm(request.POST, instance=sarki)
         if form.is_valid():
             form.save()
-            logger.info(f"Şarkı düzenlendi: {sarki.ad}, Kullanıcı: {request.user.username}")
+            logger.info(f"Şarkı düzenlendi: {sarki.sarki_grubu.ad}, Kullanıcı: {request.user.username}")
             return JsonResponse({'success': True})
         return JsonResponse({'success': False, 'errors': form.errors.as_json()})
     
     # GET isteği için JSON verisi döndürelim
     data = {
-        'ad': sarki.ad,
-        'sozler': sarki.sozler,
-        'link': sarki.link or '',
-        'tur': sarki.tur or ''
+        'sozler': sarki.sozler
     }
     return JsonResponse({'success': True, 'data': data})
 

@@ -68,6 +68,25 @@
                         <i class="bi bi-google google-icon"></i>
                         {% trans "Bi Google Têkeve" %}
                     </a>
+                    
+                    {% if debug %}
+                    <div class="text-center my-3">
+                        <span class="text-muted">yan</span>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="username" placeholder="Kullanıcı Adı" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" name="password" placeholder="Şifre" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary w-100">Normal Giriş (Test)</button>
+                    </form>
+                    {% endif %}
+                    
+
                     <div class="text-center mt-3">
                         <small class="text-muted">Bi têketinê, hûn <a href="#">Mercên Bikaranînê</a> û <a href="#">Siyaseta Nepeniyê</a> qebûl dikin.</small>
                     </div>

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
-from ..models import Post, Katki, Profile, Sarki, Kisi, Sozluk, Atasozu, Deyim, Topic, Entry
+from ..models import Post, Katki, Profile, Sarki, Kisi, Sozluk, Atasozu, Deyim, Topic, Entry, Category
 from ..forms import PostForm, TopicForm, EntryForm
 from .base import profile_required
 import bleach
@@ -12,6 +12,8 @@ from django.db import models
 import logging
 from ..utils.embed_utils import generate_embed_code
 from ..utils.shortener import create_short_link
+from django.utils import timezone
+from datetime import timedelta
 # from ..ai.utils import process_request  # Geçici olarak kapatıldı
 
 # Loglama ayarları

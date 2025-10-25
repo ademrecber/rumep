@@ -15,47 +15,58 @@ import bleach
 
 def home(request):
     from ..models import Follow, Category
+    from datetime import timedelta
     request.session['return_page'] = 'home'
     topic_form = TopicForm()
     entry_form = EntryForm()
     
     tab = request.GET.get('tab', 'home')
-    category_slug = request.GET.get('category')
+    active_period = request.GET.get('period', 'today')
     
-    if tab == 'following' and request.user.is_authenticated:
-        # Takip edilen kullanıcıların topic'leri
-        following_users = request.user.following.values_list('following', flat=True)
-        topics = Topic.objects.with_related().filter(user__in=following_users)[:20]
-    elif tab == 'category' and category_slug:
-        # Belirli kategorinin topic'leri
-        try:
-            selected_category = Category.objects.get(slug=category_slug)
-            topics = Topic.objects.with_related().filter(categories=selected_category)[:20]
-        except Category.DoesNotExist:
-            topics = Topic.objects.none()
+    # Ana sayfa topic'leri
+    topics = Topic.objects.with_related().order_by('-created_at')[:10]
+    
+    # Trend başlıklar için zaman aralığını belirle
+    now = timezone.now()
+    if active_period == 'today':
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = now
+    elif active_period == 'weekly':
+        start_date = now - timedelta(days=7)
+        end_date = now
+    elif active_period == 'monthly':
+        start_date = now - timedelta(days=30)
+        end_date = now
+    else:  # all-time
+        start_date = None
+        end_date = None
+    
+    # Trend başlıklar
+    if start_date and end_date:
+        trending_topics = Topic.objects.select_related('user').filter(
+            entries__created_at__gte=start_date,
+            entries__created_at__lte=end_date
+        ).annotate(
+            daily_entry_count=models.Count('entries', filter=models.Q(entries__created_at__gte=start_date, entries__created_at__lte=end_date))
+        ).filter(daily_entry_count__gt=0).order_by('-daily_entry_count', '-updated_at')[:20]
     else:
-        # Tüm topic'ler - optimized queryset kullan
-        topics = Topic.objects.with_related().order_by('-created_at')[:10]
+        trending_topics = Topic.objects.select_related('user').annotate(
+            daily_entry_count=models.Count('entries')
+        ).filter(daily_entry_count__gt=0).order_by('-daily_entry_count', '-updated_at')[:20]
     
-    # Kategoriler sekmesi için kategorileri getir
-    all_categories = Category.objects.all().order_by('name')
-    
-    # Her kategori için topic sayısını hesapla
-    for category in all_categories:
-        category.topic_count = category.topics.count()
-    
-    # Kategori sekmesi için ayrı topic'ler
-    category_topics = None
-    if tab == 'category' and category_slug:
-        category_topics = topics
+    # Popüler kategoriler
+    popular_categories = Category.objects.annotate(
+        topic_count=models.Count('topics')
+    ).filter(topic_count__gt=0).order_by('-topic_count')[:10]
     
     return render(request, 'main/home.html', {
         'topics': topics,
         'topic_form': topic_form,
         'entry_form': entry_form,
         'tab': tab,
-        'all_categories': all_categories,
-        'category_topics': category_topics,
+        'active_period': active_period,
+        'trending_topics': trending_topics,
+        'popular_categories': popular_categories,
         'user': request.user,
     })
 

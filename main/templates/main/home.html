@@ -10,11 +10,12 @@
     <a href="?tab=home" class="flex-fill text-center py-2 text-decoration-none {% if not tab or tab == 'home' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
         <i class="bi bi-house me-1"></i>{% trans "Anasayfa" %}
     </a>
-    {% if user.is_authenticated %}
-    <a href="?tab=following" class="flex-fill text-center py-2 text-decoration-none {% if tab == 'following' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
-        <i class="bi bi-people me-1"></i>{% trans "Takip Ettiklerim" %}
+    <a href="?tab=trending" class="flex-fill text-center py-2 text-decoration-none {% if tab == 'trending' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-fire me-1"></i>{% trans "Trend Başlıklar" %}
     </a>
-    {% endif %}
+    <a href="?tab=categories" class="flex-fill text-center py-2 text-decoration-none {% if tab == 'categories' %}border-bottom border-primary text-primary fw-bold{% else %}text-muted{% endif %}" style="border-bottom: 2px solid transparent;">
+        <i class="bi bi-tags me-1"></i>{% trans "Kategoriler" %}
+    </a>
 </div>
 {% endblock %}
 
@@ -135,7 +136,7 @@
 <!-- Sekme içeriği artık üst alanda -->
 
 <!-- Anasayfa -->
-<div class="tab-content {% if tab == 'following' %}d-none{% endif %}" id="home-tab">
+<div class="tab-content {% if tab == 'trending' or tab == 'categories' %}d-none{% endif %}" id="home-tab">
     <div class="topic-container">
     {% for topic in topics %}
         {% with first_entry=topic.entries.first %}
@@ -327,187 +328,66 @@
     </div>
 </div>
 
-<!-- Takip Ettiklerim -->
-{% if user.is_authenticated %}
-<div class="tab-content {% if not tab or tab != 'following' %}d-none{% endif %}" id="following-tab">
+<!-- Trend Başlıklar -->
+<div class="tab-content {% if tab != 'trending' %}d-none{% endif %}" id="trending-tab">
+    <div class="period-tabs mb-4 text-center">
+        <div class="btn-group btn-group-sm" role="group">
+            <a href="?tab=trending&period=today" class="btn {% if active_period == 'today' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bugün</a>
+            <a href="?tab=trending&period=weekly" class="btn {% if active_period == 'weekly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bu Hafta</a>
+            <a href="?tab=trending&period=monthly" class="btn {% if active_period == 'monthly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Bu Ay</a>
+            <a href="?tab=trending&period=all-time" class="btn {% if active_period == 'all-time' %}btn-primary{% else %}btn-outline-primary{% endif %}">Tüm Zamanlar</a>
+        </div>
+    </div>
     <div class="topic-container">
-        {% if tab == 'following' %}
-            {% if not topics %}
-                <p class="text-muted p-3">{% trans "Henüz kimseyi takip etmiyorsunuz veya takip ettikleriniz henüz başlık açmamış." %}</p>
-            {% else %}
-                {% for topic in topics %}
-                    {% with first_entry=topic.entries.first %}
-                        <div class="card mb-2 topic-card fade-in border-0" id="topic-{{ topic.id }}" style="box-shadow: none !important;">
-                            <div class="card-body">
-                                <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
-                                    <h5 class="card-title mb-1">{{ topic.title }}</h5>
-                                </a>
-
-                                {% if first_entry %}
-                                <div class="first-entry-preview text-muted mb-2" style="font-size: 0.85rem; color: #6c757d;">
-                                    {% if first_entry.content|length > 790 %}
-                                        {{ first_entry.content|slice:":790"|render_emojis|safe }}
-                                        <a href="{% url 'topic_detail' topic.slug %}" class="text-primary text-decoration-none">...{% trans "devamını gör" %}</a>
-                                    {% else %}
-                                        {{ first_entry.content|render_emojis|safe }}
-                                    {% endif %}
-                                </div>
-                                {% endif %}
-
-                                <!-- Desktop Layout -->
-                                <div class="d-none d-md-flex justify-content-between align-items-end mt-3">
-                                    <div class="vote-buttons d-flex gap-1 align-items-center">
-                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
-                                            <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
-                                        </button>
-                                        <span class="vote-score fw-bold" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
-                                        <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
-                                            <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
-                                        </button>
-                                        <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
-                                        <div class="dropdown d-inline ms-2">
-                                            <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
-                                                <i class="bi bi-share"></i>
-                                            </button>
-                                            <ul class="dropdown-menu share-dropdown">
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-twitter share-icon"></i>
-                                                        {% trans "Twitter'da Paylaş" %}
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-whatsapp share-icon"></i>
-                                                        {% trans "WhatsApp'ta Paylaş" %}
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-telegram share-icon"></i>
-                                                        {% trans "Telegram'da Paylaş" %}
-                                                    </button>
-                                                </li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-link-45deg share-icon"></i>
-                                                        {% trans "Linki Kopyala" %}
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-hash share-icon"></i>
-                                                        {% trans "Kodu Kopyala" %}
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
-                                                        <i class="bi bi-qr-code share-icon"></i>
-                                                        {% trans "QR Kod" %}
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="text-end me-2">
-                                            <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
-                                            <small class="text-muted d-block">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
-                                        </div>
-                                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                            <i class="bi bi-person text-white"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Mobile Layout -->
-                                <div class="d-block d-md-none mt-3">
-                                    <div class="mobile-topic-actions" data-topic-id="{{ topic.id }}">
-                                        <div class="topic-info-container">
-                                            <div class="topic-user-info">
-                                                <a href="{% url 'profile_detail' topic.user.profile.username %}" class="username-link">{{ topic.user.profile.nickname }}</a>
-                                                <small class="text-muted ms-2">{{ topic.created_at|date:"d.m.Y H:i" }}</small>
-                                                <small class="text-muted ms-2">{{ topic.entry_count }} {% trans "entry" %}</small>
-                                            </div>
-                                            <button class="mobile-actions-toggle" data-topic-id="{{ topic.id }}">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                        </div>
-                                        <div class="mobile-actions-panel" data-topic-id="{{ topic.id }}">
-                                            <div class="actions-content">
-                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="up">
-                                                    <i class="bi bi-arrow-up{% if user in topic.upvotes.all %}-circle-fill text-success{% endif %}"></i>
-                                                </button>
-                                                <span class="vote-score fw-bold mx-1" style="font-size: 0.9rem;">{{ topic.vote_score }}</span>
-                                                <button class="btn btn-link p-0 vote-btn" data-topic-slug="{{ topic.slug }}" data-vote-type="down">
-                                                    <i class="bi bi-arrow-down{% if user in topic.downvotes.all %}-circle-fill text-danger{% endif %}"></i>
-                                                </button>
-                                                {% if user.is_authenticated %}
-                                                    <button class="btn btn-link p-0 ms-2 topic-bookmark-btn {% if user in topic.topic_bookmarks.all %}text-warning{% else %}text-muted{% endif %}" data-topic-slug="{{ topic.slug }}">
-                                                        <i class="bi {% if user in topic.topic_bookmarks.all %}bi-bookmark-fill{% else %}bi-bookmark{% endif %}"></i>
-                                                    </button>
-                                                {% endif %}
-                                                <div class="dropdown d-inline ms-2">
-                                                    <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
-                                                        <i class="bi bi-share"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu share-dropdown">
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-twitter twitter" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-twitter share-icon"></i>
-                                                                {% trans "Twitter'da Paylaş" %}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-whatsapp whatsapp" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-whatsapp share-icon"></i>
-                                                                {% trans "WhatsApp'ta Paylaş" %}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-telegram telegram" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-telegram share-icon"></i>
-                                                                {% trans "Telegram'da Paylaş" %}
-                                                            </button>
-                                                        </li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-copy copy-link" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-link-45deg share-icon"></i>
-                                                                {% trans "Linki Kopyala" %}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-copy-code copy-code" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-hash share-icon"></i>
-                                                                {% trans "Kodu Kopyala" %}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item share-btn share-qr qr-code" data-topic-code="{{ topic.code }}">
-                                                                <i class="bi bi-qr-code share-icon"></i>
-                                                                {% trans "QR Kod" %}
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mb-3">
-                            <hr class="topic-divider">
-                        </div>
-                    {% endwith %}
-                {% endfor %}
-            {% endif %}
-        {% endif %}
+        {% for topic in trending_topics %}
+            <div class="topic-item mb-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
+                            <h5 class="mb-1">{{ topic.title }}</h5>
+                        </a>
+                        <small class="text-muted">
+                            {{ topic.daily_entry_count }} {% trans "entry" %} • 
+                            {{ topic.user.profile.nickname }} • 
+                            {{ topic.created_at|date:"d.m.Y H:i" }}
+                        </small>
+                    </div>
+                    <span class="badge bg-primary">{{ topic.daily_entry_count }}</span>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted p-3">{% trans "Henüz gündem başlığı yok." %}</p>
+        {% endfor %}
     </div>
 </div>
-{% endif %}
+
+<!-- Kategoriler -->
+<div class="tab-content {% if tab != 'categories' %}d-none{% endif %}" id="categories-tab">
+    <div class="categories-container">
+        {% for category in popular_categories %}
+            <div class="category-item mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">
+                            <a href="{% url 'category_detail' category.slug %}" class="text-decoration-none text-dark">
+                                #{{ category.name }}
+                            </a>
+                        </h6>
+                        {% if category.description %}
+                            <small class="text-muted">{{ category.description }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-primary">{{ category.topic_count }}</span>
+                        <small class="text-muted d-block">{% trans "başlık" %}</small>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted p-3">{% trans "Henüz kategori yok." %}</p>
+        {% endfor %}
+    </div>
+</div>
 
 
 

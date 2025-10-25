@@ -1,5 +1,5 @@
 from django import forms
-from .models import Sozluk, Kisi, Album, Sarki, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay, YerAdi, YerAdiDetay, Topic, Entry, Category, Profile
+from .models import Sozluk, Kisi, Album, Sarki, SarkiGrubu, Atasozu, Deyim, SozlukDetay, SarkiDetay, AtasozuDeyimDetay, KisiDetay, YerAdi, YerAdiDetay, Topic, Entry, Category, Profile
 import bleach
 import re
 from django.utils.translation import gettext_lazy as _
@@ -151,12 +151,30 @@ class SarkiDetayForm(forms.ModelForm):
 class KisiForm(forms.ModelForm):
     class Meta:
         model = Kisi
-        fields = ['ad', 'biyografi', 'kategoriler']
+        fields = ['ad', 'kisi_turu', 'biyografi', 'kategoriler', 'dogum_tarihi', 'olum_tarihi', 'dogum_yeri_secim', 'dogum_yeri_serbest', 'cinsiyet', 'meslek', 'aktif_yillar', 'bagli_grup', 'website', 'instagram', 'twitter', 'youtube']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kişinin adını yazın'), 'required': True}),
-            'biyografi': forms.Textarea(attrs={'class': 'form-control d-none', 'id': 'biyografi-hidden', 'required': True}),
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Kişi/Grup adını yazın'), 'required': True}),
+            'kisi_turu': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'biyografi': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Biyografiyi buraya yazın...', 'rows': 8, 'required': True}),
             'kategoriler': forms.SelectMultiple(attrs={'class': 'form-control select2', 'required': True}),
+            'dogum_tarihi': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': _('Doğum tarihi')}),
+            'olum_tarihi': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'placeholder': _('Ölüm tarihi')}),
+            'dogum_yeri_secim': forms.Select(attrs={'class': 'form-control'}),
+            'dogum_yeri_serbest': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Veya buraya yazın...')}),
+            'cinsiyet': forms.Select(attrs={'class': 'form-control'}),
+            'meslek': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Meslek/Alan')}),
+            'aktif_yillar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Aktif yıllar (örn: 1990-2020)')}),
+            'website': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('Website URL')}),
+            'instagram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Instagram kullanıcı adı')}),
+            'twitter': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Twitter kullanıcı adı')}),
+            'youtube': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('YouTube kanal URL')}),
+            'bagli_grup': forms.Select(attrs={'class': 'form-control'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Sadece grup ve kurumları göster
+        self.fields['bagli_grup'].queryset = Kisi.objects.filter(kisi_turu__in=['grup', 'kurum']).order_by('ad')
 
     def clean_ad(self):
         ad = self.cleaned_data.get('ad')
@@ -169,6 +187,23 @@ class KisiForm(forms.ModelForm):
         if not biyografi.strip():
             raise forms.ValidationError(_('Biyografi alanı zorunludur.'))
         return biyografi
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        dogum_tarihi = cleaned_data.get('dogum_tarihi')
+        olum_tarihi = cleaned_data.get('olum_tarihi')
+        
+        if olum_tarihi and dogum_tarihi and olum_tarihi < dogum_tarihi:
+            raise forms.ValidationError({'olum_tarihi': _('Ölüm tarihi doğum tarihinden önce olamaz.')})
+        
+        # Doğum yeri validasyonu
+        dogum_yeri_secim = cleaned_data.get('dogum_yeri_secim')
+        dogum_yeri_serbest = cleaned_data.get('dogum_yeri_serbest')
+        
+        if dogum_yeri_secim and dogum_yeri_serbest:
+            raise forms.ValidationError(_('Doğum yeri için hem listeden seçim hem de serbest metin kullanılamaz.'))
+        
+        return cleaned_data
     
 class KisiDetayForm(forms.ModelForm):
     class Meta:
@@ -200,17 +235,23 @@ class AlbumForm(forms.ModelForm):
             raise forms.ValidationError(_('Albüm adı zorunludur.'))
         return ad
 
-class SarkiForm(forms.ModelForm):
-    link = forms.URLField(required=False)
-    tur = forms.ChoiceField(
-        choices=[('', _('Tür Seçin'))] + Sarki._meta.get_field('tur').choices,
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
+class SarkiGrubuForm(forms.ModelForm):
+    class Meta:
+        model = SarkiGrubu
+        fields = ['album', 'ad']
+        widgets = {
+            'album': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı adını yazın'), 'required': True}),
+        }
 
+class SarkiForm(forms.ModelForm):
     class Meta:
         model = Sarki
-        fields = ['album', 'ad', 'sozler', 'link', 'tur']
+        fields = ['dil', 'sozler']
+        widgets = {
+            'dil': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Şarkı sözlerini yazın'), 'rows': 6, 'required': True}),
+        }
         widgets = {
             'album': forms.Select(attrs={'class': 'form-control', 'required': True}),
             'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı adını yazın'), 'required': True}),
@@ -218,79 +259,19 @@ class SarkiForm(forms.ModelForm):
             'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı bağlantısı (isteğe bağlı)')})
         }
     
-    def __init__(self, *args, **kwargs):
-        super(SarkiForm, self).__init__(*args, **kwargs)
-        self.fields['album'].queryset = Album.objects.all().order_by('ad')
-        if 'instance' in kwargs and kwargs['instance']:
-            self.fields['album'].initial = kwargs['instance'].album.id if kwargs['instance'].album else None
-
-    def clean(self):
-        cleaned_data = super().clean()
-        ad = cleaned_data.get('ad')
-        album = cleaned_data.get('album')
-        sozler = cleaned_data.get('sozler')
-        if not ad or not ad.strip():
-            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
-        if not album:
-            raise forms.ValidationError(_('Albüm seçimi zorunludur.'))
-        if not sozler or not sozler.strip():
-            raise forms.ValidationError(_('Şarkı sözleri zorunludur.'))
-        if album:
-            existing_songs = Sarki.objects.filter(album=album, ad__iexact=ad)
-            if self.instance and self.instance.pk:
-                existing_songs = existing_songs.exclude(pk=self.instance.pk)
-            if existing_songs.exists():
-                raise forms.ValidationError(_('Bu albümde aynı isimde bir şarkı zaten mevcut.'))
-        return cleaned_data
-
-    def clean_ad(self):
-        ad = self.cleaned_data.get('ad')
-        if not ad.strip():
-            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
-        return ad
-
-    def clean_album(self):
-        album = self.cleaned_data.get('album')
-        if not album:
-            raise forms.ValidationError(_('Albüm seçimi zorunludur.'))
-        return album
-
     def clean_sozler(self):
         sozler = self.cleaned_data.get('sozler')
-        if not sozler.strip():
+        if not sozler or not sozler.strip():
             raise forms.ValidationError(_('Şarkı sözleri zorunludur.'))
-        if len(sozler) > 5000:
-            raise forms.ValidationError(_('Şarkı sözleri 5000 karakterden uzun olamaz.'))
         return sozler
 
 class SarkiDuzenleForm(forms.ModelForm):
-    link = forms.URLField(required=False)
-    tur = forms.ChoiceField(
-        choices=[('', _('Tür Seçin'))] + Sarki._meta.get_field('tur').choices,
-        required=False,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
     class Meta:
         model = Sarki
-        fields = ['ad', 'sozler', 'link', 'tur']
+        fields = ['sozler']
         widgets = {
-            'ad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı adını yazın'), 'required': True}),
             'sozler': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Şarkı sözlerini yazın'), 'rows': 6, 'required': True}),
-            'link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': _('Şarkı bağlantısı (isteğe bağlı)')})
         }
-
-    def clean_ad(self):
-        ad = self.cleaned_data.get('ad')
-        if not ad.strip():
-            raise forms.ValidationError(_('Şarkı adı zorunludur.'))
-        if self.instance and self.instance.album:
-            existing_songs = Sarki.objects.filter(album=self.instance.album, ad__iexact=ad)
-            if self.instance.pk:
-                existing_songs = existing_songs.exclude(pk=self.instance.pk)
-            if existing_songs.exists():
-                raise forms.ValidationError(_('Bu albümde aynı isimde bir şarkı zaten mevcut.'))
-        return ad
 
     def clean_sozler(self):
         sozler = self.cleaned_data.get('sozler')

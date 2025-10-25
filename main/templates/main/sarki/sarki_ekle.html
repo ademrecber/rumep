@@ -8,17 +8,18 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5>{% trans "Sanatçı Ara" %}</h5>
-            <form id="kisi-ara-form" action="{% url 'sarki_kisi_ara' %}" method="get">
+            <div>
                 <div class="input-group">
                     <input type="text" id="kisi-ara-input" class="form-control rounded-pill" placeholder="{% trans 'Sanatçı adını yazın...' %}" aria-label="{% trans 'Sanatçı ara' %}">
-                    <button class="btn btn-outline-primary rounded-pill" type="submit"><i class="bi bi-search"></i></button>
+                    <span class="input-group-text rounded-pill"><i class="bi bi-search"></i></span>
                 </div>
                 <div id="kisi-ara-sonuc" class="mt-3"></div>
-            </form>
+            </div>
             <p class="text-muted mt-3">Kesê ku hûn lê digerin tune? <a href="{% url 'kisi_ekle' %}">Niha lê zêde bike!</a></p>
         </div>
     </div>
     {% if kisi %}
+        {% if not sarki_grubu %}
         <div class="card mb-3">
             <div class="card-body">
                 <h5>{{ kisi.ad }} {% trans "için Albüm Ekle" %}</h5>
@@ -38,13 +39,15 @@
                 </form>
             </div>
         </div>
+        {% endif %}
         {% if albumler %}
+            {% if not sarki_grubu %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5>{{ kisi.ad }} {% trans "için Şarkı Sözleri Ekle" %}</h5>
-                    <form id="sarki-ekle-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                    <h5>{{ kisi.ad }} {% trans "için Şarkı Oluştur" %}</h5>
+                    <form id="sarki-grup-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
                         {% csrf_token %}
-                        <input type="hidden" name="sarki_submit" value="1">
+                        <input type="hidden" name="sarki_grup_submit" value="1">
                         <div class="mb-3">
                             <label for="album" class="form-label">Albûm Hilbijêre</label>
                             <select name="album" id="album" class="form-select" required>
@@ -56,38 +59,138 @@
                         </div>
                         <div class="mb-3">
                             <label for="id_ad" class="form-label">{% trans "Şarkı Adı" %}</label>
-                            {{ sarki_form.ad }}
+                            <input type="text" name="ad" class="form-control" placeholder="{% trans 'Şarkı adını yazın' %}" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="id_sozler" class="form-label">{% trans "Şarkı Sözleri" %}</label>
-                            {{ sarki_form.sozler }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_tur" class="form-label">Cure (Bijarte)</label>
-                            {{ sarki_form.tur }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_link" class="form-label">Girêdana Stranê (Bijarte)</label>
-                            {{ sarki_form.link }}
-                        </div>
-                        <div id="sarki-form-errors" class="alert alert-danger d-none" role="alert"></div>
-                        <button type="submit" class="btn btn-primary rounded-pill">{% trans "Şarkı Ekle" %}</button>
+                        <button type="submit" class="btn btn-success rounded-pill">Şarkı Oluştur</button>
                     </form>
                 </div>
             </div>
+            {% endif %}
+            
+            {% if sarki_grubu %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>{{ sarki_grubu.ad }} - Dil Versiyonları</h5>
+                        <a href="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}" class="btn btn-outline-secondary btn-sm">Yeni Şarkı</a>
+                    </div>
+                    <div class="d-flex gap-2 mb-3 flex-wrap">
+                        {% for dil_kod, dil_ad in dil_secenekleri %}
+                            {% if dil_kod not in mevcut_diller %}
+                            <button class="btn btn-outline-primary btn-sm" onclick="showDilForm('{{ dil_kod }}', '{{ dil_ad }}')">
+                                + {{ dil_ad }}
+                            </button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    <div id="dil-forms"></div>
+                    
+                    {% for sarki in sarki_grubu.dil_versiyonlari.all %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h6>{{ sarki.get_dil_display }}</h6>
+                            <p class="text-muted small">{{ sarki.sozler|truncatewords:10 }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 </div>
 {% endblock %}
 {% block extra_scripts %}
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_loader.js' %}"></script>
-    <script type="module">
-        import { initKisiAra, initAlbumEkle, initSarkiEkle } from "{% static 'main/js/modules/sarki/sarki_loader.js' %}";
-        document.addEventListener('DOMContentLoaded', () => {
-            initKisiAra();
-            initAlbumEkle();
-            initSarkiEkle();
+    <script>
+        // Kişi arama AJAX
+        document.getElementById('kisi-ara-input').addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 0) {
+                fetch(`/sarki/kisi-ara/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const sonucDiv = document.getElementById('kisi-ara-sonuc');
+                        if (data.kisiler && data.kisiler.length > 0) {
+                            let html = '<div class="list-group">';
+                            data.kisiler.forEach(kisi => {
+                                html += `<a href="/sarki/ekle/?kisi_id=${kisi.id}" class="list-group-item list-group-item-action">
+                                    <strong>${kisi.ad}</strong> <span class="badge bg-secondary">${kisi.kisi_turu}</span><br>
+                                    <small class="text-muted">${kisi.biyografi}</small>
+                                </a>`;
+                            });
+                            html += '</div>';
+                            sonucDiv.innerHTML = html;
+                        } else {
+                            sonucDiv.innerHTML = '<p class="text-muted">Sonuç bulunamadı</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Hata:', error);
+                    });
+            } else {
+                document.getElementById('kisi-ara-sonuc').innerHTML = '';
+            }
         });
+
+        // Albüm ekleme AJAX
+        document.getElementById('album-ekle-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    const errorDiv = document.getElementById('album-form-errors');
+                    errorDiv.classList.remove('d-none');
+                    errorDiv.innerHTML = data.error || 'Bir hata oluştu';
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                const errorDiv = document.getElementById('album-form-errors');
+                errorDiv.classList.remove('d-none');
+                errorDiv.innerHTML = 'Bir hata oluştu';
+            });
+        });
+
+        function showDilForm(dilKod, dilAd) {
+            const formHtml = `
+                <div class="card mb-3" id="form-${dilKod}">
+                    <div class="card-header d-flex justify-content-between">
+                        <span>${dilAd} Versiyonu</span>
+                        <button type="button" class="btn-close" onclick="closeDilForm('${dilKod}')"></button>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="sarki_submit" value="1">
+                            <input type="hidden" name="sarki_grubu_id" value="{{ sarki_grubu.id }}">
+                            <input type="hidden" name="dil" value="${dilKod}">
+                            <div class="mb-3">
+                                <label class="form-label">${dilAd} Sözleri</label>
+                                <textarea name="sozler" class="form-control" rows="6" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.getElementById('dil-forms').insertAdjacentHTML('beforeend', formHtml);
+        }
+        
+        function closeDilForm(dilKod) {
+            document.getElementById(`form-${dilKod}`).remove();
+        }
     </script>
 {% endblock %}
 {% block extra_css %}

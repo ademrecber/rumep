@@ -68,16 +68,10 @@
         <div class="alphabet-section mb-4">
             <div class="card border-0 shadow-sm">
                 <div class="card-body py-3">
-                    <div class="d-flex flex-wrap gap-2 justify-content-center">
-                        <a href="{% url 'sarki_sozleri' %}" 
-                           class="btn btn-sm {% if not secili_harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                           {% trans "Tümü" %}
-                        </a>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{% url 'sarki_sozleri' %}" class="text-decoration-none {% if not secili_harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{% trans "Tümü" %}</a>
                         {% for harf in harfler %}
-                            <a href="?harf={{ harf }}" 
-                               class="btn btn-sm {% if secili_harf == harf %}btn-primary{% else %}btn-outline-primary{% endif %} rounded-pill">
-                                {{ harf|upper }}
-                            </a>
+                            <a href="?harf={{ harf }}" class="text-decoration-none {% if secili_harf == harf %}text-primary fw-bold border-bottom border-primary border-2{% else %}text-muted{% endif %}" style="padding: 5px 0;">{{ harf|upper }}</a>
                         {% endfor %}
                     </div>
                 </div>

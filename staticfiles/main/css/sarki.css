@@ -10,7 +10,7 @@
 }
 
 .text-primary {
-    color: #1da1f2 !important;
+    color: #667eea !important;
 }
 
 .text-muted {
@@ -18,8 +18,8 @@
 }
 
 .btn-primary {
-    background-color: #1da1f2 !important;
-    border-color: #1da1f2 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
     color: #ffffff !important;
 }
 
@@ -82,7 +82,7 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 15px;
-    border-bottom: 2px solid #1da1f2;
+    border-bottom: 2px solid #667eea;
     padding-bottom: 5px;
 }
 
@@ -100,8 +100,8 @@
 }
 
 .sarki-container .btn-primary {
-    background-color: #1da1f2 !important;
-    border-color: #1da1f2 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
     color: #ffffff !important;
 }
 
@@ -128,21 +128,23 @@
     font-weight: 600;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    border: 2px solid #1da1f2;
-    color: #1da1f2;
+    border: 2px solid #667eea;
+    color: #667eea;
     background-color: #fff;
 }
 
 .sarki-container .btn-outline-primary:hover {
-    background-color: #1da1f2;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    border-color: transparent;
 }
 
 .sarki-container .btn-outline-primary.active {
-    background-color: #1da1f2;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
+    border-color: transparent;
 }
 
 /* Sanatçı, albüm ve şarkı öğeleri */
@@ -170,7 +172,7 @@
 .kisi-item h5,
 .album-item h5,
 .sarki-item h5 {
-    color: #1da1f2;
+    color: #667eea;
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 10px;
@@ -440,4 +442,72 @@
     color: #1da1f2;
     margin-bottom: 15px;
     display: block;
+}
+
+/* Ana tema renkleri ile uyumlu ek stiller */
+.place-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.song-stats {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.song-badges .badge {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #0f1419 !important;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn-outline-success {
+    border-color: #f093fb !important;
+    color: #f093fb !important;
+}
+
+.btn-outline-success:hover {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+}
+
+.lyrics-content {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%) !important;
+    border-left: 4px solid #667eea !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+}
+
+.detail-item {
+    border-left: 3px solid #667eea !important;
+    background: rgba(102, 126, 234, 0.05) !important;
+}
+
+.btn-outline-primary {
+    border-color: #667eea !important;
+    color: #667eea !important;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-color: transparent !important;
+    color: white !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: #f5576c !important;
+    border-color: #f5576c !important;
 }

@@ -160,10 +160,50 @@ def kisi_detay(request, kisi_id):
 
 @login_required
 @profile_required
+def kisi_duzenle(request, kisi_id):
+    kisi = get_object_or_404(Kisi, id=kisi_id)
+    if kisi.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Bu kişiyi düzenleme yetkiniz yok.'}, status=403)
+    
+    if request.method == 'POST':
+        form = KisiForm(request.POST, instance=kisi)
+        if form.is_valid():
+            kisi = form.save(commit=False)
+            kisi.ad = bleach.clean(kisi.ad, tags=[], strip=True).lower()
+            kisi.biyografi = bleach.clean(
+                kisi.biyografi,
+                tags=['p', 'br', 'a', 'strong', 'em', 'ul', 'ol', 'li'],
+                attributes={'a': ['href', 'target', 'rel', 'style']},
+                strip=True
+            )
+            try:
+                kisi.save()
+                form.save_m2m()
+                logger.info(f"Kişi düzenlendi: {kisi.ad}, Kullanıcı: {request.user.username}")
+                return JsonResponse({'success': True})
+            except ValidationError as e:
+                return JsonResponse({'success': False, 'errors': {field: errors[0] for field, errors in e.message_dict.items()}})
+        else:
+            return JsonResponse({'success': False, 'errors': {field: errors[0]['message'] for field, errors in form.errors.get_json_data().items()}})
+    
+    # GET request - return form data
+    form = KisiForm(instance=kisi)
+    return render(request, 'main/kisi/kisi_duzenle.html', {
+        'form': form,
+        'kisi': kisi
+    })
+
+@login_required
+@profile_required
 def kisi_sil(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
     if kisi.kullanici != request.user:
         return JsonResponse({'success': False, 'error': 'Bu kişiyi silme yetkiniz yok.'}, status=403)
+    
+    # Başka kullanıcıların ek detayları varsa silme
+    if kisi.detaylar.exclude(kullanici=request.user).exists():
+        return JsonResponse({'success': False, 'error': 'Bu kişiye başka kullanıcılar detay eklemiş, silinemez.'}, status=400)
+    
     kisi.delete()
     logger.info(f"Kişi silindi: {kisi.ad}, Kullanıcı: {request.user.username}")
     return JsonResponse({'success': True})

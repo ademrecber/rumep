@@ -3,197 +3,244 @@
 
 {% block title %}Çand{% endblock %}
 
-{% block page_header %}Çand{% endblock %}
+{% block page_header %}
+<div class="category-tabs">
+    <div class="tabs-scroll">
+        <button class="tab-item active" data-category="all" style="--tab-color: #667eea">
+            <i class="bi bi-grid"></i>
+            <span class="tab-text">Tümü</span>
+        </button>
+        {% for category in categories %}
+        <button class="tab-item" data-category="{{ category.url }}" data-name="{{ category.name }}" style="--tab-color: {{ category.color }}">
+            <i class="{{ category.icon }}"></i>
+            <span class="tab-text">{% if category.name == 'Gotinên Pêşiyan û Îdîom' %}Gotinên Pêşiyan{% else %}{{ category.name }}{% endif %}</span>
+        </button>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
 
 {% block extra_css %}
-<style>
-.categories-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 60px 0;
-    margin: -20px -20px 40px -20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.hero-icon {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    backdrop-filter: blur(10px);
-}
-
-.hero-icon i {
-    font-size: 2.5rem;
-    color: white;
-}
-
-.hero-title {
-    font-size: 3rem;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0;
-}
-
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 0;
-}
-
-.category-card {
-    position: relative;
-    background: white;
-    border-radius: 24px;
-    padding: 32px;
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: block;
-}
-
-.card-content {
-    position: relative;
-    z-index: 2;
-}
-
-.card-icon {
-    width: 72px;
-    height: 72px;
-    background: linear-gradient(135deg, var(--bg-color), var(--bg-color));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-    transition: all 0.4s ease;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-.card-icon i {
-    font-size: 2rem;
-    color: white;
-}
-
-.category-card:hover .card-icon {
-    transform: scale(1.1);
-}
-
-.card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 12px;
-}
-
-.card-description {
-    color: #718096;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 24px;
-}
-
-.card-stats {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.stat-number {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--bg-color);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: #a0aec0;
-    font-weight: 500;
-}
-
-.category-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-}
-
-@media (max-width: 768px) {
-    .categories-hero {
-        padding: 40px 0;
-        margin: -15px -15px 30px -15px;
-    }
-    
-    .hero-title {
-        font-size: 2.2rem;
-    }
-    
-    .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .category-card {
-        padding: 24px;
-    }
-    
-    .card-icon {
-        width: 60px;
-        height: 60px;
-    }
-}
-</style>
+<link rel="stylesheet" href="{% static 'main/css/categories.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="categories-hero">
-    <div class="hero-content">
-        <div class="hero-icon">
-            <i class="bi bi-brightness-high"></i>
+<!-- İçerik Feed'i -->
+<div class="content-feed">
+    <div class="feed-header">
+        <h4 class="feed-title">
+            <i class="bi bi-clock-history me-2" style="color: #667eea;"></i>
+            <span id="feed-title-text">Son İçerikler</span>
+        </h4>
+        <div class="header-actions">
+            <a href="#" id="add-new-btn" class="btn btn-primary btn-sm d-none">
+                <i class="bi bi-plus-lg me-1"></i>
+                <span id="add-btn-text">Yeni Ekle</span>
+            </a>
+            <a href="#" id="category-link" class="category-link-btn d-none">
+                <i class="bi bi-arrow-right"></i>
+            </a>
         </div>
-        <h1 class="hero-title">Çand</h1>
-        <p class="hero-subtitle">{{ total_content }} içerik ile zengin kültürel arşivimizi keşfedin</p>
+    </div>
+    
+    <div class="feed-container">
+        <div id="feed-list">
+            <!-- İçerikler buraya yüklenecek -->
+        </div>
+        
+        <div id="loading" class="loading-spinner d-none">
+            <div class="spinner"></div>
+        </div>
+        
+        <div id="empty-state" class="empty-state d-none">
+            <i class="bi bi-inbox"></i>
+            <h5>Henüz içerik yok</h5>
+            <p>Bu kategoride henüz içerik bulunmuyor.</p>
+        </div>
     </div>
 </div>
+<!-- Floating Action Button -->
+<button class="category-fab d-md-none" id="categoryFab" style="display: none;">
+    <i class="bi bi-plus-lg" id="fabIcon"></i>
+</button>
+{% endblock %}
 
-<div class="categories-grid">
-    {% for category in categories %}
-    <a href="{% url category.url %}" class="category-card" style="--bg-color: {{ category.color }}">
-        <div class="card-background"></div>
-        <div class="card-content">
-            <div class="card-icon">
-                <i class="{{ category.icon }}"></i>
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentPage = 1;
+    let currentCategory = 'all';
+    let isLoading = false;
+    let hasMore = true;
+    
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    const feedList = document.getElementById('feed-list');
+    const loading = document.getElementById('loading');
+    const emptyState = document.getElementById('empty-state');
+    const feedTitle = document.getElementById('feed-title-text');
+    const categoryLink = document.getElementById('category-link');
+    const addNewBtn = document.getElementById('add-new-btn');
+    const addBtnText = document.getElementById('add-btn-text');
+    const categoryFab = document.getElementById('categoryFab');
+    const fabIcon = document.getElementById('fabIcon');
+    
+    // İlk yükleme
+    loadContent();
+    
+    // Kategori filtreleme
+    const tabItems = document.querySelectorAll('.tab-item');
+    tabItems.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Aktif durumu güncelle
+            tabItems.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            currentCategory = this.dataset.category;
+            const categoryName = this.dataset.name;
+            
+            // Feed başlığını güncelle
+            if (currentCategory === 'all') {
+                feedTitle.textContent = 'Son İçerikler';
+                categoryLink.classList.add('d-none');
+                addNewBtn.classList.add('d-none');
+                categoryFab.style.display = 'none';
+            } else {
+                feedTitle.textContent = categoryName + ' - Son İçerikler';
+                categoryLink.href = '/' + currentCategory + '/';
+                categoryLink.classList.remove('d-none');
+                
+                // Kategori butonlarını ayarla
+                updateCategoryButtons(currentCategory, categoryName);
+            }
+            
+            // Yeniden yükle
+            currentPage = 1;
+            hasMore = true;
+            feedList.innerHTML = '';
+            loadContent();
+        });
+    });
+    
+    // Infinite scroll
+    window.addEventListener('scroll', function() {
+        if (isLoading || !hasMore) return;
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        if (scrollTop + windowHeight >= documentHeight - 1000) {
+            currentPage++;
+            loadContent();
+        }
+    });
+    
+    function loadContent() {
+        if (isLoading) return;
+        
+        isLoading = true;
+        loading.classList.remove('d-none');
+        emptyState.classList.add('d-none');
+        
+        fetch(`/kategoriler/load-content/?page=${currentPage}&category=${currentCategory}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items.length === 0 && currentPage === 1) {
+                    emptyState.classList.remove('d-none');
+                } else {
+                    data.items.forEach(item => {
+                        const feedItem = createFeedItem(item);
+                        feedList.appendChild(feedItem);
+                    });
+                }
+                
+                hasMore = data.has_next;
+                isLoading = false;
+                loading.classList.add('d-none');
+            })
+            .catch(error => {
+                console.error('Yükleme hatası:', error);
+                isLoading = false;
+                loading.classList.add('d-none');
+            });
+    }
+    
+    function createFeedItem(item) {
+        const div = document.createElement('a');
+        div.className = 'feed-item new-item';
+        div.href = item.url;
+        
+        const timeAgo = getTimeAgo(new Date(item.date));
+        
+        div.innerHTML = `
+            <div class="feed-icon" style="background: ${item.color};">
+                <i class="${item.icon}"></i>
             </div>
-            <h3 class="card-title">{{ category.name }}</h3>
-            <p class="card-description">{{ category.description }}</p>
-            <div class="card-stats">
-                <div class="stat-number">{{ category.count }}</div>
-                <div class="stat-label">içerik</div>
+            <div class="feed-content">
+                <div class="feed-item-title">${item.title}</div>
+                ${item.description ? `<div class="feed-item-description">${item.description}</div>` : ''}
+                <div class="feed-item-meta">
+                    <i class="bi bi-person me-1"></i>${item.user}
+                    <span class="category-tag">${item.category_name}</span>
+                </div>
             </div>
-        </div>
-        <div class="card-overlay"></div>
-    </a>
-    {% endfor %}
-</div>
-
-
+            <div class="feed-time">${timeAgo}</div>
+        `;
+        
+        return div;
+    }
+    
+    function getTimeAgo(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+        
+        if (minutes < 1) return 'şimdi';
+        if (minutes < 60) return minutes + ' dk';
+        if (hours < 24) return hours + ' sa';
+        return days + ' gün';
+    }
+    
+    function updateCategoryButtons(categoryUrl, categoryName) {
+        const categoryButtons = {
+            'sozluk_ana_sayfa': {
+                addText: 'Ferheng',
+                addUrl: '/sozluk/'
+            },
+            'kisi_liste': {
+                addText: 'Kes', 
+                addUrl: '/kisi/liste/'
+            },
+            'sarki_sozleri': {
+                addText: 'Gotinên Stranan',
+                addUrl: '/sarki/'
+            },
+            'atasozu_deyim': {
+                addText: 'Gotinên Pêşiyan',
+                addUrl: '/atasozu-deyim/'
+            },
+            'yer_adlari_anasayfa': {
+                addText: 'Navên Cîhan',
+                addUrl: '/yer-adlari/'
+            }
+        };
+        
+        const config = categoryButtons[categoryUrl];
+        if (config) {
+            addBtnText.textContent = config.addText;
+            addNewBtn.href = config.addUrl;
+            addNewBtn.classList.remove('d-none');
+            
+            // FAB butonunu ayarla
+            categoryFab.onclick = () => window.location.href = config.addUrl;
+            categoryFab.style.display = 'flex';
+        } else {
+            addNewBtn.classList.add('d-none');
+            categoryFab.style.display = 'none';
+        }
+    }
+});
+</script>
 {% endblock %}

@@ -129,6 +129,25 @@ def profile(request, username=None):
         })
         print(f"DEBUG: bookmarked_entries count: {len(bookmarked_entries)}")
         print(f"DEBUG: bookmarked_topics count: {len(bookmarked_topics)}")
+    elif tab == 'contributions':
+        from ..models import Sozluk, Kisi, Sarki, Atasozu, Deyim, YerAdi
+        
+        # Kullanıcının katkıları
+        sozluk_items = Sozluk.objects.filter(kullanici=profile.user).order_by('-eklenme_tarihi')[:10]
+        kisi_items = Kisi.objects.filter(kullanici=profile.user).order_by('-eklenme_tarihi')[:10]
+        sarki_items = Sarki.objects.filter(sarki_grubu__kullanici=profile.user).select_related('sarki_grubu__album__kisi').order_by('-sarki_grubu__eklenme_tarihi')[:10]
+        atasozu_items = Atasozu.objects.filter(kullanici=profile.user).order_by('-eklenme_tarihi')[:10]
+        deyim_items = Deyim.objects.filter(kullanici=profile.user).order_by('-eklenme_tarihi')[:10]
+        yer_adi_items = YerAdi.objects.filter(kullanici=profile.user).order_by('-eklenme_tarihi')[:10]
+        
+        context.update({
+            'sozluk_items': sozluk_items,
+            'kisi_items': kisi_items,
+            'sarki_items': sarki_items,
+            'atasozu_items': atasozu_items,
+            'deyim_items': deyim_items,
+            'yer_adi_items': yer_adi_items,
+        })
 
     return render(request, template, context)
 

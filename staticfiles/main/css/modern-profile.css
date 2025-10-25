@@ -644,3 +644,75 @@
     }
 }
 
+/* Katkılar accordion stilleri */
+.accordion-button {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%) !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    color: #0f1419 !important;
+    font-weight: 600;
+}
+
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25) !important;
+}
+
+.accordion-item {
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    margin-bottom: 0.5rem;
+    border-radius: 8px !important;
+    overflow: hidden;
+}
+
+.accordion-body {
+    padding: 1rem;
+    background: #fafbff;
+}
+
+.contribution-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.contribution-item:hover {
+    border-left-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateX(4px);
+}
+
+.contribution-item:last-child {
+    margin-bottom: 0;
+}
+
+.item-title {
+    color: #0f1419;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.item-title:hover {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.item-meta {
+    font-size: 0.8rem;
+    color: #657786;
+}
+
+.accordion-button .badge {
+    font-size: 0.7rem;
+    margin-left: auto;
+}

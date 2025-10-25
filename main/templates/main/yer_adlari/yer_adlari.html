@@ -8,27 +8,32 @@
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Header -->
-    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
-        <div class="container position-relative" style="z-index: 10;">
+    <div class="modern-hero">
+        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-geo-alt-fill me-3"></i>{% trans "Yer Adları" %}
-                    </h1>
-                    <p class="lead mb-4">{% trans "Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin" %}</p>
-                    <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
-                        <a href="{% url 'yer_adi_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Yer Adı Ekle" %}
-                        </a>
-                        <button class="btn btn-outline-light btn-lg" onclick="toggleMapView()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-map me-2"></i>{% trans "Harita Görünümü" %}
-                        </button>
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            {% trans "Yer Adları" %}
+                        </h1>
+                        <p class="hero-subtitle">{% trans "Kürdistan'ın tarihi ve kültürel yer adlarını keşfedin" %}</p>
+                        <div class="hero-actions">
+                            <a href="{% url 'yer_adi_ekle' %}" class="hero-btn hero-btn-primary">
+                                <i class="bi bi-plus-circle"></i>
+                                {% trans "Yeni Yer Adı Ekle" %}
+                            </a>
+                            <button class="hero-btn hero-btn-outline" onclick="toggleMapView()">
+                                <i class="bi bi-map"></i>
+                                {% trans "Harita Görünümü" %}
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 text-center">
-                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
-                        <h3 class="h2 mb-2">{{ yer_adlari.count }}</h3>
-                        <p class="mb-0">{% trans "Toplam Yer Adı" %}</p>
+                <div class="col-lg-4">
+                    <div class="hero-stats">
+                        <div class="hero-stats-number">{{ yer_adlari.count }}</div>
+                        <p class="hero-stats-label">{% trans "Toplam Yer Adı" %}</p>
                     </div>
                 </div>
             </div>
@@ -59,11 +64,11 @@
             {% for yer_adi in yer_adlari %}
                 {
                     "id": {{ yer_adi.id }},
-                    "ad": "{{ yer_adi.ad|escapejs }}",
-                    "kategori": "{{ yer_adi.kategori|escapejs }}",
-                    "bolge": "{{ yer_adi.bolge|escapejs }}",
-                    "enlem": {{ yer_adi.enlem|default:"null" }},
-                    "boylam": {{ yer_adi.boylam|default:"null" }}
+                    "ad": {{ yer_adi.ad|safe|escapejs|safe }},
+                    "kategori": {{ yer_adi.kategori|safe|escapejs|safe }},
+                    "bolge": {{ yer_adi.bolge|safe|escapejs|safe }},
+                    "enlem": {% if yer_adi.enlem %}{{ yer_adi.enlem }}{% else %}null{% endif %},
+                    "boylam": {% if yer_adi.boylam %}{{ yer_adi.boylam }}{% else %}null{% endif %}
                 }{% if not forloop.last %},{% endif %}
             {% endfor %}
         ]
@@ -120,123 +125,104 @@
             </div>
         </div>
 
-        <!-- Modern Yer Adları Listesi -->
-        <div class="places-grid">
-            {% for bolge, bolge_yer_adlari in bolgeler.items %}
-                <div class="region-section mb-5">
-                    <div class="region-header d-flex align-items-center mb-4">
-                        <div class="region-icon me-3">
-                            <i class="bi bi-geo-alt-fill text-primary fs-2"></i>
-                        </div>
-                        <div>
-                            <h2 class="h3 mb-1 text-primary">{{ bolge|capfirst }}</h2>
-                            <p class="text-muted mb-0">{{ bolge_yer_adlari|length }} {% trans "yer adı" %}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="row g-4">
-                        {% for yer_adi in bolge_yer_adlari %}
-                            {% if yer_adi.kategori == 'il' %}
-                                <div class="col-lg-6 col-xl-4">
-                                    <div class="place-card card h-100 border-0 shadow-sm hover-lift">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                                <div class="place-category">
-                                                    <span class="badge bg-primary-subtle text-primary rounded-pill">
-                                                        <i class="bi bi-building me-1"></i>{{ yer_adi.kategori|capfirst }}
-                                                    </span>
-                                                </div>
-                                                {% if yer_adi.enlem and yer_adi.boylam %}
-                                                    <i class="bi bi-geo-alt text-success" title="{% trans 'Koordinatlar mevcut' %}"></i>
-                                                {% endif %}
-                                            </div>
-                                            
-                                            <h5 class="card-title mb-2">
-                                                <a href="{% url 'yer_adi_detay' yer_adi.id %}" 
-                                                   class="text-decoration-none text-dark fw-bold">
-                                                    {{ yer_adi.ad }}
-                                                </a>
-                                            </h5>
-                                            
-                                            <p class="card-text text-muted mb-3">{{ yer_adi.detay|truncatechars:80 }}</p>
-                                            
-                                            <div class="place-meta d-flex justify-content-between align-items-center mb-3">
-                                                <small class="text-muted">
-                                                    <i class="bi bi-calendar3 me-1"></i>{{ yer_adi.eklenme_tarihi|date:"d.m.Y" }}
-                                                </small>
-                                                <small class="text-muted">
-                                                    <i class="bi bi-person me-1"></i>{{ yer_adi.kullanici.profile.nickname }}
-                                                </small>
-                                            </div>
-                                            
-                                            {% if yer_adi.kullanici == user %}
-                                                <div class="place-actions d-flex gap-2">
-                                                    <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" 
-                                                       class="btn btn-sm btn-outline-primary">
-                                                        <i class="bi bi-pencil me-1"></i>{% trans "Düzenle" %}
-                                                    </a>
-                                                    <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" 
-                                                          class="d-inline" 
-                                                          onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                            <i class="bi bi-trash me-1"></i>{% trans "Sil" %}
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            {% endif %}
-                                            
-                                            <!-- Alt yer adları -->
-                                            {% if yer_adi.children.exists %}
-                                                <div class="sub-places mt-3">
-                                                    <button class="btn btn-sm btn-outline-secondary" 
-                                                            type="button" 
-                                                            data-bs-toggle="collapse" 
-                                                            data-bs-target="#sub-places-{{ yer_adi.id }}" 
-                                                            aria-expanded="false">
-                                                        <i class="bi bi-chevron-down me-1"></i>
-                                                        {% trans "Alt Yerler" %} ({{ yer_adi.children.count }})
-                                                    </button>
-                                                    <div class="collapse mt-2" id="sub-places-{{ yer_adi.id }}">
-                                                        <div class="sub-places-list">
-                                                            {% for alt_yer in yer_adi.children.all|dictsort:"ad" %}
-                                                                <div class="sub-place-item border-start border-3 border-primary ps-3 mb-2">
-                                                                    <h6 class="mb-1">
-                                                                        <a href="{% url 'yer_adi_detay' alt_yer.id %}" class="text-decoration-none">
-                                                                            {{ alt_yer.ad }}
-                                                                        </a>
-                                                                        <span class="badge bg-secondary-subtle text-secondary ms-2">
-                                                                            {{ alt_yer.kategori|capfirst }}
-                                                                        </span>
-                                                                    </h6>
-                                                                    <p class="small text-muted mb-1">{{ alt_yer.detay|truncatechars:60 }}</p>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
+        <!-- Modern Bölge Tabları -->
+        <div class="region-tabs-container mb-4">
+            <div class="region-tabs">
+                <button class="region-tab active" data-region="all">
+                    <i class="bi bi-globe me-2"></i>Tümü
+                    <span class="badge bg-primary ms-2">{{ yer_adlari.count }}</span>
+                </button>
+                {% for bolge, bolge_yer_adlari in bolgeler.items %}
+                <button class="region-tab" data-region="{{ bolge }}">
+                    <i class="bi bi-geo-alt me-2"></i>{{ bolge|capfirst }}
+                    <span class="badge bg-secondary ms-2">{{ bolge_yer_adlari|length }}</span>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Hiyerarşik Yer Adları -->
+        <div class="places-hierarchy">
+            <div class="row g-4" id="places-container">
+                {% for bolge, bolge_yer_adlari in bolgeler.items %}
+                    {% for yer_adi in bolge_yer_adlari %}
+                        <div class="col-lg-6 col-xl-4 place-item" data-region="{{ bolge }}">
+                            <div class="place-card card h-100 border-0 shadow-sm hover-lift">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div class="place-category">
+                                            <span class="badge bg-primary-subtle text-primary rounded-pill">
+                                                <i class="bi bi-building me-1"></i>{{ yer_adi.kategori|capfirst }}
+                                            </span>
+                                            <span class="badge bg-info-subtle text-info rounded-pill ms-1">
+                                                <i class="bi bi-geo me-1"></i>{{ bolge|capfirst }}
+                                            </span>
                                         </div>
+                                        {% if yer_adi.enlem and yer_adi.boylam %}
+                                            <i class="bi bi-geo-alt text-success" title="{% trans 'Koordinatlar mevcut' %}"></i>
+                                        {% endif %}
                                     </div>
+                                    
+                                    <h5 class="card-title mb-2">
+                                        <a href="{% url 'yer_adi_detay' yer_adi.id %}" 
+                                           class="text-decoration-none text-dark fw-bold">
+                                            {{ yer_adi.ad }}
+                                        </a>
+                                    </h5>
+                                    
+                                    <p class="card-text text-muted mb-3">{{ yer_adi.detay|truncatechars:80 }}</p>
+                                    
+                                    <div class="place-meta d-flex justify-content-between align-items-center mb-3">
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar3 me-1"></i>{{ yer_adi.eklenme_tarihi|date:"d.m.Y" }}
+                                        </small>
+                                        <small class="text-muted">
+                                            <i class="bi bi-person me-1"></i>{{ yer_adi.kullanici.profile.nickname }}
+                                        </small>
+                                    </div>
+                                    
+                                    {% if yer_adi.kullanici == user %}
+                                        <div class="place-actions d-flex gap-2 mb-3">
+                                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil me-1"></i>{% trans "Düzenle" %}
+                                            </a>
+                                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" 
+                                                  class="d-inline" 
+                                                  onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash me-1"></i>{% trans "Sil" %}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <!-- Recursive Alt Yerler -->
+                                    {% include 'main/yer_adlari/recursive_places.html' with yer=yer_adi level=0 %}
                                 </div>
-                            {% endif %}
-                        {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% empty %}
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
+                            <h3 class="text-muted">{% trans "Henüz yer adı eklenmemiş" %}</h3>
+                            <p class="text-muted mb-4">{% trans "İlk yer adını ekleyerek başlayın!" %}</p>
+                            <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg">
+                                <i class="bi bi-plus-circle me-2"></i>{% trans "Yer Adı Ekle" %}
+                            </a>
+                        </div>
                     </div>
-                </div>
-            {% empty %}
-                <div class="text-center py-5">
-                    <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
-                    <h3 class="text-muted">{% trans "Henüz yer adı eklenmemiş" %}</h3>
-                    <p class="text-muted mb-4">{% trans "İlk yer adını ekleyerek başlayın!" %}</p>
-                    <a href="{% url 'yer_adi_ekle' %}" class="btn btn-primary btn-lg">
-                        <i class="bi bi-plus-circle me-2"></i>{% trans "Yer Adı Ekle" %}
-                    </a>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+
 
 {% block extra_scripts %}
 <script>
@@ -256,6 +242,44 @@
         }
     }
     
+    // Bölge tab filtreleme
+    document.addEventListener('DOMContentLoaded', function() {
+        const regionTabs = document.querySelectorAll('.region-tab');
+        const placeItems = document.querySelectorAll('.place-item');
+        
+        regionTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const selectedRegion = this.dataset.region;
+                
+                // Tab aktif durumunu güncelle
+                regionTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Yer adlarını filtrele
+                placeItems.forEach(item => {
+                    if (selectedRegion === 'all' || item.dataset.region === selectedRegion) {
+                        item.style.display = 'block';
+                        item.classList.add('fade-in');
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('fade-in');
+                    }
+                });
+            });
+        });
+    });
+    
+    // Daha fazla göster fonksiyonu
+    function showMorePlaces(yerId) {
+        const grid = document.querySelector(`#sub-places-${yerId} .sub-places-grid`);
+        const btn = document.querySelector(`#sub-places-${yerId} .show-more-btn`);
+        
+        if (grid && btn) {
+            grid.style.maxHeight = 'none';
+            btn.style.display = 'none';
+        }
+    }
+    
     window.initMap = function() {
         const mapOptions = {
             center: { lat: 37.5, lng: 41.0 },
@@ -267,7 +291,16 @@
         
         window.map = new google.maps.Map(mapElement, mapOptions);
         
-        const yerAdlari = JSON.parse(document.getElementById('yer-adlari-data')?.textContent || '[]');
+        let yerAdlari = [];
+        try {
+            const dataElement = document.getElementById('yer-adlari-data');
+            if (dataElement && dataElement.textContent) {
+                yerAdlari = JSON.parse(dataElement.textContent);
+            }
+        } catch (e) {
+            console.warn('Yer adları verisi yüklenemedi:', e);
+            yerAdlari = [];
+        }
         yerAdlari.forEach(yer => {
             if (yer.enlem && yer.boylam) {
                 new google.maps.Marker({
@@ -284,4 +317,5 @@
 
 {% block extra_css %}
     <link href="{% static 'main/css/yer_adlari_new.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/modern-headers.css' %}" rel="stylesheet">
 {% endblock %}

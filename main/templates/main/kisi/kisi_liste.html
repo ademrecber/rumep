@@ -6,27 +6,32 @@
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
-    <div class="hero-section bg-gradient-primary text-white py-5 mb-4">
-        <div class="container position-relative" style="z-index: 10;">
+    <div class="modern-hero">
+        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-3">
-                        <i class="bi bi-people-fill me-3"></i>{% trans "Kişiler" %}
-                    </h1>
-                    <p class="lead mb-4">{% trans "Tarihi ve kültürel kişilikleri keşfedin, yeni kişiler ekleyin" %}</p>
-                    <div class="d-flex gap-3 flex-wrap" style="position: relative; z-index: 20;">
-                        <a href="{% url 'kisi_ekle' %}" class="btn btn-light btn-lg" style="position: relative; z-index: 30;">
-                            <i class="bi bi-plus-circle me-2"></i>{% trans "Yeni Kişi Ekle" %}
-                        </a>
-                        <button class="btn btn-outline-light btn-lg" onclick="focusSearch()" style="position: relative; z-index: 30;">
-                            <i class="bi bi-search me-2"></i>Kes Lêbigere
-                        </button>
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <i class="bi bi-people-fill"></i>
+                            {% trans "Kişiler" %}
+                        </h1>
+                        <p class="hero-subtitle">{% trans "Tarihi ve kültürel kişilikleri keşfedin, yeni kişiler ekleyin" %}</p>
+                        <div class="hero-actions">
+                            <a href="{% url 'kisi_ekle' %}" class="hero-btn hero-btn-primary">
+                                <i class="bi bi-plus-circle"></i>
+                                {% trans "Yeni Kişi Ekle" %}
+                            </a>
+                            <button class="hero-btn hero-btn-outline" onclick="focusSearch()">
+                                <i class="bi bi-search"></i>
+                                Kes Lêbigere
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 text-center">
-                    <div class="stats-card bg-white bg-opacity-10 rounded-4 p-4" style="position: relative; z-index: 20;">
-                        <h3 class="h2 mb-2">{{ kisiler.count|default:"0" }}</h3>
-                        <p class="mb-0">{% trans "Kişi Sayısı" %}</p>
+                <div class="col-lg-4">
+                    <div class="hero-stats">
+                        <div class="hero-stats-number">{{ kisiler.count|default:"0" }}</div>
+                        <p class="hero-stats-label">{% trans "Kişi Sayısı" %}</p>
                     </div>
                 </div>
             </div>
@@ -233,4 +238,5 @@
 
 {% block extra_css %}
     <link href="{% static 'main/css/kisi.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/modern-headers.css' %}" rel="stylesheet">
 {% endblock %}

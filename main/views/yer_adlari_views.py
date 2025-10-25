@@ -18,13 +18,24 @@ def yer_adlari_anasayfa(request):
     if kategori:
         yer_adlari = yer_adlari.filter(kategori=kategori)
     
-    # Bölgelere göre gruplandırma
-    bolgeler = {
-        'bakur': yer_adlari.filter(bolge='bakur').order_by('ad'),
-        'basur': yer_adlari.filter(bolge='basur').order_by('ad'),
-        'rojava': yer_adlari.filter(bolge='rojava').order_by('ad'),
-        'rojhilat': yer_adlari.filter(bolge='rojhilat').order_by('ad'),
-    }
+    def add_children_recursive(yer_list):
+        """Her yer için alt yerlerini recursive olarak ekle"""
+        for yer in yer_list:
+            children = yer_adlari.filter(parent=yer).order_by('kategori', 'ad')
+            yer.manual_children = list(children)
+            if children:
+                add_children_recursive(children)
+    
+    # Bölgelere göre gruplandırma ve recursive hiyerarşik yapı
+    bolgeler = {}
+    for bolge_key in ['bakur', 'basur', 'rojava', 'rojhilat']:
+        # Sadece il kategorisindeki yerleri al (ana yerler)
+        iller = yer_adlari.filter(bolge=bolge_key, kategori='il').order_by('ad')
+        
+        # Her il için recursive olarak tüm alt hiyerarşiyi oluştur
+        add_children_recursive(iller)
+        
+        bolgeler[bolge_key] = iller
     
     context = {
         'yer_adlari': yer_adlari,

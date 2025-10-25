@@ -77,6 +77,7 @@ urlpatterns = [
     path('kisi/liste/',views.kisi_liste, name='kisi_liste'),
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
     path('kisi/detay/<int:kisi_id>/', views.kisi_detay, name='kisi_detay'),
+    path('kisi/duzenle/<int:kisi_id>/', views.kisi_duzenle, name='kisi_duzenle'),
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
     
     path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
@@ -158,6 +159,7 @@ urlpatterns = [
     
     # Categories page
     path('kategoriler/', categories_views.categories_view, name='categories_page'),
+    path('kategoriler/load-content/', categories_views.get_recent_content, name='load_recent_content'),
     
     # Follow URLs
     path('follow/<str:username>/', follow_views.toggle_follow, name='toggle_follow'),

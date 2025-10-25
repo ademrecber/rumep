@@ -405,22 +405,69 @@ class Kategori(models.Model):
         return self.ad
 
 class Kisi(models.Model):
+    KISI_TURU_CHOICES = [
+        ('kisi', _('Kişi')),
+        ('grup', _('Grup/Topluluk')),
+        ('kurum', _('Kurum/Organizasyon')),
+    ]
+    
+    CINSIYET_CHOICES = [
+        ('erkek', _('Erkek')),
+        ('kadin', _('Kadın')),
+        ('belirtilmemis', _('Belirtilmemiş')),
+    ]
+    
     ad = models.CharField(max_length=100, db_index=True)
+    kisi_turu = models.CharField(
+        max_length=20,
+        choices=KISI_TURU_CHOICES,
+        default='kisi',
+        verbose_name=_('Kişi Türü')
+    )
     biyografi = models.TextField(max_length=20000)
     kategoriler = models.ManyToManyField(Kategori)
+    dogum_tarihi = models.DateField(null=True, blank=True, verbose_name=_('Doğum Tarihi'))
+    olum_tarihi = models.DateField(null=True, blank=True, verbose_name=_('Ölüm Tarihi'))
+    dogum_yeri_secim = models.ForeignKey('YerAdi', null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_('Doğum Yeri (Listeden Seç)'))
+    dogum_yeri_serbest = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Doğum Yeri (Serbest Metin)'))
+    cinsiyet = models.CharField(
+        max_length=20,
+        choices=CINSIYET_CHOICES,
+        default='belirtilmemis',
+        verbose_name=_('Cinsiyet')
+    )
+    meslek = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('Meslek/Alan'))
+    aktif_yillar = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Aktif Yıllar'))
+    website = models.URLField(blank=True, null=True, verbose_name=_('Website'))
+    instagram = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Instagram'))
+    twitter = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Twitter'))
+    youtube = models.URLField(blank=True, null=True, verbose_name=_('YouTube'))
+    bagli_grup = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, 
+                                   limit_choices_to={'kisi_turu__in': ['grup', 'kurum']}, 
+                                   related_name='uyeler', verbose_name=_('Bağlı Grup/Kurum'))
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ['ad']
-        verbose_name = _('Kişi')
-        verbose_name_plural = _('Kişiler')
+        verbose_name = _('Kişi/Grup')
+        verbose_name_plural = _('Kişiler/Gruplar')
 
     def clean(self):
         if not re.match(r'^[a-zçêîşû\s]+$', self.ad.lower()):
             raise ValidationError({'ad': _('Ad sadece Kürtçe harfleri içerebilir (a-z, ç, ê, î, ş, û ve boşluk).')})
         if not self.biyografi.strip():
             raise ValidationError({'biyografi': _('Biyografi alanı zorunludur.')})
+        if self.olum_tarihi and self.dogum_tarihi and self.olum_tarihi < self.dogum_tarihi:
+            raise ValidationError({'olum_tarihi': _('Ölüm tarihi doğum tarihinden önce olamaz.')})
+        if self.kisi_turu == 'grup' and self.cinsiyet != 'belirtilmemis':
+            self.cinsiyet = 'belirtilmemis'
+        if self.kisi_turu in ['grup', 'kurum'] and self.bagli_grup:
+            raise ValidationError({'bagli_grup': _('Grup ve kurumlar başka bir gruba bağlı olamaz.')})
+        if self.bagli_grup and self.bagli_grup.kisi_turu not in ['grup', 'kurum']:
+            raise ValidationError({'bagli_grup': _('Sadece grup ve kurumlara bağlı olabilirsiniz.')})
+        if self.dogum_yeri_secim and self.dogum_yeri_serbest:
+            raise ValidationError(_('Doğum yeri için hem listeden seçim hem de serbest metin kullanılamaz.'))
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -443,7 +490,37 @@ class Kisi(models.Model):
             pass
 
     def __str__(self):
-        return self.ad
+        return f"{self.ad} ({self.get_kisi_turu_display()})"
+    
+    def yas_hesapla(self):
+        """Yaşını hesapla"""
+        if not self.dogum_tarihi:
+            return None
+        from datetime import date
+        bugun = date.today()
+        bitis_tarihi = self.olum_tarihi or bugun
+        return bitis_tarihi.year - self.dogum_tarihi.year - ((bitis_tarihi.month, bitis_tarihi.day) < (self.dogum_tarihi.month, self.dogum_tarihi.day))
+    
+    def yasam_suresi(self):
+        """Yaşam süresini string olarak döndür"""
+        if self.dogum_tarihi:
+            yas = self.yas_hesapla()
+            if self.olum_tarihi:
+                return f"{yas} yaş (vefat etmiş)"
+            return f"{yas} yaş"
+        return "Bilinmiyor"
+    
+    def sosyal_medya_var_mi(self):
+        """Sosyal medya hesabı var mı?"""
+        return any([self.instagram, self.twitter, self.youtube, self.website])
+    
+    def dogum_yeri_display(self):
+        """Doğum yerini göster"""
+        if self.dogum_yeri_secim:
+            return self.dogum_yeri_secim.ad
+        elif self.dogum_yeri_serbest:
+            return self.dogum_yeri_serbest
+        return None
     
 class KisiDetay(models.Model):
     kisi = models.ForeignKey(Kisi, on_delete=models.CASCADE, related_name='detaylar')
@@ -505,68 +582,51 @@ class Album(models.Model):
     def diger_kullanicilarin_sarkilari_var_mi(self):
         return self.sarkilar.exclude(kullanici=self.kullanici).exists()
 
-class Sarki(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='sarkilar')
+class SarkiGrubu(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='sarki_gruplari')
     ad = models.CharField(max_length=100)
-    sozler = models.TextField(max_length=10000)
-    link = models.URLField(blank=True, null=True)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     eklenme_tarihi = models.DateTimeField(default=timezone.now)
-    tur = models.CharField(
-        max_length=50,
-        choices=[
-            ('pop', 'Pop'),
-            ('klasik', _('Klasik')),
-            ('arabesk', _('Arabesk')),
-            ('dengbej', _('Dengbej')),
-            ('halk', _('Halk Müziği')),
-            ('serbest', 'Serbest'),
-            ('rock', 'Rock'),
-            ('rap', 'Rap'),
-            ('hiphop', 'Hip Hop'),
-            ('caz', 'Caz'),
-            ('blues', 'Blues'),
-            ('metal', 'Metal'),
-            ('elektronik', _('Elektronik')),
-            ('tekno', 'Tekno'),
-            ('rnb', 'R&B'),
-            ('reggae', 'Reggae'),
-            ('tasavvuf', _('Dini Müzik')),
-            ('film', _('Film Müziği')),
-            ('çocuk', _('Çocuk Müziği')),
-            ('enstrümantal', _('Enstrümantal')),
-            ('deneysel', _('Deneysel')),
-        ],
-        blank=True,
-        verbose_name="Tür"
-    )
-
+    
     class Meta:
-        ordering = ['ad']
-        verbose_name = _('Şarkı')
-        verbose_name_plural = _('Şarkılar')
+        verbose_name = "Şarkı Grubu"
+        verbose_name_plural = "Şarkı Grupları"
+        unique_together = ('album', 'ad')
+    
+    def __str__(self):
+        return f"{self.album.ad} - {self.ad}"
+
+class Sarki(models.Model):
+    sarki_grubu = models.ForeignKey(SarkiGrubu, on_delete=models.CASCADE, related_name='dil_versiyonlari', null=True, blank=True)
+    dil = models.CharField(
+        max_length=10,
+        choices=[
+            ('ku', 'Kürtçe'),
+            ('tr', 'Türkçe'),
+            ('en', 'İngilizce'),
+            ('ar', 'Arapça'),
+            ('fa', 'Farsça'),
+        ],
+        default='ku',
+        verbose_name="Dil"
+    )
+    sozler = models.TextField(max_length=10000)
 
     def clean(self):
-        if not self.ad.strip():
-            raise ValidationError({'ad': _('Şarkı adı zorunludur.')})
         if not self.sozler.strip():
             raise ValidationError({'sozler': _('Şarkı sözleri zorunludur.')})
 
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-        from django.conf import settings
-        Katki.objects.create(
-            user=self.kullanici,
-            tur='sarki',
-            icerik_id=self.id,
-            puan=settings.KATKI_PUANLARI['sarki']
-        )
-        self.kullanici.profile.katki_puani += settings.KATKI_PUANLARI['sarki']
-        self.kullanici.profile.save()
 
     def __str__(self):
-        return f"{self.album.ad} - {self.ad}"
+        return f"{self.sarki_grubu.ad} - {self.get_dil_display()}"
+    
+    class Meta:
+        verbose_name = _('Şarkı')
+        verbose_name_plural = _('Şarkılar')
+        unique_together = ('sarki_grubu', 'dil')
 
 class SarkiDetay(models.Model):
     sarki = models.ForeignKey(Sarki, on_delete=models.CASCADE, related_name='detaylar')
@@ -580,7 +640,7 @@ class SarkiDetay(models.Model):
         verbose_name_plural = _('Şarkı Detayları')
 
     def __str__(self):
-        return f"{self.sarki.ad} - {self.detay[:50]}"
+        return f"{self.sarki.sarki_grubu.ad} - {self.detay[:50]}"
 
 class Atasozu(models.Model):
     kelime = models.CharField(max_length=500, db_index=True, unique=True)

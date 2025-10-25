@@ -1,0 +1,32 @@
+{% if yer.manual_children %}
+<div class="sub-places" style="margin-left: {{ level|add:0 }}0px;">
+    <button class="btn btn-sm btn-outline-secondary w-100" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#sub-places-{{ yer.id }}" 
+            aria-expanded="false">
+        <i class="bi bi-chevron-down me-1"></i>
+        Alt Yerler
+        <span class="badge bg-secondary ms-2">{{ yer.manual_children|length }}</span>
+    </button>
+    <div class="collapse mt-2" id="sub-places-{{ yer.id }}">
+        {% for alt_yer in yer.manual_children %}
+            <div class="sub-place-item mb-2">
+                <div class="sub-place-chip">
+                    <a href="{% url 'yer_adi_detay' alt_yer.id %}" class="chip-link">
+                        <span class="chip-icon">
+                            {% if alt_yer.kategori == 'ilce' %}İ
+                            {% elif alt_yer.kategori == 'belde' %}B
+                            {% elif alt_yer.kategori == 'koy' %}K
+                            {% elif alt_yer.kategori == 'kasaba' %}Ka
+                            {% else %}Y{% endif %}
+                        </span>
+                        <span class="chip-text">{{ alt_yer.ad }}</span>
+                    </a>
+                </div>
+                {% include 'main/yer_adlari/recursive_places.html' with yer=alt_yer level=level|add:1 %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

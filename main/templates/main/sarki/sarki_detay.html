@@ -17,31 +17,29 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{% url 'sarki_album_liste' sarki.album.kisi.id %}" class="text-white text-decoration-none">
-                                    {{ sarki.album.kisi.ad }}
+                                <a href="{% url 'sarki_album_liste' sarki.sarki_grubu.album.kisi.id %}" class="text-white text-decoration-none">
+                                    {{ sarki.sarki_grubu.album.kisi.ad }}
                                 </a>
                             </li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">{{ sarki.ad }}</li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">{{ sarki.sarki_grubu.ad }}</li>
                         </ol>
                     </nav>
                     
-                    <h1 class="display-4 fw-bold mb-3">{{ sarki.ad }}</h1>
+                    <h1 class="display-4 fw-bold mb-3">{{ sarki.sarki_grubu.ad }} <small class="text-white-50">({{ sarki.get_dil_display }})</small></h1>
                     
                     <div class="song-badges mb-4">
                         <span class="badge bg-light text-dark fs-6 me-2">
-                            <i class="bi bi-disc me-1"></i>{{ sarki.album.ad }}
+                            <i class="bi bi-disc me-1"></i>{{ sarki.sarki_grubu.album.ad }}
                         </span>
-                        {% if sarki.tur %}
-                            <span class="badge bg-light text-dark fs-6 me-2">
-                                <i class="bi bi-music-note me-1"></i>{{ sarki.tur|capfirst }}
-                            </span>
-                        {% endif %}
+                        <span class="badge bg-light text-dark fs-6 me-2">
+                            <i class="bi bi-translate me-1"></i>{{ sarki.get_dil_display }}
+                        </span>
                         <span class="badge bg-light text-dark fs-6">
-                            <i class="bi bi-person me-1"></i>{{ sarki.album.kisi.ad }}
+                            <i class="bi bi-person me-1"></i>{{ sarki.sarki_grubu.album.kisi.ad }}
                         </span>
                     </div>
                     
-                    {% if sarki.kullanici == user %}
+                    {% if sarki.sarki_grubu.kullanici == user %}
                         <div class="owner-actions d-flex gap-3">
                             <button class="btn btn-light btn-lg sarki-duzenle-btn" 
                                     data-sarki-id="{{ sarki.id }}"
@@ -95,13 +93,7 @@
                         <div class="lyrics-content bg-light rounded p-4">
                             <div class="lyrics-text">{{ sarki.sozler|linebreaks }}</div>
                         </div>
-                        {% if sarki.link %}
-                            <div class="mt-3">
-                                <a href="{{ sarki.link }}" target="_blank" class="btn btn-outline-primary">
-                                    <i class="bi bi-play-circle me-2"></i>Stranê Bibihîze
-                                </a>
-                            </div>
-                        {% endif %}
+
                     </div>
                 </div>
 
@@ -155,6 +147,28 @@
             
             <!-- Yan Panel -->
             <div class="col-lg-4">
+                <!-- Diğer Dil Versiyonları -->
+                {% if sarki.sarki_grubu.dil_versiyonlari.count > 1 %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0">
+                            <i class="bi bi-translate me-2"></i>Diğer Dil Versiyonları
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        {% for dil_sarki in sarki.sarki_grubu.dil_versiyonlari.all %}
+                            {% if dil_sarki.id != sarki.id %}
+                            <div class="d-grid mb-2">
+                                <a href="{% url 'sarki_detay' dil_sarki.id %}" class="btn btn-outline-success">
+                                    <i class="bi bi-music-note me-2"></i>{{ dil_sarki.get_dil_display }} Sözleri
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
                 <!-- Şarkı Bilgileri -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
@@ -165,43 +179,34 @@
                     <div class="card-body">
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">{% trans "Şarkı Adı" %}</strong>
-                            <span class="fs-5 fw-bold">{{ sarki.ad }}</span>
+                            <span class="fs-5 fw-bold">{{ sarki.sarki_grubu.ad }}</span>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Dil</strong>
+                            <span class="badge bg-primary">{{ sarki.get_dil_display }}</span>
                         </div>
                         
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">{% trans "Sanatçı" %}</strong>
-                            <a href="{% url 'sarki_album_liste' sarki.album.kisi.id %}" class="text-decoration-none">
-                                {{ sarki.album.kisi.ad }}
+                            <a href="{% url 'sarki_album_liste' sarki.sarki_grubu.album.kisi.id %}" class="text-decoration-none">
+                                {{ sarki.sarki_grubu.album.kisi.ad }}
                             </a>
                         </div>
                         
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">{% trans "Albüm" %}</strong>
-                            <span>{{ sarki.album.ad }}</span>
+                            <span>{{ sarki.sarki_grubu.album.ad }}</span>
                         </div>
                         
-                        {% if sarki.tur %}
-                            <div class="info-item mb-3">
-                                <strong class="text-muted d-block mb-1">Cure</strong>
-                                <span class="badge bg-primary-subtle text-primary">
-                                    {{ sarki.tur|capfirst }}
-                                </span>
-                            </div>
-                        {% endif %}
+
                         
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">Zêdeker</strong>
-                            <span>{{ sarki.kullanici.username }}</span>
+                            <span>{{ sarki.sarki_grubu.kullanici.username }}</span>
                         </div>
                         
-                        {% if sarki.link %}
-                            <div class="info-item">
-                                <strong class="text-muted d-block mb-2">Bibihîze</strong>
-                                <a href="{{ sarki.link }}" target="_blank" class="btn btn-outline-primary btn-sm w-100">
-                                    <i class="bi bi-play-circle me-2"></i>Stranê Bibihîze
-                                </a>
-                            </div>
-                        {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -292,20 +297,8 @@
                 <form id="sarki-duzenle-form">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="sarki-duzenle-ad" class="form-label">Navê Stranê</label>
-                        <input type="text" id="sarki-duzenle-ad" name="ad" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="sarki-duzenle-sozler" class="form-label">Gotinên Stranê</label>
+                        <label for="sarki-duzenle-sozler" class="form-label">{{ sarki.get_dil_display }} Sözleri</label>
                         <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="6" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="sarki-duzenle-link" class="form-label">Girêdana Stranê (Bijarte)</label>
-                        <input type="url" id="sarki-duzenle-link" name="link" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="sarki-duzenle-tur" class="form-label">Cure (Bijarte)</label>
-                        {{ sarki_form.tur }}
                     </div>
                     <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
@@ -318,17 +311,47 @@
     <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
 {% endblock %}
 {% block extra_scripts %}
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_actions.js' %}"></script>
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_album_actions.js' %}"></script>
-    <script type="module" src="{% static 'main/js/modules/sarki/sarki_edit_actions.js' %}"></script>
-    <script type="module">
-        import { initSarkiActions } from "{% static 'main/js/modules/sarki/sarki_actions.js' %}";
-        import { initSarkiAlbumActions } from "{% static 'main/js/modules/sarki/sarki_album_actions.js' %}";
-        import { initSarkiEditActions } from "{% static 'main/js/modules/sarki/sarki_edit_actions.js' %}";
-        document.addEventListener('DOMContentLoaded', () => {
-            initSarkiActions();
-            initSarkiAlbumActions();
-            initSarkiEditActions();
+    <script>
+        // Şarkı düzenle
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('sarki-duzenle-btn')) {
+                const sarkiId = e.target.dataset.sarkiId;
+                const urlDuzenle = e.target.dataset.urlDuzenle;
+                
+                fetch(urlDuzenle)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('sarki-duzenle-sozler').value = data.data.sozler;
+                            new bootstrap.Modal(document.getElementById('sarkiDuzenleModal')).show();
+                        }
+                    })
+                    .catch(error => console.error('Hata:', error));
+            }
+        });
+        
+        // Form submit
+        document.getElementById('sarki-duzenle-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const sarkiId = document.querySelector('.sarki-duzenle-btn').dataset.sarkiId;
+            
+            fetch(`/sarki/duzenle/${sarkiId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Hata oluştu');
+                }
+            })
+            .catch(error => console.error('Hata:', error));
         });
     </script>
 {% endblock %}

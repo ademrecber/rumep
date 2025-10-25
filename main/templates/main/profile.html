@@ -123,6 +123,10 @@
                 <i class="bi bi-bookmark"></i>
                 <span>{% trans "Kaydedilenler" %}</span>
             </a>
+            <a class="tab-item {% if tab == 'contributions' %}active{% endif %}" href="{% url 'profile' %}?tab=contributions">
+                <i class="bi bi-plus-circle"></i>
+                <span>{% trans "Katkılar" %}</span>
+            </a>
         </div>
     </div>
 
@@ -331,6 +335,151 @@
                     </div>
                 {% endfor %}
             </div>
+        </div>
+        {% elif tab == 'contributions' %}
+        <!-- Katkılar -->
+        <div class="content-section">
+            <div class="accordion" id="contributionsAccordion">
+                <!-- Sözlük -->
+                {% if sozluk_items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sozluk-collapse">
+                            <i class="bi bi-book text-primary me-2"></i>Ferheng
+                            <span class="badge bg-primary ms-2">{{ sozluk_items.count }}</span>
+                        </button>
+                    </h2>
+                    <div id="sozluk-collapse" class="accordion-collapse collapse" data-bs-parent="#contributionsAccordion">
+                        <div class="accordion-body">
+                            {% for item in sozluk_items %}
+                            <div class="contribution-item">
+                                <a href="/sozluk/kelime/{{ item.id }}/" class="item-title">{{ item.kelime }}</a>
+                                <div class="item-meta">
+                                    <i class="bi bi-clock"></i>
+                                    {{ item.eklenme_tarihi|date:"d.m.Y" }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Kişiler -->
+                {% if kisi_items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kisi-collapse">
+                            <i class="bi bi-people text-success me-2"></i>Kes
+                            <span class="badge bg-success ms-2">{{ kisi_items.count }}</span>
+                        </button>
+                    </h2>
+                    <div id="kisi-collapse" class="accordion-collapse collapse" data-bs-parent="#contributionsAccordion">
+                        <div class="accordion-body">
+                            {% for item in kisi_items %}
+                            <div class="contribution-item">
+                                <a href="/kisi/detay/{{ item.id }}/" class="item-title">{{ item.ad }}</a>
+                                <div class="item-meta">
+                                    <i class="bi bi-clock"></i>
+                                    {{ item.eklenme_tarihi|date:"d.m.Y" }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Şarkı Sözleri -->
+                {% if sarki_items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sarki-collapse">
+                            <i class="bi bi-music-note-list text-info me-2"></i>Gotinên Stranan
+                            <span class="badge bg-info ms-2">{{ sarki_items.count }}</span>
+                        </button>
+                    </h2>
+                    <div id="sarki-collapse" class="accordion-collapse collapse" data-bs-parent="#contributionsAccordion">
+                        <div class="accordion-body">
+                            {% for item in sarki_items %}
+                            <div class="contribution-item">
+                                <a href="/sarki/detay/{{ item.id }}/" class="item-title">{{ item.sarki_grubu.ad }}</a>
+                                <div class="item-meta">
+                                    <i class="bi bi-person"></i>
+                                    {{ item.sarki_grubu.album.kisi.ad }}
+                                    <span class="ms-2">
+                                        <i class="bi bi-clock"></i>
+                                        {{ item.sarki_grubu.eklenme_tarihi|date:"d.m.Y" }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Atasözleri -->
+                {% if atasozu_items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#atasozu-collapse">
+                            <i class="bi bi-quote text-warning me-2"></i>Gotinên Pêşiyan
+                            <span class="badge bg-warning ms-2">{{ atasozu_items.count }}</span>
+                        </button>
+                    </h2>
+                    <div id="atasozu-collapse" class="accordion-collapse collapse" data-bs-parent="#contributionsAccordion">
+                        <div class="accordion-body">
+                            {% for item in atasozu_items %}
+                            <div class="contribution-item">
+                                <a href="/atasozu-deyim/atasozu/{{ item.id }}/" class="item-title">{{ item.kelime|truncatechars:50 }}</a>
+                                <div class="item-meta">
+                                    <i class="bi bi-clock"></i>
+                                    {{ item.eklenme_tarihi|date:"d.m.Y" }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Yer Adları -->
+                {% if yer_adi_items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#yer-collapse">
+                            <i class="bi bi-geo-alt text-danger me-2"></i>Navên Cîhan
+                            <span class="badge bg-danger ms-2">{{ yer_adi_items.count }}</span>
+                        </button>
+                    </h2>
+                    <div id="yer-collapse" class="accordion-collapse collapse" data-bs-parent="#contributionsAccordion">
+                        <div class="accordion-body">
+                            {% for item in yer_adi_items %}
+                            <div class="contribution-item">
+                                <a href="/yer-adi/{{ item.id }}/" class="item-title">{{ item.ad }}</a>
+                                <div class="item-meta">
+                                    <i class="bi bi-geo-alt"></i>
+                                    {{ item.get_bolge_display }}
+                                    <span class="ms-2">
+                                        <i class="bi bi-clock"></i>
+                                        {{ item.eklenme_tarihi|date:"d.m.Y" }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if not sozluk_items and not kisi_items and not sarki_items and not atasozu_items and not yer_adi_items %}
+            <div class="empty-state">
+                <i class="bi bi-plus-circle"></i>
+                <p>{% trans "Henüz hiçbir katkıda bulunmamışsınız." %}</p>
+            </div>
+            {% endif %}
         </div>
     </div>
         {% else %}
