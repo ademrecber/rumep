@@ -82,8 +82,9 @@ urlpatterns = [
 
     path('kisi/<path:kisi_adi>/', views.kisi_detay_seo, name='kisi_detay_seo'),
     path('kisi/<path:kisi_adi>/duzenle/', views.kisi_duzenle_seo, name='kisi_duzenle_seo'),
+    path('kisi/<path:kisi_adi>/sil/', views.kisi_sil_seo, name='kisi_sil_seo'),
 
-    path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
+
     
     path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
     path('kisi/detay-sil/<int:detay_id>/', views.kisi_detay_sil, name='kisi_detay_sil'),

@@ -142,3 +142,20 @@ def kisi_duzenle_seo(request, kisi_adi):
         'form': form,
         'kisi': kisi
     })
+
+@login_required
+@csrf_protect
+def kisi_sil_seo(request, kisi_adi):
+    from urllib.parse import unquote
+    from django.http import JsonResponse
+    kisi_adi = unquote(kisi_adi)
+    kisi_adi = kisi_adi.replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
+    if kisi.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Yetkiniz yok'}, status=403)
+    
+    if request.method == 'POST':
+        kisi.delete()
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False, 'error': 'Geçersiz istek'}, status=400)

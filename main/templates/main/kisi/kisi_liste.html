@@ -214,7 +214,8 @@
                 
                 const kisiId = this.dataset.kisiId;
                 try {
-                    const response = await fetch(`/kisi/sil/${kisiId}/`, {
+                    const kisiAdi = btn.closest('.kisi-card').querySelector('.kisi-name').textContent.trim().replace(' ', '-');
+                    const response = await fetch(`/kisi/${kisiAdi}/sil/`, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',

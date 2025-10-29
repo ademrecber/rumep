@@ -351,14 +351,12 @@
 {% block extra_scripts %}
     <script type="module">
         document.addEventListener('DOMContentLoaded', () => {
-            initDetayEkleForm();
-            initEditDetayForm();
             const deleteBtn = document.querySelector('.delete-kisi-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', async () => {
                     if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
                     try {
-                        const response = await fetch(`/kisi/sil/${deleteBtn.dataset.kisiId}/`, {
+                        const response = await fetch(`/kisi/{{ kisi.ad|url_safe }}/sil/`, {
                             method: 'POST',
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
