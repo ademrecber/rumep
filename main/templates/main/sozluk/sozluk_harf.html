@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{{ harf|upper }} {% trans "Harfi" %} - {% trans "Kürtçe Sözlük" %}{% endblock %}
 {% block extra_head %}
     <meta name="csrf-token" content="{% csrf_token %}">
@@ -50,7 +51,7 @@
                 {% for kelime in kelimeler %}
                     <div class="kelime-item mb-2" data-kelime-id="{{ kelime.id }}">
                         <div class="d-flex justify-content-between align-items-start">
-                            <a href="{% url 'sozluk_kelime' kelime.id %}" class="text-decoration-none">
+                            <a href="{% url 'sozluk_kelime_seo' kelime.kelime|url_safe %}" class="text-decoration-none">
                                 <strong>{{ kelime.kelime }}</strong>
                                 <p class="text-muted small">{{ kelime.detay|truncatechars:100 }}</p>
                             </a>

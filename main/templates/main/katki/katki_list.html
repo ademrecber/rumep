@@ -28,9 +28,9 @@
                                 {% if katki.tur == 'sarki' %}
                                     <p><i class="bi bi-music-note"></i> Vî bikarhênerî gotinên strana nû zêde kir: 
                                     {% if katki.sarki %}
-                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad katki.sarki.dil %}">{{ katki.sarki.sarki_grubu.ad }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad %}">{{ katki.sarki.sarki_grubu.ad }}</a>
                                     {% else %}
-                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad katki.sarki.dil %}">Stran #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad %}">Stran #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'kisi' %}
@@ -44,9 +44,9 @@
                                 {% elif katki.tur == 'sozluk' %}
                                     <p><i class="bi bi-book"></i> Vî bikarhênerî peyveke ferhengê nû zêde kir: 
                                     {% if katki.sozluk %}
-                                        <a href="{% url 'sozluk_kelime' katki.icerik_id %}">{{ katki.sozluk.kelime }}</a>
+                                        <a href="{% url 'sozluk_kelime_seo' katki.sozluk.kelime|url_safe %}">{{ katki.sozluk.kelime }}</a>
                                     {% else %}
-                                        <a href="{% url 'sozluk_kelime' katki.icerik_id %}">Peyv #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'sozluk_kelime_seo' katki.sozluk.kelime|url_safe %}">Peyv #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'atasozu' %}

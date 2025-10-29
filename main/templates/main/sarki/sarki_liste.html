@@ -63,7 +63,7 @@
                     
                     <div class="song-languages">
                         {% for sarki in sarki_grubu.dil_versiyonlari.all %}
-                            <a href="{% url 'sarki_detay_seo' sarki.sarki_grubu.ad|url_safe sarki.dil %}" class="language-chip">
+                            <a href="{% url 'sarki_detay_seo' sarki.sarki_grubu.ad|url_safe %}" class="language-chip">
                                 <i class="bi bi-play-circle"></i>
                                 <span>{{ sarki.get_dil_display }}</span>
                             </a>

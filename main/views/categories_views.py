@@ -82,7 +82,7 @@ def get_recent_content(request):
             'category_url': 'sozluk_ana_sayfa',
             'icon': 'bi-book',
             'color': '#667eea',
-            'url': f'/sozluk/kelime/{item.id}/'
+            'url': f'/sozluk/{item.kelime.replace(" ", "-")}/'
         })
     
     # Kisi
@@ -100,7 +100,7 @@ def get_recent_content(request):
             'category_url': 'kisi_liste',
             'icon': 'bi-people',
             'color': '#764ba2',
-            'url': f'/kisi/detay/{item.id}/'
+            'url': f'/kisi/{item.ad.replace(" ", "-")}/'
         })
     
     # Sarki
@@ -118,7 +118,7 @@ def get_recent_content(request):
             'category_url': 'sarki_sozleri',
             'icon': 'bi-music-note-list',
             'color': '#f093fb',
-            'url': f'/sarki/detay/{item.id}/'
+            'url': f'/sarki/{item.sarki_grubu.ad.replace(" ", "-")}/'
         })
     
     # Atasozu
@@ -135,7 +135,24 @@ def get_recent_content(request):
             'category_url': 'atasozu_deyim',
             'icon': 'bi-quote',
             'color': '#f5576c',
-            'url': f'/atasozu-deyim/atasozu/{item.id}/'
+            'url': f'/atasozu/{item.kelime.replace(" ", "-")}/'
+        })
+    
+    # Deyim
+    for item in Deyim.objects.order_by('-eklenme_tarihi'):
+        # Anlamından kesit
+        meaning = item.anlami[:60] + '...' if len(item.anlami) > 60 else item.anlami
+        all_items.append({
+            'type': 'deyim',
+            'title': item.kelime[:40] + '...' if len(item.kelime) > 40 else item.kelime,
+            'description': meaning,
+            'user': item.kullanici.profile.nickname,
+            'date': item.eklenme_tarihi,
+            'category_name': 'Îdîom',
+            'category_url': 'atasozu_deyim',
+            'icon': 'bi-quote',
+            'color': '#f5576c',
+            'url': f'/deyim/{item.kelime.replace(" ", "-")}/'
         })
     
     # Yer Adi
@@ -152,7 +169,7 @@ def get_recent_content(request):
             'category_url': 'yer_adlari_anasayfa',
             'icon': 'bi-geo-alt',
             'color': '#4facfe',
-            'url': f'/yer-adi/{item.id}/'
+            'url': f'/yer-adi/{item.ad.replace(" ", "-")}/'
         })
     
     # Tarihe göre sırala
