@@ -13,31 +13,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='atasozu',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
         migrations.AddField(
             model_name='deyim',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
         migrations.AddField(
             model_name='kisi',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
         migrations.AddField(
             model_name='sarki',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
         migrations.AddField(
             model_name='sozluk',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
         migrations.AddField(
             model_name='yeradi',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200),
+            field=models.SlugField(blank=True, null=True, max_length=200),
         ),
     ]

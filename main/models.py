@@ -330,7 +330,7 @@ class Profile(models.Model):
 
 class Sozluk(models.Model):
     kelime = models.CharField(max_length=50, db_index=True, unique=True)
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     detay = models.TextField(max_length=500)
     turkce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('Türkçe Karşılığı'))
     ingilizce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('İngilizce Karşılığı'))
@@ -427,7 +427,7 @@ class Kisi(models.Model):
     ]
     
     ad = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     kisi_turu = models.CharField(
         max_length=20,
         choices=KISI_TURU_CHOICES,
@@ -630,7 +630,7 @@ class Sarki(models.Model):
     )
     sozler = models.TextField(max_length=10000)
     link = models.URLField(blank=True, null=True, verbose_name=_('Şarkı Linki (YouTube, Spotify vs.)'))
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
 
     def clean(self):
         if not self.sozler.strip():
@@ -672,7 +672,7 @@ class SarkiDetay(models.Model):
 
 class Atasozu(models.Model):
     kelime = models.CharField(max_length=500, db_index=True, unique=True)
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     anlami = models.TextField(max_length=500)
     ornek = models.TextField(max_length=500, blank=True)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -716,7 +716,7 @@ class Atasozu(models.Model):
 
 class Deyim(models.Model):
     kelime = models.CharField(max_length=500, db_index=True, unique=True)
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     anlami = models.TextField(max_length=500)
     ornek = models.TextField(max_length=500, blank=True)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -855,7 +855,7 @@ class AIProviderConfig(models.Model):
   
 class YerAdi(models.Model):
     ad = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=200, blank=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True)
     detay = models.TextField(max_length=5000, blank=True)
     kategori = models.CharField(
         max_length=20,
