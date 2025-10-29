@@ -214,12 +214,12 @@
                 
                 const kisiId = this.dataset.kisiId;
                 try {
-                    const kisiAdi = btn.closest('.kisi-card').querySelector('.kisi-name').textContent.trim().replace(' ', '-');
+                    const kisiAdi = btn.closest('.kisi-item').querySelector('.person-title a').textContent.trim().replace(/ /g, '-');
                     const response = await fetch(`/kisi/${kisiAdi}/sil/`, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                            'X-CSRFToken': '{{ csrf_token }}'
                         }
                     });
                     const data = await response.json();

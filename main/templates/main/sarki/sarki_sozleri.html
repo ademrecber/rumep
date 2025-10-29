@@ -39,28 +39,18 @@
         <div class="search-section mb-4">
             <div class="card border-0 shadow-lg">
                 <div class="card-body p-4">
-                    <form id="sarki-arama-form" class="row g-3">
-                        <div class="col-lg-8">
-                            <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-search me-2"></i>Stranê Lêbigere
-                            </label>
-                            <input type="text" id="sarki-arama-input" class="form-control form-control-lg" 
+                    <div class="search-container">
+                        <div class="search-input-wrapper position-relative">
+                            <input type="text" id="search-input" class="form-control form-control-lg pe-5" 
                                    placeholder="Navê stranê, hunermend an gotinên wê lêbigere..." 
-                                   aria-label="Lêgerîn">
+                                   autocomplete="off">
+                            <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2" 
+                                    onclick="clearSearch()" id="clear-btn" style="display: none;">
+                                <i class="bi bi-x-circle text-muted"></i>
+                            </button>
                         </div>
-                        <div class="col-lg-4">
-                            <label class="form-label fw-semibold mb-2">
-                                <i class="bi bi-music-note me-2"></i>Cure
-                            </label>
-                            <select id="tur-filtre" class="form-select form-select-lg">
-                                <option value="">Hemû Cure</option>
-                                {% for tur in turler %}
-                                    <option value="{{ tur }}">{{ tur|capfirst }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </form>
-                    <div id="sarki-arama-sonuc" class="mt-3"></div>
+                        <div id="search-results" class="search-results mt-3" style="display: none;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,28 +143,82 @@
 {% endblock %}
 {% block extra_scripts %}
 <script>
+    let searchTimeout;
+    
     function focusSearch() {
-        document.getElementById('sarki-arama-input').focus();
+        document.getElementById('search-input').focus();
+    }
+    
+    function clearSearch() {
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-results').style.display = 'none';
+        document.getElementById('clear-btn').style.display = 'none';
+    }
+    
+    function performSearch(query) {
+        if (query.length < 2) {
+            document.getElementById('search-results').style.display = 'none';
+            return;
+        }
+        
+        fetch(`/sarki/ara/?q=${encodeURIComponent(query)}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            displaySearchResults(data.results);
+        })
+        .catch(error => {
+            console.error('Arama hatası:', error);
+        });
+    }
+    
+    function displaySearchResults(results) {
+        const resultsContainer = document.getElementById('search-results');
+        
+        if (results.length === 0) {
+            resultsContainer.innerHTML = '<div class="text-center py-3 text-muted">Encam nehat dîtin</div>';
+        } else {
+            resultsContainer.innerHTML = results.map(result => `
+                <div class="search-result-item p-3 border-bottom">
+                    <a href="${result.url}" class="text-decoration-none">
+                        <h6 class="mb-1 text-dark">${result.title}</h6>
+                        <p class="mb-0 text-muted small">${result.description}</p>
+                    </a>
+                </div>
+            `).join('');
+        }
+        
+        resultsContainer.style.display = 'block';
     }
     
     document.addEventListener('DOMContentLoaded', function() {
-        // Mevcut JavaScript modüllerini koruyoruz
-        try {
-            // Modül yükleme hatalarını yakalayalım
-        } catch (error) {
-            console.log('Çewtiya barkirina modûlê:', error);
-        }
-    });
-</script>
-<script type="module">
-    try {
-        const { initSarkiLoader } = await import("{% static 'main/js/modules/sarki/sarki_loader.js' %}");
-        const { initSarkiSearch } = await import("{% static 'main/js/modules/sarki/sarki_search.js' %}");
+        const searchInput = document.getElementById('search-input');
+        const clearBtn = document.getElementById('clear-btn');
         
-        initSarkiLoader();
-        initSarkiSearch();
-    } catch (error) {
-        console.log('Çewtiya barkirina modûlê:', error);
-    }
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            if (query.length > 0) {
+                clearBtn.style.display = 'block';
+            } else {
+                clearBtn.style.display = 'none';
+                document.getElementById('search-results').style.display = 'none';
+            }
+            
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(query);
+            }, 300);
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('search-results').style.display = 'none';
+            }
+        });
+    });
 </script>
 {% endblock %}

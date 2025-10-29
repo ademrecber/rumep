@@ -70,22 +70,36 @@ def sarki_kisi_ara(request):
 @csrf_protect
 def sarki_ara(request):
     query = request.GET.get('q', '').strip()
-    sarki_gruplari = SarkiGrubu.objects.all()
     
-    if query:
-        sarki_gruplari = sarki_gruplari.filter(
-            Q(ad__icontains=query) | Q(dil_versiyonlari__sozler__icontains=query)
-        ).distinct()
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        # AJAX isteği
+        sarki_gruplari = SarkiGrubu.objects.select_related('album__kisi').prefetch_related('dil_versiyonlari')
+        
+        if query:
+            sarki_gruplari = sarki_gruplari.filter(
+                Q(ad__icontains=query) | 
+                Q(dil_versiyonlari__sozler__icontains=query) |
+                Q(album__kisi__ad__icontains=query)
+            ).distinct()
+        
+        sarki_gruplari = sarki_gruplari.order_by('ad')[:50]
+        
+        results = []
+        for sarki_grubu in sarki_gruplari:
+            for sarki in sarki_grubu.dil_versiyonlari.all():
+                results.append({
+                    'title': sarki_grubu.ad,
+                    'description': f"{sarki_grubu.album.kisi.ad} - {sarki.get_dil_display()}",
+                    'url': f'/sarki/{sarki_grubu.ad.replace(" ", "-")}/',
+                    'category': 'Gotinên Stranan'
+                })
+        
+        return JsonResponse({'results': results[:20]})
     
-    sarki_gruplari = sarki_gruplari.order_by('ad')[:20]
-    data = [{
-        'id': sarki_grubu.id,
-        'ad': sarki_grubu.ad,
-        'album': sarki_grubu.album.ad,
-        'kisi': sarki_grubu.album.kisi.ad,
-        'dil_sayisi': sarki_grubu.dil_versiyonlari.count()
-    } for sarki_grubu in sarki_gruplari]
-    return JsonResponse({'sarki_gruplari': data})
+    # Normal sayfa isteği
+    return render(request, 'main/sarki/sarki_sozleri.html', {
+        'query': query
+    })
 
 @login_required
 @profile_required

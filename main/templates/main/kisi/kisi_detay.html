@@ -356,11 +356,12 @@
                 deleteBtn.addEventListener('click', async () => {
                     if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
                     try {
-                        const response = await fetch(`/kisi/{{ kisi.ad|url_safe }}/sil/`, {
+                        const kisiAdi = '{{ kisi.ad|url_safe }}';
+                        const response = await fetch(`/kisi/${kisiAdi}/sil/`, {
                             method: 'POST',
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
                             }
                         });
                         const data = await response.json();
