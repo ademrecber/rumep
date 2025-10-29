@@ -17,7 +17,7 @@
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{% url 'sarki_album_liste' album.kisi.id %}" class="text-white text-decoration-none">
+                                    <a href="{% url 'sarki_album_liste_seo' album.kisi.ad %}" class="text-white text-decoration-none">
                                         {{ album.kisi.ad }}
                                     </a>
                                 </li>
@@ -62,7 +62,7 @@
                     
                     <div class="song-languages">
                         {% for sarki in sarki_grubu.dil_versiyonlari.all %}
-                            <a href="{% url 'sarki_detay' sarki.id %}" class="language-chip">
+                            <a href="{% url 'sarki_detay_seo' sarki.ad sarki.dil %}" class="language-chip">
                                 <i class="bi bi-play-circle"></i>
                                 <span>{{ sarki.get_dil_display }}</span>
                             </a>

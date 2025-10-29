@@ -422,3 +422,15 @@ def sarki_detay_seo(request, sarki_adi, dil):
         'dil_secenekleri': dil_secenekleri,
         'mevcut_diller': mevcut_diller
     })
+
+@login_required
+@csrf_protect
+def sarki_album_liste_seo(request, kisi_adi):
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi.replace('-', ' '))
+    albumler = Album.objects.filter(kisi=kisi).prefetch_related(
+        'sarki_gruplari__dil_versiyonlari'
+    ).order_by('ad')
+    return render(request, 'main/sarki/album_liste.html', {
+        'kisi': kisi,
+        'albumler': albumler
+    })

@@ -17,7 +17,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{% url 'sarki_album_liste' sarki.sarki_grubu.album.kisi.id %}" class="text-white text-decoration-none">
+                                <a href="{% url 'sarki_album_liste_seo' sarki.sarki_grubu.album.kisi.ad %}" class="text-white text-decoration-none">
                                     {{ sarki.sarki_grubu.album.kisi.ad }}
                                 </a>
                             </li>
@@ -162,7 +162,7 @@
                                         <i class="bi bi-check-circle me-2"></i>{{ dil_sarki.get_dil_display }} (Mevcut)
                                     </button>
                                 {% else %}
-                                    <a href="{% url 'sarki_detay' dil_sarki.id %}" class="btn btn-outline-success">
+                                    <a href="{% url 'sarki_detay_seo' dil_sarki.ad dil_sarki.dil %}" class="btn btn-outline-success">
                                         <i class="bi bi-music-note me-2"></i>{{ dil_sarki.get_dil_display }} Sözleri
                                     </a>
                                 {% endif %}
@@ -201,7 +201,7 @@
                         
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">{% trans "Sanatçı" %}</strong>
-                            <a href="{% url 'sarki_album_liste' sarki.sarki_grubu.album.kisi.id %}" class="text-decoration-none">
+                            <a href="{% url 'sarki_album_liste_seo' sarki.sarki_grubu.album.kisi.ad %}" class="text-decoration-none">
                                 {{ sarki.sarki_grubu.album.kisi.ad }}
                             </a>
                         </div>

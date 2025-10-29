@@ -18,7 +18,7 @@
                             </li>
                             {% if yer_adi.parent %}
                                 <li class="breadcrumb-item">
-                                    <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}" class="text-white text-decoration-none">
+                                    <a href="{% url 'yer_adi_detay_seo' yer_adi.parent.ad %}" class="text-white text-decoration-none">
                                         {{ yer_adi.parent.ad }}
                                     </a>
                                 </li>
@@ -177,7 +177,7 @@
                         {% if yer_adi.parent %}
                             <div class="info-item mb-3">
                                 <strong class="text-muted d-block mb-1">{% trans "İlişkili Yer" %}</strong>
-                                <a href="{% url 'yer_adi_detay' yer_adi.parent.id %}" 
+                                <a href="{% url 'yer_adi_detay_seo' yer_adi.parent.ad %}" 
                                    class="text-decoration-none">
                                     {{ yer_adi.parent.ad }}
                                     <small class="text-muted">({{ yer_adi.parent.kategori|capfirst }})</small>
@@ -216,7 +216,7 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <h6 class="mb-1">
-                                            <a href="{% url 'yer_adi_detay' alt_yer.id %}" 
+                                            <a href="{% url 'yer_adi_detay_seo' alt_yer.ad %}" 
                                                class="text-decoration-none">
                                                 {{ alt_yer.ad }}
                                             </a>

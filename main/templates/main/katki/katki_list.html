@@ -28,17 +28,17 @@
                                 {% if katki.tur == 'sarki' %}
                                     <p><i class="bi bi-music-note"></i> Vî bikarhênerî gotinên strana nû zêde kir: 
                                     {% if katki.sarki %}
-                                        <a href="{% url 'sarki_detay' katki.icerik_id %}">{{ katki.sarki.ad }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.ad katki.sarki.dil %}">{{ katki.sarki.ad }}</a>
                                     {% else %}
-                                        <a href="{% url 'sarki_detay' katki.icerik_id %}">Stran #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.ad katki.sarki.dil %}">Stran #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'kisi' %}
                                     <p><i class="bi bi-person"></i> Vî bikarhênerî kesek nû zêde kir: 
                                     {% if katki.kisi %}
-                                        <a href="{% url 'kisi_detay' katki.icerik_id %}">{{ katki.kisi.ad }}</a>
+                                        <a href="{% url 'kisi_detay_seo' katki.kisi.ad %}">{{ katki.kisi.ad }}</a>
                                     {% else %}
-                                        <a href="{% url 'kisi_detay' katki.icerik_id %}">Kes #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'kisi_detay_seo' katki.kisi.ad %}">Kes #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'sozluk' %}
@@ -52,17 +52,17 @@
                                 {% elif katki.tur == 'atasozu' %}
                                     <p><i class="bi bi-quote"></i> Vî bikarhênerî gotineke pêşiyan nû zêde kir: 
                                     {% if katki.atasozu %}
-                                        <a href="{% url 'atasozu_deyim_detay' tur='atasozu' id=katki.icerik_id %}">{{ katki.atasozu.kelime }}</a>
+                                        <a href="{% url 'atasozu_detay_seo' katki.atasozu.kelime %}">{{ katki.atasozu.kelime }}</a>
                                     {% else %}
-                                        <a href="{% url 'atasozu_deyim_detay' tur='atasozu' id=katki.icerik_id %}">Gotina Pêşiyan #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'atasozu_detay_seo' katki.atasozu.kelime %}">Gotina Pêşiyan #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'deyim' %}
                                     <p><i class="bi bi-quote"></i> Vî bikarhênerî îdîomeke nû zêde kir: 
                                     {% if katki.deyim %}
-                                        <a href="{% url 'atasozu_deyim_detay' tur='deyim' id=katki.icerik_id %}">{{ katki.deyim.kelime }}</a>
+                                        <a href="{% url 'deyim_detay_seo' katki.deyim.kelime %}">{{ katki.deyim.kelime }}</a>
                                     {% else %}
-                                        <a href="{% url 'atasozu_deyim_detay' tur='deyim' id=katki.icerik_id %}">Îdîom #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'deyim_detay_seo' katki.deyim.kelime %}">Îdîom #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% endif %}

@@ -103,6 +103,7 @@ urlpatterns = [
     path('sarki/liste/<int:album_id>/', views.sarki_liste, name='sarki_liste'),
     path('sarki/detay/<int:sarki_id>/', views.sarki_detay, name='sarki_detay'),
     path('sarki/<str:sarki_adi>/<str:dil>/', sarki_views.sarki_detay_seo, name='sarki_detay_seo'),
+    path('sarki/album/<str:kisi_adi>/', sarki_views.sarki_album_liste_seo, name='sarki_album_liste_seo'),
     path('sarki/sil/<int:sarki_id>/', views.sarki_sil, name='sarki_sil'),
     path('sarki/ekle/', views.sarki_ekle, name='sarki_ekle'),
     path('sarki/album-sil/<int:album_id>/', views.sarki_album_sil, name='sarki_album_sil'),

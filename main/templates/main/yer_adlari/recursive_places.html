@@ -13,7 +13,7 @@
         {% for alt_yer in yer.manual_children %}
             <div class="sub-place-item mb-2">
                 <div class="sub-place-chip">
-                    <a href="{% url 'yer_adi_detay' alt_yer.id %}" class="chip-link">
+                    <a href="{% url 'yer_adi_detay_seo' alt_yer.ad %}" class="chip-link">
                         <span class="chip-icon">
                             {% if alt_yer.kategori == 'ilce' %}İ
                             {% elif alt_yer.kategori == 'belde' %}B
