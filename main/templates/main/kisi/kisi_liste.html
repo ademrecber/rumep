@@ -214,10 +214,20 @@
                 if (!confirm('Ma hûn ji vê kesê jêbirinê piştrast in?')) return;
                 
                 const kisiId = this.dataset.kisiId;
+                console.log('Delete button clicked, kisi ID:', kisiId);
+                console.log('Button element:', this);
+                
+                if (!kisiId) {
+                    alert('Kişi ID bulunamadı!');
+                    return;
+                }
+                
                 try {
                     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
-                    console.log('Silme isteği gönderiliyor, kişi ID:', kisiId);
-                    const response = await fetch(`/kisi/sil/${kisiId}/`, {
+                    const deleteUrl = `/kisi/sil/${kisiId}/`;
+                    console.log('Silme URL\'si:', deleteUrl);
+                    
+                    const response = await fetch(deleteUrl, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
