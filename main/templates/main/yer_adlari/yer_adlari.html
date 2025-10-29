@@ -204,7 +204,8 @@
                             </div>
                         </div>
                     {% endfor %}
-                {% empty %}
+                {% endfor %}
+                {% if not bolgeler %}
                     <div class="col-12">
                         <div class="text-center py-5">
                             <i class="bi bi-geo-alt display-1 text-muted mb-3"></i>
@@ -215,7 +216,7 @@
                             </a>
                         </div>
                     </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@
 {% block title %}{% trans "Kişiler" %} - Rumep{% endblock %}
 {% block page_header %}{% trans "Kişiler" %}{% endblock %}
 {% block content %}
+{% csrf_token %}
 <div class="container-fluid px-0">
     <!-- Modern Hero Section -->
     <div class="modern-hero">
@@ -215,16 +216,23 @@
                 const kisiId = this.dataset.kisiId;
                 try {
                     const kisiAdi = btn.closest('.kisi-item').querySelector('.person-title a').textContent.trim().replace(/ /g, '-');
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
                     const response = await fetch(`/kisi/${kisiAdi}/sil/`, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRFToken': '{{ csrf_token }}'
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
                         }
                     });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
                     const data = await response.json();
                     if (data.success) {
-                        location.reload();
+                        btn.closest('.kisi-item').remove();
                     } else {
                         alert(data.error || 'Di dema jêbirina kesê de çewtî çêbû.');
                     }
