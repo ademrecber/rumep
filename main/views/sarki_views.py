@@ -411,7 +411,8 @@ def sarki_yeni_dil_ekle(request):
 @csrf_protect
 def sarki_detay_seo(request, sarki_adi, dil):
     from urllib.parse import unquote
-    sarki_adi = unquote(sarki_adi).replace('-', ' ')
+    sarki_adi = unquote(sarki_adi)
+    sarki_adi = sarki_adi.replace('-', ' ')
     sarki_grubu = get_object_or_404(SarkiGrubu, ad__iexact=sarki_adi)
     sarki = get_object_or_404(Sarki, sarki_grubu=sarki_grubu, dil=dil)
     detaylar = sarki.detaylar.all()
@@ -428,7 +429,8 @@ def sarki_detay_seo(request, sarki_adi, dil):
 @csrf_protect
 def sarki_album_liste_seo(request, kisi_adi):
     from urllib.parse import unquote
-    kisi_adi = unquote(kisi_adi).replace('-', ' ')
+    kisi_adi = unquote(kisi_adi)
+    kisi_adi = kisi_adi.replace('-', ' ')
     kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
     albumler = Album.objects.filter(kisi=kisi).prefetch_related(
         'sarki_gruplari__dil_versiyonlari'
