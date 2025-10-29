@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0022_remove_profile_dark_mode'),
+        ('main', '0028_remove_kisi_dogum_yeri_kisi_dogum_yeri_secim_and_more'),
     ]
 
     operations = [
