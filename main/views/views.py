@@ -27,3 +27,51 @@ def privacy_policy(request):
 
 def terms_of_service(request):
     return render(request, 'main/terms.html')
+
+# SEO uyumlu slug view'ları
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
+from ..models import Kisi, Sozluk, Atasozu, Deyim
+
+@login_required
+@csrf_protect
+def kisi_detay_slug(request, slug):
+    kisi = get_object_or_404(Kisi, slug=slug)
+    detaylar = kisi.detaylar.all()
+    return render(request, 'main/kisi/kisi_detay.html', {
+        'kisi': kisi,
+        'detaylar': detaylar
+    })
+
+@login_required
+@csrf_protect
+def sozluk_kelime_slug(request, slug):
+    kelime = get_object_or_404(Sozluk, slug=slug)
+    detaylar = kelime.detaylar.all()
+    return render(request, 'main/sozluk/sozluk_kelime.html', {
+        'kelime': kelime,
+        'detaylar': detaylar
+    })
+
+@login_required
+@csrf_protect
+def atasozu_detay_slug(request, slug):
+    atasozu = get_object_or_404(Atasozu, slug=slug)
+    detaylar = atasozu.detaylar.all()
+    return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
+        'item': atasozu,
+        'detaylar': detaylar,
+        'tur': 'atasozu'
+    })
+
+@login_required
+@csrf_protect
+def deyim_detay_slug(request, slug):
+    deyim = get_object_or_404(Deyim, slug=slug)
+    detaylar = deyim.detaylar.all()
+    return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
+        'item': deyim,
+        'detaylar': detaylar,
+        'tur': 'deyim'
+    })

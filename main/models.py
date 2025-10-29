@@ -330,6 +330,7 @@ class Profile(models.Model):
 
 class Sozluk(models.Model):
     kelime = models.CharField(max_length=50, db_index=True, unique=True)
+    slug = models.SlugField(max_length=200, blank=True)
     detay = models.TextField(max_length=500)
     turkce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('Türkçe Karşılığı'))
     ingilizce_karsiligi = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('İngilizce Karşılığı'))
@@ -363,6 +364,14 @@ class Sozluk(models.Model):
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
+        if not self.slug:
+            base_slug = slugify(self.kelime)
+            slug = base_slug
+            counter = 1
+            while Sozluk.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
         from django.conf import settings
@@ -418,6 +427,7 @@ class Kisi(models.Model):
     ]
     
     ad = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=200, blank=True)
     kisi_turu = models.CharField(
         max_length=20,
         choices=KISI_TURU_CHOICES,
@@ -470,6 +480,14 @@ class Kisi(models.Model):
             raise ValidationError(_('Doğum yeri için hem listeden seçim hem de serbest metin kullanılamaz.'))
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.ad)
+            slug = base_slug
+            counter = 1
+            while Kisi.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
         from django.conf import settings
@@ -611,13 +629,22 @@ class Sarki(models.Model):
         verbose_name="Dil"
     )
     sozler = models.TextField(max_length=10000)
-    link = models.URLField(blank=True, null=True, verbose_name=_('Şarkı Linki (YouTube, Spotify vs.)')
+    link = models.URLField(blank=True, null=True, verbose_name=_('Şarkı Linki (YouTube, Spotify vs.)'))
+    slug = models.SlugField(max_length=200, blank=True)
 
     def clean(self):
         if not self.sozler.strip():
             raise ValidationError({'sozler': _('Şarkı sözleri zorunludur.')})
 
     def save(self, *args, **kwargs):
+        if not self.slug and self.sarki_grubu:
+            base_slug = slugify(f"{self.sarki_grubu.ad}-{self.get_dil_display()}")
+            slug = base_slug
+            counter = 1
+            while Sarki.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
 
@@ -645,6 +672,7 @@ class SarkiDetay(models.Model):
 
 class Atasozu(models.Model):
     kelime = models.CharField(max_length=500, db_index=True, unique=True)
+    slug = models.SlugField(max_length=200, blank=True)
     anlami = models.TextField(max_length=500)
     ornek = models.TextField(max_length=500, blank=True)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -663,6 +691,14 @@ class Atasozu(models.Model):
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
+        if not self.slug:
+            base_slug = slugify(self.kelime)
+            slug = base_slug
+            counter = 1
+            while Atasozu.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
         from django.conf import settings
@@ -680,6 +716,7 @@ class Atasozu(models.Model):
 
 class Deyim(models.Model):
     kelime = models.CharField(max_length=500, db_index=True, unique=True)
+    slug = models.SlugField(max_length=200, blank=True)
     anlami = models.TextField(max_length=500)
     ornek = models.TextField(max_length=500, blank=True)
     kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -698,6 +735,14 @@ class Deyim(models.Model):
 
     def save(self, *args, **kwargs):
         self.kelime = self.kelime.upper()
+        if not self.slug:
+            base_slug = slugify(self.kelime)
+            slug = base_slug
+            counter = 1
+            while Deyim.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
         from django.conf import settings
@@ -810,6 +855,7 @@ class AIProviderConfig(models.Model):
   
 class YerAdi(models.Model):
     ad = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=200, blank=True)
     detay = models.TextField(max_length=5000, blank=True)
     kategori = models.CharField(
         max_length=20,
@@ -861,6 +907,14 @@ class YerAdi(models.Model):
 
     def save(self, *args, **kwargs):
         self.ad = self.ad.upper()
+        if not self.slug:
+            base_slug = slugify(self.ad)
+            slug = base_slug
+            counter = 1
+            while YerAdi.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         self.full_clean()
         super().save(*args, **kwargs)
         from django.conf import settings

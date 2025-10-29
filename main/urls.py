@@ -60,6 +60,7 @@ urlpatterns = [
     path('sozluk/harf/<str:harf>/', views.sozluk_harf, name='sozluk_harf'),
     path('sozluk/harf-yukle/', views.sozluk_harf_yukle, name='sozluk_harf_yukle'),
     path('sozluk/kelime/<int:kelime_id>/', views.sozluk_kelime, name='sozluk_kelime'),
+    path('sozluk/<slug:slug>/', views.sozluk_kelime_slug, name='sozluk_kelime_slug'),
     path('sozluk/kelime-sil/<int:kelime_id>/', views.sozluk_kelime_sil, name='sozluk_kelime_sil'),
     path('sozluk/', views.sozluk_ana_sayfa, name='sozluk_ana_sayfa'),  
     path('sozluk/kelime-duzenle/<int:kelime_id>/', views.sozluk_kelime_duzenle, name='sozluk_kelime_duzenle'),
@@ -78,6 +79,7 @@ urlpatterns = [
     path('kisi/liste/',views.kisi_liste, name='kisi_liste'),
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
     path('kisi/detay/<int:kisi_id>/', views.kisi_detay, name='kisi_detay'),
+    path('kisi/<slug:slug>/', views.kisi_detay_slug, name='kisi_detay_slug'),
     path('kisi/duzenle/<int:kisi_id>/', views.kisi_duzenle, name='kisi_duzenle'),
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
     
@@ -100,6 +102,7 @@ urlpatterns = [
     path('sarki/album-liste/<int:kisi_id>/', views.sarki_album_liste, name='sarki_album_liste'),
     path('sarki/liste/<int:album_id>/', views.sarki_liste, name='sarki_liste'),
     path('sarki/detay/<int:sarki_id>/', views.sarki_detay, name='sarki_detay'),
+    path('sarki/<slug:slug>/', views.sarki_detay_slug, name='sarki_detay_slug'),
     path('sarki/sil/<int:sarki_id>/', views.sarki_sil, name='sarki_sil'),
     path('sarki/ekle/', views.sarki_ekle, name='sarki_ekle'),
     path('sarki/album-sil/<int:album_id>/', views.sarki_album_sil, name='sarki_album_sil'),
@@ -131,6 +134,8 @@ urlpatterns = [
     path('atasozu-deyim/<str:tur>/<int:id>/duzenle/', views.atasozu_deyim_duzenle, name='atasozu_deyim_duzenle'),
     # Daha genel URL’ler sona gelmeli
     path('atasozu-deyim/<str:tur>/<int:id>/', views.atasozu_deyim_detay, name='atasozu_deyim_detay'),
+    path('atasozu/<slug:slug>/', views.atasozu_detay_slug, name='atasozu_detay_slug'),
+    path('deyim/<slug:slug>/', views.deyim_detay_slug, name='deyim_detay_slug'),
     path('atasozu-deyim/', views.atasozu_deyim, name='atasozu_deyim'),
 
 
@@ -144,6 +149,7 @@ urlpatterns = [
     path('yer-adlari/', yer_adlari_views.yer_adlari_anasayfa, name='yer_adlari_anasayfa'),
     path('yer-adi/ekle/', yer_adlari_views.yer_adi_ekle, name='yer_adi_ekle'),
     path('yer-adi/<int:yer_adi_id>/', yer_adlari_views.yer_adi_detay, name='yer_adi_detay'),
+    path('yer-adi/<slug:slug>/', yer_adlari_views.yer_adi_detay_slug, name='yer_adi_detay_slug'),
     path('yer-adi/<int:yer_adi_id>/duzenle/', yer_adlari_views.yer_adi_duzenle, name='yer_adi_duzenle'),
     path('yer-adi/<int:yer_adi_id>/sil/', yer_adlari_views.yer_adi_sil, name='yer_adi_sil'),
     path('yer-adi-detay/<int:detay_id>/duzenle/', yer_adlari_views.yer_adi_detay_duzenle, name='yer_adi_detay_duzenle'),

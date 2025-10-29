@@ -406,3 +406,17 @@ def sarki_yeni_dil_ekle(request):
     
     logger.info(f"Yeni dil versiyonu eklendi: {sarki_grubu.ad} - {dil}, Kullanıcı: {request.user.username}")
     return JsonResponse({'success': True})
+
+@login_required
+@csrf_protect
+def sarki_detay_slug(request, slug):
+    sarki = get_object_or_404(Sarki, slug=slug)
+    detaylar = sarki.detaylar.all()
+    dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
+    mevcut_diller = list(sarki.sarki_grubu.dil_versiyonlari.values_list('dil', flat=True))
+    return render(request, 'main/sarki/sarki_detay.html', {
+        'sarki': sarki,
+        'detaylar': detaylar,
+        'dil_secenekleri': dil_secenekleri,
+        'mevcut_diller': mevcut_diller
+    })

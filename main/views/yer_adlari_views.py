@@ -199,3 +199,31 @@ def yer_adi_detay_sil(request, detay_id):
         detay.delete()
         return redirect('yer_adi_detay', yer_adi_id=yer_adi_id)
     return redirect('yer_adi_detay', yer_adi_id=detay.yer_adi.id)
+
+@csrf_protect
+def yer_adi_detay_slug(request, slug):
+    yer_adi = get_object_or_404(YerAdi, slug=slug)
+    detaylar = YerAdiDetay.objects.filter(yer_adi=yer_adi).order_by('-eklenme_tarihi')
+    
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login_page')
+        form = YerAdiDetayForm(request.POST)
+        if form.is_valid() and request.user != yer_adi.kullanici:
+            detay = form.save(commit=False)
+            detay.yer_adi = yer_adi
+            detay.kullanici = request.user
+            detay.detay = bleach.clean(detay.detay, tags=['p', 'b', 'i'], strip=True)
+            detay.save()
+            return redirect('yer_adi_detay_slug', slug=yer_adi.slug)
+    else:
+        form = YerAdiDetayForm()
+    
+    context = {
+        'yer_adi': yer_adi,
+        'detaylar': detaylar,
+        'form': form,
+        'is_owner': yer_adi.kullanici == request.user,
+        'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',
+    }
+    return render(request, 'main/yer_adlari/yer_adi_detay.html', context)
