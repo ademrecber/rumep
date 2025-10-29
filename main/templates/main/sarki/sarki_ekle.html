@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{% trans "Şarkı Sözleri Ekle" %} - Rumep{% endblock %}
 {% block content %}
 <div class="container twitter-container sarki-container">
@@ -23,7 +24,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h5>{{ kisi.ad }} {% trans "için Albüm Ekle" %}</h5>
-                <form id="album-ekle-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                <form id="album-ekle-form" method="post" action="{% url 'sarki_album_ekle_seo' kisi.ad|url_safe %}">
                     {% csrf_token %}
                     <input type="hidden" name="album_submit" value="1">
                     <div class="mb-3">
@@ -45,7 +46,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5>{{ kisi.ad }} {% trans "için Şarkı Oluştur" %}</h5>
-                    <form id="sarki-grup-form" method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                    <form id="sarki-grup-form" method="post" action="{% url 'sarki_ekle_seo' kisi.ad|url_safe %}">
                         {% csrf_token %}
                         <input type="hidden" name="sarki_grup_submit" value="1">
                         <div class="mb-3">
@@ -72,7 +73,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5>{{ sarki_grubu.ad }} - Dil Versiyonları</h5>
-                        <a href="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}" class="btn btn-outline-secondary btn-sm">Yeni Şarkı</a>
+                        <a href="{% url 'sarki_ekle_seo' kisi.ad|url_safe %}" class="btn btn-outline-secondary btn-sm">Yeni Şarkı</a>
                     </div>
                     <div class="language-buttons mb-3">
                         {% for dil_kod, dil_ad in dil_secenekleri %}
@@ -114,7 +115,7 @@
                         if (data.kisiler && data.kisiler.length > 0) {
                             let html = '<div class="list-group">';
                             data.kisiler.forEach(kisi => {
-                                html += `<a href="/sarki/ekle/?kisi_id=${kisi.id}" class="list-group-item list-group-item-action">
+                                html += `<a href="/sarki/ekle/${kisi.ad.replace(/ /g, '-')}/" class="list-group-item list-group-item-action">
                                     <strong>${kisi.ad}</strong> <span class="badge bg-secondary">${kisi.kisi_turu}</span><br>
                                     <small class="text-muted">${kisi.biyografi}</small>
                                 </a>`;
@@ -171,7 +172,7 @@
                         <button type="button" class="btn-close" onclick="closeDilForm('${dilKod}')"></button>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{% url 'sarki_ekle' %}?kisi_id={{ kisi.id }}">
+                        <form method="post" action="{% url 'sarki_ekle_seo' kisi.ad|url_safe %}">
                             {% csrf_token %}
                             <input type="hidden" name="sarki_submit" value="1">
                             <input type="hidden" name="sarki_grubu_id" value="{{ sarki_grubu.id }}">

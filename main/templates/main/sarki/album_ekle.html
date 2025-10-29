@@ -1,13 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{% trans "Albüm Ekle" %} - {{ kisi.ad }}{% endblock %}
 {% block content %}
 <div class="container twitter-container sarki-container">
     <h3>{{ kisi.ad }} {% trans "için Albüm Ekle" %}</h3>
     <div class="card mb-3">
         <div class="card-body">
-            <form id="album-ekle-form" method="post" action="{% url 'sarki_album_ekle' kisi.id %}">
+            <form id="album-ekle-form" method="post" action="{% url 'sarki_album_ekle_seo' kisi.ad|url_safe %}">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="id_ad" class="form-label">{% trans "Albüm Adı" %}</label>

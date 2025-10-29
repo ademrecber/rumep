@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{{ item.kelime }} - Rumep{% endblock %}
 {% block content %}
 <div class="container twitter-container atasozu-deyim-container">
@@ -14,7 +15,7 @@
                         <button class="btn btn-outline-primary btn-sm me-2" data-action="duzenle" data-tur="{{ tur }}" data-id="{{ item.id }}" title="{% trans 'Düzenle' %}">
                             <i class="bi bi-pencil"></i> {% trans "Düzenle" %}
                         </button>
-                        <form method="post" action="{% url 'atasozu_deyim_sil' tur=tur id=item.id %}" class="d-inline" id="sil-form" data-tur="{{ tur }}">
+                        <form method="post" action="{% if tur == 'atasozu' %}{% url 'atasozu_sil_seo' item.kelime|url_safe %}{% else %}{% url 'deyim_sil_seo' item.kelime|url_safe %}{% endif %}" class="d-inline" id="sil-form" data-tur="{{ tur }}">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-outline-danger btn-sm" title="{% trans 'Sil' %}">
                                 <i class="bi bi-trash"></i> {% trans "Sil" %}

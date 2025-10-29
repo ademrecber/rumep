@@ -467,3 +467,86 @@ def sarki_liste_seo(request, kisi_adi, album_adi):
         'album': album,
         'sarki_gruplari': sarki_gruplari
     })
+
+@login_required
+@profile_required
+def sarki_ekle_seo(request, kisi_adi):
+    from urllib.parse import unquote
+    kisi_adi = unquote(kisi_adi).replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
+    albumler = Album.objects.filter(kisi=kisi).order_by('ad')
+    
+    album_form = AlbumForm()
+    sarki_grup_form = SarkiGrubuForm()
+    sarki_grubu = None
+    dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
+    mevcut_diller = []
+    
+    # Eğer sarki_grubu_id varsa, mevcut şarkı grubunu al
+    sarki_grubu_id = request.GET.get('sarki_grubu_id')
+    if sarki_grubu_id:
+        sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
+        mevcut_diller = list(sarki_grubu.dil_versiyonlari.values_list('dil', flat=True))
+    
+    if request.method == 'POST':
+        if 'sarki_grup_submit' in request.POST:
+            album_id = request.POST.get('album')
+            ad = request.POST.get('ad')
+            if album_id and ad:
+                album = get_object_or_404(Album, id=album_id)
+                sarki_grubu = SarkiGrubu.objects.create(
+                    album=album,
+                    ad=ad,
+                    kullanici=request.user
+                )
+                return redirect('sarki_ekle_seo', kisi_adi=kisi.ad.replace(' ', '-'))
+        elif 'sarki_submit' in request.POST:
+            sarki_grubu_id = request.POST.get('sarki_grubu_id')
+            dil = request.POST.get('dil')
+            sozler = request.POST.get('sozler')
+            link = request.POST.get('link')
+            if sarki_grubu_id and dil and sozler:
+                sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
+                Sarki.objects.create(
+                    sarki_grubu=sarki_grubu,
+                    dil=dil,
+                    sozler=sozler,
+                    link=link if link else None
+                )
+                return redirect('sarki_ekle_seo', kisi_adi=kisi.ad.replace(' ', '-'))
+    
+    return render(request, 'main/sarki/sarki_ekle.html', {
+        'kisi': kisi,
+        'albumler': albumler,
+        'album_form': album_form,
+        'sarki_grup_form': sarki_grup_form,
+        'sarki_grubu': sarki_grubu,
+        'dil_secenekleri': dil_secenekleri,
+        'mevcut_diller': mevcut_diller
+    })
+
+@login_required
+@profile_required
+def sarki_album_ekle_seo(request, kisi_adi):
+    from urllib.parse import unquote
+    kisi_adi = unquote(kisi_adi).replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
+    album_form = AlbumForm()
+    
+    if request.method == 'POST':
+        album_form = AlbumForm(request.POST)
+        if album_form.is_valid():
+            album = album_form.save(commit=False)
+            album.kisi = kisi
+            album.kullanici = request.user
+            try:
+                album.save()
+                logger.info(f"Albüm eklendi: {album.ad}, Kullanıcı: {request.user.username}")
+                return redirect('sarki_ekle_seo', kisi_adi=kisi.ad.replace(' ', '-'))
+            except ValidationError as e:
+                return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    
+    return render(request, 'main/sarki/album_ekle.html', {
+        'kisi': kisi,
+        'album_form': album_form
+    })

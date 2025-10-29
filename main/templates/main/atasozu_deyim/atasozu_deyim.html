@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{% trans "Atasözü ve Deyimler" %} - Rumep{% endblock %}
 {% block page_header %}{% trans "Atasözü ve Deyimler" %}{% endblock %}
 {% block content %}
@@ -136,7 +137,7 @@
                                                                 </div>
                                                                 {% if item.kullanici == user %}
                                                                     <div class="item-actions ms-3">
-                                                                        <form method="post" action="{% url 'atasozu_deyim_sil' tur='deyim' id=item.id %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="deyim">
+                                                                        <form method="post" action="{% url 'deyim_sil_seo' item.kelime|url_safe %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="deyim">
                                                                             {% csrf_token %}
                                                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                                                 <i class="bi bi-trash"></i>
@@ -194,7 +195,7 @@
                                                                 </div>
                                                                 {% if item.kullanici == user %}
                                                                     <div class="item-actions ms-3">
-                                                                        <form method="post" action="{% url 'atasozu_deyim_sil' tur='atasozu' id=item.id %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="atasozu">
+                                                                        <form method="post" action="{% url 'atasozu_sil_seo' item.kelime|url_safe %}" class="d-inline" id="sil-form-{{ item.id }}" data-tur="atasozu">
                                                                             {% csrf_token %}
                                                                             <button type="submit" class="btn btn-sm btn-outline-danger">
                                                                                 <i class="bi bi-trash"></i>

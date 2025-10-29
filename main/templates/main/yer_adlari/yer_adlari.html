@@ -183,11 +183,11 @@
                                     
                                     {% if yer_adi.kullanici == user %}
                                         <div class="place-actions d-flex gap-2 mb-3">
-                                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" 
+                                            <a href="{% url 'yer_adi_duzenle_seo' yer_adi.ad|url_safe %}" 
                                                class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-pencil me-1"></i>{% trans "Düzenle" %}
                                             </a>
-                                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" 
+                                            <form method="post" action="{% url 'yer_adi_sil_seo' yer_adi.ad|url_safe %}" 
                                                   class="d-inline" 
                                                   onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
                                                 {% csrf_token %}

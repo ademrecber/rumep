@@ -3,6 +3,7 @@
 {% load post_tags %}
 {% load i18n %}
 {% load link_tags %}
+{% load url_filters %}
 {% block title %}{% trans "Profîl" %} - {{ profile.nickname }}{% endblock %}
 {% block page_header %}{% trans "Profil" %}{% endblock %}
 {% block content %}
@@ -353,7 +354,7 @@
                         <div class="accordion-body">
                             {% for item in sozluk_items %}
                             <div class="contribution-item">
-                                <a href="/sozluk/kelime/{{ item.id }}/" class="item-title">{{ item.kelime }}</a>
+                                <a href="{% url 'sozluk_kelime_seo' item.kelime|url_safe %}" class="item-title">{{ item.kelime }}</a>
                                 <div class="item-meta">
                                     <i class="bi bi-clock"></i>
                                     {{ item.eklenme_tarihi|date:"d.m.Y" }}
@@ -378,7 +379,7 @@
                         <div class="accordion-body">
                             {% for item in kisi_items %}
                             <div class="contribution-item">
-                                <a href="/kisi/detay/{{ item.id }}/" class="item-title">{{ item.ad }}</a>
+                                <a href="{% url 'kisi_detay_seo' item.ad|url_safe %}" class="item-title">{{ item.ad }}</a>
                                 <div class="item-meta">
                                     <i class="bi bi-clock"></i>
                                     {{ item.eklenme_tarihi|date:"d.m.Y" }}
@@ -403,7 +404,7 @@
                         <div class="accordion-body">
                             {% for item in sarki_items %}
                             <div class="contribution-item">
-                                <a href="/sarki/detay/{{ item.id }}/" class="item-title">{{ item.sarki_grubu.ad }}</a>
+                                <a href="{% url 'sarki_detay_seo' item.sarki_grubu.ad|url_safe %}" class="item-title">{{ item.sarki_grubu.ad }}</a>
                                 <div class="item-meta">
                                     <i class="bi bi-person"></i>
                                     {{ item.sarki_grubu.album.kisi.ad }}
@@ -432,7 +433,7 @@
                         <div class="accordion-body">
                             {% for item in atasozu_items %}
                             <div class="contribution-item">
-                                <a href="/atasozu-deyim/atasozu/{{ item.id }}/" class="item-title">{{ item.kelime|truncatechars:50 }}</a>
+                                <a href="{% url 'atasozu_detay_seo' item.kelime|url_safe %}" class="item-title">{{ item.kelime|truncatechars:50 }}</a>
                                 <div class="item-meta">
                                     <i class="bi bi-clock"></i>
                                     {{ item.eklenme_tarihi|date:"d.m.Y" }}
@@ -457,7 +458,7 @@
                         <div class="accordion-body">
                             {% for item in yer_adi_items %}
                             <div class="contribution-item">
-                                <a href="/yer-adi/{{ item.id }}/" class="item-title">{{ item.ad }}</a>
+                                <a href="{% url 'yer_adi_detay_seo' item.ad|url_safe %}" class="item-title">{{ item.ad }}</a>
                                 <div class="item-meta">
                                     <i class="bi bi-geo-alt"></i>
                                     {{ item.get_bolge_display }}

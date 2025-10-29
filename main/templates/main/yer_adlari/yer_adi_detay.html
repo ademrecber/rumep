@@ -45,10 +45,10 @@
                     
                     {% if is_owner %}
                         <div class="owner-actions d-flex gap-3">
-                            <a href="{% url 'yer_adi_duzenle' yer_adi.id %}" class="btn btn-light btn-lg">
+                            <a href="{% url 'yer_adi_duzenle_seo' yer_adi.ad|url_safe %}" class="btn btn-light btn-lg">
                                 <i class="bi bi-pencil me-2"></i>{% trans "Düzenle" %}
                             </a>
-                            <form method="post" action="{% url 'yer_adi_sil' yer_adi.id %}" class="d-inline" 
+                            <form method="post" action="{% url 'yer_adi_sil_seo' yer_adi.ad|url_safe %}" class="d-inline" 
                                   onsubmit="return confirm('Bu yer adını silmek istediğinizden emin misiniz?');">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-light btn-lg">
@@ -125,11 +125,11 @@
                                     </div>
                                     {% if detay.kullanici == user %}
                                         <div class="detail-actions">
-                                            <a href="{% url 'yer_adi_detay_duzenle' detay.id %}" 
+                                            <a href="{% url 'yer_adi_detay_duzenle_seo' yer_adi.ad|url_safe detay.id %}" 
                                                class="btn btn-sm btn-outline-primary me-1">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <form method="post" action="{% url 'yer_adi_detay_sil' detay.id %}" 
+                                            <form method="post" action="{% url 'yer_adi_detay_sil_seo' yer_adi.ad|url_safe detay.id %}" 
                                                   class="d-inline" 
                                                   onsubmit="return confirm('Bu açıklamayı silmek istediğinizden emin misiniz?');">
                                                 {% csrf_token %}

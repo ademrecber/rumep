@@ -62,10 +62,10 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">{% trans "Düzenle" %}</button>
+                                            <button class="dropdown-item edit-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_veri_seo' kelime.kelime|url_safe %}" data-bs-toggle="modal" data-bs-target="#editKelimeModal">{% trans "Düzenle" %}</button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}">{% trans "Sil" %}</button>
+                                            <button class="dropdown-item text-danger delete-kelime-btn" data-kelime-id="{{ kelime.id }}" data-url="{% url 'sozluk_kelime_sil_seo' kelime.kelime|url_safe %}">{% trans "Sil" %}</button>
                                         </li>
                                     </ul>
                                 </div>

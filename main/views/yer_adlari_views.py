@@ -246,6 +246,66 @@ def yer_adi_detay_seo(request, yer_adi):
             detay.kullanici = request.user
             detay.detay = bleach.clean(detay.detay, tags=['p', 'b', 'i'], strip=True)
             detay.save()
+            return redirect('yer_adi_detay_seo', yer_adi=yer_adi_obj.ad.replace(' ', '-'))
+    else:
+        form = YerAdiDetayForm()
+    
+    context = {
+        'yer_adi': yer_adi_obj,
+        'detaylar': detaylar,
+        'form': form,
+        'is_owner': yer_adi_obj.kullanici == request.user,
+        'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',
+    }
+    return render(request, 'main/yer_adlari/yer_adi_detay.html', context)
+
+@login_required
+@profile_required
+@csrf_protect
+def yer_adi_duzenle_seo(request, yer_adi):
+    from urllib.parse import unquote
+    yer_adi = unquote(yer_adi).replace('-', ' ')
+    yer_adi_obj = get_object_or_404(YerAdi, ad__iexact=yer_adi)
+    if yer_adi_obj.kullanici != request.user:
+        return redirect('yer_adi_detay_seo', yer_adi=yer_adi_obj.ad.replace(' ', '-'))
+    
+    if request.method == 'POST':
+        form = YerAdiForm(request.POST, instance=yer_adi_obj)
+        if form.is_valid():
+            yer_adi_obj = form.save()
+            return redirect('yer_adi_detay_seo', yer_adi=yer_adi_obj.ad.replace(' ', '-'))
+    else:
+        form = YerAdiForm(instance=yer_adi_obj)
+    
+    context = {
+        'form': form,
+        'yer_adi': yer_adi_obj,
+        'is_edit': True,
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
+    }
+    return render(request, 'main/yer_adlari/yer_adi_ekle.html', context)
+
+@login_required
+@profile_required
+@csrf_protect
+def yer_adi_sil_seo(request, yer_adi):
+    from urllib.parse import unquote
+    yer_adi = unquote(yer_adi).replace('-', ' ')
+    yer_adi_obj = get_object_or_404(YerAdi, ad__iexact=yer_adi)
+    if yer_adi_obj.kullanici == request.user:
+        yer_adi_obj.delete()
+    return redirect('yer_adlari_anasayfa')
+    
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login_page')
+        form = YerAdiDetayForm(request.POST)
+        if form.is_valid() and request.user != yer_adi_obj.kullanici:
+            detay = form.save(commit=False)
+            detay.yer_adi = yer_adi_obj
+            detay.kullanici = request.user
+            detay.detay = bleach.clean(detay.detay, tags=['p', 'b', 'i'], strip=True)
+            detay.save()
             return redirect('yer_adi_detay_seo', yer_adi=yer_adi)
     else:
         form = YerAdiDetayForm()

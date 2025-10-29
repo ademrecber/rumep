@@ -70,6 +70,13 @@ urlpatterns = [
     path('sozluk/detay-sil/<int:detay_id>/', views.sozluk_detay_sil, name='sozluk_detay_sil'),
     path('sozluk/detay-duzenle/<int:detay_id>/', views.sozluk_detay_duzenle, name='sozluk_detay_duzenle'),
     path('sozluk/detay-veri/<int:detay_id>/', views.sozluk_detay_veri, name='sozluk_detay_veri'),
+    # SEO-friendly sözlük URL'leri
+    path('sozluk/<path:kelime_adi>/veri/', views.sozluk_kelime_veri_seo, name='sozluk_kelime_veri_seo'),
+    path('sozluk/<path:kelime_adi>/sil/', views.sozluk_kelime_sil_seo, name='sozluk_kelime_sil_seo'),
+    path('sozluk/<path:kelime_adi>/duzenle/', views.sozluk_kelime_duzenle_seo, name='sozluk_kelime_duzenle_seo'),
+    path('sozluk/<path:kelime_adi>/detay-ekle/', views.sozluk_detay_ekle_seo, name='sozluk_detay_ekle_seo'),
+    path('sozluk/<path:kelime_adi>/detay-veri/<int:detay_id>/', views.sozluk_detay_veri_seo, name='sozluk_detay_veri_seo'),
+    path('sozluk/<path:kelime_adi>/detay-sil/<int:detay_id>/', views.sozluk_detay_sil_seo, name='sozluk_detay_sil_seo'),
     path('sozluk/ara/', views.sozluk_ara, name='sozluk_ara'),
     path('sozluk/tum-kelimeler/', views.sozluk_tum_kelimeler, name='sozluk_tum_kelimeler'),
 
@@ -83,6 +90,9 @@ urlpatterns = [
     path('kisi/<path:kisi_adi>/', views.kisi_detay_seo, name='kisi_detay_seo'),
     path('kisi/<path:kisi_adi>/duzenle/', views.kisi_duzenle_seo, name='kisi_duzenle_seo'),
     path('kisi/<path:kisi_adi>/sil/', views.kisi_sil_seo, name='kisi_sil_seo'),
+    path('kisi/<path:kisi_adi>/detay-ekle/', views.kisi_detay_ekle_seo, name='kisi_detay_ekle_seo'),
+    path('kisi/<path:kisi_adi>/detay-veri/<int:detay_id>/', views.kisi_detay_veri_seo, name='kisi_detay_veri_seo'),
+    path('kisi/<path:kisi_adi>/detay-sil/<int:detay_id>/', views.kisi_detay_sil_seo, name='kisi_detay_sil_seo'),
 
 
     
@@ -110,10 +120,12 @@ urlpatterns = [
     path('sarki/<path:sarki_adi>/', sarki_views.sarki_detay_seo, name='sarki_detay_seo'),
     path('sarki/sil/<int:sarki_id>/', views.sarki_sil, name='sarki_sil'),
     path('sarki/ekle/', views.sarki_ekle, name='sarki_ekle'),
+    path('sarki/ekle/<path:kisi_adi>/', sarki_views.sarki_ekle_seo, name='sarki_ekle_seo'),
+    path('sarki/album-ekle/<path:kisi_adi>/', sarki_views.sarki_album_ekle_seo, name='sarki_album_ekle_seo'),
     path('sarki/album-sil/<int:album_id>/', views.sarki_album_sil, name='sarki_album_sil'),
  
     # Şarkı sözleri için yeni URL’ler
-    path('sarki/ara/', views.sarki_ara, name='sarki_ara'),  # Şarkı arama ve türe göre filtreleme
+    path('sarki/ara/', sarki_views.sarki_ara, name='sarki_ara'),  # Şarkı arama ve türe göre filtreleme
     path('sarki/album-ekle/<int:kisi_id>/', views.sarki_album_ekle, name='sarki_album_ekle'),  # Albüm ekleme
     path('sarki/detay-ekle/<int:sarki_id>/', views.sarki_detay_ekle, name='sarki_detay_ekle'),  # Şarkıya detay ekleme
     path('sarki/detay-veri/<int:detay_id>/', views.sarki_detay_veri, name='sarki_detay_veri'),  # Şarkı detayını düzenleme için veri
@@ -140,7 +152,9 @@ urlpatterns = [
     # Daha genel URL’ler sona gelmeli
 
     path('atasozu/<path:atasozu_metni>/', views.atasozu_detay_seo, name='atasozu_detay_seo'),
+    path('atasozu/<path:atasozu_metni>/sil/', views.atasozu_sil_seo, name='atasozu_sil_seo'),
     path('deyim/<path:deyim_metni>/', views.deyim_detay_seo, name='deyim_detay_seo'),
+    path('deyim/<path:deyim_metni>/sil/', views.deyim_sil_seo, name='deyim_sil_seo'),
     path('atasozu-deyim/', views.atasozu_deyim, name='atasozu_deyim'),
 
 
@@ -154,7 +168,11 @@ urlpatterns = [
     path('yer-adlari/', yer_adlari_views.yer_adlari_anasayfa, name='yer_adlari_anasayfa'),
     path('yer-adi/ekle/', yer_adlari_views.yer_adi_ekle, name='yer_adi_ekle'),
 
-    path('yer-adi/<path:yer_adi>/', yer_adlari_views.yer_adi_detay_seo, name='yer_adi_detay_seo'),
+    path('yer-adi/<path:yer_adi>/', views.yer_adi_detay_seo, name='yer_adi_detay_seo'),
+    path('yer-adi/<path:yer_adi>/duzenle/', views.yer_adi_duzenle_seo, name='yer_adi_duzenle_seo'),
+    path('yer-adi/<path:yer_adi>/sil/', views.yer_adi_sil_seo, name='yer_adi_sil_seo'),
+    path('yer-adi/<path:yer_adi>/detay-duzenle/<int:detay_id>/', views.yer_adi_detay_duzenle_seo, name='yer_adi_detay_duzenle_seo'),
+    path('yer-adi/<path:yer_adi>/detay-sil/<int:detay_id>/', views.yer_adi_detay_sil_seo, name='yer_adi_detay_sil_seo'),
     path('yer-adi/<int:yer_adi_id>/duzenle/', yer_adlari_views.yer_adi_duzenle, name='yer_adi_duzenle'),
     path('yer-adi/<int:yer_adi_id>/sil/', yer_adlari_views.yer_adi_sil, name='yer_adi_sil'),
     path('yer-adi-detay/<int:detay_id>/duzenle/', yer_adlari_views.yer_adi_detay_duzenle, name='yer_adi_detay_duzenle'),
