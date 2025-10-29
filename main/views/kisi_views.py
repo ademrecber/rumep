@@ -195,7 +195,11 @@ def kisi_duzenle(request, kisi_id):
 
 @login_required
 @profile_required
+@csrf_protect
 def kisi_sil(request, kisi_id):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Sadece POST istekleri kabul edilir.'}, status=405)
+    
     kisi = get_object_or_404(Kisi, id=kisi_id)
     if kisi.kullanici != request.user:
         return JsonResponse({'success': False, 'error': 'Bu kişiyi silme yetkiniz yok.'}, status=403)

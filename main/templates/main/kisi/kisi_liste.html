@@ -215,9 +215,8 @@
                 
                 const kisiId = this.dataset.kisiId;
                 try {
-                    const kisiAdi = btn.closest('.kisi-item').querySelector('.person-title a').textContent.trim().replace(/ /g, '-');
                     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
-                    const response = await fetch(`/kisi/${kisiAdi}/sil/`, {
+                    const response = await fetch(`/kisi/sil/${kisiId}/`, {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
