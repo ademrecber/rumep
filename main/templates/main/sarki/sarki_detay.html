@@ -117,7 +117,7 @@
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div class="detail-meta">
                                             <small class="text-muted">
-                                                <i class="bi bi-person me-1"></i>{{ detay.kullanici.profile.username }}
+                                                <i class="bi bi-person me-1"></i>{{ detay.kullanici.profile.nickname }}
                                                 <i class="bi bi-calendar3 ms-3 me-1"></i>{{ detay.eklenme_tarihi|date:"d.m.Y H:i" }}
                                             </small>
                                         </div>
@@ -203,7 +203,7 @@
                         
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">Zêdeker</strong>
-                            <span>{{ sarki.sarki_grubu.kullanici.username }}</span>
+                            <span>{{ sarki.sarki_grubu.kullanici.profile.nickname }}</span>
                         </div>
                         
 
@@ -287,7 +287,7 @@
 
 <!-- Şarkı Düzenle Modal -->
 <div class="modal fade" id="sarkiDuzenleModal" tabindex="-1" aria-labelledby="sarkiDuzenleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="sarkiDuzenleModalLabel">Stranê Biguherîne</h5>
@@ -296,9 +296,29 @@
             <div class="modal-body">
                 <form id="sarki-duzenle-form">
                     {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sarki-duzenle-ad" class="form-label">Şarkı Adı</label>
+                                <input type="text" id="sarki-duzenle-ad" name="ad" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sarki-duzenle-dil" class="form-label">Dil</label>
+                                <select id="sarki-duzenle-dil" name="dil" class="form-select" required>
+                                    <option value="ku">Kürtçe</option>
+                                    <option value="tr">Türkçe</option>
+                                    <option value="en">İngilizce</option>
+                                    <option value="ar">Arapça</option>
+                                    <option value="fa">Farsça</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-3">
-                        <label for="sarki-duzenle-sozler" class="form-label">{{ sarki.get_dil_display }} Sözleri</label>
-                        <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="6" required></textarea>
+                        <label for="sarki-duzenle-sozler" class="form-label">Şarkı Sözleri</label>
+                        <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="8" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
@@ -312,16 +332,51 @@
 {% endblock %}
 {% block extra_scripts %}
     <script>
+        // Şarkı sil
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('sarki-sil-btn') || e.target.closest('.sarki-sil-btn')) {
+                e.preventDefault();
+                if (confirm('Bu şarkıyı silmek istediğinizden emin misiniz?')) {
+                    const btn = e.target.classList.contains('sarki-sil-btn') ? e.target : e.target.closest('.sarki-sil-btn');
+                    const sarkiId = btn.dataset.sarkiId;
+                    const urlSil = btn.dataset.urlSil;
+                    
+                    fetch(urlSil, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/sarki/';
+                        } else {
+                            alert('Hata: ' + (data.error || 'Bilinmeyen hata'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Hata:', error);
+                        alert('Bir hata oluştu');
+                    });
+                }
+            }
+        });
+        
         // Şarkı düzenle
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('sarki-duzenle-btn')) {
-                const sarkiId = e.target.dataset.sarkiId;
-                const urlDuzenle = e.target.dataset.urlDuzenle;
+            if (e.target.classList.contains('sarki-duzenle-btn') || e.target.closest('.sarki-duzenle-btn')) {
+                const btn = e.target.classList.contains('sarki-duzenle-btn') ? e.target : e.target.closest('.sarki-duzenle-btn');
+                const sarkiId = btn.dataset.sarkiId;
+                const urlDuzenle = btn.dataset.urlDuzenle;
                 
                 fetch(urlDuzenle)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
+                            document.getElementById('sarki-duzenle-ad').value = data.data.ad;
+                            document.getElementById('sarki-duzenle-dil').value = data.data.dil;
                             document.getElementById('sarki-duzenle-sozler').value = data.data.sozler;
                             new bootstrap.Modal(document.getElementById('sarkiDuzenleModal')).show();
                         }

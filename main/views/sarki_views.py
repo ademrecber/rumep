@@ -329,6 +329,13 @@ def sarki_duzenle(request, sarki_id):
         return JsonResponse({'success': False, 'error': 'Bu şarkıyı düzenleme yetkiniz yok.'}, status=403)
     
     if request.method == 'POST':
+        # Şarkı grubu adını güncelle
+        ad = request.POST.get('ad')
+        if ad:
+            sarki.sarki_grubu.ad = ad
+            sarki.sarki_grubu.save()
+        
+        # Şarkı dil ve sözlerini güncelle
         form = SarkiDuzenleForm(request.POST, instance=sarki)
         if form.is_valid():
             form.save()
@@ -338,6 +345,8 @@ def sarki_duzenle(request, sarki_id):
     
     # GET isteği için JSON verisi döndürelim
     data = {
+        'ad': sarki.sarki_grubu.ad,
+        'dil': sarki.dil,
         'sozler': sarki.sozler
     }
     return JsonResponse({'success': True, 'data': data})
