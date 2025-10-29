@@ -33,6 +33,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from ..models import Kisi, Sozluk, Atasozu, Deyim
+from ..forms import KisiForm
 
 @login_required
 @csrf_protect
@@ -117,4 +118,27 @@ def deyim_detay_seo(request, deyim_metni):
         'item': deyim,
         'detaylar': detaylar,
         'tur': 'deyim'
+    })
+
+@login_required
+@csrf_protect
+def kisi_duzenle_seo(request, kisi_adi):
+    from urllib.parse import unquote
+    kisi_adi = unquote(kisi_adi)
+    kisi_adi = kisi_adi.replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
+    if kisi.kullanici != request.user:
+        return redirect('kisi_detay_seo', kisi_adi=kisi.ad.replace(' ', '-'))
+    
+    if request.method == 'POST':
+        form = KisiForm(request.POST, instance=kisi)
+        if form.is_valid():
+            form.save()
+            return redirect('kisi_detay_seo', kisi_adi=kisi.ad.replace(' ', '-'))
+    else:
+        form = KisiForm(instance=kisi)
+    
+    return render(request, 'main/kisi/kisi_duzenle.html', {
+        'form': form,
+        'kisi': kisi
     })

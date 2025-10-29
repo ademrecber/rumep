@@ -36,7 +36,7 @@
                     
                     {% if kisi.kullanici == user %}
                         <div class="owner-actions d-flex gap-3">
-                            <a href="{% url 'kisi_duzenle' kisi.id %}" class="btn btn-outline-light btn-lg" style="color: #ffffff !important; border-color: #ffffff !important;">
+                            <a href="{% url 'kisi_duzenle_seo' kisi.ad|url_safe %}" class="btn btn-outline-light btn-lg" style="color: #ffffff !important; border-color: #ffffff !important;">
                                 <i class="bi bi-pencil me-2"></i>{% trans "Düzenle" %}
                             </a>
                             <button class="btn btn-outline-light btn-lg delete-kisi-btn" data-kisi-id="{{ kisi.id }}" style="color: #ffffff !important; border-color: #ffffff !important;">

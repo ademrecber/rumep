@@ -124,7 +124,7 @@
                 <div class="d-flex flex-wrap gap-3">
                     <button class="btn btn-link text-decoration-none text-primary fw-bold border-bottom border-primary border-2 p-0" onclick="initTumKelimeler(true)" style="padding: 5px 0;">{% trans "Tümü" %}</button>
                     {% for harf in harfler %}
-                        <button class="btn btn-link text-decoration-none text-muted p-0" onclick="loadHarf('{{ harf }}')" style="padding: 5px 0;">{{ harf|upper }}</button>
+                        <a href="{% url 'sozluk_harf' harf %}" class="text-decoration-none text-muted" style="padding: 5px 0;">{{ harf|upper }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -292,19 +292,6 @@
                 searchInput.focus();
                 searchInput.scrollIntoView({ behavior: 'smooth' });
             }
-        };
-        
-        window.loadHarf = function(harf) {
-            // Harf butonlarının aktif durumunu güncelle
-            document.querySelectorAll('.btn-link').forEach(btn => {
-                btn.classList.remove('text-primary', 'fw-bold', 'border-bottom', 'border-primary', 'border-2');
-                btn.classList.add('text-muted');
-            });
-            event.target.classList.remove('text-muted');
-            event.target.classList.add('text-primary', 'fw-bold', 'border-bottom', 'border-primary', 'border-2');
-            
-            // Harfe göre kelimeleri yükle
-            initTumKelimeler(true, harf);
         };
     </script>
 {% endblock %}

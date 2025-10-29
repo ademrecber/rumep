@@ -60,6 +60,7 @@ urlpatterns = [
 
 
 
+    path('sozluk/harf/<str:harf>/', views.sozluk_harf, name='sozluk_harf'),
     path('sozluk/<path:kelime_adi>/', views.sozluk_kelime_seo, name='sozluk_kelime_seo'),
     path('sozluk/kelime-sil/<int:kelime_id>/', views.sozluk_kelime_sil, name='sozluk_kelime_sil'),
     path('sozluk/', views.sozluk_ana_sayfa, name='sozluk_ana_sayfa'),  
@@ -80,7 +81,8 @@ urlpatterns = [
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
 
     path('kisi/<path:kisi_adi>/', views.kisi_detay_seo, name='kisi_detay_seo'),
-    path('kisi/duzenle/<int:kisi_id>/', views.kisi_duzenle, name='kisi_duzenle'),
+    path('kisi/<path:kisi_adi>/duzenle/', views.kisi_duzenle_seo, name='kisi_duzenle_seo'),
+
     path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
     
     path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
