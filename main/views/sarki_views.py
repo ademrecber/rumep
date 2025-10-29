@@ -409,8 +409,10 @@ def sarki_yeni_dil_ekle(request):
 
 @login_required
 @csrf_protect
-def sarki_detay_slug(request, slug):
-    sarki = get_object_or_404(Sarki, slug=slug)
+def sarki_detay_seo(request, sarki_adi, dil):
+    from django.utils.text import slugify
+    sarki_grubu = get_object_or_404(SarkiGrubu, ad__iexact=sarki_adi.replace('-', ' '))
+    sarki = get_object_or_404(Sarki, sarki_grubu=sarki_grubu, dil=dil)
     detaylar = sarki.detaylar.all()
     dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
     mevcut_diller = list(sarki.sarki_grubu.dil_versiyonlari.values_list('dil', flat=True))

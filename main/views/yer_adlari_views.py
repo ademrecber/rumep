@@ -227,3 +227,31 @@ def yer_adi_detay_slug(request, slug):
         'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',
     }
     return render(request, 'main/yer_adlari/yer_adi_detay.html', context)
+
+@csrf_protect
+def yer_adi_detay_seo(request, yer_adi):
+    yer_adi_obj = get_object_or_404(YerAdi, ad__iexact=yer_adi.replace('-', ' '))
+    detaylar = YerAdiDetay.objects.filter(yer_adi=yer_adi_obj).order_by('-eklenme_tarihi')
+    
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login_page')
+        form = YerAdiDetayForm(request.POST)
+        if form.is_valid() and request.user != yer_adi_obj.kullanici:
+            detay = form.save(commit=False)
+            detay.yer_adi = yer_adi_obj
+            detay.kullanici = request.user
+            detay.detay = bleach.clean(detay.detay, tags=['p', 'b', 'i'], strip=True)
+            detay.save()
+            return redirect('yer_adi_detay_seo', yer_adi=yer_adi)
+    else:
+        form = YerAdiDetayForm()
+    
+    context = {
+        'yer_adi': yer_adi_obj,
+        'detaylar': detaylar,
+        'form': form,
+        'is_owner': yer_adi_obj.kullanici == request.user,
+        'google_maps_api_key': 'YOUR_GOOGLE_MAPS_API_KEY',
+    }
+    return render(request, 'main/yer_adlari/yer_adi_detay.html', context)

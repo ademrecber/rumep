@@ -67,8 +67,39 @@ def atasozu_detay_slug(request, slug):
 
 @login_required
 @csrf_protect
-def deyim_detay_slug(request, slug):
-    deyim = get_object_or_404(Deyim, slug=slug)
+def kisi_detay_seo(request, kisi_adi):
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi.replace('-', ' '))
+    detaylar = kisi.detaylar.all()
+    return render(request, 'main/kisi/kisi_detay.html', {
+        'kisi': kisi,
+        'detaylar': detaylar
+    })
+
+@login_required
+@csrf_protect
+def sozluk_kelime_seo(request, kelime_adi):
+    kelime = get_object_or_404(Sozluk, kelime__iexact=kelime_adi.replace('-', ' '))
+    detaylar = kelime.detaylar.all()
+    return render(request, 'main/sozluk/sozluk_kelime.html', {
+        'kelime': kelime,
+        'detaylar': detaylar
+    })
+
+@login_required
+@csrf_protect
+def atasozu_detay_seo(request, atasozu_metni):
+    atasozu = get_object_or_404(Atasozu, kelime__iexact=atasozu_metni.replace('-', ' '))
+    detaylar = atasozu.detaylar.all()
+    return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
+        'item': atasozu,
+        'detaylar': detaylar,
+        'tur': 'atasozu'
+    })
+
+@login_required
+@csrf_protect
+def deyim_detay_seo(request, deyim_metni):
+    deyim = get_object_or_404(Deyim, kelime__iexact=deyim_metni.replace('-', ' '))
     detaylar = deyim.detaylar.all()
     return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
         'item': deyim,
