@@ -40,7 +40,7 @@ def yer_adlari_anasayfa(request):
     context = {
         'yer_adlari': yer_adlari,
         'bolgeler': bolgeler,
-        'kategoriler': [choice[0] for choice in YerAdi.kategori.field.choices],
+        'kategoriler': [choice[0] for choice in YerAdi._meta.get_field('kategori').choices],
         'harfler': [chr(i) for i in range(65, 91)],  # A-Z
         'secili_harf': harf,
         'secili_kategori': kategori,
