@@ -611,6 +611,7 @@ class Sarki(models.Model):
         verbose_name="Dil"
     )
     sozler = models.TextField(max_length=10000)
+    link = models.URLField(blank=True, null=True, verbose_name=_('Şarkı Linki (YouTube, Spotify vs.)')
 
     def clean(self):
         if not self.sozler.strip():

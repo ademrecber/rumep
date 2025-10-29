@@ -218,6 +218,23 @@
                             <span>{{ sarki.sarki_grubu.kullanici.profile.nickname }}</span>
                         </div>
                         
+                        {% if sarki.link %}
+                        <div class="info-item mb-3">
+                            <strong class="text-muted d-block mb-1">Şarkı Linki</strong>
+                            <a href="{{ sarki.link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                {% if 'youtube' in sarki.link %}
+                                    <i class="bi bi-youtube"></i> YouTube
+                                {% elif 'spotify' in sarki.link %}
+                                    <i class="bi bi-spotify"></i> Spotify
+                                {% elif 'apple' in sarki.link %}
+                                    <i class="bi bi-music-note"></i> Apple Music
+                                {% else %}
+                                    <i class="bi bi-link-45deg"></i> Dinle
+                                {% endif %}
+                            </a>
+                        </div>
+                        {% endif %}
+                        
 
                     </div>
                 </div>
@@ -332,6 +349,13 @@
                         <label for="sarki-duzenle-sozler" class="form-label">Şarkı Sözleri</label>
                         <textarea id="sarki-duzenle-sozler" name="sozler" class="form-control" rows="8" required></textarea>
                     </div>
+                    <div class="mb-3">
+                        <label for="sarki-duzenle-link" class="form-label">Şarkı Linki</label>
+                        <input type="url" id="sarki-duzenle-link" name="link" class="form-control" placeholder="https://youtube.com/watch?v=...">
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i> YouTube, Spotify veya diğer platformlardaki link
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Tomar Bike</button>
                 </form>
             </div>
@@ -365,6 +389,13 @@
                     <div class="mb-3">
                         <label for="yeni-dil-sozler" class="form-label">Şarkı Sözleri</label>
                         <textarea id="yeni-dil-sozler" name="sozler" class="form-control" rows="8" required placeholder="Bu dilin sözlerini buraya yazın..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="yeni-dil-link" class="form-label">Şarkı Linki (Opsiyonel)</label>
+                        <input type="url" id="yeni-dil-link" name="link" class="form-control" placeholder="https://youtube.com/watch?v=...">
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i> YouTube, Spotify veya diğer platformlardaki link
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-plus-circle me-2"></i>Dil Versiyonu Ekle
@@ -426,6 +457,7 @@
                             document.getElementById('sarki-duzenle-ad').value = data.data.ad;
                             document.getElementById('sarki-duzenle-dil').value = data.data.dil;
                             document.getElementById('sarki-duzenle-sozler').value = data.data.sozler;
+                            document.getElementById('sarki-duzenle-link').value = data.data.link || '';
                             new bootstrap.Modal(document.getElementById('sarkiDuzenleModal')).show();
                         }
                     })

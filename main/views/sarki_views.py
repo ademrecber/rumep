@@ -138,12 +138,14 @@ def sarki_ekle(request):
             sarki_grubu_id = request.POST.get('sarki_grubu_id')
             dil = request.POST.get('dil')
             sozler = request.POST.get('sozler')
+            link = request.POST.get('link')
             if sarki_grubu_id and dil and sozler:
                 sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
                 Sarki.objects.create(
                     sarki_grubu=sarki_grubu,
                     dil=dil,
-                    sozler=sozler
+                    sozler=sozler,
+                    link=link if link else None
                 )
                 return redirect(f'/sarki/ekle/?kisi_id={kisi.id}&sarki_grubu_id={sarki_grubu.id}')
     
@@ -341,19 +343,20 @@ def sarki_duzenle(request, sarki_id):
             sarki.sarki_grubu.ad = ad
             sarki.sarki_grubu.save()
         
-        # Şarkı dil ve sözlerini güncelle
-        form = SarkiDuzenleForm(request.POST, instance=sarki)
-        if form.is_valid():
-            form.save()
-            logger.info(f"Şarkı düzenlendi: {sarki.sarki_grubu.ad}, Kullanıcı: {request.user.username}")
-            return JsonResponse({'success': True})
-        return JsonResponse({'success': False, 'errors': form.errors.as_json()})
+        # Şarkı dil, sözler ve link güncelle
+        sarki.dil = request.POST.get('dil', sarki.dil)
+        sarki.sozler = request.POST.get('sozler', sarki.sozler)
+        sarki.link = request.POST.get('link') or None
+        sarki.save()
+        logger.info(f"Şarkı düzenlendi: {sarki.sarki_grubu.ad}, Kullanıcı: {request.user.username}")
+        return JsonResponse({'success': True})
     
     # GET isteği için JSON verisi döndürelim
     data = {
         'ad': sarki.sarki_grubu.ad,
         'dil': sarki.dil,
-        'sozler': sarki.sozler
+        'sozler': sarki.sozler,
+        'link': sarki.link
     }
     return JsonResponse({'success': True, 'data': data})
 
@@ -379,6 +382,7 @@ def sarki_yeni_dil_ekle(request):
     sarki_grubu_id = request.POST.get('sarki_grubu_id')
     dil = request.POST.get('dil')
     sozler = request.POST.get('sozler')
+    link = request.POST.get('link')
     
     if not all([sarki_grubu_id, dil, sozler]):
         return JsonResponse({'success': False, 'error': 'Tüm alanları doldurun.'}, status=400)
@@ -396,7 +400,8 @@ def sarki_yeni_dil_ekle(request):
     Sarki.objects.create(
         sarki_grubu=sarki_grubu,
         dil=dil,
-        sozler=sozler
+        sozler=sozler,
+        link=link if link else None
     )
     
     logger.info(f"Yeni dil versiyonu eklendi: {sarki_grubu.ad} - {dil}, Kullanıcı: {request.user.username}")
