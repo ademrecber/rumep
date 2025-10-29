@@ -431,14 +431,6 @@ def sarki_album_liste_seo(request, kisi_adi):
     from urllib.parse import unquote
     kisi_adi = unquote(kisi_adi)
     kisi_adi = kisi_adi.replace('-', ' ')
-    logger.info(f"Aranan kişi adı: '{kisi_adi}'")
-    
-    # Debug: Tüm kişileri listele
-    from django.http import HttpResponse
-    if kisi_adi == 'debug':
-        kisiler = Kisi.objects.all().values_list('ad', flat=True)
-        return HttpResponse(f"Kişiler: {list(kisiler)}")
-    
     kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
     albumler = Album.objects.filter(kisi=kisi).prefetch_related(
         'sarki_gruplari__dil_versiyonlari'

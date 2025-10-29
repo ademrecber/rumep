@@ -119,7 +119,7 @@
             <div class="card-body">
                 {% for sarki in sarkilar %}
                 <div class="border-bottom pb-2 mb-2">
-                    <h6><a href="{% url 'sarki_detay_seo' sarki.ad|url_safe sarki.dil %}" class="text-decoration-none">{{ sarki.ad }}</a></h6>
+                    <h6><a href="{% url 'sarki_detay_seo' sarki.sarki_grubu.ad|url_safe sarki.dil %}" class="text-decoration-none">{{ sarki.sarki_grubu.ad }}</a></h6>
                     <p class="text-muted mb-1">{{ sarki.album.kisi.ad }} • {{ sarki.sozler|truncatechars:100 }}</p>
                     <small class="text-muted">{{ sarki.kullanici.profile.nickname }} • {{ sarki.eklenme_tarihi|date:"d.m.Y" }}</small>
                 </div>

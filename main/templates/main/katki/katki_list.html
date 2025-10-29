@@ -28,9 +28,9 @@
                                 {% if katki.tur == 'sarki' %}
                                     <p><i class="bi bi-music-note"></i> Vî bikarhênerî gotinên strana nû zêde kir: 
                                     {% if katki.sarki %}
-                                        <a href="{% url 'sarki_detay_seo' katki.sarki.ad katki.sarki.dil %}">{{ katki.sarki.ad }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad katki.sarki.dil %}">{{ katki.sarki.sarki_grubu.ad }}</a>
                                     {% else %}
-                                        <a href="{% url 'sarki_detay_seo' katki.sarki.ad katki.sarki.dil %}">Stran #{{ katki.icerik_id }}</a>
+                                        <a href="{% url 'sarki_detay_seo' katki.sarki.sarki_grubu.ad katki.sarki.dil %}">Stran #{{ katki.icerik_id }}</a>
                                     {% endif %}
                                     </p>
                                 {% elif katki.tur == 'kisi' %}
