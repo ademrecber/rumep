@@ -147,27 +147,39 @@
             
             <!-- Yan Panel -->
             <div class="col-lg-4">
-                <!-- Diğer Dil Versiyonları -->
-                {% if sarki.sarki_grubu.dil_versiyonlari.count > 1 %}
+                <!-- Dil Versiyonları -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-success text-white">
                         <h6 class="mb-0">
-                            <i class="bi bi-translate me-2"></i>Diğer Dil Versiyonları
+                            <i class="bi bi-translate me-2"></i>Dil Versiyonları
                         </h6>
                     </div>
                     <div class="card-body">
                         {% for dil_sarki in sarki.sarki_grubu.dil_versiyonlari.all %}
-                            {% if dil_sarki.id != sarki.id %}
                             <div class="d-grid mb-2">
-                                <a href="{% url 'sarki_detay' dil_sarki.id %}" class="btn btn-outline-success">
-                                    <i class="bi bi-music-note me-2"></i>{{ dil_sarki.get_dil_display }} Sözleri
-                                </a>
+                                {% if dil_sarki.id == sarki.id %}
+                                    <button class="btn btn-success" disabled>
+                                        <i class="bi bi-check-circle me-2"></i>{{ dil_sarki.get_dil_display }} (Mevcut)
+                                    </button>
+                                {% else %}
+                                    <a href="{% url 'sarki_detay' dil_sarki.id %}" class="btn btn-outline-success">
+                                        <i class="bi bi-music-note me-2"></i>{{ dil_sarki.get_dil_display }} Sözleri
+                                    </a>
+                                {% endif %}
                             </div>
-                            {% endif %}
                         {% endfor %}
+                        
+                        <!-- Yeni Dil Ekleme -->
+                        {% if sarki.sarki_grubu.kullanici == user %}
+                            <hr class="my-3">
+                            <div class="text-center">
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#yeniDilModal">
+                                    <i class="bi bi-plus-circle me-2"></i>Yeni Dil Ekle
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
                 
                 <!-- Şarkı Bilgileri -->
                 <div class="card border-0 shadow-sm mb-4">
@@ -326,6 +338,42 @@
         </div>
     </div>
 </div>
+
+<!-- Yeni Dil Ekle Modal -->
+<div class="modal fade" id="yeniDilModal" tabindex="-1" aria-labelledby="yeniDilModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="yeniDilModalLabel">Yeni Dil Versiyonu Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <form id="yeni-dil-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="sarki_grubu_id" value="{{ sarki.sarki_grubu.id }}">
+                    <div class="mb-3">
+                        <label for="yeni-dil-select" class="form-label">Dil Seçin</label>
+                        <select id="yeni-dil-select" name="dil" class="form-select" required>
+                            <option value="">Dil seçin...</option>
+                            {% for kod, ad in dil_secenekleri %}
+                                {% if kod not in mevcut_diller %}
+                                    <option value="{{ kod }}">{{ ad }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="yeni-dil-sozler" class="form-label">Şarkı Sözleri</label>
+                        <textarea id="yeni-dil-sozler" name="sozler" class="form-control" rows="8" required placeholder="Bu dilin sözlerini buraya yazın..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Dil Versiyonu Ekle
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block extra_css %}
     <link href="{% static 'main/css/sarki.css' %}" rel="stylesheet">
@@ -407,6 +455,32 @@
                 }
             })
             .catch(error => console.error('Hata:', error));
+        });
+        
+        // Yeni dil ekleme
+        document.getElementById('yeni-dil-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch('/sarki/yeni-dil-ekle/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Hata: ' + (data.error || 'Bilinmeyen hata'));
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu');
+            });
         });
     </script>
 {% endblock %}

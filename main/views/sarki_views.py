@@ -185,7 +185,9 @@ def sarki_album_ekle(request, kisi_id):
 @csrf_protect
 def sarki_album_liste(request, kisi_id):
     kisi = get_object_or_404(Kisi, id=kisi_id)
-    albumler = Album.objects.filter(kisi=kisi).order_by('ad')
+    albumler = Album.objects.filter(kisi=kisi).prefetch_related(
+        'sarki_gruplari__dil_versiyonlari'
+    ).order_by('ad')
     return render(request, 'main/sarki/album_liste.html', {
         'kisi': kisi,
         'albumler': albumler
@@ -206,9 +208,13 @@ def sarki_liste(request, album_id):
 def sarki_detay(request, sarki_id):
     sarki = get_object_or_404(Sarki, id=sarki_id)
     detaylar = sarki.detaylar.all()
+    dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
+    mevcut_diller = list(sarki.sarki_grubu.dil_versiyonlari.values_list('dil', flat=True))
     return render(request, 'main/sarki/sarki_detay.html', {
         'sarki': sarki,
-        'detaylar': detaylar
+        'detaylar': detaylar,
+        'dil_secenekleri': dil_secenekleri,
+        'mevcut_diller': mevcut_diller
     })
 
 @login_required
@@ -365,3 +371,33 @@ def sarki_duzenle_kaydet(request, sarki_id):
         logger.info(f"Şarkı düzenlendi: {sarki.ad}, Kullanıcı: {request.user.username}")
         return JsonResponse({'success': True})
     return JsonResponse({'success': False, 'errors': form.errors.as_json()})
+
+@login_required
+@profile_required
+@require_POST
+def sarki_yeni_dil_ekle(request):
+    sarki_grubu_id = request.POST.get('sarki_grubu_id')
+    dil = request.POST.get('dil')
+    sozler = request.POST.get('sozler')
+    
+    if not all([sarki_grubu_id, dil, sozler]):
+        return JsonResponse({'success': False, 'error': 'Tüm alanları doldurun.'}, status=400)
+    
+    sarki_grubu = get_object_or_404(SarkiGrubu, id=sarki_grubu_id)
+    
+    if sarki_grubu.kullanici != request.user:
+        return JsonResponse({'success': False, 'error': 'Bu şarkıya dil ekleme yetkiniz yok.'}, status=403)
+    
+    # Aynı dilde zaten var mı kontrol et
+    if sarki_grubu.dil_versiyonlari.filter(dil=dil).exists():
+        return JsonResponse({'success': False, 'error': 'Bu dilde zaten söz mevcut.'}, status=400)
+    
+    # Yeni dil versiyonu oluştur
+    Sarki.objects.create(
+        sarki_grubu=sarki_grubu,
+        dil=dil,
+        sozler=sozler
+    )
+    
+    logger.info(f"Yeni dil versiyonu eklendi: {sarki_grubu.ad} - {dil}, Kullanıcı: {request.user.username}")
+    return JsonResponse({'success': True})

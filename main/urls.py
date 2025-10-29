@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import views
+from .views import sarki_views
 from .views import popular_views, profile_views
 from .views import account_views
 from .views import topic_views
@@ -114,6 +115,7 @@ urlpatterns = [
     path('sarki/album-degistir/<int:sarki_id>/', views.sarki_album_degistir, name='sarki_album_degistir'), # Şarkı albümünü değiştirme
     path('sarki/duzenle/<int:sarki_id>/', views.sarki_duzenle, name='sarki_duzenle'),  # Şarkı düzenleme
     path('sarki/duzenle-kaydet/<int:sarki_id>/', views.sarki_duzenle_kaydet, name='sarki_duzenle_kaydet'),  # Şarkı düzenleme kaydetme
+    path('sarki/yeni-dil-ekle/', sarki_views.sarki_yeni_dil_ekle, name='sarki_yeni_dil_ekle'),  # Yeni dil versiyonu ekleme
     
     
     # Daha spesifik URL’ler önce gelmeli
