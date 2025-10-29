@@ -68,7 +68,9 @@ def atasozu_detay_slug(request, slug):
 @login_required
 @csrf_protect
 def kisi_detay_seo(request, kisi_adi):
-    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi.replace('-', ' '))
+    from urllib.parse import unquote
+    kisi_adi = unquote(kisi_adi).replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
     detaylar = kisi.detaylar.all()
     return render(request, 'main/kisi/kisi_detay.html', {
         'kisi': kisi,
@@ -78,7 +80,9 @@ def kisi_detay_seo(request, kisi_adi):
 @login_required
 @csrf_protect
 def sozluk_kelime_seo(request, kelime_adi):
-    kelime = get_object_or_404(Sozluk, kelime__iexact=kelime_adi.replace('-', ' '))
+    from urllib.parse import unquote
+    kelime_adi = unquote(kelime_adi).replace('-', ' ')
+    kelime = get_object_or_404(Sozluk, kelime__iexact=kelime_adi)
     detaylar = kelime.detaylar.all()
     return render(request, 'main/sozluk/sozluk_kelime.html', {
         'kelime': kelime,
@@ -88,7 +92,9 @@ def sozluk_kelime_seo(request, kelime_adi):
 @login_required
 @csrf_protect
 def atasozu_detay_seo(request, atasozu_metni):
-    atasozu = get_object_or_404(Atasozu, kelime__iexact=atasozu_metni.replace('-', ' '))
+    from urllib.parse import unquote
+    atasozu_metni = unquote(atasozu_metni).replace('-', ' ')
+    atasozu = get_object_or_404(Atasozu, kelime__iexact=atasozu_metni)
     detaylar = atasozu.detaylar.all()
     return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
         'item': atasozu,
@@ -99,7 +105,9 @@ def atasozu_detay_seo(request, atasozu_metni):
 @login_required
 @csrf_protect
 def deyim_detay_seo(request, deyim_metni):
-    deyim = get_object_or_404(Deyim, kelime__iexact=deyim_metni.replace('-', ' '))
+    from urllib.parse import unquote
+    deyim_metni = unquote(deyim_metni).replace('-', ' ')
+    deyim = get_object_or_404(Deyim, kelime__iexact=deyim_metni)
     detaylar = deyim.detaylar.all()
     return render(request, 'main/atasozu_deyim/atasozu_deyim_detay.html', {
         'item': deyim,

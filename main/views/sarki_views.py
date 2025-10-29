@@ -410,8 +410,9 @@ def sarki_yeni_dil_ekle(request):
 @login_required
 @csrf_protect
 def sarki_detay_seo(request, sarki_adi, dil):
-    from django.utils.text import slugify
-    sarki_grubu = get_object_or_404(SarkiGrubu, ad__iexact=sarki_adi.replace('-', ' '))
+    from urllib.parse import unquote
+    sarki_adi = unquote(sarki_adi).replace('-', ' ')
+    sarki_grubu = get_object_or_404(SarkiGrubu, ad__iexact=sarki_adi)
     sarki = get_object_or_404(Sarki, sarki_grubu=sarki_grubu, dil=dil)
     detaylar = sarki.detaylar.all()
     dil_secenekleri = [('ku', 'Kürtçe'), ('tr', 'Türkçe'), ('en', 'İngilizce'), ('ar', 'Arapça'), ('fa', 'Farsça')]
@@ -426,7 +427,9 @@ def sarki_detay_seo(request, sarki_adi, dil):
 @login_required
 @csrf_protect
 def sarki_album_liste_seo(request, kisi_adi):
-    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi.replace('-', ' '))
+    from urllib.parse import unquote
+    kisi_adi = unquote(kisi_adi).replace('-', ' ')
+    kisi = get_object_or_404(Kisi, ad__iexact=kisi_adi)
     albumler = Album.objects.filter(kisi=kisi).prefetch_related(
         'sarki_gruplari__dil_versiyonlari'
     ).order_by('ad')

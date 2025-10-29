@@ -230,7 +230,9 @@ def yer_adi_detay_slug(request, slug):
 
 @csrf_protect
 def yer_adi_detay_seo(request, yer_adi):
-    yer_adi_obj = get_object_or_404(YerAdi, ad__iexact=yer_adi.replace('-', ' '))
+    from urllib.parse import unquote
+    yer_adi = unquote(yer_adi).replace('-', ' ')
+    yer_adi_obj = get_object_or_404(YerAdi, ad__iexact=yer_adi)
     detaylar = YerAdiDetay.objects.filter(yer_adi=yer_adi_obj).order_by('-eklenme_tarihi')
     
     if request.method == 'POST':
