@@ -60,25 +60,26 @@ urlpatterns = [
 
 
 
+    # Spesifik sözlük URL'leri önce gelmeli
+    path('sozluk/', views.sozluk_ana_sayfa, name='sozluk_ana_sayfa'),
     path('sozluk/harf/<str:harf>/', views.sozluk_harf, name='sozluk_harf'),
-    path('sozluk/<path:kelime_adi>/', views.sozluk_kelime_seo, name='sozluk_kelime_seo'),
+    path('sozluk/ara/', views.sozluk_ara, name='sozluk_ara'),
+    path('sozluk/tum-kelimeler/', views.sozluk_tum_kelimeler, name='sozluk_tum_kelimeler'),
     path('sozluk/kelime-sil/<int:kelime_id>/', views.sozluk_kelime_sil, name='sozluk_kelime_sil'),
-    path('sozluk/', views.sozluk_ana_sayfa, name='sozluk_ana_sayfa'),  
     path('sozluk/kelime-duzenle/<int:kelime_id>/', views.sozluk_kelime_duzenle, name='sozluk_kelime_duzenle'),
     path('sozluk/kelime-veri/<int:kelime_id>/', views.sozluk_kelime_veri, name='sozluk_kelime_veri'),
     path('sozluk/detay-ekle/<int:kelime_id>/', views.sozluk_detay_ekle, name='sozluk_detay_ekle'),
     path('sozluk/detay-sil/<int:detay_id>/', views.sozluk_detay_sil, name='sozluk_detay_sil'),
     path('sozluk/detay-duzenle/<int:detay_id>/', views.sozluk_detay_duzenle, name='sozluk_detay_duzenle'),
     path('sozluk/detay-veri/<int:detay_id>/', views.sozluk_detay_veri, name='sozluk_detay_veri'),
-    # SEO-friendly sözlük URL'leri
+    # SEO-friendly sözlük URL'leri sonra gelmeli
     path('sozluk/<path:kelime_adi>/veri/', views.sozluk_kelime_veri_seo, name='sozluk_kelime_veri_seo'),
     path('sozluk/<path:kelime_adi>/sil/', views.sozluk_kelime_sil_seo, name='sozluk_kelime_sil_seo'),
     path('sozluk/<path:kelime_adi>/duzenle/', views.sozluk_kelime_duzenle_seo, name='sozluk_kelime_duzenle_seo'),
     path('sozluk/<path:kelime_adi>/detay-ekle/', views.sozluk_detay_ekle_seo, name='sozluk_detay_ekle_seo'),
     path('sozluk/<path:kelime_adi>/detay-veri/<int:detay_id>/', views.sozluk_detay_veri_seo, name='sozluk_detay_veri_seo'),
     path('sozluk/<path:kelime_adi>/detay-sil/<int:detay_id>/', views.sozluk_detay_sil_seo, name='sozluk_detay_sil_seo'),
-    path('sozluk/ara/', views.sozluk_ara, name='sozluk_ara'),
-    path('sozluk/tum-kelimeler/', views.sozluk_tum_kelimeler, name='sozluk_tum_kelimeler'),
+    path('sozluk/<path:kelime_adi>/', views.sozluk_kelime_seo, name='sozluk_kelime_seo'),
 
 
 
@@ -86,21 +87,21 @@ urlpatterns = [
     path('kisi/ekle/',views.kisi_ekle, name='kisi_ekle'),
     path('kisi/liste/',views.kisi_liste, name='kisi_liste'),
     path('kisi/liste-yukle/', views.kisi_liste_yukle, name='kisi_liste_yukle'),
+    
+    # ID tabanlı URL'ler önce gelmeli
+    path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
+    path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
+    path('kisi/detay-sil/<int:detay_id>/', views.kisi_detay_sil, name='kisi_detay_sil'),
+    path('kisi/detay-duzenle/<int:detay_id>/', views.kisi_detay_duzenle, name='kisi_detay_duzenle'),
+    path('kisi/detay-veri/<int:detay_id>/', views.kisi_detay_veri, name='kisi_detay_veri'),
 
+    # SEO URL'leri sonra gelmeli
     path('kisi/<path:kisi_adi>/', views.kisi_detay_seo, name='kisi_detay_seo'),
     path('kisi/<path:kisi_adi>/duzenle/', views.kisi_duzenle_seo, name='kisi_duzenle_seo'),
     path('kisi/<path:kisi_adi>/sil/', views.kisi_sil_seo, name='kisi_sil_seo'),
     path('kisi/<path:kisi_adi>/detay-ekle/', views.kisi_detay_ekle_seo, name='kisi_detay_ekle_seo'),
     path('kisi/<path:kisi_adi>/detay-veri/<int:detay_id>/', views.kisi_detay_veri_seo, name='kisi_detay_veri_seo'),
     path('kisi/<path:kisi_adi>/detay-sil/<int:detay_id>/', views.kisi_detay_sil_seo, name='kisi_detay_sil_seo'),
-
-
-    
-    path('kisi/sil/<int:kisi_id>/', views.kisi_sil, name='kisi_sil'),
-    path('kisi/detay-ekle/<int:kisi_id>/', views.kisi_detay_ekle, name='kisi_detay_ekle'),
-    path('kisi/detay-sil/<int:detay_id>/', views.kisi_detay_sil, name='kisi_detay_sil'),
-    path('kisi/detay-duzenle/<int:detay_id>/', views.kisi_detay_duzenle, name='kisi_detay_duzenle'),
-    path('kisi/detay-veri/<int:detay_id>/', views.kisi_detay_veri, name='kisi_detay_veri'),
   
     
     # Account management URLs

@@ -216,6 +216,7 @@
                 const kisiId = this.dataset.kisiId;
                 try {
                     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}';
+                    console.log('Silme isteği gönderiliyor, kişi ID:', kisiId);
                     const response = await fetch(`/kisi/sil/${kisiId}/`, {
                         method: 'POST',
                         headers: {
