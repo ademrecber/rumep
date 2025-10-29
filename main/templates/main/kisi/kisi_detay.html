@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{{ kisi.ad }} - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
@@ -221,7 +222,7 @@
                             <strong class="text-muted d-block mb-1">{% trans "Doğum Yeri" %}</strong>
                             <i class="bi bi-geo-alt me-1"></i>{{ kisi.dogum_yeri_display }}
                             {% if kisi.dogum_yeri_secim %}
-                                <a href="{% url 'yer_adi_detay_seo' kisi.dogum_yeri_secim.ad %}" class="btn btn-sm btn-outline-primary ms-2">
+                                <a href="{% url 'yer_adi_detay_seo' kisi.dogum_yeri_secim.ad|url_safe %}" class="btn btn-sm btn-outline-primary ms-2">
                                     <i class="bi bi-info-circle"></i>
                                 </a>
                             {% endif %}
@@ -245,7 +246,7 @@
                         {% if kisi.bagli_grup %}
                         <div class="info-item mb-3">
                             <strong class="text-muted d-block mb-1">{% trans "Bağlı Grup/Kurum" %}</strong>
-                            <a href="{% url 'kisi_detay_seo' kisi.bagli_grup.ad %}" class="text-decoration-none">
+                            <a href="{% url 'kisi_detay_seo' kisi.bagli_grup.ad|url_safe %}" class="text-decoration-none">
                                 <i class="bi bi-diagram-3 me-1"></i>{{ kisi.bagli_grup.ad }}
                                 <span class="badge bg-secondary ms-1">{{ kisi.bagli_grup.get_kisi_turu_display }}</span>
                             </a>
@@ -304,7 +305,7 @@
                             <strong class="text-muted d-block mb-1">{% trans "Üyeler" %}</strong>
                             {% for uye in kisi.uyeler.all %}
                                 <div class="mb-1">
-                                    <a href="{% url 'kisi_detay_seo' uye.ad %}" class="text-decoration-none">
+                                    <a href="{% url 'kisi_detay_seo' uye.ad|url_safe %}" class="text-decoration-none">
                                         <i class="bi bi-person me-1"></i>{{ uye.ad }}
                                     </a>
                                 </div>

@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{{ kisi.ad }} {% trans "Düzenle" %} - Rumep{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
@@ -17,7 +18,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{% url 'kisi_detay_seo' kisi.ad %}" class="text-white text-decoration-none">
+                                <a href="{% url 'kisi_detay_seo' kisi.ad|url_safe %}" class="text-white text-decoration-none">
                                     {{ kisi.ad }}
                                 </a>
                             </li>
@@ -177,7 +178,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg">
                                     <i class="bi bi-check-circle me-2"></i>{% trans "Kaydet" %}
                                 </button>
-                                <a href="{% url 'kisi_detay_seo' kisi.ad %}" class="btn btn-outline-secondary btn-lg">
+                                <a href="{% url 'kisi_detay_seo' kisi.ad|url_safe %}" class="btn btn-outline-secondary btn-lg">
                                     <i class="bi bi-arrow-left me-2"></i>{% trans "İptal" %}
                                 </a>
                             </div>
@@ -251,7 +252,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Kişi başarıyla güncellendi!');
-                        window.location.href = '{% url "kisi_detay_seo" kisi.ad %}';
+                        window.location.href = '{% url "kisi_detay_seo" kisi.ad|url_safe %}';
                     } else {
                         errorDiv.classList.remove('d-none');
                         let errorText = 'Hata oluştu:';

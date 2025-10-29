@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 
 {% block title %}{% trans "Global Arama" %}{% endblock %}
 {% block page_header %}{% trans "Global Arama" %}{% endblock %}
@@ -100,7 +101,7 @@
             <div class="card-body">
                 {% for kisi in kisiler %}
                 <div class="result-item">
-                    <h6><a href="{% url 'kisi_detay_seo' kisi.ad %}">{{ kisi.ad }}</a></h6>
+                    <h6><a href="{% url 'kisi_detay_seo' kisi.ad|url_safe %}">{{ kisi.ad }}</a></h6>
                     <p class="text-muted">{{ kisi.biyografi|truncatechars:100 }}</p>
                     <small>{{ kisi.kullanici.profile.nickname }} • {{ kisi.eklenme_tarihi|date:"d.m.Y" }}</small>
                 </div>
@@ -118,7 +119,7 @@
             <div class="card-body">
                 {% for sarki in sarkilar %}
                 <div class="border-bottom pb-2 mb-2">
-                    <h6><a href="{% url 'sarki_detay_seo' sarki.ad sarki.dil %}" class="text-decoration-none">{{ sarki.ad }}</a></h6>
+                    <h6><a href="{% url 'sarki_detay_seo' sarki.ad|url_safe sarki.dil %}" class="text-decoration-none">{{ sarki.ad }}</a></h6>
                     <p class="text-muted mb-1">{{ sarki.album.kisi.ad }} • {{ sarki.sozler|truncatechars:100 }}</p>
                     <small class="text-muted">{{ sarki.kullanici.profile.nickname }} • {{ sarki.eklenme_tarihi|date:"d.m.Y" }}</small>
                 </div>
@@ -154,7 +155,7 @@
             <div class="card-body">
                 {% for yer in yer_adlari %}
                 <div class="border-bottom pb-2 mb-2">
-                    <h6><a href="{% url 'yer_adi_detay_seo' yer.ad %}" class="text-decoration-none">{{ yer.ad }}</a></h6>
+                    <h6><a href="{% url 'yer_adi_detay_seo' yer.ad|url_safe %}" class="text-decoration-none">{{ yer.ad }}</a></h6>
                     <p class="text-muted mb-1">{{ yer.detay|truncatechars:100 }}</p>
                     <small class="text-muted">{{ yer.kullanici.profile.nickname }} • {{ yer.eklenme_tarihi|date:"d.m.Y" }}</small>
                 </div>

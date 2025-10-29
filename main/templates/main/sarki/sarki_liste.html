@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load url_filters %}
 {% block title %}{% trans "Şarkı Sözleri" %} - {{ album.ad }}{% endblock %}
 {% block content %}
 <div class="container-fluid px-0">
@@ -17,7 +18,7 @@
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="{% url 'sarki_album_liste_seo' album.kisi.ad %}" class="text-white text-decoration-none">
+                                    <a href="{% url 'sarki_album_liste_seo' album.kisi.ad|url_safe %}" class="text-white text-decoration-none">
                                         {{ album.kisi.ad }}
                                     </a>
                                 </li>
@@ -62,7 +63,7 @@
                     
                     <div class="song-languages">
                         {% for sarki in sarki_grubu.dil_versiyonlari.all %}
-                            <a href="{% url 'sarki_detay_seo' sarki.ad sarki.dil %}" class="language-chip">
+                            <a href="{% url 'sarki_detay_seo' sarki.ad|url_safe sarki.dil %}" class="language-chip">
                                 <i class="bi bi-play-circle"></i>
                                 <span>{{ sarki.get_dil_display }}</span>
                             </a>
