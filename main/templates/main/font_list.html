@@ -34,6 +34,27 @@
                     <i class="bi bi-book"></i> Kullanım Talimatları
                 </a>
             </div>
+
+            <!-- Font İndirme Bölümü -->
+            <h4 class="mb-3">Font Dosyaları</h4>
+            <div class="row mb-5">
+                {% for font in fonts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ font.name }}</h5>
+                            <p class="card-text">{{ font.description }}</p>
+                            <p class="text-muted mb-3">
+                                <small>Format: {{ font.format }}</small>
+                            </p>
+                            <a href="{% url 'download_font' font.file %}" class="btn btn-primary w-100">
+                                <i class="bi bi-download"></i> İndir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
             
             <!-- Font Karakterleri Bölümü -->
             <div class="card mb-5">
@@ -65,27 +86,6 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-
-            <!-- Font İndirme Bölümü -->
-            <h4 class="mb-3">Font Dosyaları</h4>
-            <div class="row mb-5">
-                {% for font in fonts %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ font.name }}</h5>
-                            <p class="card-text">{{ font.description }}</p>
-                            <p class="text-muted mb-3">
-                                <small>Format: {{ font.format }}</small>
-                            </p>
-                            <a href="{% url 'download_font' font.file %}" class="btn btn-primary w-100">
-                                <i class="bi bi-download"></i> İndir
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
             </div>
             
             <div class="mt-4">

@@ -96,8 +96,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'rumep.wsgi.application'
 
-import dj_database_url
-
 # Database
 if DEBUG:
     # Yerel geliştirme için SQLite
@@ -108,12 +106,12 @@ if DEBUG:
         }
     }
 else:
-    # Production için PostgreSQL (Render)
+    # Production: Veritabanı kullanılmıyor (Dummy)
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
     }
 
 # Password validation
