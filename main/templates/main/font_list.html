@@ -1,28 +1,75 @@
 {% extends 'main/base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Fontlar" %}{% endblock %}
+{% block title %}Fontlar{% endblock %}
+
+{% block extra_css %}
+<style>
+    .font-char-display {
+        font-family: 'RumepLogosSVG', 'RumepLogosCOLR', sans-serif;
+        font-size: 3rem;
+        line-height: 1;
+        margin-bottom: 1rem;
+        display: block;
+    }
+    .char-card {
+        transition: transform 0.2s;
+    }
+    .char-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <h2>{% trans "Rumep Fontları" %}</h2>
-            <p class="text-muted">{% trans "Projemizde kullanılan fontları indirebilirsiniz" %}</p>
+            <h2 class="mb-4">Rumep Fontları</h2>
             
-            <div class="row">
+            <!-- Font Karakterleri Bölümü -->
+            <div class="card mb-5">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Font Karakterleri</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Aşağıdaki karakterleri kopyalayarak projelerinizde kullanabilirsiniz.</p>
+                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4">
+                        {% for char in font_characters %}
+                        <div class="col">
+                            <div class="card h-100 char-card text-center">
+                                <div class="card-body">
+                                    <span class="font-char-display">{{ char.char }}</span>
+                                    <button class="btn btn-outline-primary btn-sm w-100 copy-char-btn" 
+                                            data-char="{{ char.char }}">
+                                        <i class="bi bi-clipboard"></i> Kopyala
+                                    </button>
+                                </div>
+                                <div class="card-footer text-muted small">
+                                    {{ char.code }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Font İndirme Bölümü -->
+            <h4 class="mb-3">Font Dosyaları</h4>
+            <div class="row mb-5">
                 {% for font in fonts %}
                 <div class="col-md-4 mb-4">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">{{ font.name }}</h5>
                             <p class="card-text">{{ font.description }}</p>
-                            <p class="text-muted">
-                                <small>{% trans "Format" %}: {{ font.format }}</small>
+                            <p class="text-muted mb-3">
+                                <small>Format: {{ font.format }}</small>
                             </p>
-                            <a href="{% url 'download_font' font.file %}" 
-                               class="btn btn-primary">
-                                <i class="fas fa-download"></i> {% trans "İndir" %}
+                            <a href="{% url 'download_font' font.file %}" class="btn btn-primary w-100">
+                                <i class="bi bi-download"></i> İndir
                             </a>
                         </div>
                     </div>
@@ -31,9 +78,9 @@
             </div>
             
             <div class="mt-4">
-                <h4>{% trans "Kullanım Talimatları" %}</h4>
+                <h4>Kullanım Talimatları</h4>
                 <div class="alert alert-info">
-                    <h6>{% trans "CSS'de Kullanım:" %}</h6>
+                    <h6>CSS'de Kullanım:</h6>
                     <pre><code>@font-face {
     font-family: 'RumepLogos';
     src: url('RumepLogosSVG.woff2') format('woff2'),
@@ -48,4 +95,36 @@
         </div>
     </div>
 </div>
+
+<!-- Toast for copy feedback -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Kopyalandı!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toastEl = document.getElementById('copyToast');
+        const toast = new bootstrap.Toast(toastEl);
+
+        // Karakter kopyalama
+        document.querySelectorAll('.copy-char-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const char = this.getAttribute('data-char');
+                navigator.clipboard.writeText(char).then(() => {
+                    document.querySelector('.toast-body').textContent = 'Karakter kopyalandı: ' + char;
+                    toast.show();
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

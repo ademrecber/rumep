@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',  # Sadece bir kez
     'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'django.contrib.sitemaps',  # Sitemap için eklendi
-    'social_django',
+    # 'django.contrib.humanize',
+    # 'django.contrib.sitemaps',  # Sitemap için eklendi
+    # 'social_django',
     'csp',
     'main',
 ]
@@ -51,15 +51,15 @@ MIDDLEWARE = [
     'main.middleware.SecurityMiddleware',  # Güvenlik middleware'i
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Added for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # i18n için eklendi
+    # 'django.middleware.locale.LocaleMiddleware',  # i18n için eklendi
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',  # django-csp middleware'ini ekleyin
-    'main.middleware.SocialAuthExceptionMiddleware',
-    'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
+    # 'main.middleware.SocialAuthExceptionMiddleware',
+    # 'main.middleware.UserLanguageMiddleware',  # Dil için eklendi
     'main.middleware.CSRFFailureMiddleware',  # CSRF hata yönetimi
 ]
 
@@ -71,7 +71,7 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_AGE = 3600  # 1 saat
 CSRF_TOKEN_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 CSRF_TRUSTED_ORIGINS = ['https://*.render.com', 'https://rumep.net']
-CSRF_FAILURE_VIEW = 'main.views.views.csrf_failure'
+# CSRF_FAILURE_VIEW = 'main.views.views.csrf_failure'
 
 ROOT_URLCONF = 'rumep.urls'
 
@@ -86,15 +86,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.notification_count',
-                'main.context_processors.user_role_context',
-                'main.context_processors.sidebar_data',
+                # 'main.context_processors.notification_count',
+                # 'main.context_processors.user_role_context',
+                # 'main.context_processors.sidebar_data',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'rumep.wsgi.application'
+
+import dj_database_url
 
 # Database
 if DEBUG:
@@ -106,16 +108,12 @@ if DEBUG:
         }
     }
 else:
-    # Production için PostgreSQL
+    # Production için PostgreSQL (Render)
     DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('ENGINE'),
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
-        }
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600
+        )
     }
 
 # Password validation
@@ -145,7 +143,7 @@ LANGUAGE_CODE = 'tr'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-LOCALE_PATHS = [BASE_DIR / 'locale']
+# LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # Static files
 STATIC_URL = '/static/'
@@ -167,8 +165,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Social Auth settings
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 

@@ -1,450 +1,61 @@
-{% load static i18n %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'tr' }}">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block meta_description %}Rumep{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Rumep Fontları{% endblock %}">
     <meta name="theme-color" content="#0d6efd">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% csrf_token %}
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <meta name="google-adsense-account" content="ca-pub-4275159020382475">
     
-    <!-- PWA Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Rumep">
-    <meta name="msapplication-TileColor" content="#0d6efd">
-    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4275159020382475"
+     crossorigin="anonymous"></script>
+
     <title>Rumep - {% block title %}{% endblock %}</title>
     
-    <!-- Performance optimizations -->
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Resource hints -->
-    <link rel="preload" href="{% static 'main/css/styles.css' %}" as="style">
-    <link rel="preload" href="{% static 'main/js/performance.js' %}" as="script">
-    <!-- PWA support -->
-    <link rel="manifest" href="{% static 'main/manifest.json' %}">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="{% static 'main/css/styles.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/kisi.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/modern.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/mentions.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/share.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/search.css' %}" rel="stylesheet">
     <link href="{% static 'main/css/fonts.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/font-keyboard.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/layout.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/responsive-fixes.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/social-links.css' %}" rel="stylesheet">
-    
-
-    
-    <!-- Sayfa özel CSS dosyaları -->
-    {% block extra_head %}{% endblock %}
-    {% block extra_css %}{% endblock %}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://rumep.net/static/img/rumep.png">
-    <link rel="shortcut icon" type="image/png" href="https://rumep.net/static/img/rumep.png">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Rumep - {% block twitter_title %}Kürtçe Sosyal Platform{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}Rumep - Kürtçe sözlük, şarkı sözleri, atasözleri ve daha fazlası. Kürt kültürünün dijital platformu.{% endblock %}">
-    <meta name="twitter:image" content="https://rumep.net/static/img/rumep.png">
-
-    <!-- Open Graph (Facebook, LinkedIn vb.) -->
-    <meta property="og:title" content="Rumep - {% block og_title %}Kürtçe Sosyal Platform{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Rumep - Kürtçe sözlük, şarkı sözleri, atasözleri ve daha fazlası. Kürt kültürünün dijital platformu.{% endblock %}">
-    <meta property="og:image" content="https://rumep.net/static/img/rumep.png">
-    <meta property="og:url" content="https://rumep.net{% block og_url %}{% endblock %}">
-    <meta property="og:type" content="website">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JW7ZSY31H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-6JW7ZSY31H');
-    </script>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4275159020382475"
-         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-</head>
-<body class="bg-white">
-    <!-- Progress Bar -->
-    <div class="progress-bar-container position-fixed top-0 start-0 w-100" style="z-index: 9999; height: 3px;">
-        <div class="progress-bar bg-primary" id="pageProgressBar" style="height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-    </div>
-    <!-- Modern Mobil Header -->
-    <div class="d-md-none mobile-header">
-        <div class="d-flex justify-content-between align-items-center h-100 px-3">
-            <button class="btn btn-link text-dark p-0" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
-                <i class="bi bi-list fs-4"></i>
-            </button>
-            <h5 class="mb-0 fw-bold text-primary">Rumep</h5>
-            <div class="d-flex align-items-center gap-2">
-            </div>
-        </div>
-    </div>
     
-    <!-- Modern Offcanvas Sidebar -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Rumep</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body p-0">
-            <ul class="nav flex-column p-3">
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> Ferheng</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> Kes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> Gotinên Stranan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> Gotinên Pêşiyan û Îdîom</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> Navên Cîhan</a>
-                </li>
-                {% if user.is_authenticated %}
-                <li class="nav-item"><hr class="my-2"></li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'user_settings' %}active{% endif %}" href="{% url 'user_settings' %}"><i class="bi bi-gear me-2"></i> Mîhengî</a>
-                </li>
-                {% endif %}
+    {% block extra_head %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-white d-flex flex-column min-vh-100">
+    
+    <div class="container-fluid flex-grow-1">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© {% now "Y" %} Rumep.</span>
+            <ul class="list-inline mb-0 mt-2">
+                <li class="list-inline-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted">Ana Sayfa</a></li>
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item"><a href="{% url 'about' %}" class="text-decoration-none text-muted">Hakkımızda</a></li>
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item"><a href="{% url 'privacy_policy' %}" class="text-decoration-none text-muted">Gizlilik Politikası</a></li>
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item"><a href="{% url 'terms_of_service' %}" class="text-decoration-none text-muted">Kullanım Şartları</a></li>
+                <li class="list-inline-item">|</li>
+                <li class="list-inline-item"><a href="{% url 'contact' %}" class="text-decoration-none text-muted">İletişim</a></li>
             </ul>
         </div>
-    </div>
-    <div class="container-fluid layout-container">
-        <div class="row">
-            <!-- Sol Sidebar -->
-            <div class="col-xl-3 col-lg-3 d-none d-md-block left-fixed-area p-0">
-                <div class="sidebar" id="sidebar">
-                <div class="d-flex justify-content-between align-items-center p-3">
-                    <h2 class="mb-0"><a href="/" class="text-dark text-decoration-none">Rumep</a></h2>
-                    <button class="btn btn-link text-muted d-md-none" onclick="toggleSidebar()" title="{% trans 'Kapat' %}">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
-                </div>
-                <ul class="nav flex-column p-3" style="font-size: 1.1rem;">
-                    <li class="nav-item d-none d-md-block">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'popular' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house me-2"></i> {% trans "Rûpela Sereke" %}</a>
-                    </li>
-                    <li class="nav-item d-none d-md-block">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'categories_page' %}active{% endif %}" href="{% url 'categories_page' %}"><i class="bi bi-brightness-high me-2"></i> Çand</a>
-                    </li>
-                    <li class="nav-item d-none d-md-block">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'global_search' %}active{% endif %}" href="{% url 'global_search' %}"><i class="bi bi-search me-2"></i> {% trans "Arama" %}</a>
-                    </li>
-                    <li class="nav-item d-none d-md-block">
-                        {% if user.is_authenticated %}
-                            <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> {% trans "Profil" %}</a>
-                        {% else %}
-                            <a class="nav-link" href="{% url 'login_page' %}"><i class="bi bi-person me-2"></i> {% trans "Giriş Yap" %}</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item d-none d-md-block">
-                        {% if user.is_authenticated %}
-                            <a class="nav-link {% if request.resolver_match.url_name == 'notifications' %}active{% endif %} position-relative" href="{% url 'notifications' %}">
-                                <i class="bi bi-bell me-2"></i> {% trans "Bildirimler" %}
-                                {% if unread_notifications_count > 0 %}
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
-                                        {{ unread_notifications_count }}
-                                    </span>
-                                {% endif %}
-                            </a>
-                        {% else %}
-                            <a class="nav-link" href="{% url 'login_page' %}"><i class="bi bi-bell me-2"></i> {% trans "Bildirimler" %}</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item d-none d-md-block"><hr class="my-2"></li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sozluk_ana_sayfa' %}active{% endif %}" href="{% url 'sozluk_ana_sayfa' %}"><i class="bi bi-book me-2"></i> {% trans "Sözlük" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'kisi_liste' %}active{% endif %}" href="{% url 'kisi_liste' %}"><i class="bi bi-people me-2"></i> {% trans "Kişiler" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'sarki_sozleri' %}active{% endif %}" href="{% url 'sarki_sozleri' %}"><i class="bi bi-music-note-list me-2"></i> {% trans "Şarkı Sözleri" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'atasozu_deyim' %}active{% endif %}" href="{% url 'atasozu_deyim' %}"><i class="bi bi-quote me-2"></i> {% trans "Atasözü ve Deyimler" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'yer_adlari_anasayfa' %}active{% endif %}" href="{% url 'yer_adlari_anasayfa' %}"><i class="bi bi-geo-alt me-2"></i> {% trans "Yer Adları" %}</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item d-none d-md-block"><hr class="my-2"></li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'user_settings' %}active{% endif %}" href="{% url 'user_settings' %}"><i class="bi bi-gear me-2"></i> {% trans "Ayarlar" %}</a>
-                    </li>
-                    {% endif %}
-                </ul>
-                
-                {% if user.is_authenticated and user.profile and request.resolver_match.url_name == 'home' %}
-                <div class="p-3 d-none d-md-block">
-                    <button class="btn btn-primary w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#createTopicModal">
-                        <i class="bi bi-plus-lg me-2"></i>{% trans "Başlık Aç" %}
-                    </button>
-                </div>
-                {% endif %}
+    </footer>
 
-                </div>
-            </div>
-
-            <!-- Orta Ana Alan -->
-            <div class="col-xl-6 col-lg-6 col-md-12 center-main-area p-0">
-                <!-- Üst Sekme Alanı - Mobilde sabit değil -->
-                <div class="top-tabs-area">
-                    {% block page_tabs %}
-                    <!-- Varsayılan sayfa başlığı -->
-                    <div class="p-3">
-                        <h4 class="mb-0">{% block page_header %}Sayfa{% endblock %}</h4>
-                    </div>
-                    {% endblock %}
-                </div>
-                
-                <!-- Sayfa İçeriği -->
-                <div class="page-content">
-                    {% if request.resolver_match.url_name == 'post_detail' %}
-                    <a href="{% url request.session.return_page|default:'home' %}#post-{{ request.resolver_match.kwargs.pk }}" class="btn text-muted p-0 mb-3 back-arrow" title="{% trans 'Geri Dön' %}">
-                        <i class="bi bi-arrow-left fs-3"></i>
-                    </a>
-                    {% endif %}
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-
-            <!-- Sağ Sidebar -->
-            {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'categories' or request.resolver_match.url_name == 'popular' or request.resolver_match.url_name == 'global_search' %}
-            <div class="col-xl-3 col-lg-3 d-none d-lg-block right-fixed-area">
-            <!-- Popüler Başlıklar Kartı -->
-            <div class="card mb-3 popular-topics-card">
-                <div class="card-body p-4">
-                    <h5 class="card-title mb-4 fw-bold">{% trans "Popüler Başlıklar" %}</h5>
-                    <div class="trending-topics">
-                        {% for topic in sidebar_popular_topics %}
-                        <div class="topic-item mb-3">
-                            <a href="{% url 'topic_detail' topic.slug %}" class="text-decoration-none text-dark">
-                                <div class="d-flex justify-content-between align-items-start mb-1">
-                                    <h6 class="mb-1">{{ topic.title|truncatechars:40 }}</h6>
-                                    <span class="badge bg-primary">{{ topic.total_entries }}</span>
-                                </div>
-                                <small class="text-muted">entry</small>
-                            </a>
-                        </div>
-                        {% empty %}
-                        <p class="text-muted text-center py-3">{% trans "Henüz popüler başlık yok" %}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="{% url 'popular' %}" class="btn btn-outline-primary btn-sm">{% trans "Daha Fazla Göster" %}</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Aktif Yazarlar Kartı -->
-            <div class="card mb-3 active-authors-card">
-                <div class="card-body p-4">
-                    <h5 class="card-title mb-4 fw-bold">{% trans "Aktif Yazarlar" %}</h5>
-                    <div class="suggested-authors">
-                        {% for author in sidebar_active_authors %}
-                        <div class="author-item d-flex justify-content-between align-items-center mb-3">
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">{{ author.nickname }}</h6>
-                                <div class="text-muted small">@{{ author.username }}</div>
-                                <div class="text-muted small mt-1">
-                                    <span class="me-2">{{ author.topic_count }} topic</span>
-                                    <span>{{ author.entry_count }} entry</span>
-                                </div>
-                            </div>
-                            {% if user.is_authenticated and user != author.user %}
-                            <button class="btn btn-sm btn-outline-primary follow-btn" data-username="{{ author.username }}">{% trans "Takip Et" %}</button>
-                            {% endif %}
-                        </div>
-                        {% empty %}
-                        <p class="text-muted text-center py-3">{% trans "Henüz aktif yazar yok" %}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="#" class="btn btn-outline-primary btn-sm">{% trans "Daha Fazla Göster" %}</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mevcut katkı sağlayanlar kartı -->
-            {% if request.GET.sekme == 'katkilar' %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h6 class="mb-3">{% trans "En Çok Katkı Sağlayanlar" %}</h6>
-                        <div class="liderler-container" style="max-height: 300px; overflow-y: auto;">
-                            {% for lider in liderler %}
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <a href="{% url 'profile_detail' lider.username %}" class="text-decoration-none">
-                                            <strong>{{ lider.nickname }}</strong>  
-                                            <span class="text-muted">@{{ lider.username }}</span>
-                                        </a>
-                                        <div class="mt-1">
-                                            <span class="badge bg-warning text-dark">⭐ {{ lider.katki_puani }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            
-            <!-- Legal Links -->
-            <div class="card mb-3">
-                <div class="card-body p-3">
-                    <h6 class="card-title mb-3">{% trans "Yasal" %}</h6>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="{% url 'privacy_policy' %}" class="text-decoration-none small">{% trans "Gizlilik Politikası" %}</a>
-                        <a href="{% url 'terms_of_service' %}" class="text-decoration-none small">{% trans "Kullanım Şartları" %}</a>
-                        <a href="mailto:info@rumep.net" class="text-decoration-none small">{% trans "İletişim" %}</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Yardım Accordion -->
-            <div class="card mb-3">
-                <div class="card-body p-3">
-                    <h6 class="card-title mb-3">{% trans "Yardım" %}</h6>
-                    <div class="accordion accordion-flush" id="helpAccordion">
-                        <div class="accordion-item border-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse" data-bs-target="#help1">
-                                    <small>{% trans "Nasıl başlık açarım?" %}</small>
-                                </button>
-                            </h2>
-                            <div id="help1" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
-                                <div class="accordion-body p-2">
-                                    <small class="text-muted">{% trans "Başlık Aç butonuna tıklayarak yeni başlık açabilirsiniz." %}</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item border-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse" data-bs-target="#help2">
-                                    <small>{% trans "Nasıl oy veririm?" %}</small>
-                                </button>
-                            </h2>
-                            <div id="help2" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
-                                <div class="accordion-body p-2">
-                                    <small class="text-muted">{% trans "Başlıkların yanındaki ok butonlarına tıklayarak oy verebilirsiniz." %}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- Modern Topic Ekle Butonu - Mobil -->
-    {% if user.is_authenticated and user.profile and request.resolver_match.url_name == 'home' %}
-    <button class="mobile-fab d-md-none" data-bs-toggle="modal" data-bs-target="#createTopicModal">
-        <i class="bi bi-pencil-square"></i>
-    </button>
-    {% endif %}
-    
-
-
-    <!-- Modern Alt Navigasyon Çubuğu -->
-    <nav class="bottom-nav d-md-none">
-        <a href="{% url 'home' %}" class="nav-item {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'popular' or request.resolver_match.url_name == 'popular_period' %}active{% endif %}">
-            <i class="bi bi-fire"></i>
-            <span class="nav-label">{% trans "Gündem" %}</span>
-        </a>
-        <a href="{% url 'categories_page' %}" class="nav-item {% if request.resolver_match.url_name == 'categories_page' %}active{% endif %}">
-            <i class="bi bi-brightness-high"></i>
-            <span class="nav-label">Çand</span>
-        </a>
-        <a href="{% url 'global_search' %}" class="nav-item {% if request.resolver_match.url_name == 'global_search' %}active{% endif %}">
-            <i class="bi bi-search"></i>
-            <span class="nav-label">{% trans "Ara" %}</span>
-        </a>
-        <a href="{% if user.is_authenticated %}{% url 'notifications' %}{% else %}{% url 'login_page' %}{% endif %}" class="nav-item {% if request.resolver_match.url_name == 'notifications' %}active{% endif %} position-relative">
-            <i class="bi bi-bell"></i>
-            <span class="nav-label">{% trans "Bildirimler" %}</span>
-            {% if user.is_authenticated and unread_notifications_count > 0 %}
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                    {{ unread_notifications_count }}
-                </span>
-            {% endif %}
-        </a>
-        <a href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login_page' %}{% endif %}" class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
-            <i class="bi bi-person-fill"></i>
-            <span class="nav-label">{% trans "Profil" %}</span>
-        </a>
-    </nav>
-
-    <!-- Toast Container -->
-    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11000;">
-        <!-- Success Toast -->
-        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi bi-check-circle me-2"></i><span id="successMessage"></span>
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-        <!-- Error Toast -->
-        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi bi-exclamation-triangle me-2"></i><span id="errorMessage"></span>
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-        <!-- Info Toast -->
-        <div id="infoToast" class="toast align-items-center text-bg-info border-0" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi bi-info-circle me-2"></i><span id="infoMessage"></span>
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    </div>
-
-    <script src="{% static 'main/js/base.js' %}"></script>
-    <script src="{% static 'main/js/bootstrap-features.js' %}"></script>
-    <script src="{% static 'main/js/follow.js' %}"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     {% block extra_scripts %}{% endblock %}
-    <!-- Bootstrap with SRI -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <!-- Load social media widgets only when needed -->
-    {% if has_social_embeds %}
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script async src="https://www.instagram.com/embed.js"></script>
-    {% endif %}
-    
-
-    
-
-
+</body>
+</html>

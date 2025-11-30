@@ -1,47 +1,26 @@
 {% extends 'main/base.html' %}
-{% load i18n %}
 
-{% block title %}{% trans "Kullanım Şartları" %}{% endblock %}
-{% block page_header %}{% trans "Kullanım Şartları" %}{% endblock %}
+{% block title %}Kullanım Şartları{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body p-4">
-                    <h1 class="mb-4">{% trans "Kullanım Şartları" %}</h1>
-                    
-                    <h3>{% trans "Genel Kurallar" %}</h3>
-                    <p>Rumep platformunu kullanarak aşağıdaki kurallara uymayı kabul ediyorsunuz:</p>
-                    
-                    <h3>{% trans "İçerik Kuralları" %}</h3>
-                    <ul>
-                        <li>Paylaştığınız içerikler yasal olmalıdır</li>
-                        <li>Telif hakkı ihlali yapılamaz</li>
-                        <li>Nefret söylemi ve hakaret yasaktır</li>
-                        <li>Spam ve reklam içerikleri yasaktır</li>
-                    </ul>
-                    
-                    <h3>{% trans "Hesap Sorumluluğu" %}</h3>
-                    <p>Kullanıcılar hesaplarının güvenliğinden sorumludur. Şifrenizi güvenli tutun ve başkalarıyla paylaşmayın.</p>
-                    
-                    <h3>{% trans "Moderasyon" %}</h3>
-                    <p>Platform yöneticileri, kurallara uymayan içerikleri kaldırma ve hesapları askıya alma hakkına sahiptir.</p>
-                    
-                    <h3>{% trans "Fikri Mülkiyet" %}</h3>
-                    <p>Paylaştığınız içeriklerin telif haklarına saygı gösterilmelidir. Kendi oluşturduğunuz içerikler üzerindeki haklarınız korunur.</p>
-                    
-                    <h3>{% trans "Sorumluluk Reddi" %}</h3>
-                    <p>Platform, kullanıcı içeriklerinden sorumlu değildir. İçerikler kullanıcıların kendi görüşlerini yansıtır.</p>
-                    
-                    <h3>{% trans "İletişim" %}</h3>
-                    <p>Kullanım şartları hakkında sorularınız için: <a href="mailto:info@rumep.net">info@rumep.net</a></p>
-                    
-                    <p class="text-muted mt-4"><small>Son güncelleme: {{ "now"|date:"d.m.Y" }}</small></p>
-                </div>
-            </div>
+        <div class="col-md-8">
+            <h1 class="mb-4">Kullanım Şartları</h1>
+
+            <h3>1. Kabul</h3>
+            <p>Bu web sitesine erişerek ve kullanarak, bu kullanım şartlarını kabul etmiş olursunuz.</p>
+
+            <h3>2. Font Kullanımı</h3>
+            <p>Sitemizde sunulan fontlar, ilgili lisans koşulları çerçevesinde indirilebilir ve kullanılabilir. İndirdiğiniz fontların lisans dosyalarını incelemeniz önerilir.</p>
+
+            <h3>3. Sorumluluk Reddi</h3>
+            <p>Bu sitedeki materyaller "olduğu gibi" sağlanmaktadır. Rumep, satılabilirlik, belirli bir amaca uygunluk veya fikri mülkiyet haklarının ihlal edilmemesi dahil ancak bunlarla sınırlı olmamak üzere, açık veya zımni hiçbir garanti vermez.</p>
+
+            <h3>4. Değişiklikler</h3>
+            <p>Rumep, bu kullanım şartlarını dilediği zaman değiştirme hakkını saklı tutar.</p>
         </div>
     </div>
 </div>
 {% endblock %}
+
