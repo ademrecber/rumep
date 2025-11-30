@@ -110,6 +110,10 @@ def font_list(request):
         'font_characters': font_characters
     })
 
+def usage_guide(request):
+    """Kullanım Kılavuzu sayfası"""
+    return render(request, 'main/usage_guide.html')
+
 def privacy_policy(request):
     """Gizlilik Politikası sayfası"""
     return render(request, 'main/privacy.html')
