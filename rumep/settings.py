@@ -65,7 +65,7 @@ MIDDLEWARE = [
 
 # CSRF Settings
 CSRF_COOKIE_SECURE = True  # Production için True
-CSRF_COOKIE_HTTPONLY = False  # JavaScript erişimi için False
+CSRF_COOKIE_HTTPONLY = True  # JavaScript erişimi için True
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_AGE = 3600  # 1 saat
@@ -217,23 +217,22 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Session Security
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_AGE = 86400  # 24 saat
+SECURE_SSL_REDIRECT = False # HTTPS yönlendirmesi tamamen kapatıldı (geçici olarak)
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
-# Social Auth Security
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['openid', 'email', 'profile']
 SOCIAL_AUTH_GOOGLE_OAUTH2_USE_DEPRECATED_API = False
 
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
+        'default-src': ["'self'"],
         'script-src': [
             "'self'",
-            "'unsafe-inline'",
-            "'unsafe-eval'",
+            "'unsafe-inline'", # Gerekli (bazı JS kodları için)
+            "'unsafe-eval'", # Gerekli (bazı kütüphaneler için)
             "https://cdn.jsdelivr.net",
             "https://platform.twitter.com",
             "https://www.instagram.com",
@@ -283,5 +282,7 @@ CONTENT_SECURITY_POLICY = {
             "https://ep2.adtrafficquality.google",
             "https://www.google.com",
         ],
+        'object-src': ["'none'"],
+        'base-uri': ["'self'"],
     }
 }
