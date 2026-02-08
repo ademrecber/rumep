@@ -1,39 +1,27 @@
-﻿<!doctype html>
-<html lang="tr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rumep Spor - Gizlilik Politikasi</title>
-  <style>
+﻿{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Rumep Spor - Gizlilik Politikası{% endblock %}
+
+{% block extra_css %}
+<style>
     :root {
-      --bg1: #0b1220;
-      --bg2: #0f1b2d;
       --accent: #22c55e;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --card: rgba(17, 24, 39, 0.85);
-      --border: rgba(255, 255, 255, 0.08);
+      --card-bg: rgba(17, 24, 39, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background: radial-gradient(1200px 800px at 10% -10%, #1f2937 0%, transparent 60%),
-                  radial-gradient(900px 600px at 100% 0%, #0b4b2e 0%, transparent 55%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
-      min-height: 100vh;
-    }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 48px 20px 80px; position: relative; }
-    .hero {
+    
+    .privacy-hero {
       padding: 28px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(15,23,42,0.4));
       border-radius: 14px;
       position: relative;
       overflow: hidden;
+      margin-bottom: 2rem;
     }
-    .hero::after {
+    
+    .privacy-hero::after {
       content: "";
       position: absolute;
       right: -80px;
@@ -44,81 +32,68 @@
       border: 2px dashed rgba(34,197,94,0.35);
       opacity: 0.6;
     }
-    h1 { margin: 0 0 6px; font-size: 30px; }
-    .muted { color: var(--muted); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .card {
-      border: 1px solid var(--border);
-      background: var(--card);
+    
+    .tag { display: inline-block; font-size: 12px; color: #0b1220; background: var(--accent); padding: 4px 8px; border-radius: 999px; font-weight: 600; margin-bottom: 0.5rem; }
+    
+    .spor-card {
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
       padding: 16px;
       border-radius: 12px;
+      height: 100%;
     }
-    .tag { display: inline-block; font-size: 12px; color: #0b1220; background: var(--accent); padding: 4px 8px; border-radius: 999px; font-weight: 600; }
-    .field {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
-      opacity: 0.25;
-    }
-    .line {
+    
+    .custom-link { color: #a7f3d0; text-decoration: none; font-weight: 600; }
+    .custom-link:hover { color: #34d399; text-decoration: underline; }
+    
+    .separator-line {
       height: 2px;
       background: linear-gradient(90deg, transparent, rgba(34,197,94,0.7), transparent);
       margin: 24px 0;
     }
-    a { color: #a7f3d0; }
-  </style>
-</head>
-<body>
-  <div class="field"></div>
-  <div class="wrap">
-    <div class="hero">
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-8">
+    <div class="privacy-hero">
       <span class="tag">Rumep Spor</span>
-      <h1>Gizlilik Politikasi</h1>
-      <p class="muted">Son guncelleme: 2026-02-08</p>
-      <div style="margin-top: 15px;">
-        <a href="{% url 'rumep_spor' %}" style="color: var(--accent); text-decoration: none; font-weight: 600;">
-          &larr; Ana Sayfaya Don
+      <h1 class="text-3xl font-bold text-white mb-2">Gizlilik Politikası</h1>
+      <p class="text-gray-400 text-sm">Son güncelleme: 2026-02-08</p>
+      <div class="mt-4">
+        <a href="{% url 'rumep_spor' %}" class="custom-link">
+          &larr; Rumep Spor'a Dön
         </a>
       </div>
     </div>
 
-    <div class="line"></div>
+    <div class="separator-line"></div>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Toplanan Veriler</h2>
-        <p>Uygulama; mac verileri, bildirim tercihleri ve performans gelistirme amaciyla sinirli teknik veriler toplayabilir.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">Toplanan Veriler</h2>
+        <p class="text-gray-400">Uygulama; maç verileri, bildirim tercihleri ve performans geliştirme amacıyla sınırlı teknik veriler toplayabilir.</p>
       </div>
-      <div class="card">
-        <h2>Bildirimler</h2>
-        <p>Mac gelismeleri ve duyurular icin push bildirimleri gonderilebilir. Bildirimleri cihaz ayarlarindan kapatabilirsiniz.</p>
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">Bildirimler</h2>
+        <p class="text-gray-400">Maç gelişmeleri ve duyurular için push bildirimleri gönderilebilir. Bildirimleri cihaz ayarlarından kapatabilirsiniz.</p>
       </div>
-      <div class="card">
-        <h2>Ucuncu Taraf Servisler</h2>
-        <p>Uygulama Firebase ve API-Football servislerini kullanir. Bu servisler kendi gizlilik politikalarina tabidir.</p>
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">Üçüncü Taraf Servisler</h2>
+        <p class="text-gray-400">Uygulama Firebase ve API-Football servislerini kullanır. Bu servisler kendi gizlilik politikalarına tabidir.</p>
       </div>
-      <div class="card">
-        <h2>Veri Saklama</h2>
-        <p>Veriler yalnizca hizmet sunumu ve iyilestirme amaciyla saklanir. Gerektiginde silme taleplerinizi degerlendiririz.</p>
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">Veri Saklama</h2>
+        <p class="text-gray-400">Veriler yalnızca hizmet sunumu ve iyileştirme amacıyla saklanır. Gerektiğinde silme taleplerinizi değerlendiririz.</p>
       </div>
-      <div class="card">
-        <h2>Haklariniz</h2>
-        <p>Kisisel verilerinizle ilgili sorulariniz icin bize ulasabilirsiniz. Talep uzerine duzeltme veya silme yapilabilir.</p>
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">Haklarınız</h2>
+        <p class="text-gray-400">Kişisel verilerinizle ilgili sorularınız için bize ulaşabilirsiniz. Talep üzerine düzeltme veya silme yapılabilir.</p>
       </div>
-      <div class="card">
-        <h2>Iletisim</h2>
-        <p>Gizlilikle ilgili sorular icin: <strong>support@rumepspor.com</strong></p>
+      <div class="spor-card">
+        <h2 class="text-xl font-bold text-white mb-2">İletişim</h2>
+        <p class="text-gray-400">Gizlilikle ilgili sorular için: <strong>support@rumepspor.com</strong></p>
       </div>
     </div>
-  </div>
-</body>
-</html>
+</div>
+{% endblock %}

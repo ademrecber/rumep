@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Çerez Politikası{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Çerez Politikası
+        </h1>
+        <p class="text-slate-400">Son Güncelleme: {% now "d F Y" %}</p>
+    </div>
+
+    <!-- Content -->
+    <div class="glass-card rounded-2xl p-8 md:p-12">
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300">
+            <h3 class="text-xl font-bold text-white mb-4">1. Çerez Nedir?</h3>
+            <p class="mb-6">
+                Çerezler (cookies), bir web sitesini ziyaret ettiğinizde bilgisayarınıza veya mobil cihazınıza kaydedilen küçük metin dosyalarıdır. Bu dosyalar, sitenin tercihlerinizi hatırlamasını ve size daha iyi bir deneyim sunmasını sağlar.
+            </p>
+
+            <h3 class="text-xl font-bold text-white mb-4">2. Hangi Çerezleri Kullanıyoruz?</h3>
+            <div class="space-y-4 mb-6">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <h4 class="font-bold text-white mb-2">Zorunlu Çerezler</h4>
+                    <p class="text-sm">Web sitesinin düzgün çalışması için gerekli olan teknik çerezlerdir. Bu çerezler olmadan sitenin bazı bölümleri kullanılamaz.</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <h4 class="font-bold text-white mb-2">Performans ve Analiz Çerezleri</h4>
+                    <p class="text-sm">Sitemizi nasıl kullandığınızı analiz ederek performansı artırmamıza yardımcı olur. Hangi sayfaların en çok ziyaret edildiğini anlamamızı sağlar.</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <h4 class="font-bold text-white mb-2">Reklam (Hedefleme) Çerezleri</h4>
+                    <p class="text-sm">Google AdSense gibi iş ortaklarımız tarafından, ilgi alanlarınıza göre size uygun reklamlar göstermek için kullanılır.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-4">3. Çerezleri Nasıl Kontrol Edebilirsiniz?</h3>
+            <p class="mb-6">
+                Çerez tercihlerini dilediğiniz zaman tarayıcı ayarlarınızdan değiştirebilirsiniz. Çerezleri silebilir veya engelleyebilirsiniz, ancak bu durumda sitemizin bazı özellikleri düzgün çalışmayabilir.
+            </p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" class="text-indigo-400 hover:text-indigo-300">Google Chrome</a></li>
+                <li><a href="https://support.mozilla.org/tr/kb/cerezler-web-sitelerinin-bilgisayarinizda-depoladigi-bilgiler" target="_blank" class="text-indigo-400 hover:text-indigo-300">Mozilla Firefox</a></li>
+                <li><a href="https://support.apple.com/tr-tr/guide/safari/sfri11471/mac" target="_blank" class="text-indigo-400 hover:text-indigo-300">Safari</a></li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-white mb-4">4. İletişim</h3>
+            <p>
+                Çerez politikamızla ilgili sorularınız için <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">İletişim</a> sayfamızdan bize ulaşabilirsiniz.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

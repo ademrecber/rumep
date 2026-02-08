@@ -3,26 +3,67 @@
 {% block title %}Gizlilik Politikası{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4">Gizlilik Politikası</h1>
-            <p>Son Güncelleme: {% now "d F Y" %}</p>
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Gizlilik Politikası
+        </h1>
+        <p class="text-slate-400">Son Güncelleme: {% now "d F Y" %}</p>
+    </div>
 
-            <h3>1. Toplanan Bilgiler</h3>
-            <p>Sitemizi ziyaret ettiğinizde, tarayıcınız tarafından gönderilen standart günlük bilgilerini (IP adresi, tarayıcı türü, erişim zamanları vb.) otomatik olarak alabiliriz. Ayrıca, Google AdSense gibi üçüncü taraf reklam ağları aracılığıyla çerezler (cookies) kullanılarak veri toplanabilir.</p>
+    <!-- Content -->
+    <div class="glass-card rounded-2xl p-8 md:p-12">
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300">
+            <p class="lead text-white font-medium mb-6">
+                Rumep ("biz", "bizi" veya "bizim") olarak, https://rumep.net ("Site") adresindeki ziyaretçilerimizin gizliliğine önem veriyoruz. Bu Gizlilik Politikası, sitemizi kullandığınızda hangi bilgilerin toplandığını, nasıl kullanıldığını ve korunduğunu açıklar.
+            </p>
 
-            <h3>2. Çerezler (Cookies)</h3>
-            <p>Sitemizde kullanıcı deneyimini geliştirmek ve kişiselleştirilmiş reklamlar sunmak için çerezler kullanılmaktadır. Üçüncü taraf satıcı olarak Google, sitemizde reklam yayınlamak için çerezlerden yararlanır. Google'ın reklam çerezlerini kullanması, kendisine ve iş ortaklarına, sitemize ve internetteki diğer sitelere yaptığınız ziyaretlere dayalı olarak reklam sunmasına olanak tanır.</p>
+            <h3 class="text-xl font-bold text-white mt-8 mb-4">1. Toplanan Bilgiler</h3>
+            <p>
+                Sitemizi ziyaret ettiğinizde, tarayıcınızın gönderdiği standart bilgileri (Log Verileri) otomatik olarak topluyor olabiliriz. Bu veriler şunları içerebilir:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Bilgisayarınızın İnternet Protokolü (IP) adresi</li>
+                <li>Tarayıcı türü ve sürümü</li>
+                <li>Ziyaret ettiğiniz sayfalar</li>
+                <li>Ziyaretinizin saati ve tarihi</li>
+                <li>Bu sayfalarda geçirilen süre</li>
+            </ul>
 
-            <h3>3. Veri Güvenliği</h3>
-            <p>Kişisel bilgilerinizin güvenliği bizim için önemlidir, ancak internet üzerinden yapılan hiçbir iletim yönteminin veya elektronik depolama yönteminin %100 güvenli olmadığını unutmayın.</p>
+            <h3 class="text-xl font-bold text-white mt-8 mb-4">2. Çerezler (Cookies) ve Reklamlar</h3>
+            <p>
+                Sitemizde kullanıcı deneyimini geliştirmek, site trafiğini analiz etmek ve kişiselleştirilmiş içerik sunmak için çerezler kullanıyoruz.
+            </p>
+            <h4 class="text-lg font-semibold text-white mt-4 mb-2">Google AdSense</h4>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Üçüncü taraf bir tedarikçi olarak Google, sitemizde reklam yayınlamak için çerezleri kullanır.</li>
+                <li>Google'ın reklam çerezlerini kullanması, kendisinin ve iş ortaklarının, sitemize ve/veya internetteki diğer sitelere yaptığınız ziyaretlere dayalı olarak size reklam sunmasına olanak tanır.</li>
+                <li>Kişiselleştirilmiş reklamcılığı <a href="https://www.google.com/settings/ads" target="_blank" class="text-indigo-400 hover:text-indigo-300">Reklam Ayarları</a> sayfasını ziyaret ederek devre dışı bırakabilirsiniz.</li>
+            </ul>
 
-            <h3>4. Üçüncü Taraf Bağlantılar</h3>
-            <p>Sitemiz, bizim tarafımızdan işletilmeyen diğer sitelere bağlantılar içerebilir. Bir üçüncü taraf bağlantısına tıklarsanız, o üçüncü tarafın sitesine yönlendirilirsiniz.</p>
+            <h3 class="text-xl font-bold text-white mt-8 mb-4">3. Bilgilerin Kullanımı</h3>
+            <p>Topladığımız bilgileri şu amaçlarla kullanabiliriz:</p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Web sitemizi işletmek ve sürdürmek</li>
+                <li>Web sitemizi geliştirmek, kişiselleştirmek ve genişletmek</li>
+                <li>Web sitemizi nasıl kullandığınızı anlamak ve analiz etmek</li>
+                <li>Dolandırıcılığı önlemek</li>
+            </ul>
 
-            <h3>5. İletişim</h3>
-            <p>Gizlilik politikamızla ilgili sorularınız için <a href="{% url 'contact' %}">İletişim</a> sayfamızdan bize ulaşabilirsiniz.</p>
+            <h3 class="text-xl font-bold text-white mt-8 mb-4">4. GDPR Veri Koruma Hakları</h3>
+            <p>Tüm kişisel veri koruma haklarınızın tam olarak farkında olmanızı istiyoruz. Her kullanıcı aşağıdaki haklara sahiptir:</p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Erişim hakkı – Kişisel verilerinizin kopyalarını talep etme hakkınız vardır.</li>
+                <li>Düzeltme hakkı – Yanlış olduğuna inandığınız bilgileri düzeltmemizi talep etme hakkınız vardır.</li>
+                <li>Silme hakkı – Belirli koşullar altında kişisel verilerinizi silmemizi talep etme hakkınız vardır.</li>
+            </ul>
+
+            <h3 class="text-xl font-bold text-white mt-8 mb-4">5. İletişim</h3>
+            <p>
+                Gizlilik politikamız hakkında herhangi bir sorunuz varsa, lütfen <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">İletişim</a> sayfamız üzerinden bizimle iletişime geçin.
+            </p>
         </div>
     </div>
 </div>

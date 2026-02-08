@@ -1,6 +1,9 @@
 from django.http import HttpResponse, Http404
 from django.conf import settings
-from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
 import os
 import mimetypes
 from fontTools.ttLib import TTFont
@@ -137,10 +140,53 @@ def terms_of_service(request):
 def contact(request):
     """İletişim sayfası"""
     if request.method == 'POST':
-        # Burada form işlemi yapılabilir ama şimdilik sadece gösterim
-        pass
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        if name and email and message:
+            try:
+                # E-posta Konusu
+                email_subject = f"Rumep İletişim Formu: {name}"
+                
+                # E-posta İçeriği
+                email_body = f"Web sitenizden yeni bir mesaj var:\n\nGönderen: {name}\nE-posta: {email}\n\nMesaj:\n{message}"
+                
+                # E-postayı site sahibine (kendisine) gönder
+                send_mail(
+                    email_subject,
+                    email_body,
+                    settings.EMAIL_HOST_USER,  # From
+                    [settings.EMAIL_HOST_USER],  # To (Kendine gönder)
+                    fail_silently=False,
+                )
+                
+                messages.success(request, 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.')
+                return redirect('contact')
+                
+            except Exception as e:
+                messages.error(request, 'Mesaj gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.')
+                print(f"Mail Hatası: {e}")
+        else:
+            messages.error(request, 'Lütfen tüm alanları doldurun.')
+
     return render(request, 'main/contact.html')
 
 def about(request):
     """Hakkımızda sayfası"""
     return render(request, 'main/about.html')
+
+def cookie_policy(request):
+    """Çerez Politikası sayfası"""
+    return render(request, 'main/cookie_policy.html')
+
+def statistics(request):
+    """İstatistikler sayfası"""
+    # İstatistik verileri (örnek veriler)
+    stats = {
+        'total_visitors': '10.5K+',
+        'active_users': '1.2K',
+        'downloads': '5.8K+',
+        'projects': '3'
+    }
+    return render(request, 'main/statistics.html', {'stats': stats})

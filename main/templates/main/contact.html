@@ -3,26 +3,104 @@
 {% block title %}İletişim{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4">İletişim</h1>
-            <p>Bizimle iletişime geçmek için aşağıdaki e-posta adresini kullanabilirsiniz:</p>
-            
-            <div class="card">
-                <div class="card-body text-center">
-                    <h4 class="card-title"><i class="bi bi-envelope"></i> E-posta</h4>
-                    <p class="card-text lead">
-                        <a href="mailto:info@rumep.net" class="text-decoration-none">info@rumep.net</a>
+<div class="max-w-5xl mx-auto px-6 py-12 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">
+            İletişime Geçin
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Sorularınız, projeleriniz veya işbirlikleriniz için bize ulaşın.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Contact Info Cards -->
+        <div class="space-y-6">
+            <!-- Email Card -->
+            <div class="glass-card rounded-2xl p-6 flex items-center gap-6 group hover:bg-white/5 transition-colors">
+                <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-1">E-posta</h3>
+                    <p class="text-slate-400 text-sm mb-1">Genel sorularınız için:</p>
+                    <a href="mailto:info@rumep.net" class="text-indigo-400 font-medium hover:text-indigo-300 transition-colors">info@rumep.net</a>
+                </div>
+            </div>
+
+            <!-- Location Card -->
+            <div class="glass-card rounded-2xl p-6 flex items-center gap-6 group hover:bg-white/5 transition-colors">
+                <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-1">Konum</h3>
+                    <p class="text-slate-400 text-sm">
+                        Dijital bir platformuz.<br>
+                        Dünyanın her yerindeyiz. 🌍
                     </p>
                 </div>
             </div>
 
-            <div class="mt-4">
-                <h5>Adres</h5>
-                <p>Dijital bir platform olduğumuz için fiziksel ofisimiz bulunmamaktadır. Tüm iletişim kanallarımız çevrimiçidir.</p>
+            <!-- Social Media Card -->
+            <div class="glass-card rounded-2xl p-6 flex items-center gap-6 group hover:bg-white/5 transition-colors">
+                <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-pink-400 text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-2">Sosyal Medya</h3>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Contact Form -->
+        <div class="glass-card rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-white mb-6">Bize Yazın</h3>
+            
+            {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-500/20 text-green-400 border border-green-500/50{% else %}bg-red-500/20 text-red-400 border border-red-500/50{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="block text-slate-400 text-sm font-medium mb-2">Adınız Soyadınız</label>
+                    <input type="text" name="name" required class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors" placeholder="Adınız">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-slate-400 text-sm font-medium mb-2">E-posta Adresiniz</label>
+                    <input type="email" name="email" required class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors" placeholder="ornek@email.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-slate-400 text-sm font-medium mb-2">Mesajınız</label>
+                    <textarea name="message" required class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors h-32" placeholder="Mesajınız..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-3 rounded-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all">
+                    Gönder <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+        </div>
+
     </div>
 </div>
 {% endblock %}

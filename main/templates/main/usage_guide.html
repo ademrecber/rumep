@@ -1,140 +1,27 @@
 {% extends 'main/base.html' %}
-{% load i18n %}
 
 {% block title %}Kullanım Kılavuzu{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <h1 class="mb-4 text-center">Rumep Fontları Kullanım Kılavuzu</h1>
-            <p class="lead text-center mb-5">Fontlarımızı farklı platformlarda nasıl kullanabileceğinize dair detaylı rehber.</p>
-
-            <div class="accordion" id="usageAccordion">
-                <!-- Android -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAndroid">
-                            <i class="bi bi-android2 me-2 fs-4"></i> Android Cihazlarda Kullanım
-                        </button>
-                    </h2>
-                    <div id="collapseAndroid" class="accordion-collapse collapse show" data-bs-parent="#usageAccordion">
-                        <div class="accordion-body">
-                            <h5>Uygulama Geliştiricileri İçin:</h5>
-                            <ol>
-                                <li><code>RumepLogosSVG.ttf</code> dosyasını indirin.</li>
-                                <li>Dosyayı projenizin <code>res/font/</code> klasörüne kopyalayın.</li>
-                                <li>XML layout dosyanızda TextView'a şu özelliği ekleyin:
-                                    <pre class="bg-light p-2 mt-2 border rounded"><code>android:fontFamily="@font/rumeplogossvg"</code></pre>
-                                </li>
-                            </ol>
-                            
-                            <hr>
-                            
-                            <h5>Son Kullanıcılar İçin (Klavye Uygulamaları):</h5>
-                            <p>Eğer bu fontu destekleyen bir klavye uygulaması (Gboard, SwiftKey vb. özel temalarla) kullanıyorsanız:</p>
-                            <ul>
-                                <li>Font dosyasını cihazınıza indirin.</li>
-                                <li>Kullandığınız klavye uygulamasının "Tema" veya "Font" ayarlarına gidin.</li>
-                                <li>"Özel Font Ekle" seçeneğinden indirdiğiniz <code>.ttf</code> dosyasını seçin.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIOS">
-                            <i class="bi bi-apple me-2 fs-4"></i> iOS (iPhone/iPad) Cihazlarda Kullanım
-                        </button>
-                    </h2>
-                    <div id="collapseIOS" class="accordion-collapse collapse" data-bs-parent="#usageAccordion">
-                        <div class="accordion-body">
-                            <h5>Konfigürasyon Profili İle Yükleme:</h5>
-                            <p>iOS cihazlara font yüklemek için genellikle bir "Font Yükleyici" uygulaması (iFont vb.) kullanmanız gerekir.</p>
-                            <ol>
-                                <li>App Store'dan <strong>iFont</strong> gibi bir uygulama indirin.</li>
-                                <li>Rumep fontunu indirin ve "iFont ile Aç" seçeneğini seçin.</li>
-                                <li>Uygulama içindeki "Install" (Yükle) butonuna basın.</li>
-                                <li>Ayarlar > Genel > Profil yolunu izleyerek yüklenen profili onaylayın.</li>
-                                <li>Artık Pages, Keynote gibi destekleyen uygulamalarda fontu kullanabilirsiniz.</li>
-                            </ol>
-                            
-                            <div class="alert alert-warning mt-3">
-                                <i class="bi bi-exclamation-triangle"></i> Not: iOS sistem fontunu tamamen değiştirmek jailbreak olmadan mümkün değildir. Bu işlem sadece font destekleyen uygulamalarda (örneğin tasarım uygulamaları) fontu kullanmanızı sağlar.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Windows/Mac -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDesktop">
-                            <i class="bi bi-pc-display me-2 fs-4"></i> Windows ve Mac Bilgisayarlarda Kullanım
-                        </button>
-                    </h2>
-                    <div id="collapseDesktop" class="accordion-collapse collapse" data-bs-parent="#usageAccordion">
-                        <div class="accordion-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5><i class="bi bi-windows"></i> Windows</h5>
-                                    <ol>
-                                        <li><code>.ttf</code> formatındaki font dosyasını indirin.</li>
-                                        <li>İndirdiğiniz dosyaya sağ tıklayın.</li>
-                                        <li><strong>"Yükle"</strong> (veya "Tüm kullanıcılar için yükle") seçeneğine tıklayın.</li>
-                                        <li>Word, Photoshop gibi programlarda "RumepLogos" adıyla fontu bulabilirsiniz.</li>
-                                    </ol>
-                                </div>
-                                <div class="col-md-6 border-start">
-                                    <h5><i class="bi bi-apple"></i> Mac (macOS)</h5>
-                                    <ol>
-                                        <li>Font dosyasını indirin ve çift tıklayın.</li>
-                                        <li>Açılan pencerede <strong>"Fontu Yükle"</strong> butonuna tıklayın.</li>
-                                        <li>Font Book (Font İzlencesi) uygulamasına eklenecektir.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Web/CSS -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeb">
-                            <i class="bi bi-globe me-2 fs-4"></i> Web Sitelerinde Kullanım (CSS)
-                        </button>
-                    </h2>
-                    <div id="collapseWeb" class="accordion-collapse collapse" data-bs-parent="#usageAccordion">
-                        <div class="accordion-body">
-                            <p>Web sitenizde kullanmak için <code>WOFF2</code> formatını tercih etmeniz önerilir.</p>
-                            <pre class="bg-light p-3 border rounded"><code>@font-face {
-    font-family: 'RumepLogos';
-    src: url('RumepLogosSVG.woff2') format('woff2'),
-         url('RumepLogosSVG.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* Kullanım Örneği */
-.ikon {
-    font-family: 'RumepLogos', sans-serif;
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div class="text-center mt-5">
-                <a href="{% url 'font_list' %}" class="btn btn-primary btn-lg">
-                    <i class="bi bi-arrow-left"></i> Font Listesine Dön
-                </a>
-            </div>
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10 text-center">
+    <div class="glass-card rounded-2xl p-12">
+        <div class="w-20 h-20 mx-auto bg-indigo-500/20 rounded-full flex items-center justify-center mb-6 text-indigo-400 text-4xl">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Kullanım Kılavuzu
+        </h1>
+        <p class="text-slate-400 mb-8 text-lg">
+            Rumep fontları ve araçlarının nasıl kullanılacağına dair detaylı rehberler ve dokümantasyon çok yakında bu sayfada olacak.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'font_list' %}" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-xl font-medium transition-all">
+                Fontları İncele
+            </a>
+            <a href="{% url 'contact' %}" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-medium transition-all border border-white/10">
+                Bize Ulaşın
+            </a>
         </div>
     </div>
 </div>
 {% endblock %}
-

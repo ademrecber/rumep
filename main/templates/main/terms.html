@@ -3,22 +3,53 @@
 {% block title %}Kullanım Şartları{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4">Kullanım Şartları</h1>
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+            Kullanım Şartları
+        </h1>
+        <p class="text-slate-400">Son Güncelleme: {% now "d F Y" %}</p>
+    </div>
 
-            <h3>1. Kabul</h3>
-            <p>Bu web sitesine erişerek ve kullanarak, bu kullanım şartlarını kabul etmiş olursunuz.</p>
+    <!-- Content -->
+    <div class="glass-card rounded-2xl p-8 md:p-12">
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300">
+            <h3 class="text-xl font-bold text-white mb-4">1. Şartların Kabulü</h3>
+            <p class="mb-6">
+                Rumep web sitesine ("Site") erişerek, bu kullanım şartlarına, geçerli tüm yasalara ve düzenlemelere bağlı kalmayı ve geçerli yerel yasalara uymaktan sorumlu olduğunuzu kabul edersiniz. Bu şartların hiçbirini kabul etmiyorsanız, bu siteyi kullanmanız yasaktır.
+            </p>
 
-            <h3>2. Font Kullanımı</h3>
-            <p>Sitemizde sunulan fontlar, ilgili lisans koşulları çerçevesinde indirilebilir ve kullanılabilir. İndirdiğiniz fontların lisans dosyalarını incelemeniz önerilir.</p>
+            <h3 class="text-xl font-bold text-white mb-4">2. İzin Verilen Kullanım</h3>
+            <p class="mb-6">
+                Sitemizde sunduğumuz fontlar, araçlar ve diğer içerikler ("Materyaller"), kişisel veya ticari projelerinizde kullanılmak üzere sağlanmıştır. Ancak şunları yapamazsınız:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li>Sitemizi veya ağımızı bozacak, zarar verecek veya aşırı yükleyecak eylemlerde bulunmak.</li>
+                <li>Otomatik araçlar (bot, scraper vb.) kullanarak sitemizden veri toplamak.</li>
+                <li>Site içeriğini izinsiz kopyalayıp başka bir yerde kendi içeriğiniz gibi sunmak.</li>
+            </ul>
 
-            <h3>3. Sorumluluk Reddi</h3>
-            <p>Bu sitedeki materyaller "olduğu gibi" sağlanmaktadır. Rumep, satılabilirlik, belirli bir amaca uygunluk veya fikri mülkiyet haklarının ihlal edilmemesi dahil ancak bunlarla sınırlı olmamak üzere, açık veya zımni hiçbir garanti vermez.</p>
+            <h3 class="text-xl font-bold text-white mb-4">3. Fikri Mülkiyet Hakları</h3>
+            <p class="mb-6">
+                Bu sitedeki tüm materyaller (metinler, grafikler, logolar, fontlar, yazılım) Rumep veya içerik sağlayıcılarına aittir ve telif hakkı yasalarıyla korunmaktadır. İndirilebilir fontların kullanımı, o fontla birlikte verilen özel lisans dosyasına tabidir.
+            </p>
 
-            <h3>4. Değişiklikler</h3>
-            <p>Rumep, bu kullanım şartlarını dilediği zaman değiştirme hakkını saklı tutar.</p>
+            <h3 class="text-xl font-bold text-white mb-4">4. Sorumluluk Reddi</h3>
+            <p class="mb-6">
+                Rumep web sitesindeki materyaller "olduğu gibi" sağlanmaktadır. Rumep, satılabilirlik, belirli bir amaca uygunluk hakkındaki zımni garantiler veya koşullar da dahil ancak bunlarla sınırlı olmamak üzere, açık veya zımni hiçbir garanti vermez. Ayrıca, Rumep bu sitedeki materyallerin kullanımının doğruluğu, olası sonuçları veya güvenilirliği konusunda hiçbir beyanda bulunmaz.
+            </p>
+
+            <h3 class="text-xl font-bold text-white mb-4">5. Değişiklikler</h3>
+            <p class="mb-6">
+                Rumep, bu Kullanım Şartlarını herhangi bir zamanda bildirimde bulunmaksızın revize edebilir. Bu siteyi kullanarak, Kullanım Şartlarının o anki güncel versiyonuna bağlı kalmayı kabul etmiş olursunuz.
+            </p>
+
+            <h3 class="text-xl font-bold text-white mb-4">6. İletişim</h3>
+            <p>
+                Kullanım şartları hakkında sorularınız varsa <a href="{% url 'contact' %}" class="text-indigo-400 hover:text-indigo-300">İletişim</a> sayfamız üzerinden bize ulaşabilirsiniz.
+            </p>
         </div>
     </div>
 </div>

@@ -3,18 +3,61 @@
 {% block title %}Hakkımızda{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4">Hakkımızda</h1>
-            
-            <p class="lead">Rumep, dijital dünyada kültürel mirasın korunması ve geliştirilmesi amacıyla kurulmuş bir platformdur.</p>
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-green-500">
+            Hakkımızda
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Teknoloji ve kültürü harmanlayan dijital çözümler üretiyoruz.
+        </p>
+    </div>
 
-            <p>Projemiz, özellikle tipografi ve font tasarımı alanında çalışmalar yürüterek, azınlık dilleri ve kültürleri için dijital araçlar geliştirmeyi hedeflemektedir. Sunduğumuz fontlar, bu dillerin dijital ortamda daha iyi temsil edilmesini sağlamak üzere tasarlanmıştır.</p>
+    <!-- Main Content Card -->
+    <div class="glass-card rounded-2xl p-8 md:p-12 mb-12">
+        <div class="prose prose-invert prose-lg max-w-none">
+            <h2 class="text-2xl font-bold text-white mb-4">Biz Kimiz?</h2>
+            <p class="text-slate-300 leading-relaxed mb-6">
+                Rumep, dijital dünyada kültürel mirasın korunması, geliştirilmesi ve modern teknolojiyle entegre edilmesi amacıyla kurulmuş yenilikçi bir platformdur. 
+                Geleneksel değerleri modern tasarım anlayışıyla buluşturarak, kullanıcılarımıza özgün ve işlevsel dijital deneyimler sunuyoruz.
+            </p>
 
-            <p>Amacımız, teknolojiyi kültürle buluşturarak herkes için erişilebilir ve estetik dijital çözümler üretmektir.</p>
+            <h2 class="text-2xl font-bold text-white mb-4">Ne Yapıyoruz?</h2>
+            <p class="text-slate-300 leading-relaxed mb-6">
+                Özellikle tipografi ve font tasarımı alanında öncü çalışmalar yürütüyoruz. Azınlık dilleri ve kültürel semboller için özel olarak tasarlanmış 
+                dijital araçlar, font aileleri ve web çözümleri geliştiriyoruz. Sunduğumuz fontlar, bu zengin kültürlerin dijital ortamda hak ettiği estetikle 
+                temsil edilmesini sağlamak üzere titizlikle tasarlanmıştır.
+            </p>
         </div>
     </div>
+
+    <!-- Vision & Mission Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Misyon -->
+        <div class="glass-card rounded-2xl p-8 border-t-4 border-indigo-500">
+            <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-4 text-indigo-400 text-2xl">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Misyonumuz</h3>
+            <p class="text-slate-400">
+                Teknolojiyi erişilebilir kılarak, kültürel öğeleri dijital çağa taşımak ve herkes için estetik, kullanışlı ve modern yazılım çözümleri üretmek.
+            </p>
+        </div>
+
+        <!-- Vizyon -->
+        <div class="glass-card rounded-2xl p-8 border-t-4 border-pink-500">
+            <div class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4 text-pink-400 text-2xl">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Vizyonumuz</h3>
+            <p class="text-slate-400">
+                Global ölçekte tanınan, kültürel değerlere saygılı ve teknolojik inovasyona öncülük eden bir dijital üretim merkezi olmak.
+            </p>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 

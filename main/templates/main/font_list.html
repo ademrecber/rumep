@@ -1,9 +1,11 @@
 {% extends 'main/base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}Fontlar{% endblock %}
 
 {% block extra_css %}
+<link href="{% static 'main/css/fonts.css' %}" rel="stylesheet">
 <style>
     .font-char-display {
         font-family: 'RumepLogosSVG', 'RumepLogosCOLR', sans-serif;
@@ -16,92 +18,100 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12">
-            
-            <!-- Başlık ve Kılavuz Linki -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Rumep Fontları</h2>
-                <a href="{% url 'usage_guide' %}" class="btn btn-outline-primary">
-                    <i class="bi bi-book"></i> Kullanım Talimatları
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+    <!-- Başlık Bölümü -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <div>
+            <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-green-500">
+                Rumep Fontları
+            </h2>
+            <p class="text-gray-400 mt-2">Projeleriniz için özel tasarlanmış ikon ve yazı tipleri.</p>
+        </div>
+        <a href="{% url 'usage_guide' %}" class="glass-card hover:bg-white/10 text-white px-6 py-3 rounded-xl flex items-center gap-2 transition-all group">
+            <i class="fas fa-book-open text-indigo-400 group-hover:scale-110 transition-transform"></i>
+            <span>Kullanım Kılavuzu</span>
+        </a>
+    </div>
+
+    <!-- Font Listesi -->
+    <h3 class="text-xl font-semibold text-white mb-6 border-l-4 border-indigo-500 pl-3">İndirilebilir Fontlar</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {% for font in fonts %}
+        <div class="glass-card rounded-2xl p-6 flex flex-col h-full">
+            <div class="mb-4">
+                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center mb-4">
+                    <i class="fas fa-font text-indigo-400 text-xl"></i>
+                </div>
+                <h5 class="text-xl font-bold text-white mb-2">{{ font.name }}</h5>
+                <p class="text-gray-400 text-sm mb-4 min-h-[40px]">{{ font.description }}</p>
+                <div class="inline-block px-3 py-1 rounded-full bg-slate-800 text-xs text-gray-300 border border-gray-700">
+                    Format: <span class="text-indigo-400 font-mono">{{ font.format }}</span>
+                </div>
+            </div>
+            <div class="mt-auto">
+                <a href="{% url 'download_font' font.file %}" class="custom-btn block w-full text-center text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/20 transition-all">
+                    <i class="fas fa-download mr-2"></i> İndir
                 </a>
             </div>
+        </div>
+        {% endfor %}
+    </div>
 
-            <!-- Font İndirme Bölümü -->
-            <h4 class="mb-3">Font Dosyaları</h4>
-            <div class="row mb-5">
-                {% for font in fonts %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ font.name }}</h5>
-                            <p class="card-text">{{ font.description }}</p>
-                            <p class="text-muted mb-3">
-                                <small>Format: {{ font.format }}</small>
-                            </p>
-                            <a href="{% url 'download_font' font.file %}" class="btn btn-primary w-100">
-                                <i class="bi bi-download"></i> İndir
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+    <!-- Font Karakterleri -->
+    <div class="glass-card rounded-2xl p-8 mb-12">
+        <div class="flex justify-between items-center mb-8 border-b border-gray-700 pb-4">
+            <div>
+                <h5 class="text-xl font-bold text-white">Karakter Haritası</h5>
+                <p class="text-gray-400 text-sm mt-1">İkonları kopyalamak için üzerine tıklayın</p>
             </div>
-            
-            <!-- Font Karakterleri Bölümü -->
-            <div class="card mb-5">
-                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Font Karakterleri</h5>
-                    <small class="text-muted">Karakterleri kopyalayıp kullanabilirsiniz</small>
-                </div>
-                <div class="card-body">
-                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4">
-                        {% for char in font_characters %}
-                        <div class="col">
-                            <div class="card h-100 char-card text-center">
-                                <div class="card-body">
-                                    <span class="font-char-display">{{ char.char }}</span>
-                                    <button class="btn btn-outline-primary btn-sm w-100 copy-char-btn" 
-                                            data-char="{{ char.char }}">
-                                        <i class="bi bi-clipboard"></i> Kopyala
-                                    </button>
-                                </div>
-                                <div class="card-footer text-muted small">
-                                    {{ char.code }}
-                                </div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="col-12 text-center text-muted">
-                            <p>Karakterler yüklenemedi veya font dosyasında PUA karakteri bulunamadı.</p>
-                        </div>
-                        {% endfor %}
-                    </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {% for char in font_characters %}
+            <div class="bg-slate-800/50 rounded-xl p-4 border border-gray-700 hover:border-indigo-500/50 transition-colors group text-center relative">
+                <span class="font-char-display text-4xl mb-3 text-white group-hover:scale-110 transition-transform duration-300">{{ char.char }}</span>
+                <p class="text-xs text-gray-500 font-mono mb-3">{{ char.code }}</p>
+                <button class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs py-2 rounded-lg transition-colors copy-char-btn" 
+                        data-char="{{ char.char }}">
+                    <i class="far fa-copy mr-1"></i> Kopyala
+                </button>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <div class="text-gray-500 text-lg">
+                    <i class="fas fa-search mb-2 text-2xl block"></i>
+                    Karakter bulunamadı.
                 </div>
             </div>
-            
-            <div class="mt-4">
-                <h4>Hızlı CSS Kodu</h4>
-                <div class="alert alert-info">
-                    <pre class="mb-0"><code>@font-face {
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Hızlı CSS -->
+    <div class="glass-card rounded-2xl p-6">
+        <h4 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <i class="fab fa-css3-alt text-blue-500"></i> Hızlı Kullanım
+        </h4>
+        <div class="bg-slate-900 rounded-xl p-4 border border-gray-800 relative group">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText)">
+                <i class="far fa-copy"></i>
+            </button>
+            <pre class="text-green-400 font-mono text-sm overflow-x-auto"><code>@font-face {
     font-family: 'RumepLogos';
     src: url('RumepLogosSVG.woff2') format('woff2');
 }</code></pre>
-                </div>
-            </div>
         </div>
     </div>
+
 </div>
 
-<!-- Toast for copy feedback -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Kopyalandı!
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+<!-- Toast Notification (Tailwind style) -->
+<div id="copyToast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <div class="bg-slate-800 border border-indigo-500/50 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+        <i class="fas fa-check-circle text-green-400 text-xl"></i>
+        <div>
+            <h6 class="font-bold text-sm">Başarılı!</h6>
+            <p class="text-xs text-gray-300 toast-message">Karakter panoya kopyalandı.</p>
         </div>
     </div>
 </div>
@@ -111,15 +121,25 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const toastEl = document.getElementById('copyToast');
-        const toast = new bootstrap.Toast(toastEl);
+        const toastMsg = toastEl.querySelector('.toast-message');
+        let toastTimeout;
+
+        function showToast(message) {
+            toastMsg.textContent = message;
+            toastEl.classList.remove('translate-y-20', 'opacity-0');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toastEl.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
 
         // Karakter kopyalama
         document.querySelectorAll('.copy-char-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const char = this.getAttribute('data-char');
                 navigator.clipboard.writeText(char).then(() => {
-                    document.querySelector('.toast-body').textContent = 'Karakter kopyalandı: ' + char;
-                    toast.show();
+                    showToast('Karakter kopyalandı: ' + char);
                 });
             });
         });
