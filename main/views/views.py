@@ -5,6 +5,18 @@ import os
 import mimetypes
 from fontTools.ttLib import TTFont
 
+def landing_page(request):
+    """Yeni modern ana sayfa"""
+    return render(request, 'main/landing_page.html')
+
+def rumep_spor(request):
+    """Rumep Spor uygulaması ana sayfası"""
+    return render(request, 'rumep-spor/index.html')
+
+def rumep_spor_privacy(request):
+    """Rumep Spor uygulaması gizlilik politikası"""
+    return render(request, 'rumep-spor/privacy-policy.html')
+
 def download_font(request, font_name):
     """Font dosyalarını indirilebilir hale getirir"""
     

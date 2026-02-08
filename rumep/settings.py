@@ -243,18 +243,20 @@ CONTENT_SECURITY_POLICY = {
             "https://pagead2.googlesyndication.com",
             "https://googleads.g.doubleclick.net",
             "https://ep2.adtrafficquality.google",
+            "https://cdn.tailwindcss.com", # Tailwind CSS
         ],
         'style-src': [
             "'self'",
             "'unsafe-inline'",
             "https://cdn.jsdelivr.net",
             "https://fonts.googleapis.com",
-            
+            "https://cdnjs.cloudflare.com", # FontAwesome
         ],
         'font-src': [
             "'self'",
             "https://fonts.gstatic.com",
             "https://cdn.jsdelivr.net",
+            "https://cdnjs.cloudflare.com", # FontAwesome
         ],
         'img-src': [
             "'self'",

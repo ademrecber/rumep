@@ -1,0 +1,254 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumep - Dijital Çözümler & Projeler</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN - Development only) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-gradient {
+            /* background: linear-gradient(135deg, #FFD700 0%, #FF8C00 50%, #FF0000 100%); Eski tasarım */
+            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.3), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.3), transparent 40%),
+                        linear-gradient(135deg, #0f172a 0%, #1e293b 100%); /* Base gradient */
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #fbbf24, #f87171, #22c55e); /* Yellow, Red, Green like flag colors but brighter */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .custom-btn {
+            background: linear-gradient(90deg, #4f46e5, #ec4899);
+            border: none;
+            color: white;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .custom-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #ec4899, #4f46e5);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .custom-btn:hover::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 px-6 py-4 glass-card bg-opacity-30 border-b-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <span class="text-3xl">🚀</span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-green-500">Rumep</span>
+            </a>
+            <div class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-300">
+                <a href="#projects" class="hover:text-white transition-colors">Projeler</a>
+                <a href="{% url 'about' %}" class="hover:text-white transition-colors">Hakkımızda</a>
+                <a href="{% url 'contact' %}" class="hover:text-white transition-colors">İletişim</a>
+                <a href="https://adretools.com/" target="_blank" class="px-5 py-2 rounded-full glass-card hover:bg-white/10 text-white transition-all">
+                    Adretools <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
+            </div>
+            <!-- Mobile Menu description -->
+             <button class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 px-6 hero-gradient overflow-hidden">
+        <!-- Floating Elements -->
+        <div class="absolute top-1/4 left-10 w-24 h-24 bg-yellow-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-10 w-32 h-32 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-green-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wide text-indigo-300 mb-6 uppercase">
+                Dijital Dünyanın Yeni Yüzü
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Hayallerinizi <br>
+                <span class="text-gradient">Dijital Gerçekliğe</span> Dönüştürüyoruz
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Rumep, modern web teknolojileri, mobil uygulamalar ve yaratıcı tasarım çözümleri sunan yenilikçi bir platformdur. Projelerimizi keşfedin.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#projects" class="custom-btn px-8 py-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 transform hover:-translate-y-1 transition-all">
+                    Projelerimizi İncele
+                </a>
+                <a href="{% url 'contact' %}" class="px-8 py-4 rounded-xl font-semibold bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm">
+                    Bize Ulaşın
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Projelerimiz</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-yellow-400 via-red-500 to-green-500 mx-auto rounded-full"></div>
+                <p class="text-slate-400 mt-4 max-w-xl mx-auto">Hayatınızı kolaylaştıracak ve işinize değer katacak dijital ürünlerimiz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Rumep Fonts Card -->
+                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-font text-9xl"></i>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20 text-white text-2xl">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-yellow-400 transition-colors">Rumep Fontları</h3>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        Kürdistan Bayrağı'ndan ilham alan özel tasarım emojiler ve ikon setleri. Yazı tiplerinizi özelleştirin.
+                    </p>
+                    <a href="{% url 'font_list' %}" class="inline-flex items-center text-yellow-400 font-semibold hover:text-yellow-300 transition-colors">
+                        Fontları Keşfet <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Rumep Spor Card -->
+                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-futbol text-9xl"></i>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 text-white text-2xl">
+                         <i class="fas fa-running"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-green-400 transition-colors">Rumep Spor</h3>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        Amedspor ve diğer takımlar için canlı skorlar, fikstürler ve detaylı istatistikler. Spor dünyası cebinizde.
+                    </p>
+                    <!-- Linki daha sonra spesifik bir url varsa güncelleyebiliriz, şimdilik placeholder -->
+                    <a href="{% url 'rumep_spor' %}" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors">
+                        Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Adretools Card -->
+                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-tools text-9xl"></i>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20 text-white text-2xl">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors">Adretools</h3>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        PDF dönüştürücülerden resim işleme araçlarına kadar onlarca ücretsiz web aracı. Hızlı, güvenli ve kolay.
+                    </p>
+                    <a href="https://adretools.com/" target="_blank" class="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors">
+                        Araçları Kullan <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-black/20 backdrop-blur-md pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2 mb-4">
+                        <span class="text-3xl">🚀</span>
+                        <span class="text-white">Rumep</span>
+                    </a>
+                    <p class="text-slate-500 text-sm">
+                        Yenilikçi dijital çözümler üreten teknoloji topluluğu.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Hızlı Erişim</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Ana Sayfa</a></li>
+                        <li><a href="{% url 'about' %}" class="hover:text-white transition-colors">Hakkımızda</a></li>
+                        <li><a href="{% url 'contact' %}" class="hover:text-white transition-colors">İletişim</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Projeler</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="{% url 'font_list' %}" class="hover:text-white transition-colors">Rumep Fonts</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Rumep Spor</a></li>
+                        <li><a href="https://adretools.com/" target="_blank" class="hover:text-white transition-colors">Adretools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Yasal</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="{% url 'privacy_policy' %}" class="hover:text-white transition-colors">Gizlilik Politikası</a></li>
+                        <li><a href="{% url 'terms_of_service' %}" class="hover:text-white transition-colors">Kullanım Şartları</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-600 text-xs">
+                    &copy; 2026 Rumep. Tüm hakları saklıdır.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
