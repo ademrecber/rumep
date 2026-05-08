@@ -447,9 +447,53 @@
         }
 
         /* ── RESPONSIVE ── */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 73px; left: 0; right: 0;
+            z-index: 99;
+            background: rgba(3,0,10,0.97);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 24px;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.2s;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--text); }
+        .mobile-menu a.rumep-link { color: var(--primary); font-weight: 700; }
+
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
             .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
             .split { grid-template-columns: 1fr; }
             .split-phone { order: -1; }
             footer { padding: 40px 20px 24px; }
@@ -617,7 +661,20 @@
             <li><a href="#terms">Terms</a></li>
             <li><a href="https://rumep.net" style="color:var(--primary);font-weight:700;">rumep.net</a></li>
         </ul>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
+
+    <!-- MOBİL MENÜ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#features" onclick="closeMobile()">Features</a>
+        <a href="#about" onclick="closeMobile()">About</a>
+        <a href="#faq" onclick="closeMobile()">FAQ</a>
+        <a href="#privacy" onclick="closeMobile()">Privacy</a>
+        <a href="#terms" onclick="closeMobile()">Terms</a>
+        <a href="https://rumep.net" class="rumep-link">rumep.net</a>
+    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -884,6 +941,16 @@
             &copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net" style="color:var(--primary);text-decoration:none;">rumep.net</a>
         </div>
     </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        function closeMobile() {
+            mobileMenu.classList.remove('open');
+        }
+    </script>
 
 </body>
 </html>
