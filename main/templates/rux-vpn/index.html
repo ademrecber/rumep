@@ -656,9 +656,9 @@
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#terms">Terms</a></li>
+            <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
+            <li><a href="{% url 'rux_vpn_privacy' %}">Privacy</a></li>
+            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
             <li><a href="https://rumep.net" style="color:var(--primary);font-weight:700;">rumep.net</a></li>
         </ul>
         <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -670,9 +670,9 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="#features" onclick="closeMobile()">Features</a>
         <a href="#about" onclick="closeMobile()">About</a>
-        <a href="#faq" onclick="closeMobile()">FAQ</a>
-        <a href="#privacy" onclick="closeMobile()">Privacy</a>
-        <a href="#terms" onclick="closeMobile()">Terms</a>
+        <a href="{% url 'rux_vpn_faq' %}">FAQ</a>
+        <a href="{% url 'rux_vpn_privacy' %}">Privacy</a>
+        <a href="{% url 'rux_vpn_terms' %}">Terms</a>
         <a href="https://rumep.net" class="rumep-link">rumep.net</a>
     </div>
 
@@ -782,139 +782,6 @@
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
-    <section class="doc-section" id="faq">
-        <div class="doc-inner">
-            <div class="doc-header">
-                <div class="page-badge">❓ Help Center</div>
-                <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about RUX VPN.</p>
-            </div>
-
-            <div class="faq-item">
-                <input type="checkbox" id="faq1" class="faq-toggle">
-                <label for="faq1" class="faq-trigger">What is RUX VPN and what makes it unique?</label>
-                <div class="faq-content">
-                    <p>RUX VPN is a state-of-the-art, decentralized VPN client designed for ultimate anonymity and speed. Unlike traditional VPN providers that require registration, RUX VPN uses <span class="hl">Binance Smart Chain (BSC)</span> smart contracts for access and the advanced <span class="hl">VLESS-Reality proxy protocol</span> to make your traffic indistinguishable from normal HTTPS.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq2" class="faq-toggle">
-                <label for="faq2" class="faq-trigger">Is RUX VPN truly Zero-Log?</label>
-                <div class="faq-content">
-                    <p>Yes, absolutely. We have no user registrations, so there's no database linking any account to a real person. Our proxy servers run on custom blind nodes — they do not record bandwidth usage, destinations, DNS lookups, or IP addresses.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq3" class="faq-toggle">
-                <label for="faq3" class="faq-trigger">How do I buy a premium subscription?</label>
-                <div class="faq-content">
-                    <p>Premium plans are unlocked instantly through EVM blockchain payments inside the app. Transfer the subscription amount (e.g., USDT) on the Binance Smart Chain (BSC) to our secure registry address. Once confirmed, paste your transaction ID (TXID) into the activation box — your premium activates instantly.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq4" class="faq-toggle">
-                <label for="faq4" class="faq-trigger">What is the "Recovery Code"? Why is it important?</label>
-                <div class="faq-content">
-                    <p>Your <span class="hl">Recovery Code</span> — a unique 6-character code generated offline on your device — is your only master access key. If you change devices or reinstall the app, this code combined with your original TXID is the <span class="hl">ONLY</span> way to restore your premium. Back it up immediately. We cannot recover it for you.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq5" class="faq-toggle">
-                <label for="faq5" class="faq-trigger">How do I migrate my Premium to a new device?</label>
-                <div class="faq-content">
-                    <p>On your new device, go to the Premium screen → tap "Migration" → enter your original TXID and your Recovery Code. Our backend will instantly transfer your premium tunnel to the new device.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq6" class="faq-toggle">
-                <label for="faq6" class="faq-trigger">How many devices can I connect simultaneously?</label>
-                <div class="faq-content">
-                    <p>Each premium subscription allows exactly <span class="hl">one (1) concurrent IP connection</span>. Connecting from a second device while the first session is active will automatically disconnect the prior session.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <input type="checkbox" id="faq7" class="faq-toggle">
-                <label for="faq7" class="faq-trigger">What is the VLESS-Reality protocol?</label>
-                <div class="faq-content">
-                    <p>VLESS-Reality wraps traffic inside standard TLS parameters that make it look identical to visiting a normal secure website — undetectable by Deep Packet Inspection (DPI) and national firewalls.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRIVACY SECTION -->
-    <section class="doc-section" id="privacy">
-        <div class="doc-inner">
-            <div class="doc-header">
-                <div class="page-badge">🔒 Legal</div>
-                <h2>Privacy Policy</h2>
-                <div class="last-updated">Last Modified: May 2026</div>
-            </div>
-            <div class="doc-card">
-                <p>RUX VPN has the strongest observance of data protection. When using RUX VPN, we have absolutely no knowledge about your online traffic — browsing history, traffic destination, data content, or search preferences are <strong>NEVER</strong> monitored, recorded, logged, or stored.</p>
-                <h3>1. What Does This Policy Cover?</h3>
-                <p>This Privacy Policy applies to all Services, proxy interfaces, routing nodes, and applications under the <strong>RUX VPN</strong> brand, and to the website <a href="https://rumep.net" target="_blank">rumep.net</a>.</p>
-                <h3>2. What Data Do We Collect?</h3>
-                <p>Our products support fully anonymous use. No registration, email, name, phone number, or password is required. We collect limited non-personal, statistical information solely to maintain connection quality:</p>
-                <ul>
-                    <li>Device model, operating system version, and general system properties</li>
-                    <li>Preferred language and general locale</li>
-                    <li>Date and time of connection triggers (aggregated, not bound to IPs)</li>
-                    <li>Connectivity types (WLAN, Cellular) and mobile service provider names</li>
-                </ul>
-                <h3>3. Strict No-Logs Disclosure</h3>
-                <ul>
-                    <li>We <strong>DO NOT</strong> know which user accessed any website, protocol, or internet service</li>
-                    <li>We <strong>DO NOT</strong> store any database of original IP addresses</li>
-                    <li>Your encrypted tunnel credentials are held in volatile RAM and deleted instantly upon disconnect</li>
-                </ul>
-                <h3>4. Blockchain Transactions</h3>
-                <p>We store your on-chain transaction hashes (TXIDs) solely to verify premium duration. Transaction data is completely isolated from your VPN browsing history.</p>
-                <h3>5. GDPR & International Compliance</h3>
-                <p>Because RUX VPN does not collect Personal Data, traditional data requests (Access, Portability, Erasure under GDPR/CCPA) are inherently fulfilled.</p>
-                <h3>6. Contact Us</h3>
-                <p>For questions, contact us through <a href="https://rumep.net" target="_blank">rumep.net</a>.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- TERMS SECTION -->
-    <section class="doc-section" id="terms">
-        <div class="doc-inner">
-            <div class="doc-header">
-                <div class="page-badge">📄 Legal</div>
-                <h2>Terms of Use</h2>
-                <div class="last-updated">Last Modified: May 2026</div>
-            </div>
-            <div class="doc-card">
-                <p>BY ACCESSING, USING, INSTALLING, OR DOWNLOADING RUX VPN PRODUCTS AND SERVICES, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THESE TERMS AND AGREE TO BE FULLY BOUND BY THEM.</p>
-                <h3>1. Agreement and Eligibility</h3>
-                <p>You may only use RUX VPN if you are aged 18 or above and legally authorized to conclude an agreement under your applicable laws.</p>
-                <h3>2. License</h3>
-                <p>RUX VPN grants you a personal, non-exclusive, non-transferable, limited, and revocable license to use RUX VPN Products solely in accordance with these Terms.</p>
-                <h3>3. Acceptable Use Policy</h3>
-                <p>You agree that you will not engage in any of the following prohibited activities:</p>
-                <ul>
-                    <li>Sending spam, chain letters, or pyramid schemes</li>
-                    <li>Exploiting or distributing any illegal content, including CSAM</li>
-                    <li>Uploading or distributing copyrighted content without written consent</li>
-                    <li>Engaging in DoS/DDoS attacks against any third parties or RUX VPN servers</li>
-                    <li>Abusing simultaneous device connection limits</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>Simultaneous IP Limit: Premium service is strictly restricted to one (1) concurrent IP address connection per account.</p>
-                </div>
-                <h3>4. On-chain Payments and Non-Refundability</h3>
-                <p>All blockchain payments are completely final and <strong>non-refundable</strong> due to the decentralized, immutable nature of smart contracts.</p>
-                <h3>5. Disclaimer</h3>
-                <p>RUX VPN IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
-                <h3>6. Limitation of Liability</h3>
-                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, RUX VPN SHALL NOT BE LIABLE FOR ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, OR PUNITIVE DAMAGES ARISING FROM USE OF THE SERVICES.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- FOOTER -->
     <footer>
         <div class="footer-top">
@@ -925,9 +792,9 @@
             <div class="footer-links">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms of Use</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="{% url 'rux_vpn_privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'rux_vpn_terms' %}">Terms of Use</a></li>
+                    <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-links">
