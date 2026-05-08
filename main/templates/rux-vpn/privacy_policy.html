@@ -176,11 +176,10 @@
             <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
         </a>
         <ul class="nav-links">
-            <li><a href="{% url 'rux_vpn' %}#features">Features</a></li>
-            <li><a href="{% url 'rux_vpn' %}#about">About</a></li>
-            <li><a href="{% url 'rux_vpn' %}#faq">FAQ</a></li>
-            <li><a href="{% url 'rux_vpn' %}#privacy" class="active">Privacy</a></li>
-            <li><a href="{% url 'rux_vpn' %}#terms">Terms</a></li>
+            <li><a href="{% url 'rux_vpn' %}">Home</a></li>
+            <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
+            <li><a href="{% url 'rux_vpn_privacy' %}" class="active">Privacy</a></li>
+            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
             <li><a href="https://rumep.net" style="color:var(--primary);font-weight:700;">rumep.net</a></li>
         </ul>
     </nav>
