@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RUX VPN{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'rux-vpn/rux-vpn.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <nav>
+        <a href="{% url 'rux_vpn' %}" class="nav-logo">
+            <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
+        </a>
+        <ul class="nav-links">
+            <li><a href="{% url 'rux_vpn' %}" {% block nav_home %}{% endblock %}>Home</a></li>
+            <li><a href="{% url 'rux_vpn_faq' %}" {% block nav_faq %}{% endblock %}>FAQ</a></li>
+            <li><a href="{% url 'rux_vpn_privacy' %}" {% block nav_privacy %}{% endblock %}>Privacy</a></li>
+            <li><a href="{% url 'rux_vpn_terms' %}" {% block nav_terms %}{% endblock %}>Terms</a></li>
+            <li><a href="https://rumep.net" class="rumep-link">rumep.net</a></li>
+        </ul>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="{% url 'rux_vpn' %}">Home</a>
+        <a href="{% url 'rux_vpn_faq' %}">FAQ</a>
+        <a href="{% url 'rux_vpn_privacy' %}">Privacy</a>
+        <a href="{% url 'rux_vpn_terms' %}">Terms</a>
+        <a href="https://rumep.net" class="rumep-link">rumep.net</a>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

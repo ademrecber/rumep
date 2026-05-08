@@ -1,255 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUX VPN - FAQ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #03000a;
-            --surface: #0d061f;
-            --surface2: #130a2a;
-            --primary: #a855f7;
-            --primary-dim: rgba(168,85,247,0.18);
-            --primary-glow: rgba(168,85,247,0.35);
-            --text: #f3f0ff;
-            --muted: #9d8fb0;
-            --border: rgba(168,85,247,0.22);
-            --green: #22c55e;
-        }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 20% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(88,28,135,0.12) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a855f7' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-        }
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 40px;
-            background: rgba(3,0,10,0.75);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .nav-logo img { height: 36px; width: auto; }
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--text); }
-        .nav-links a.active { color: var(--primary); }
-        .nav-links li::before { display: none !important; }
+{% extends 'rux-vpn/base.html' %}
+{% load static %}
 
-        .page-wrap {
-            position: relative;
-            z-index: 1;
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 120px 20px 80px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .page-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--primary-dim);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 7px 16px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--primary);
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-        header h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-        }
-        header p { color: var(--muted); font-size: 1rem; }
+{% block title %}RUX VPN - FAQ{% endblock %}
+{% block nav_faq %}class="active"{% endblock %}
 
-        .faq-item {
-            margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 18px;
-            background: var(--surface);
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .faq-item:hover { border-color: var(--border); }
-        .faq-toggle { display: none; }
-        .faq-trigger {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px 26px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #fff;
-            user-select: none;
-            transition: color 0.2s;
-        }
-        .faq-trigger::after {
-            content: '+';
-            font-size: 1.4rem;
-            color: var(--primary);
-            font-weight: 300;
-            transition: transform 0.3s ease;
-            display: inline-block;
-            flex-shrink: 0;
-            margin-left: 16px;
-        }
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
-            padding: 0 26px;
-            color: var(--muted);
-            font-size: 0.97rem;
-            line-height: 1.7;
-        }
-        .faq-toggle:checked ~ .faq-content { max-height: 600px; padding-bottom: 24px; }
-        .faq-toggle:checked ~ .faq-trigger::after { transform: rotate(45deg); }
-        .faq-toggle:checked ~ .faq-trigger { color: var(--primary); }
-        .faq-content ul { padding-left: 20px; margin-top: 10px; }
-        .faq-content li { margin-bottom: 8px; }
-        .hl { color: #fff; font-weight: 600; }
-
-        footer {
-            position: relative;
-            z-index: 1;
-            border-top: 1px solid var(--border);
-            padding: 30px 20px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.85rem;
-            max-width: 820px;
-            margin: 0 auto;
-        }
-        footer a { color: var(--primary); text-decoration: none; }
-        footer a:hover { color: #fff; }
-
-        @media (max-width: 768px) {
-            nav { padding: 16px 20px; }
-            .nav-links { display: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <a href="{% url 'rux_vpn' %}" class="nav-logo">
-            <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
-        </a>
-        <ul class="nav-links">
-            <li><a href="{% url 'rux_vpn' %}">Home</a></li>
-            <li><a href="{% url 'rux_vpn_faq' %}" class="active">FAQ</a></li>
-            <li><a href="{% url 'rux_vpn_privacy' %}">Privacy</a></li>
-            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
-            <li><a href="https://rumep.net" style="color:var(--primary);font-weight:700;">rumep.net</a></li>
-        </ul>
-    </nav>
-
-    <div class="page-wrap">
-        <header>
-            <div class="page-badge">❓ Help Center</div>
-            <h1>Frequently Asked Questions</h1>
-            <p>Everything you need to know about RUX VPN.</p>
-        </header>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq1" class="faq-toggle">
-            <label for="faq1" class="faq-trigger">What is RUX VPN and what makes it unique?</label>
-            <div class="faq-content">
-                <p>RUX VPN is a state-of-the-art, decentralized VPN client designed for ultimate anonymity and speed. Unlike traditional VPN providers that require registration, RUX VPN uses <span class="hl">Binance Smart Chain (BSC)</span> smart contracts for access and the advanced <span class="hl">VLESS-Reality proxy protocol</span> to make your traffic indistinguishable from normal HTTPS.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq2" class="faq-toggle">
-            <label for="faq2" class="faq-trigger">Is RUX VPN truly Zero-Log?</label>
-            <div class="faq-content">
-                <p>Yes, absolutely. We have no user registrations, so there's no database linking any account to a real person. Our proxy servers run on custom blind nodes — they do not record bandwidth usage, destinations, DNS lookups, or IP addresses. Your data is encrypted on-device and decrypted at destination, without intermediate footprints.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq3" class="faq-toggle">
-            <label for="faq3" class="faq-trigger">How do I buy a premium subscription?</label>
-            <div class="faq-content">
-                <p>Premium plans are unlocked instantly through EVM blockchain payments inside the app. Transfer the subscription amount (e.g., USDT) on the Binance Smart Chain (BSC) to our secure registry address. Once confirmed, paste your transaction ID (TXID) into the activation box — your premium activates instantly.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq4" class="faq-toggle">
-            <label for="faq4" class="faq-trigger">What is the "Recovery Code"? Why is it important?</label>
-            <div class="faq-content">
-                <p>Since we have no usernames or email logins, your <span class="hl">Recovery Code</span> — a unique 6-character code generated offline on your device — is your only master access key. If you change devices, format your phone, or reinstall the app, this code combined with your original TXID is the <span class="hl">ONLY</span> way to restore your premium. Back it up immediately in a safe offline location. We cannot recover it for you.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq5" class="faq-toggle">
-            <label for="faq5" class="faq-trigger">How do I migrate my Premium to a new device?</label>
-            <div class="faq-content">
-                <p>On your new device, go to the Premium screen → tap "Migration" → enter:</p>
-                <ul>
-                    <li>Your original blockchain transaction hash (TXID)</li>
-                    <li>Your original device's Recovery Code</li>
-                </ul>
-                <p style="margin-top:10px;">Our backend will instantly transfer your premium tunnel to the new device. The old device's credentials are permanently deactivated.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq6" class="faq-toggle">
-            <label for="faq6" class="faq-trigger">How many devices can I connect simultaneously?</label>
-            <div class="faq-content">
-                <p>Each premium subscription allows exactly <span class="hl">one (1) concurrent IP connection</span> to guarantee maximum speed for all users. Connecting from a second device while the first session is active will automatically disconnect the prior session.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <input type="checkbox" id="faq7" class="faq-toggle">
-            <label for="faq7" class="faq-trigger">What is the VLESS-Reality protocol?</label>
-            <div class="faq-content">
-                <p>VLESS-Reality is the gold standard of modern anti-censorship protocols. Unlike OpenVPN or WireGuard which can be detected by Deep Packet Inspection (DPI), VLESS-Reality wraps traffic inside standard TLS parameters that make it look identical to visiting a normal secure website. This ensures stable bypass capabilities even under intense national firewalls.</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>&copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net">rumep.net</a></p>
-        </footer>
+{% block content %}
+<div class="page-wrap">
+    <div class="page-header">
+        <div class="page-badge">❓ Help Center</div>
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know about RUX VPN.</p>
     </div>
 
-</body>
-</html>
+    <div class="faq-item">
+        <input type="checkbox" id="faq1" class="faq-toggle">
+        <label for="faq1" class="faq-trigger">What is RUX VPN and what makes it unique?</label>
+        <div class="faq-content">
+            <p>RUX VPN is a state-of-the-art, decentralized VPN client designed for ultimate anonymity and speed. Unlike traditional VPN providers that require registration, RUX VPN uses <span class="hl">Binance Smart Chain (BSC)</span> smart contracts for access and the advanced <span class="hl">VLESS-Reality proxy protocol</span> to make your traffic indistinguishable from normal HTTPS.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq2" class="faq-toggle">
+        <label for="faq2" class="faq-trigger">Is RUX VPN truly Zero-Log?</label>
+        <div class="faq-content">
+            <p>Yes, absolutely. We have no user registrations, so there's no database linking any account to a real person. Our proxy servers run on custom blind nodes — they do not record bandwidth usage, destinations, DNS lookups, or IP addresses. Your data is encrypted on-device and decrypted at destination, without intermediate footprints.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq3" class="faq-toggle">
+        <label for="faq3" class="faq-trigger">How do I buy a premium subscription?</label>
+        <div class="faq-content">
+            <p>Premium plans are unlocked instantly through EVM blockchain payments inside the app. Transfer the subscription amount (e.g., USDT) on the Binance Smart Chain (BSC) to our secure registry address. Once confirmed, paste your transaction ID (TXID) into the activation box — your premium activates instantly.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq4" class="faq-toggle">
+        <label for="faq4" class="faq-trigger">What is the "Recovery Code"? Why is it important?</label>
+        <div class="faq-content">
+            <p>Since we have no usernames or email logins, your <span class="hl">Recovery Code</span> — a unique 6-character code generated offline on your device — is your only master access key. If you change devices, format your phone, or reinstall the app, this code combined with your original TXID is the <span class="hl">ONLY</span> way to restore your premium. Back it up immediately in a safe offline location. We cannot recover it for you.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq5" class="faq-toggle">
+        <label for="faq5" class="faq-trigger">How do I migrate my Premium to a new device?</label>
+        <div class="faq-content">
+            <p>On your new device, go to the Premium screen → tap "Migration" → enter:</p>
+            <ul>
+                <li>Your original blockchain transaction hash (TXID)</li>
+                <li>Your original device's Recovery Code</li>
+            </ul>
+            <p style="margin-top:10px;">Our backend will instantly transfer your premium tunnel to the new device. The old device's credentials are permanently deactivated.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq6" class="faq-toggle">
+        <label for="faq6" class="faq-trigger">How many devices can I connect simultaneously?</label>
+        <div class="faq-content">
+            <p>Each premium subscription allows exactly <span class="hl">one (1) concurrent IP connection</span> to guarantee maximum speed for all users. Connecting from a second device while the first session is active will automatically disconnect the prior session.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <input type="checkbox" id="faq7" class="faq-toggle">
+        <label for="faq7" class="faq-trigger">What is the VLESS-Reality protocol?</label>
+        <div class="faq-content">
+            <p>VLESS-Reality is the gold standard of modern anti-censorship protocols. Unlike OpenVPN or WireGuard which can be detected by Deep Packet Inspection (DPI), VLESS-Reality wraps traffic inside standard TLS parameters that make it look identical to visiting a normal secure website. This ensures stable bypass capabilities even under intense national firewalls.</p>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <p>&copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net">rumep.net</a></p>
+    </footer>
+</div>
+{% endblock %}

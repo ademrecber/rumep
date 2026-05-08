@@ -1,697 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUX VPN - Secure. Private. Free.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #03000a;
-            --surface: #0d061f;
-            --surface2: #130a2a;
-            --primary: #a855f7;
-            --primary-dim: rgba(168,85,247,0.18);
-            --primary-glow: rgba(168,85,247,0.35);
-            --text: #f3f0ff;
-            --muted: #9d8fb0;
-            --border: rgba(168,85,247,0.22);
-            --green: #22c55e;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        /* ── PATTERN BACKGROUND ── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 20% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(88,28,135,0.12) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a855f7' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── NAV ── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 40px;
-            background: rgba(3,0,10,0.75);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-
-        /* ── HERO ── */
-        .hero {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 20px 80px;
-            text-align: center;
-        }
-
-        .hero-inner {
-            max-width: 1100px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--primary-dim);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 8px 18px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--primary);
-            letter-spacing: 0.5px;
-        }
-
-        .hero-badge span { width: 7px; height: 7px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.4); }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -2px;
-        }
-
-        .hero h1 .grad {
-            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            max-width: 560px;
-            color: var(--muted);
-            font-size: 1.15rem;
-            line-height: 1.7;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #9333ea, #a855f7);
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            padding: 16px 36px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 0 30px var(--primary-glow);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 50px var(--primary-glow);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 36px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--primary);
-            background: var(--primary-dim);
-        }
-
-        /* ── PHONE MOCKUP ── */
-        .phone-wrap {
-            position: relative;
-            display: inline-block;
-        }
-
-        .phone-glow {
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-            filter: blur(30px);
-            z-index: 0;
-        }
-
-        .phone-img {
-            position: relative;
-            z-index: 1;
-            width: 260px;
-            border-radius: 36px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(168,85,247,0.3);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-14px); }
-        }
-
-        /* ── FEATURES ── */
-        .section {
-            position: relative;
-            z-index: 1;
-            padding: 100px 20px;
-        }
-
-        .section-label {
-            text-align: center;
-            color: var(--primary);
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 60px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 36px 30px;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px var(--primary-dim);
-            border-color: var(--primary);
-        }
-
-        .feature-icon {
-            width: 52px;
-            height: 52px;
-            background: var(--primary-dim);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* ── SPLIT SECTION ── */
-        .split {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .split-text h2 {
-            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-        }
-
-        .split-text p {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-
-        .check-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .check-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .check-list li::before {
-            content: '✓';
-            color: var(--green);
-            font-weight: 700;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .split-phone {
-            display: flex;
-            justify-content: center;
-        }
-
-        .split-phone img {
-            width: 220px;
-            border-radius: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.25);
-        }
-
-        /* ── STATS ── */
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-num {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
-        }
-
-        .stat-label {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 6px;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            position: relative;
-            z-index: 1;
-            border-top: 1px solid var(--border);
-            padding: 50px 40px 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .footer-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand img {
-            height: 40px;
-            margin-bottom: 12px;
-        }
-
-        .footer-brand p {
-            color: var(--muted);
-            font-size: 0.88rem;
-            max-width: 260px;
-            line-height: 1.6;
-        }
-
-        .footer-links h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 16px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover { color: var(--text); }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border);
-            padding-top: 24px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.82rem;
-        }
-
-        /* ── RESPONSIVE ── */
-        .nav-hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-        }
-        .nav-hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--text);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 73px; left: 0; right: 0;
-            z-index: 99;
-            background: rgba(3,0,10,0.97);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 24px;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: color 0.2s;
-        }
-        .mobile-menu a:last-child { border-bottom: none; }
-        .mobile-menu a:hover { color: var(--text); }
-        .mobile-menu a.rumep-link { color: var(--primary); font-weight: 700; }
-
-        @media (max-width: 768px) {
-            nav { padding: 16px 20px; }
-            .nav-links { display: none; }
-            .nav-hamburger { display: flex; }
-            .split { grid-template-columns: 1fr; }
-            .split-phone { order: -1; }
-            footer { padding: 40px 20px 24px; }
-            .footer-top { flex-direction: column; }
-        }
-
-        /* ── DOC SECTIONS (FAQ / Privacy / Terms) ── */
-        .doc-section {
-            position: relative;
-            z-index: 1;
-            padding: 100px 20px;
-            border-top: 1px solid var(--border);
-        }
-        .doc-inner {
-            max-width: 860px;
-            margin: 0 auto;
-        }
-        .doc-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .page-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--primary-dim);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 7px 16px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--primary);
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-        .doc-header h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-        }
-        .doc-header p { color: var(--muted); font-size: 1rem; }
-        .last-updated { color: var(--primary); font-size: 0.85rem; font-weight: 600; }
-
-        /* FAQ accordion */
-        .faq-item {
-            margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 18px;
-            background: var(--surface);
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .faq-item:hover { border-color: var(--border); }
-        .faq-toggle { display: none; }
-        .faq-trigger {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px 26px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #fff;
-            user-select: none;
-            transition: color 0.2s;
-        }
-        .faq-trigger::after {
-            content: '+';
-            font-size: 1.4rem;
-            color: var(--primary);
-            font-weight: 300;
-            transition: transform 0.3s ease;
-            display: inline-block;
-            flex-shrink: 0;
-            margin-left: 16px;
-        }
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
-            padding: 0 26px;
-            color: var(--muted);
-            font-size: 0.97rem;
-            line-height: 1.7;
-        }
-        .faq-toggle:checked ~ .faq-content { max-height: 600px; padding-bottom: 24px; }
-        .faq-toggle:checked ~ .faq-trigger::after { transform: rotate(45deg); }
-        .faq-toggle:checked ~ .faq-trigger { color: var(--primary); }
-        .faq-content ul { padding-left: 20px; margin-top: 10px; }
-        .faq-content li { margin-bottom: 8px; }
-        .hl { color: #fff; font-weight: 600; }
-
-        /* Doc card (Privacy / Terms) */
-        .doc-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 50px 45px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 50px rgba(168,85,247,0.08);
-        }
-        .doc-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #fff;
-            margin-top: 40px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 10px;
-        }
-        .doc-card h3::before { content: '✦'; color: var(--primary); font-size: 1rem; }
-        .doc-card h4 { font-size: 1.05rem; font-weight: 600; color: #fff; margin-top: 24px; margin-bottom: 10px; }
-        .doc-card p {
-            color: var(--muted);
-            margin-bottom: 18px;
-            font-size: 0.97rem;
-            line-height: 1.75;
-        }
-        .doc-card p a { color: var(--primary); text-decoration: none; }
-        .doc-card p a:hover { color: #fff; }
-        .doc-card p strong { color: #fff; }
-        .doc-card ul { list-style: none; margin-bottom: 22px; padding-left: 4px; }
-        .doc-card li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 10px;
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.65;
-        }
-        .doc-card li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
-        .doc-card li strong { color: #fff; }
-        .highlight-box {
-            background: #130a2a;
-            border-left: 4px solid var(--primary);
-            padding: 20px 22px;
-            border-radius: 0 16px 16px 0;
-            margin: 28px 0;
-        }
-        .highlight-box p { color: #fff; margin-bottom: 0; font-weight: 500; font-size: 0.97rem; }
-
-        @media (max-width: 768px) {
-            .doc-card { padding: 30px 20px; border-radius: 16px; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- NAV -->
-    <nav>
-        <a href="{% url 'rux_vpn' %}" class="nav-logo">
-            <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
-        </a>
-        <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
-            <li><a href="{% url 'rux_vpn_privacy' %}">Privacy</a></li>
-            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
-            <li><a href="https://rumep.net" style="color:var(--primary);font-weight:700;">rumep.net</a></li>
-        </ul>
-        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
-    <!-- MOBİL MENÜ -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#features" onclick="closeMobile()">Features</a>
-        <a href="#about" onclick="closeMobile()">About</a>
-        <a href="{% url 'rux_vpn_faq' %}">FAQ</a>
-        <a href="{% url 'rux_vpn_privacy' %}">Privacy</a>
-        <a href="{% url 'rux_vpn_terms' %}">Terms</a>
-        <a href="https://rumep.net" class="rumep-link">rumep.net</a>
-    </div>
-
+{% extends 'rux-vpn/base.html' %}
+{% load static %}
+
+{% block title %}RUX VPN - Secure. Private. Free.{% endblock %}
+{% block nav_home %}class="active"{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ── HERO ── */
+    .hero {
+        position: relative; z-index: 1;
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 120px 20px 80px;
+        text-align: center;
+    }
+    .hero-inner { max-width: 1100px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 50px; }
+    .hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--primary-dim); border: 1px solid var(--border);
+        border-radius: 100px; padding: 8px 18px;
+        font-size: 0.82rem; font-weight: 600; color: var(--primary); letter-spacing: 0.5px;
+    }
+    .hero-badge span { width: 7px; height: 7px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .hero h1 { font-size: clamp(2.8rem,7vw,5.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -2px; }
+    .hero h1 .grad { background: linear-gradient(135deg,#fff 30%,var(--primary) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { max-width: 560px; color: var(--muted); font-size: 1.15rem; line-height: 1.7; }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+        background: linear-gradient(135deg,#9333ea,#a855f7); color:#fff; border:none;
+        border-radius:14px; padding:16px 36px; font-size:1rem; font-weight:700;
+        cursor:pointer; text-decoration:none;
+        box-shadow:0 0 30px var(--primary-glow); transition:transform .2s,box-shadow .2s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 50px var(--primary-glow); }
+    .btn-ghost {
+        background:transparent; color:var(--text); border:1px solid var(--border);
+        border-radius:14px; padding:16px 36px; font-size:1rem; font-weight:600;
+        cursor:pointer; text-decoration:none; transition:border-color .2s,background .2s;
+    }
+    .btn-ghost:hover { border-color:var(--primary); background:var(--primary-dim); }
+    .phone-wrap { position:relative; display:inline-block; }
+    .phone-glow { position:absolute; inset:-40px; background:radial-gradient(circle,var(--primary-glow) 0%,transparent 70%); filter:blur(30px); z-index:0; }
+    .phone-img { position:relative; z-index:1; width:260px; border-radius:36px; box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(168,85,247,.3); animation:float 4s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+    /* ── SECTIONS ── */
+    .section { position:relative; z-index:1; padding:100px 20px; }
+    .section-label { text-align:center; color:var(--primary); font-size:.82rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+    .section-title { text-align:center; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-1px; margin-bottom:60px; }
+
+    /* ── FEATURES ── */
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; max-width:1100px; margin:0 auto; }
+    .feature-card { background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:36px 30px; transition:transform .3s,box-shadow .3s,border-color .3s; }
+    .feature-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 30px var(--primary-dim); border-color:var(--primary); }
+    .feature-icon { width:52px; height:52px; background:var(--primary-dim); border:1px solid var(--border); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:20px; }
+    .feature-card h3 { font-size:1.1rem; font-weight:700; margin-bottom:10px; }
+    .feature-card p { color:var(--muted); font-size:.95rem; line-height:1.6; }
+
+    /* ── SPLIT ── */
+    .split { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    .split-text h2 { font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:800; letter-spacing:-1px; margin-bottom:20px; }
+    .split-text p { color:var(--muted); font-size:1rem; line-height:1.7; margin-bottom:16px; }
+    .check-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin-top:24px; }
+    .check-list li { display:flex; align-items:center; gap:12px; color:var(--muted); font-size:.95rem; }
+    .check-list li::before { content:'✓'; color:var(--green); font-weight:700; font-size:1rem; flex-shrink:0; }
+    .split-phone { display:flex; justify-content:center; }
+    .split-phone img { width:220px; border-radius:30px; box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(168,85,247,.25); }
+
+    /* ── STATS ── */
+    .stats-row { display:flex; justify-content:center; gap:60px; flex-wrap:wrap; max-width:900px; margin:0 auto; }
+    .stat { text-align:center; }
+    .stat-num { font-size:3rem; font-weight:800; background:linear-gradient(135deg,#fff 30%,var(--primary) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-2px; }
+    .stat-label { color:var(--muted); font-size:.9rem; margin-top:6px; }
+
+    /* ── FOOTER ── */
+    .site-footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:50px 40px 30px; max-width:1100px; margin:0 auto; }
+    .footer-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; margin-bottom:40px; }
+    .footer-brand img { height:40px; margin-bottom:12px; }
+    .footer-brand p { color:var(--muted); font-size:.88rem; max-width:260px; line-height:1.6; }
+    .footer-links h4 { font-size:.85rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+    .footer-links ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-links li::before { display:none !important; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-size:.9rem; transition:color .2s; }
+    .footer-links a:hover { color:var(--text); }
+    .footer-bottom { border-top:1px solid var(--border); padding-top:24px; text-align:center; color:var(--muted); font-size:.82rem; }
+
+    @media (max-width:768px) {
+        .split { grid-template-columns:1fr; }
+        .split-phone { order:-1; }
+        .site-footer { padding:40px 20px 24px; }
+        .footer-top { flex-direction:column; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
     <!-- HERO -->
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-badge">
                 <span></span> Zero-Log · No Registration · Free Forever
             </div>
-
             <h1><span class="grad">Secure. Private.<br>Unstoppable.</span></h1>
-
             <p>RUX VPN uses VLESS-Reality protocol and blockchain-based access — no accounts, no logs, no limits.</p>
-
             <div class="hero-cta">
                 <a href="#" class="btn-primary">Download Free</a>
-                <a href="#faq" class="btn-ghost">Learn More</a>
+                <a href="{% url 'rux_vpn_faq' %}" class="btn-ghost">Learn More</a>
             </div>
-
             <div class="phone-wrap">
                 <div class="phone-glow"></div>
                 <img class="phone-img" src="{% static 'rux-vpn/images/start.png' %}" alt="RUX VPN App">
@@ -700,24 +116,12 @@
     </section>
 
     <!-- STATS -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section" style="padding-top:0;">
         <div class="stats-row">
-            <div class="stat">
-                <div class="stat-num">0</div>
-                <div class="stat-label">Logs Stored</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">0</div>
-                <div class="stat-label">Registrations Required</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">∞</div>
-                <div class="stat-label">Bandwidth</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">1</div>
-                <div class="stat-label">Click to Connect</div>
-            </div>
+            <div class="stat"><div class="stat-num">0</div><div class="stat-label">Logs Stored</div></div>
+            <div class="stat"><div class="stat-num">0</div><div class="stat-label">Registrations Required</div></div>
+            <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Bandwidth</div></div>
+            <div class="stat"><div class="stat-num">1</div><div class="stat-label">Click to Connect</div></div>
         </div>
     </section>
 
@@ -725,42 +129,17 @@
     <section class="section" id="features">
         <div class="section-label">Why RUX VPN</div>
         <div class="section-title">Built for real privacy</div>
-
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>VLESS-Reality Protocol</h3>
-                <p>Traffic looks identical to normal HTTPS — undetectable by deep packet inspection and national firewalls.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⛓️</div>
-                <h3>Blockchain Access</h3>
-                <p>Premium unlocked via BSC smart contracts. No email, no password, no identity — just a TXID.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚫</div>
-                <h3>Strict No-Log Policy</h3>
-                <p>We never record your IP, browsing history, DNS queries, or session duration. Ever.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Unlimited Traffic</h3>
-                <p>Free users get unlimited bandwidth. Premium users get higher speeds and priority routing.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <h3>Bypass Censorship</h3>
-                <p>Access geo-blocked content and bypass national firewalls with our advanced routing nodes.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔑</div>
-                <h3>Recovery Code</h3>
-                <p>Your 6-character offline key is the only thing you need to migrate your premium to a new device.</p>
-            </div>
+            <div class="feature-card"><div class="feature-icon">🔒</div><h3>VLESS-Reality Protocol</h3><p>Traffic looks identical to normal HTTPS — undetectable by deep packet inspection and national firewalls.</p></div>
+            <div class="feature-card"><div class="feature-icon">⛓️</div><h3>Blockchain Access</h3><p>Premium unlocked via BSC smart contracts. No email, no password, no identity — just a TXID.</p></div>
+            <div class="feature-card"><div class="feature-icon">🚫</div><h3>Strict No-Log Policy</h3><p>We never record your IP, browsing history, DNS queries, or session duration. Ever.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3>Unlimited Traffic</h3><p>Free users get unlimited bandwidth. Premium users get higher speeds and priority routing.</p></div>
+            <div class="feature-card"><div class="feature-icon">🌍</div><h3>Bypass Censorship</h3><p>Access geo-blocked content and bypass national firewalls with our advanced routing nodes.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔑</div><h3>Recovery Code</h3><p>Your 6-character offline key is the only thing you need to migrate your premium to a new device.</p></div>
         </div>
     </section>
 
-    <!-- SPLIT -->
+    <!-- ABOUT -->
     <section class="section" id="about">
         <div class="split">
             <div class="split-text">
@@ -783,7 +162,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer>
+    <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-brand">
                 <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
@@ -808,16 +187,4 @@
             &copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net" style="color:var(--primary);text-decoration:none;">rumep.net</a>
         </div>
     </footer>
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
-        function closeMobile() {
-            mobileMenu.classList.remove('open');
-        }
-    </script>
-
-</body>
-</html>
+{% endblock %}
