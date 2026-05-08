@@ -82,7 +82,7 @@
                 <p class="text-slate-400 mt-4 max-w-xl mx-auto">Hayatınızı kolaylaştıracak ve işinize değer katacak dijital ürünlerimiz.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
                 <!-- Rumep Fonts Card -->
                 <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
@@ -114,6 +114,25 @@
                         Amedspor ve diğer takımlar için canlı skorlar, fikstürler ve detaylı istatistikler. Spor dünyası cebinizde.
                     </p>
                     <a href="{% url 'rumep_spor' %}" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors">
+                        Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- RUX VPN Card -->
+                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-shield-alt text-9xl text-white"></i>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-violet-700 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 text-white text-2xl">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN" class="h-7 w-auto">
+                    </div>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        Sıfır kayıt, sıfır log. VLESS-Reality protokolü ve blockchain tabanlı erişimle gerçek gizlilik.
+                    </p>
+                    <a href="{% url 'rux_vpn' %}" class="inline-flex items-center text-purple-400 font-semibold hover:text-purple-300 transition-colors">
                         Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>

@@ -461,15 +461,15 @@
 
     <!-- NAV -->
     <nav>
-        <a href="index.html" class="nav-logo">
+        <a href="{% url 'rux_vpn' %}" class="nav-logo">
             <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
         </a>
         <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="privacy_policy.html">Privacy</a></li>
-            <li><a href="terms_of_use.html">Terms</a></li>
+            <li><a href="{% url 'rux_vpn' %}#features">Features</a></li>
+            <li><a href="{% url 'rux_vpn' %}#about">About</a></li>
+            <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
+            <li><a href="{% url 'rux_vpn_privacy' %}">Privacy</a></li>
+            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
         </ul>
     </nav>
 
@@ -486,7 +486,7 @@
 
             <div class="hero-cta">
                 <a href="#" class="btn-primary">Download Free</a>
-                <a href="faq.html" class="btn-ghost">Learn More</a>
+                <a href="{% url 'rux_vpn_faq' %}" class="btn-ghost">Learn More</a>
             </div>
 
             <div class="phone-wrap">
@@ -589,9 +589,9 @@
             <div class="footer-links">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="privacy_policy.html">Privacy Policy</a></li>
-                    <li><a href="terms_of_use.html">Terms of Use</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="{% url 'rux_vpn_privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'rux_vpn_terms' %}">Terms of Use</a></li>
+                    <li><a href="{% url 'rux_vpn_faq' %}">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-links">

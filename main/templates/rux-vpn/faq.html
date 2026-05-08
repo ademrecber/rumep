@@ -165,14 +165,14 @@
 <body>
 
     <nav>
-        <a href="index.html" class="nav-logo">
+        <a href="{% url 'rux_vpn' %}" class="nav-logo">
             <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
         </a>
         <ul class="nav-links">
-            <li><a href="index.html#features">Features</a></li>
-            <li><a href="faq.html" class="active">FAQ</a></li>
-            <li><a href="privacy_policy.html">Privacy</a></li>
-            <li><a href="terms_of_use.html">Terms</a></li>
+            <li><a href="{% url 'rux_vpn' %}#features">Features</a></li>
+            <li><a href="{% url 'rux_vpn_faq' %}" class="active">FAQ</a></li>
+            <li><a href="{% url 'rux_vpn_privacy' %}">Privacy</a></li>
+            <li><a href="{% url 'rux_vpn_terms' %}">Terms</a></li>
         </ul>
     </nav>
 
