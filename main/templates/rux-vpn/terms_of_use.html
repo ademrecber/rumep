@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUX VPN - Terms of Use</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #03000a;
+            --surface: #0d061f;
+            --surface2: #130a2a;
+            --primary: #a855f7;
+            --primary-dim: rgba(168,85,247,0.18);
+            --text: #f3f0ff;
+            --muted: #9d8fb0;
+            --border: rgba(168,85,247,0.22);
+            --green: #22c55e;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(88,28,135,0.12) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a855f7' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            background: rgba(3,0,10,0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo img { height: 36px; width: auto; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active { color: var(--primary); }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-dim);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .last-updated { color: var(--primary); font-size: 0.85rem; font-weight: 600; }
+
+        .doc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px 45px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 50px rgba(168,85,247,0.08);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 40px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+        h2::before { content: '✦'; color: var(--primary); font-size: 1rem; }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 18px;
+            font-size: 0.97rem;
+            line-height: 1.75;
+        }
+        p strong { color: #fff; }
+
+        ul { list-style: none; margin-bottom: 22px; padding-left: 4px; }
+        li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+        li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+
+        .highlight-box {
+            background: #130a2a;
+            border-left: 4px solid var(--primary);
+            padding: 20px 22px;
+            border-radius: 0 16px 16px 0;
+            margin: 28px 0;
+        }
+        .highlight-box p { color: #fff; margin-bottom: 0; font-weight: 500; font-size: 0.97rem; }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .doc-card { padding: 30px 20px; border-radius: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="nav-logo">
+            <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="privacy_policy.html">Privacy</a></li>
+            <li><a href="terms_of_use.html" class="active">Terms</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-wrap">
+        <header>
+            <div class="page-badge">📄 Legal</div>
+            <h1>Terms of Use</h1>
+            <div class="last-updated">Last Modified: May 2026</div>
+        </header>
+
+        <main class="doc-card">
+            <p>BY ACCESSING, USING, INSTALLING, OR DOWNLOADING RUX VPN PRODUCTS AND SERVICES, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THESE TERMS AND AGREE TO BE FULLY BOUND BY THEM. IF YOU DO NOT AGREE, DO NOT ACCESS, INSTALL, DOWNLOAD, OR USE RUX VPN.</p>
+
+            <h2>1. Agreement and Eligibility</h2>
+            <p>This agreement is concluded between RUX VPN and you, as User of RUX VPN Products. You may only use RUX VPN if you are aged 18 or above and legally authorized to conclude an agreement under your applicable laws.</p>
+
+            <h2>2. License</h2>
+            <p>RUX VPN grants you a personal, non-exclusive, non-transferable, limited, and revocable license to use RUX VPN Products solely in accordance with these Terms. You may not sublicense, assign, or transfer this license. You represent and warrant that you will use RUX VPN solely for private, anonymous privacy and security needs in full compliance with all applicable laws.</p>
+
+            <h2>3. Acceptable Use Policy</h2>
+            <p>You agree that you will not engage in any of the following prohibited activities:</p>
+            <ul>
+                <li>Sending or receiving unsolicited commercial emails ("spam"), chain letters, or pyramid schemes</li>
+                <li>Exploiting, possessing, producing, or distributing any illegal content, including CSAM</li>
+                <li>Uploading or distributing copyrighted content without written consent or a valid license</li>
+                <li>Forging headers or manipulating email identifiers to mask the origin of content</li>
+                <li>Interfering with the service of any other user, host, or network</li>
+                <li>Using the service to engage in DoS/DDoS attacks against any third parties or RUX VPN servers</li>
+                <li>Accessing systems or databases without written consent from the owner</li>
+                <li>Abusing simultaneous device connection limits or interfering with RUX VPN's functionality</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>Simultaneous IP Limit: Premium service is strictly restricted to one (1) concurrent IP address connection per account. Connecting another device while a session is active will automatically terminate the prior connection.</p>
+            </div>
+
+            <h2>4. Reverse Engineering and Protection</h2>
+            <p>You warrant that you will not, and will not permit any third party to:</p>
+            <ul>
+                <li>Reverse engineer, disassemble, decompile, or extract any portion of RUX VPN applications or routing servers</li>
+                <li>Change, modify, or otherwise alter RUX VPN applications</li>
+                <li>Publish, resell, distribute, or sublicense RUX VPN access keys</li>
+                <li>Use RUX VPN to build a competing product or service</li>
+            </ul>
+
+            <h2>5. On-chain Payments and Non-Refundability</h2>
+            <p>Subscriptions are activated via on-chain crypto payments (e.g., USDT on BSC) directly to our verification ledger. Due to the decentralized, immutable, and irreversible nature of smart contracts, all blockchain payments are completely final and <strong>non-refundable</strong>. It is your sole responsibility to verify target wallet addresses, gas fees, and network selections before finalizing a transfer.</p>
+
+            <h2>6. Disclaimer</h2>
+            <p>RUX VPN provides no warranty of the service or the software. RUX VPN IS PROVIDED "AS IS" AND WE MAKE NO EXPRESS OR IMPLIED WARRANTIES, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. WE DO NOT WARRANT THAT THE OPERATION OF RUX VPN WILL BE UNINTERRUPTED OR ERROR-FREE.</p>
+
+            <h2>7. Limitation of Liability</h2>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL RUX VPN OR ITS LICENSORS BE LIABLE FOR ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, LOSS OF PROFITS, BUSINESS INTERRUPTION, OR DATA LOSS ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THE SERVICES.</p>
+
+            <h2>8. Amendments and Updates</h2>
+            <p>RUX VPN reviews these Terms from time to time. The updated version is always published on our website. Your continued use of the Services following modifications constitutes your acceptance of the changed Terms.</p>
+
+            <h2>9. Final Provisions</h2>
+            <p>If any provision of this Agreement is held invalid or unenforceable, the remaining provisions shall remain in full force and effect. Any failure to exercise any right or provision of this Agreement shall not constitute a waiver.</p>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net">rumep.net</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>

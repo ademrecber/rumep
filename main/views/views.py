@@ -190,3 +190,16 @@ def statistics(request):
         'projects': '3'
     }
     return render(request, 'main/statistics.html', {'stats': stats})
+
+# ── RUX VPN ──
+def rux_vpn(request):
+    return render(request, 'rux-vpn/index.html')
+
+def rux_vpn_faq(request):
+    return render(request, 'rux-vpn/faq.html')
+
+def rux_vpn_privacy(request):
+    return render(request, 'rux-vpn/privacy_policy.html')
+
+def rux_vpn_terms(request):
+    return render(request, 'rux-vpn/terms_of_use.html')

@@ -70,7 +70,12 @@ CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_AGE = 3600  # 1 saat
 CSRF_TOKEN_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
-CSRF_TRUSTED_ORIGINS = ['https://*.render.com', 'https://rumep.net']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.render.com',
+    'https://*.railway.app',
+    'https://rumep.net',
+    'https://www.rumep.net',
+]
 # CSRF_FAILURE_VIEW = 'main.views.views.csrf_failure'
 
 ROOT_URLCONF = 'rumep.urls'

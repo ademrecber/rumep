@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUX VPN - Privacy Policy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #03000a;
+            --surface: #0d061f;
+            --surface2: #130a2a;
+            --primary: #a855f7;
+            --primary-dim: rgba(168,85,247,0.18);
+            --text: #f3f0ff;
+            --muted: #9d8fb0;
+            --border: rgba(168,85,247,0.22);
+            --green: #22c55e;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(88,28,135,0.12) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a855f7' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            background: rgba(3,0,10,0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo img { height: 36px; width: auto; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active { color: var(--primary); }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-dim);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .last-updated { color: var(--primary); font-size: 0.85rem; font-weight: 600; }
+
+        .doc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px 45px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 50px rgba(168,85,247,0.08);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 40px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+        h2::before { content: '✦'; color: var(--primary); font-size: 1rem; }
+        h3 { font-size: 1.05rem; font-weight: 600; color: #fff; margin-top: 24px; margin-bottom: 10px; }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 18px;
+            font-size: 0.97rem;
+            line-height: 1.75;
+        }
+        p a { color: var(--primary); text-decoration: none; }
+        p a:hover { color: #fff; }
+        p strong { color: #fff; }
+
+        ul { list-style: none; margin-bottom: 22px; padding-left: 4px; }
+        li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+        li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+        li strong { color: #fff; }
+
+        .highlight-box {
+            background: #130a2a;
+            border-left: 4px solid var(--primary);
+            padding: 20px 22px;
+            border-radius: 0 16px 16px 0;
+            margin: 28px 0;
+        }
+        .highlight-box p { color: #fff; margin-bottom: 0; font-weight: 500; font-size: 0.97rem; }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .doc-card { padding: 30px 20px; border-radius: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="nav-logo">
+            <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="privacy_policy.html" class="active">Privacy</a></li>
+            <li><a href="terms_of_use.html">Terms</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-wrap">
+        <header>
+            <div class="page-badge">🔒 Legal</div>
+            <h1>Privacy Policy</h1>
+            <div class="last-updated">Last Modified: May 2026</div>
+        </header>
+
+        <main class="doc-card">
+            <p>RUX VPN has the strongest observance of data protection and uncompromising protection of user privacy. When using RUX VPN, we have absolutely no knowledge about your online traffic — browsing history, traffic destination, data content, or search preferences are <strong>NEVER</strong> monitored, recorded, logged, or stored. We also do not store connection logs, meaning no logs tied to your real IP address, connection timestamp, or session duration.</p>
+
+            <h2>1. What Does This Policy Cover?</h2>
+            <p>This Privacy Policy applies to all Services, proxy interfaces, routing nodes, and applications under the <strong>RUX VPN</strong> brand, and to the website <a href="https://rumep.net" target="_blank">rumep.net</a>. By using our Services, you accept the practices described here.</p>
+
+            <h2>2. What Data Do We Collect?</h2>
+            <p>Our products support fully anonymous use. No registration, email, name, phone number, or password is required. We do not record any Personal Information (PII) during your use of the VPN tunnel.</p>
+
+            <h3>A. Anonymous Information ("Non-personal Data")</h3>
+            <p>We collect limited non-personal, statistical information solely to maintain connection quality:</p>
+            <ul>
+                <li>Device model, operating system version, and general system properties</li>
+                <li>Preferred language and general locale</li>
+                <li>Date and time of connection triggers (aggregated, not bound to IPs)</li>
+                <li>Connectivity types (WLAN, Cellular) and mobile service provider names</li>
+                <li>Google Advertising ID (for aggregate diagnostics only — resettable anytime)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>Non-personal Data is never associated with your Personal Information and does not permit identification of individual persons. It never includes your browsing history, web content, destination IPs, or DNS queries.</p>
+            </div>
+
+            <h2>3. Strict No-Logs Disclosure</h2>
+            <p>Through our strict No-Logs Policy, we guarantee:</p>
+            <ul>
+                <li>We <strong>DO NOT</strong> know which user accessed any website, protocol, or internet service</li>
+                <li>We <strong>DO NOT</strong> know which user was connected at any given time or which node IP they used</li>
+                <li>We <strong>DO NOT</strong> store any database of original IP addresses</li>
+                <li>Your encrypted tunnel credentials (VLESS-Reality keys) are held in volatile RAM and deleted instantly upon disconnect</li>
+            </ul>
+
+            <h2>4. Blockchain Transactions</h2>
+            <p>Premium features are unlocked via decentralized blockchain payments (USDT on BSC). In this process:</p>
+            <ul>
+                <li>We store your on-chain transaction hashes (TXIDs) to verify premium duration</li>
+                <li>Your TXID is matched solely to your offline-generated 6-character Recovery Code</li>
+                <li>Transaction data, wallet addresses, and crypto history are completely isolated from your VPN browsing history</li>
+            </ul>
+
+            <h2>5. Children's Privacy</h2>
+            <p>You must be at least 16 years of age to use our Service. We do not knowingly collect data from children under 16. If we discover such data was collected, we will delete it immediately.</p>
+
+            <h2>6. GDPR, CCPA & International Compliance</h2>
+            <p>Because RUX VPN does not collect Personal Data, email addresses, names, or real-world identifiers, traditional data requests (Access, Portability, Erasure under GDPR/CCPA) are inherently fulfilled — there is no personal data database to retrieve or delete.</p>
+
+            <h2>7. Data Retention</h2>
+            <p>We retain TXIDs and anonymous premium duration records as long as needed to provide active subscription services. Once expired, this data remains historically archived to prevent double-claiming, but remains completely decoupled from any user traffic metadata.</p>
+
+            <h2>8. Policy Updates</h2>
+            <p>Changes to this Privacy Policy are effective immediately upon publication. Your continued use of the Services constitutes acceptance of the updated Policy.</p>
+
+            <h2>9. Contact Us</h2>
+            <p>For questions regarding this Privacy Policy, contact us through the channels listed on <a href="https://rumep.net" target="_blank">rumep.net</a>.</p>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 RUX VPN. All rights reserved. Managed under <a href="https://rumep.net">rumep.net</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
