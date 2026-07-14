@@ -1,0 +1,54 @@
+{% extends 'rux-pdf/base.html' %}
+{% load static %}
+
+{% block nav_home %}class="active"{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        position: relative; z-index: 1;
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 120px 20px 80px;
+        text-align: center;
+    }
+    .hero-inner { max-width: 900px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 800; line-height: 1.1; letter-spacing: -2px; }
+    .hero h1 .grad { background: linear-gradient(135deg, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { max-width: 600px; color: var(--muted); font-size: 1.2rem; line-height: 1.7; }
+    
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto 100px; padding: 0 20px;}
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 32px; transition: transform 0.3s, border-color 0.3s; }
+    .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+    .card-icon { width: 48px; height: 48px; background: rgba(155, 123, 255, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--primary); }
+    .card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <h1><span class="grad">Your PDFs.</span><br>100% Offline.</h1>
+        <p>Rux PDF is a privacy-first, blazingly fast PDF editor and viewer. All operations are performed locally on your device. No cloud, no uploads, no compromises.</p>
+    </div>
+</section>
+
+<section class="features">
+    <div class="card">
+        <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+        <h3>Absolute Privacy</h3>
+        <p>We use the "All Files Access" permission strictly to let you browse and edit your local PDFs. Not a single byte leaves your device.</p>
+    </div>
+    <div class="card">
+        <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
+        <h3>Powerful Tools</h3>
+        <p>Compress, merge, split, rotate, watermark, and sign. Everything you need to manage documents efficiently.</p>
+    </div>
+    <div class="card">
+        <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+        <h3>Lightning Fast</h3>
+        <p>Optimized rendering ensures that even 1000+ page documents open and scroll seamlessly without lag.</p>
+    </div>
+</section>
+{% endblock %}

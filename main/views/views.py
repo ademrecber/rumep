@@ -203,3 +203,13 @@ def rux_vpn_privacy(request):
 
 def rux_vpn_terms(request):
     return render(request, 'rux-vpn/terms_of_use.html')
+
+# ── RUX PDF ──
+def rux_pdf(request):
+    return render(request, 'rux-pdf/index.html')
+
+def rux_pdf_privacy(request):
+    return render(request, 'rux-pdf/privacy_policy.html')
+
+def rux_pdf_terms(request):
+    return render(request, 'rux-pdf/terms_of_use.html')

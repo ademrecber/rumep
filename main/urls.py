@@ -19,4 +19,8 @@ urlpatterns = [
     path('rux-vpn/faq/', views.rux_vpn_faq, name='rux_vpn_faq'),
     path('rux-vpn/privacy-policy/', views.rux_vpn_privacy, name='rux_vpn_privacy'),
     path('rux-vpn/terms-of-use/', views.rux_vpn_terms, name='rux_vpn_terms'),
+    # RUX PDF
+    path('rux-pdf/', views.rux_pdf, name='rux_pdf'),
+    path('rux-pdf/privacy-policy/', views.rux_pdf_privacy, name='rux_pdf_privacy'),
+    path('rux-pdf/terms-of-use/', views.rux_pdf_terms, name='rux_pdf_terms'),
 ]

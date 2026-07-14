@@ -1,0 +1,63 @@
+{% extends 'rux-pdf/base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy - Rux PDF{% endblock %}
+{% block nav_privacy %}class="active"{% endblock %}
+
+{% block extra_css %}
+<style>
+    .doc-content {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px;
+    }
+    .doc-content h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    .doc-content .last-updated { color: var(--primary); font-size: 0.9rem; margin-bottom: 32px; font-weight: 500; }
+    .doc-content h2 { font-size: 1.4rem; margin: 32px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .doc-content p, .doc-content li { margin-bottom: 16px; color: #ccc; }
+    .doc-content ul { padding-left: 20px; margin-bottom: 16px; }
+    .highlight-box { background: rgba(155, 123, 255, 0.1); border-left: 4px solid var(--primary); padding: 16px; border-radius: 0 8px 8px 0; margin: 24px 0; }
+    .highlight-box p { margin: 0; color: #fff; font-weight: 500;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="doc-content">
+        <h1>Privacy Policy</h1>
+        <div class="last-updated">Last Updated: July 2026</div>
+
+        <div class="highlight-box">
+            <p><strong>TL;DR:</strong> Rux PDF is a 100% offline application. We do not collect, store, share, or transmit your personal data or your files. Everything stays on your device.</p>
+        </div>
+
+        <h2>1. Core Functionality & Permissions</h2>
+        <p>To provide its core functionality as a PDF manager and editor, Rux PDF requires the <strong>All Files Access (MANAGE_EXTERNAL_STORAGE)</strong> permission on Android devices.</p>
+        <ul>
+            <li><strong>Why we need it:</strong> This permission allows you to browse all folders on your device to locate PDF files, edit them using our tools (compress, split, merge, sign, etc.), and save the modified files back to your preferred directory.</li>
+            <li><strong>How we use it:</strong> We access your storage <em>strictly</em> for the purpose of reading and writing the PDF documents you explicitly choose to interact with.</li>
+        </ul>
+
+        <h2>2. Data Collection and Usage</h2>
+        <p><strong>We do not collect any user data.</strong></p>
+        <ul>
+            <li>No analytics or tracking SDKs are integrated into the app.</li>
+            <li>No crash reporting tools that collect device identifiers are used.</li>
+            <li>No background data transmission occurs.</li>
+        </ul>
+
+        <h2>3. Offline Processing</h2>
+        <p>All operations—including rendering, optimizing, OCR text recognition, watermarking, and signing—are executed entirely locally on your device's processor. Your files are never uploaded to any cloud server.</p>
+
+        <h2>4. Third-Party Sharing</h2>
+        <p>Because we do not collect any data, we have absolutely nothing to share with or sell to third parties.</p>
+
+        <h2>5. Changes to This Policy</h2>
+        <p>If we ever introduce features that require data collection (such as opt-in cloud syncing), we will update this privacy policy and explicitly request your consent before doing so.</p>
+
+        <h2>6. Contact Us</h2>
+        <p>If you have any questions regarding this privacy policy or our data practices, please contact us at: <strong>support@rumep.net</strong></p>
+    </div>
+</div>
+{% endblock %}

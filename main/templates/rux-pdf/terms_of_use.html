@@ -1,0 +1,59 @@
+{% extends 'rux-pdf/base.html' %}
+{% load static %}
+
+{% block title %}Terms of Use - Rux PDF{% endblock %}
+{% block nav_terms %}class="active"{% endblock %}
+
+{% block extra_css %}
+<style>
+    .doc-content {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px;
+    }
+    .doc-content h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    .doc-content .last-updated { color: var(--primary); font-size: 0.9rem; margin-bottom: 32px; font-weight: 500; }
+    .doc-content h2 { font-size: 1.4rem; margin: 32px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .doc-content p, .doc-content li { margin-bottom: 16px; color: #ccc; }
+    .doc-content ul { padding-left: 20px; margin-bottom: 16px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="doc-content">
+        <h1>Terms of Use</h1>
+        <div class="last-updated">Last Updated: July 2026</div>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By downloading, installing, or using the Rux PDF application ("App"), you agree to be bound by these Terms of Use. If you do not agree to these terms, do not use the App.</p>
+
+        <h2>2. License to Use</h2>
+        <p>Rux PDF grants you a personal, non-exclusive, non-transferable, limited license to install and use the App on your mobile device for personal or business document management purposes.</p>
+
+        <h2>3. Local Processing & File Responsibility</h2>
+        <p>Rux PDF operates entirely offline. All modifications, conversions, and document processing happen locally on your device. Consequently:</p>
+        <ul>
+            <li>We do not have access to, nor do we backup, your documents.</li>
+            <li>You are solely responsible for ensuring you have adequate backups of your original PDF files before modifying them with the App.</li>
+            <li>We are not liable for any data loss, file corruption, or unintended modifications to your documents.</li>
+        </ul>
+
+        <h2>4. Prohibited Uses</h2>
+        <p>You agree not to use the App for any unlawful purpose or in any way that interrupts, damages, or impairs the service. You may not reverse engineer, decompile, or disassemble the App.</p>
+
+        <h2>5. Disclaimer of Warranties</h2>
+        <p>The App is provided "AS IS" without warranties of any kind. We do not guarantee that the App will meet your specific requirements, or that it will be error-free, uninterrupted, or perfectly secure.</p>
+
+        <h2>6. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Rux PDF and its developers (rumep.net) shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use the App.</p>
+
+        <h2>7. Changes to Terms</h2>
+        <p>We reserve the right to modify these Terms of Use at any time. Continued use of the App following any changes indicates your acceptance of the new terms.</p>
+        
+        <h2>8. Contact</h2>
+        <p>For any inquiries regarding these terms, please contact: <strong>support@rumep.net</strong></p>
+    </div>
+</div>
+{% endblock %}

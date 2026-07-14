@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rux PDF - 100% Offline PDF Editor{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9B7BFF;
+            --primary-dark: #7a5ce0;
+            --primary-glow: rgba(155, 123, 255, 0.4);
+            --bg: #0f0f13;
+            --surface: #1a1a20;
+            --border: #2a2a32;
+            --text: #f0f0f0;
+            --muted: #a0a0aa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 15, 19, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+        .nav-logo { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px;}
+        .nav-logo span { color: var(--primary); }
+        .nav-links { list-style: none; display: flex; gap: 24px; align-items: center; }
+        .nav-links a { color: var(--muted); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+        .rumep-link { background: #222; padding: 6px 14px; border-radius: 8px; border: 1px solid #333; font-size: 0.85rem; }
+
+        .container { max-width: 1000px; margin: 120px auto 60px; padding: 0 20px; }
+        
+        /* Typography */
+        h1, h2, h3 { font-weight: 700; color: #fff; }
+        
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <a href="{% url 'rux_pdf' %}" class="nav-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Rux<span>PDF</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="{% url 'rux_pdf' %}" {% block nav_home %}{% endblock %}>Home</a></li>
+            <li><a href="{% url 'rux_pdf_privacy' %}" {% block nav_privacy %}{% endblock %}>Privacy</a></li>
+            <li><a href="{% url 'rux_pdf_terms' %}" {% block nav_terms %}{% endblock %}>Terms</a></li>
+            <li><a href="https://rumep.net" class="rumep-link">rumep.net</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        &copy; 2026 Rux PDF. A privacy-first tool by <a href="https://rumep.net" style="color:var(--primary);">rumep.net</a>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
