@@ -6,4 +6,4 @@ pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 # Veritabanı kullanılmadığı için migrate komutu kaldırıldı
-# python manage.py migrate
+python manage.py migrate
