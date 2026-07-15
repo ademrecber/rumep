@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 import os
 import mimetypes
 from fontTools.ttLib import TTFont
+from main.models import RuxPdfComment
+from main.forms import RuxPdfCommentForm
 
 def landing_page(request):
     """Yeni modern ana sayfa"""
@@ -206,7 +208,17 @@ def rux_vpn_terms(request):
 
 # ── RUX PDF ──
 def rux_pdf(request):
-    return render(request, 'rux-pdf/index.html')
+    comments = RuxPdfComment.objects.filter(is_approved=True)
+    if request.method == 'POST':
+        form = RuxPdfCommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Yorumunuz başarıyla eklendi!')
+            return redirect('rux_pdf')
+    else:
+        form = RuxPdfCommentForm()
+        
+    return render(request, 'rux-pdf/index.html', {'comments': comments, 'form': form})
 
 def rux_pdf_privacy(request):
     return render(request, 'rux-pdf/privacy_policy.html')
