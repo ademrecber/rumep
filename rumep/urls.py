@@ -20,6 +20,9 @@ Allow: /
 """
     return HttpResponse(content, content_type='text/plain')
 
+def app_ads_txt_view(request):
+    return HttpResponse('google.com, pub-8541321354650330, DIRECT, f08c47fec0942fa0\n', content_type='text/plain')
+
 def favicon_view(request):
     favicon_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'favicon.ico')
     try:
@@ -29,6 +32,7 @@ def favicon_view(request):
         return HttpResponse(status=404)
 
 urlpatterns = [
+    path('app-ads.txt', app_ads_txt_view, name='app_ads_txt'),
     path('api/wallpapers/', wallpaper_api, name='wallpaper_api'),
     path('rumep-studyo/wallpapers/<int:pk>/preview/', admin.site.admin_view(admin_wallpaper_preview), name='wallpaper_admin_preview'),
     path('rumep-studyo/', admin.site.urls),
