@@ -2,7 +2,7 @@
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#151719"><meta name="description" content="Rumep Spor: Amedspor taraftarları için maç takibi, anlaşılır analizler ve duvar kâğıtları.">
 <title>{% block title %}Rumep Spor · Taraftarın yeri{% endblock %}</title>
-<link rel="stylesheet" href="{% static 'rumep-spor/site.css' %}"></head>
+<link rel="stylesheet" href="{% static 'rumep-spor/site.css' %}?v=2"></head>
 <body><header class="nav"><a class="brand" href="{% url 'rumep_spor' %}"><img src="{% static 'rumep-spor/logo.webp' %}" alt="Rumep Spor" width="58" height="42"><span>Rumep <strong>Spor</strong></span></a><nav aria-label="Ana gezinme"><a href="{% url 'rumep_spor' %}#ozellikler">Keşfet</a><a href="{% url 'rumep_spor' %}#ekranlar">Ekranlar</a><a href="{% url 'rumep_spor_privacy' %}">Gizlilik</a></nav></header>
 <main>{% block content %}{% endblock %}</main>
 <footer><div><strong>Rumep Spor</strong><p>Amedspor taraftarları için bağımsız bir proje.<br>Resmî kulüp uygulaması değildir.</p></div><nav aria-label="Yasal bağlantılar"><a href="{% url 'rumep_spor_privacy' %}">Gizlilik politikası</a><a href="{% url 'rumep_spor_terms' %}">Kullanım koşulları</a><a href="{% url 'rumep_spor_data' %}">Veri ve silme talepleri</a><a href="mailto:info@rumep.net">İletişim</a><a href="/">rumep.net</a></nav><small>© 2026 Rumep · Beyaz, yeşil, kırmızı.</small></footer></body></html>
