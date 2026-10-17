@@ -1,110 +1,13 @@
-﻿{% extends 'main/base.html' %}
-{% load static %}
-
-{% block title %}Rumep Spor - Uygulama Tanıtımı{% endblock %}
-
-{% block extra_css %}
-<style>
-    /* Rumep Spor Specific Variables Override */
-    :root {
-      --accent: #22c55e;
-      --card-bg: rgba(17, 24, 39, 0.85);
-      --border-color: rgba(255, 255, 255, 0.08);
-    }
-
-    .spor-hero {
-      padding: 32px;
-      border: 1px solid var(--border-color);
-      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(59,130,246,0.08));
-      border-radius: 16px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-
-    .spor-hero::after {
-      content: "";
-      position: absolute;
-      right: -120px;
-      top: -120px;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      border: 2px dashed rgba(34,197,94,0.35);
-      opacity: 0.6;
-    }
-
-    .spor-hero::before {
-      content: "";
-      position: absolute;
-      left: -80px;
-      bottom: -80px;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 2px dashed rgba(59,130,246,0.35);
-      opacity: 0.6;
-    }
-
-    .spor-badge { display: inline-block; font-size: 12px; color: #0b1220; background: var(--accent); padding: 4px 8px; border-radius: 999px; font-weight: 700; margin-bottom: 1rem; }
-    
-    .spor-card {
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      padding: 24px;
-      border-radius: 12px;
-      min-height: 150px;
-      transition: transform 0.3s ease;
-    }
-    
-    .spor-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--accent);
-    }
-
-    .spor-stripe {
-      height: 3px;
-      margin: 20px 0 6px;
-      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.7), rgba(59,130,246,0.7), transparent);
-    }
-</style>
-{% endblock %}
-
+{% extends 'rumep-spor/base.html' %}{% load static %}
 {% block content %}
-<div class="max-w-5xl mx-auto py-8">
-    <div class="spor-hero">
-      <span class="spor-badge">Rumep Spor</span>
-      <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Maçları Tek Ekranda Takip Et</h1>
-      <p class="text-gray-300 max-w-2xl text-lg mb-6">Canlı skor, fikstür, istatistik, kadro ve transferler. Rumep Spor ile tüm gelişmeler cebinde.</p>
-      <div class="spor-stripe"></div>
-      <p class="text-gray-400 mt-4">Hızlı. Güncel. Basit.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Canlı Maç</h2>
-        <p class="text-gray-400">Maçlar devam ederken skorları, olayları ve istatistikleri anlık gösterir.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Fikstür ve Sonuçlar</h2>
-        <p class="text-gray-400">Geçmiş ve gelecek maçları kolayca görüntüle.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Kadro ve Transferler</h2>
-        <p class="text-gray-400">Kadro güncellemeleri ve transfer haberleri tek sayfada.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Bildirimler</h2>
-        <p class="text-gray-400">Gol, kart ve önemli maç anları için anında bildirim al.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Analiz</h2>
-        <p class="text-gray-400">Sezonluk performans, oyuncu katkısı ve maç için istatistikler.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Hafif ve Hızlı</h2>
-        <p class="text-gray-400">Minimum veri kullanımı ile hızlı açılan ekranlar.</p>
-      </div>
-    </div>
-</div>
+<section class="hero"><div><span class="eyebrow">Taraftarın yeri</span><h1>Maçın heyecanı.<br><em>Sezonun hikâyesi.</em></h1><p class="intro">Amedspor’u sadece skorla takip etme. Maçları keşfet, sezonu anlaşılır analizlerle oku, takımının renklerini yanında taşı.</p><div class="actions"><a class="button" href="#ekranlar">Uygulamayı keşfet ↗</a><a class="button secondary" href="#ozellikler">Neler var?</a></div><span class="pill">Android için hazırlanıyor</span><p class="note">Google Play bağlantısı yayınlandığında burada olacak.</p></div><div class="phone"><img src="{% static 'rumep-spor/screen-1.webp' %}" width="720" height="1489" alt="Amedspor uygulamasında sezon özeti ve sıradaki karşılaşma" fetchpriority="high"></div></section>
+<section id="ozellikler" class="section"><span class="eyebrow">Bir takımdan fazlası</span><h2>Taraftarlığın her anı,<br>tek bir yerde.</h2><p>Maç gününün temposundan sezonun bütününe. Önemli bilgileri sade, koyu ve göz yormayan bir tasarımda bul.</p><div class="features"><article class="feature"><b>01 / MAÇ MERKEZİ</b><h3>Sıradaki maç aklında.</h3><p>Yaklaşan karşılaşmalar, tamamlanan maçlar ve maç ayrıntıları. Takvim ile sonuçlar arasında kolayca geç.</p></article><article class="feature"><b>02 / ANALİZ</b><h3>Skorun arkasını gör.</h3><p>Biten lig maçlarından gol, rakip, iç saha ve deplasman karşılaştırmaları. Hesapların kapsamı ve maç ayrıntıları açıkça görünür.</p></article><article class="feature"><b>03 / CANLI TAKİP</b><h3>Heyecana yakın kal.</h3><p>Mevcut maç verileriyle canlı skor ve dakika. Gol, kart, devre ve kadro bildirimlerini kendi tercihlerine göre açıp kapat.</p></article><article class="feature"><b>04 / PUAN DURUMU</b><h3>Sezonun resmine bak.</h3><p>Takımların sıralaması, puanları ve son maç performansları. Güncelleme bilgisiyle kayıtlı tabloyu takip et.</p></article><article class="feature"><b>05 / KULÜP</b><h3>Takımını daha yakından tanı.</h3><p>Kayıtlı oyuncu kadrosu, mevkiler ve forma numaraları. Haber ve transfer kayıtları mevcut olduğunda aynı yerde.</p></article><article class="feature"><b>06 / DUVAR KÂĞITLARI</b><h3>Renklerini yanında taşı.</h3><p>Görselleri büyüterek incele, tarihe göre sırala ve kaliteli hâliyle telefonuna kaydet. Görünüm tercihlerin cihazında kalır.</p></article></div></section>
+<section id="ekranlar" class="section"><span class="eyebrow">Uygulamanın içinden</span><h2>Sade. Koyu. Bizden.</h2><p>Gerçek uygulama ekranlarını yana kaydırarak keşfet. Ekran görüntülerindeki skor ve kadrolar çekildikleri tarihe aittir; güncel maç bilgisi değildir.</p><div class="rail">
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-1.webp' %}" alt="Ana sayfa" width="720" height="1489"><figcaption>Sezonun hikâyesi</figcaption></figure>
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-2.webp' %}" alt="Rumep Spor ekran görüntüsü 2" width="720" height="1489"><figcaption>Maç gününe bir bakış</figcaption></figure>
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-3.webp' %}" alt="Rumep Spor ekran görüntüsü 3" width="720" height="1489"><figcaption>Takımını keşfet</figcaption></figure>
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-4.webp' %}" alt="Rumep Spor ekran görüntüsü 4" width="720" height="1489"><figcaption>Sezonu takip et</figcaption></figure>
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-5.webp' %}" alt="Rumep Spor ekran görüntüsü 5" width="720" height="1489"><figcaption>Ayrıntılara in</figcaption></figure>
+<figure><img loading="lazy" src="{% static 'rumep-spor/screen-6.webp' %}" alt="Rumep Spor ekran görüntüsü 6" width="720" height="1489"><figcaption>Taraftarın yeri</figcaption></figure></div></section>
+<section class="section"><div class="privacy-strip"><span class="eyebrow">Kontrol sende</span><h3>Hesap açmadan keşfet.</h3><p>Bildirimlerini kendin seç. Görsellerini telefonunun kaydetme ekranıyla indir. Gizlilik, verilerinin kullanımı ve silme seçenekleri hakkında açık bilgiye ulaş.</p><div class="actions"><a class="button" href="{% url 'rumep_spor_privacy' %}">Gizlilik politikası</a><a class="button secondary" href="{% url 'rumep_spor_data' %}">Veri ve silme talepleri</a></div></div><p class="note">Rumep Spor bağımsız taraftar uygulamasıdır. Amedspor’un resmî uygulaması değildir. Canlı veri ve bildirimlerde bağlantı veya kayıt kaynaklı gecikme olabilir.</p></section>
 {% endblock %}

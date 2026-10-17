@@ -1,99 +1,14 @@
-﻿{% extends 'main/base.html' %}
-{% load static %}
-
-{% block title %}Rumep Spor - Gizlilik Politikası{% endblock %}
-
-{% block extra_css %}
-<style>
-    :root {
-      --accent: #22c55e;
-      --card-bg: rgba(17, 24, 39, 0.85);
-      --border-color: rgba(255, 255, 255, 0.08);
-    }
-    
-    .privacy-hero {
-      padding: 28px;
-      border: 1px solid var(--border-color);
-      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(15,23,42,0.4));
-      border-radius: 14px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-    
-    .privacy-hero::after {
-      content: "";
-      position: absolute;
-      right: -80px;
-      top: -80px;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      border: 2px dashed rgba(34,197,94,0.35);
-      opacity: 0.6;
-    }
-    
-    .tag { display: inline-block; font-size: 12px; color: #0b1220; background: var(--accent); padding: 4px 8px; border-radius: 999px; font-weight: 600; margin-bottom: 0.5rem; }
-    
-    .spor-card {
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      padding: 16px;
-      border-radius: 12px;
-      height: 100%;
-    }
-    
-    .custom-link { color: #a7f3d0; text-decoration: none; font-weight: 600; }
-    .custom-link:hover { color: #34d399; text-decoration: underline; }
-    
-    .separator-line {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.7), transparent);
-      margin: 24px 0;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="max-w-4xl mx-auto py-8">
-    <div class="privacy-hero">
-      <span class="tag">Rumep Spor</span>
-      <h1 class="text-3xl font-bold text-white mb-2">Gizlilik Politikası</h1>
-      <p class="text-gray-400 text-sm">Son güncelleme: 2026-02-08</p>
-      <div class="mt-4">
-        <a href="{% url 'rumep_spor' %}" class="custom-link">
-          &larr; Rumep Spor'a Dön
-        </a>
-      </div>
-    </div>
-
-    <div class="separator-line"></div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Toplanan Veriler</h2>
-        <p class="text-gray-400">Uygulama; maç verileri, bildirim tercihleri ve performans geliştirme amacıyla sınırlı teknik veriler toplayabilir.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Bildirimler</h2>
-        <p class="text-gray-400">Maç gelişmeleri ve duyurular için push bildirimleri gönderilebilir. Bildirimleri cihaz ayarlarından kapatabilirsiniz.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Üçüncü Taraf Servisler</h2>
-        <p class="text-gray-400">Uygulama Firebase ve API-Football servislerini kullanır. Bu servisler kendi gizlilik politikalarına tabidir.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Veri Saklama</h2>
-        <p class="text-gray-400">Veriler yalnızca hizmet sunumu ve iyileştirme amacıyla saklanır. Gerektiğinde silme taleplerinizi değerlendiririz.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">Haklarınız</h2>
-        <p class="text-gray-400">Kişisel verilerinizle ilgili sorularınız için bize ulaşabilirsiniz. Talep üzerine düzeltme veya silme yapılabilir.</p>
-      </div>
-      <div class="spor-card">
-        <h2 class="text-xl font-bold text-white mb-2">İletişim</h2>
-        <p class="text-gray-400">Gizlilikle ilgili sorular için: <strong>support@rumepspor.com</strong></p>
-      </div>
-    </div>
-</div>
-{% endblock %}
+{% extends 'rumep-spor/base.html' %}{% block title %}Rumep Spor · Gizlilik Politikası{% endblock %}{% block content %}<article class="legal">
+<span class="eyebrow">Gizlilik ve şeffaflık</span><h1>Gizlilik politikası</h1><p class="meta">Yürürlük ve son güncelleme: 17 Ekim 2026</p>
+<p>Bu politika, Rumep tarafından sunulan <strong>Rumep Spor</strong> Android uygulamasını (uygulama içinde Amedspor adıyla da gösterilir) ve rumep.net/rumep-spor sayfalarını kapsar. Geliştirici/yayıncı: <strong>Adem Reçber · Rumep</strong>. Gizlilik ve veri talepleri için <a href="mailto:info@rumep.net">info@rumep.net</a> adresine yazabilirsiniz.</p>
+<h2>1. Hangi bilgiler işlenir?</h2><p>Uygulama hesap açmanızı, adınızı, telefon numaranızı veya e-posta adresinizi girmenizi istemez. Konum, rehber, SMS, mikrofon ve kamera erişimi istemez. Bununla birlikte internet ve bildirim hizmetleri teknik cihaz bilgileri işler; bu nedenle “hiç veri toplanmaz” iddiasında bulunmuyoruz.</p>
+<table><thead><tr><th>Bilgi</th><th>Amaç ve işleme</th></tr></thead><tbody><tr><td>Bildirim kayıt belirteci ve uygulama kurulum kimliği</td><td>Bildirimleri doğru uygulama kurulumuna ulaştırmak için Google Firebase Cloud Messaging hizmetince işlenir. Maç bildirim konusu aboneliği yönetilir.</td></tr><tr><td>IP adresi, istek zamanı ve teknik bağlantı bilgileri</td><td>Maç/görsel sunucuları ve hizmet sağlayıcılar tarafından içeriği ulaştırmak, bağlantı hatalarını ve kötüye kullanımı incelemek için işlenebilir.</td></tr><tr><td>Bildirim, sıralama ve görünüm tercihleri; görsel önbelleği</td><td>Uygulamanın cihazdaki alanında tutulur. Bu tercihler için profil oluşturulmaz.</td></tr><tr><td>Destek mesajınız ve iletişim adresiniz</td><td>Bize kendiniz yazarsanız talebinizi yanıtlamak ve sonuçlandırmak için kullanılır.</td></tr></tbody></table>
+<h2>2. Reklamlar</h2><p>Bu politikayı hazırladığımız mevcut sürümde üretim reklamları etkin değildir; geliştirme sürümünde test reklam altyapısı bulunur. Reklamlar etkinleştirilirse Google AdMob ve izin yönetimi kullanılacaktır. Google Mobile Ads; IP adresi, cihaz/reklam kimlikleri, reklam etkileşimleri ve tanılama bilgilerini reklam sunumu, ölçüm ve kötüye kullanımın önlenmesi için işleyebilir. IP adresinden yaklaşık konum çıkarılabilir; bu, GPS izni istendiği anlamına gelmez. Reklam etkinleştirilmeden önce politika ve mağazadaki veri beyanı güncellenir; gerekli bölgelerde seçim/izin ekranı gösterilir. Varsa reklam gizlilik tercihleri uygulama ayarlarından yönetilir. Ayrıntılar: <a href="https://policies.google.com/privacy">Google gizlilik politikası</a>.</p>
+<h2>3. Paylaşım ve hizmet sağlayıcılar</h2><p>Teknik bilgiler bildirim iletimi, barındırma, dosya depolama ve ağ güvenliği hizmetlerini sağlayan iş ortaklarınca bu işlevler için işlenebilir. Bildirimlerde Google Firebase kullanılır; ayrıntılar <a href="https://firebase.google.com/support/privacy">Firebase gizlilik açıklamalarında</a> yer alır. Futbol veri hizmetine telefon başına kullanıcı profili gönderilmez. Verilerinizi satmayız. Yasal yükümlülük veya yetkili makamın geçerli talebi bulunursa gerekli bilgiler açıklanabilir. Hizmet sağlayıcı altyapıları yurt dışında bulunabilir; veriler sınır ötesinde işlenebilir.</p>
+<h2>4. İzinler ve cihazınıza kayıt</h2><ul><li>Bildirim izni maç uyarıları içindir. Android ayarlarından veya uygulamadaki bildirim tercihlerinden kapatabilirsiniz.</li><li>Duvar kâğıdı kaydederken Android’in dosya seçicisi yalnızca seçtiğiniz hedef dosyaya yazma erişimi verir. Tüm dosyalarınıza veya fotoğraf arşivinize geniş erişim istenmez.</li><li>İndirilen görseller cihazınızda kalır; bunları Dosyalar/Downloads uygulamasından silebilirsiniz.</li></ul>
+<h2>5. Saklama, silme ve tercihler</h2><p>Yerel tercihler ve önbellek, uygulama verisini temizleyene veya uygulamayı kaldırana kadar tutulabilir. Dışarı kaydedilen duvar kâğıtları uygulama kaldırıldığında otomatik silinmez. Sunucu teknik kayıtlarının saklanması kullanılan hizmetin yapılandırması ve güvenlik ihtiyacıyla sınırlıdır. Destek yazışmaları talebin sonuçlandırılması ve gerekli yasal yükümlülükler boyunca saklanır. Bildirim hizmetine ait teknik verilerin saklama ve silme süreleri ilgili sağlayıcının politikasına tabidir; geliştirici bu hizmetlerdeki bütün kayıtları doğrudan silemez.</p><p>Verilerinize erişim, düzeltme, silme ve itiraz talepleriniz için <a href="{% url 'rumep_spor_data' %}">Veri ve silme talepleri</a> sayfasındaki yolları kullanın. Kimlik belgesi veya şifrenizi göndermeyin.</p>
+<h2>6. Güvenlik</h2><p>Ağ iletişiminde HTTPS kullanılır. Hizmet erişimleri yetkilerle sınırlandırılır. Hiçbir internet sistemi için mutlak güvenlik garantisi verilemez. Uygulama mağazası ve Android’in kendi veri işlemleri ilgili hizmetlerin politikalarına tabidir.</p>
+<h2>7. Çocuklar</h2><p>Uygulama özellikle çocuklara yönelik tasarlanmamıştır. Çocuklardan bilerek kişisel bilgi istemeyiz. Bir çocuğa ait bilginin destek kanalıyla paylaşıldığını düşünüyorsanız silme talebi için bize ulaşın.</p>
+<h2>8. Bu web sayfaları</h2><p>Bu tanıtım ve politika sayfaları kendi başına reklam, analiz izleyicisi veya zorunlu olmayan çerez eklemez. Site ve barındırma hizmetleri HTTP isteklerinin teknik kayıtlarını işleyebilir. Rumep sitesinin diğer bölümleri için <a href="/privacy-policy/">site gizlilik politikası</a> geçerlidir.</p>
+<h2>9. Güncellemeler ve iletişim</h2><p>İşlevler veya veri uygulamaları değiştiğinde bu sayfa güncellenir. Gerekli önemli değişikliklerde uygulama içi bilgilendirme yapılır. İletişim: <a href="mailto:info@rumep.net">info@rumep.net</a>.</p>
+</article>{% endblock %}
