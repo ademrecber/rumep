@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from .database_config import database_config
 
 # .env dosyasını yükle
 load_dotenv()
@@ -103,10 +104,7 @@ WSGI_APPLICATION = 'rumep.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': database_config(BASE_DIR, os.getenv('DATABASE_URL', '')),
 }
 
 # Password validation
@@ -140,6 +138,39 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(os.getenv('MEDIA_ROOT', str(BASE_DIR / 'media')))
+# Neon Object Storage is S3-compatible.  It is enabled only when all values
+# are present; otherwise local media remains available for development.
+NEON_STORAGE_CONFIGURED = all(os.getenv(name) for name in (
+    'AWS_ENDPOINT_URL_S3', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY',
+    'AWS_STORAGE_BUCKET_NAME',
+))
+if NEON_STORAGE_CONFIGURED:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3.S3Storage',
+            'OPTIONS': {
+                'bucket_name': os.environ['AWS_STORAGE_BUCKET_NAME'],
+                'endpoint_url': os.environ['AWS_ENDPOINT_URL_S3'],
+                'region_name': os.getenv('AWS_REGION', 'eu-central-1'),
+                'access_key': os.environ['AWS_ACCESS_KEY_ID'],
+                'secret_key': os.environ['AWS_SECRET_ACCESS_KEY'],
+                'default_acl': None,
+                'querystring_auth': True,
+                'addressing_style': 'path',
+                'file_overwrite': False,
+            },
+        },
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
+# Production uploads stay closed until durable storage is configured.
+WALLPAPER_UPLOADS_ENABLED = os.getenv(
+    'WALLPAPER_UPLOADS_ENABLED',
+    'true' if NEON_STORAGE_CONFIGURED else ('false' if os.getenv('RAILWAY_ENVIRONMENT_ID') else 'true'),
+).lower() == 'true'
 STATICFILES_DIRS = [BASE_DIR / "main/static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

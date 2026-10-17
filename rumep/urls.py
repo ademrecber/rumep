@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.http import HttpResponse
 from django.conf import settings
 import os
+from main.wallpaper_views import admin_wallpaper_preview
 
 def ads_txt_view(request):
     ads_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'ads.txt')
@@ -28,7 +29,8 @@ def favicon_view(request):
         return HttpResponse(status=404)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('rumep-studyo/wallpapers/<int:pk>/preview/', admin.site.admin_view(admin_wallpaper_preview), name='wallpaper_admin_preview'),
+    path('rumep-studyo/', admin.site.urls),
     path('ads.txt', ads_txt_view, name='ads_txt'),
     path('robots.txt', robots_txt_view, name='robots_txt'),
     path('favicon.ico', favicon_view, name='favicon'),
