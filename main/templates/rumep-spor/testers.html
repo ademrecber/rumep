@@ -1,0 +1,52 @@
+{% extends 'rumep-spor/base.html' %}{% load static %}
+{% block title %}Amedspor · Test kullanıcısı ol | Rumep Spor{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'rumep-spor/testers.css' %}">
+<section class="tester-page">
+  <div class="tester-intro"><span class="tester-pill"><i></i> ERKEN ERİŞİM · ANDROID</span>
+    <h1>Tribündeki heyecan.<br><span>Şimdi cebinde.</span></h1>
+    <p>Amedspor uygulamamızı ilk deneyenlerden ol. Maçları takip et, analizleri keşfet, deneyiminle bize destek ol.</p>
+  </div>
+  <aside class="tester-download" aria-label="Daha önce başvuranlar için indirme">
+    <span class="tester-app-icon"><img src="{% static 'rumep-spor/logo.webp' %}" alt="Rumep Spor" width="58" height="42"></span>
+    <div><strong>Zaten e-postanı yazdın mı?</strong><p>Test erişimin eklendiyse uygulamaya geç.</p></div>
+    <a class="tester-secondary" href="https://play.google.com/store/apps/details?id=net.rumep.spor" rel="noopener">Google Play’de aç <span aria-hidden="true">↗</span></a>
+  </aside>
+  <div class="tester-layout">
+    <article class="tester-card">
+      <span class="tester-step">01 / KATILIM</span><h2>Test kullanıcısı ol</h2>
+      <p class="tester-muted">Amedspor uygulamamızı kullanmak için Google Play’de kullandığın Gmail adresini yaz.</p>
+      {% if success %}
+      <div class="tester-success" role="status"><span aria-hidden="true">✓</span><h3>Başvurun alındı!</h3><p>Lütfen yaklaşık 10 dakika sonra üstteki Google Play düğmesini tekrar dene.</p><p>Test erişimi elle eklenir; yoğunluk ve Google’ın incelemesi nedeniyle daha uzun sürebilir. Başvuru göndermek erişimi otomatik açmaz.</p></div>
+      {% else %}
+      {% if error %}<p class="tester-error" role="alert">{{ error }}</p>{% endif %}
+      <form method="post" class="tester-form" id="tester-form">{% csrf_token %}
+        <label for="id_email">Google Play Gmail adresin</label>
+        <div class="tester-input-wrap"><span aria-hidden="true">@</span>{{ form.email }}</div>
+        <small id="email-help">Yalnızca @gmail.com · Şifre istemiyoruz.</small>
+        {% for error in form.email.errors %}<p class="tester-error" role="alert">{{ error }}</p>{% endfor %}
+        <label class="tester-consent">{{ form.consent }}<span>Adresimin yalnızca kapalı test erişimi için kullanılmasını kabul ediyorum. <a href="{% url 'rumep_spor_privacy' %}#test-katilim">Veri kullanımını oku.</a></span></label>
+        {% for error in form.consent.errors %}<p class="tester-error" role="alert">Katılmak için veri kullanımını onaylamalısın.</p>{% endfor %}
+        <button class="tester-primary" type="submit">Adresi kontrol et <span aria-hidden="true">→</span></button>
+        <p class="tester-form-foot">Göndermeden önce adresini son kez kontrol edeceksin.</p>
+      </form>
+      {% endif %}
+    </article>
+    <aside class="tester-guide"><span class="tester-step">02 / SONRA NE OLACAK?</span><h2>Üç küçük adım.</h2>
+      <ol><li><b>1</b><div><strong>Gmail adresini gönder</strong><p>Telefonunda Google Play’e giriş yaptığın hesabı kullan. Farklı bir hesapla bağlantı açılmayabilir.</p></div></li>
+      <li><b>2</b><div><strong>Test listesine ekleyelim</strong><p>Başvurunu kontrol edip test erişimini elle tanımlayacağız. Bu işlem otomatik değil.</p></div></li>
+      <li><b>3</b><div><strong>İndir ve bizimle dene</strong><p>Erişimin açıldığında Google Play’den yükle. Gerekirse kapalı teste katılma adımını da tamamla.</p></div></li></ol>
+      <div class="tester-note"><strong>Birlikte geliştirelim.</strong><p>Kapalı test süresince uygulamayı deneyip geri bildirim vermen bize yardımcı olur. İletişim için Instagram’dan DM atabilirsin.</p></div>
+    </aside>
+  </div>
+  <section class="tester-privacy"><span aria-hidden="true">◈</span><div><h2>Adresin yalnızca test erişimi için.</h2><p>Gmail adresin yönetim panelimize iletilir. Reklam, pazarlama veya başka amaçlarla kullanılmaz; herkese gösterilmez. Test listesine ekleme işlemi tamamlandıktan sonra yönetici tarafından başvuru veritabanından silinir.</p><p>Google Play’in test listesinde test boyunca kalması gerekir. Teknik yedekler ve güvenlik kayıtları anında silinmeyebilir. İstediğin zaman silme talebini iletebilirsin.</p></div></section>
+</section>
+{% if preview_email %}
+<dialog class="tester-confirm" id="confirmation" open aria-labelledby="confirm-title" aria-describedby="confirm-description">
+  <div class="tester-modal-body"><span class="tester-pill">SON BİR KONTROL</span><h2 id="confirm-title">Adresin doğru mu?</h2><p id="confirm-description">Google Play’de bu hesapla oturum açmış olmalısın.</p><strong class="tester-email-preview">{{ preview_email }}</strong><p class="tester-muted">Yanlış yazdıysan düzelt. Henüz kaydetmedik.</p>
+    <div class="tester-modal-actions"><button type="button" class="tester-secondary" id="edit-email">Düzelt</button><form method="post">{% csrf_token %}<input type="hidden" name="action" value="confirm"><input type="hidden" name="confirmation" value="{{ confirmation }}"><button type="submit" class="tester-primary">Onayla ve gönder <span aria-hidden="true">→</span></button></form></div><noscript><p><a href="{% url 'rumep_spor_testers' %}">Adresimi düzeltmek için geri dön</a></p></noscript>
+  </div>
+</dialog>
+<script src="{% static 'rumep-spor/testers.js' %}" defer></script>
+{% endif %}
+{% endblock %}

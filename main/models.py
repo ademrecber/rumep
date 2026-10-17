@@ -1,6 +1,20 @@
 from django.db import models
 from django.utils import timezone
 
+
+class SporTestApplication(models.Model):
+    email = models.EmailField('Google Play Gmail adresi', unique=True)
+    added_to_test = models.BooleanField('Teste eklendi', default=False)
+    created_at = models.DateTimeField('Başvuru tarihi', auto_now_add=True)
+
+    class Meta:
+        ordering = ['added_to_test', '-created_at']
+        verbose_name = 'Spor test başvurusu'
+        verbose_name_plural = 'Spor test başvuruları'
+
+    def __str__(self):
+        return self.email
+
 class RuxPdfComment(models.Model):
     name = models.CharField(max_length=100, verbose_name="İsim")
     message = models.TextField(verbose_name="Mesaj/Yorum")

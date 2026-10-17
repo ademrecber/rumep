@@ -6,6 +6,37 @@ from django.core.exceptions import ValidationError
 from django.utils.html import format_html
 from django.urls import reverse
 from .models import Wallpaper
+from .models import SporTestApplication
+
+
+@admin.register(SporTestApplication)
+class SporTestApplicationAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/main/sportestapplication/change_list.html'
+    list_display = ('email', 'status_badge', 'added_to_test', 'created_at')
+    list_editable = ('added_to_test',)
+    list_filter = ('added_to_test', 'created_at')
+    search_fields = ('email',)
+    readonly_fields = ('created_at',)
+    actions = ('mark_added', 'mark_waiting')
+    list_per_page = 50
+
+    @admin.display(description='Durum', ordering='added_to_test')
+    def status_badge(self, obj):
+        return format_html('<span style="display:inline-block;padding:6px 12px;border-radius:20px;background:{};color:{};font-weight:600">{}</span>',
+                           '#d9fbe8' if obj.added_to_test else '#fff0cf',
+                           '#12623d' if obj.added_to_test else '#765318',
+                           '✓ Teste eklendi' if obj.added_to_test else '● Eklenmeyi bekliyor')
+
+    @admin.action(description='Seçilenleri teste eklendi olarak işaretle')
+    def mark_added(self, request, queryset):
+        queryset.update(added_to_test=True)
+
+    @admin.action(description='Seçilenleri bekliyor olarak işaretle')
+    def mark_waiting(self, request, queryset):
+        queryset.update(added_to_test=False)
+
+    def has_add_permission(self, request):
+        return False
 
 admin.site.site_header = 'Rumep Stüdyo'
 admin.site.site_title = 'Rumep Stüdyo'

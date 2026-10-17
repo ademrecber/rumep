@@ -1,8 +1,10 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from .views import views
+from .tester_views import tester_signup
 
 urlpatterns = [
+    path('rumep-spor/test-katilim/', tester_signup, name='rumep_spor_testers'),
     path('rumep-spor/terms-of-use/', TemplateView.as_view(template_name='rumep-spor/terms.html'), name='rumep_spor_terms'),
     path('rumep-spor/data-deletion/', TemplateView.as_view(template_name='rumep-spor/data.html'), name='rumep_spor_data'),
     path('', views.landing_page, name='landing_page'),
