@@ -8,8 +8,6 @@ import os
 import mimetypes
 import logging
 from fontTools.ttLib import TTFont
-from main.models import RuxPdfComment
-from main.forms import RuxPdfCommentForm
 
 logger = logging.getLogger(__name__)
 
@@ -195,36 +193,3 @@ def statistics(request):
         'projects': '3'
     }
     return render(request, 'main/statistics.html', {'stats': stats})
-
-# ── RUX VPN ──
-def rux_vpn(request):
-    return render(request, 'rux-vpn/index.html')
-
-def rux_vpn_faq(request):
-    return render(request, 'rux-vpn/faq.html')
-
-def rux_vpn_privacy(request):
-    return render(request, 'rux-vpn/privacy_policy.html')
-
-def rux_vpn_terms(request):
-    return render(request, 'rux-vpn/terms_of_use.html')
-
-# ── RUX PDF ──
-def rux_pdf(request):
-    comments = RuxPdfComment.objects.filter(is_approved=True)
-    if request.method == 'POST':
-        form = RuxPdfCommentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Yorumunuz başarıyla eklendi!')
-            return redirect('rux_pdf')
-    else:
-        form = RuxPdfCommentForm()
-        
-    return render(request, 'rux-pdf/index.html', {'comments': comments, 'form': form})
-
-def rux_pdf_privacy(request):
-    return render(request, 'rux-pdf/privacy_policy.html')
-
-def rux_pdf_terms(request):
-    return render(request, 'rux-pdf/terms_of_use.html')

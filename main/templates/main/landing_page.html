@@ -82,7 +82,7 @@
                 <p class="text-slate-400 mt-4 max-w-xl mx-auto">Hayatınızı kolaylaştıracak ve işinize değer katacak dijital ürünlerimiz.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                 
                 <!-- Rumep Fonts Card -->
                 <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
@@ -107,70 +107,16 @@
                         <i class="fas fa-futbol text-9xl text-white"></i>
                     </div>
                     <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 text-white text-2xl">
-                         <i class="fas fa-running"></i>
+                         <img src="{% static 'rumep-spor/app-icon.png' %}" alt="Rumep Spor uygulama ikonu" width="56" height="56" class="w-full h-full rounded-xl object-cover">
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors">Rumep Spor</h3>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        Amedspor ve diğer takımlar için canlı skorlar, fikstürler ve detaylı istatistikler. Spor dünyası cebinizde.
+                        Amedspor taraftarları için maç takibi, anlaşılır analizler ve duvar kâğıtları. Takımının heyecanı cebinde.
                     </p>
                     <a href="{% url 'rumep_spor' %}" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors">
                         Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
-
-                <!-- RUX VPN Card -->
-                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-shield-alt text-9xl text-white"></i>
-                    </div>
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-violet-700 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 text-white text-2xl">
-                        <img src="{% static 'rux-vpn/images/icon.png' %}" alt="RUX VPN" class="h-9 w-9 object-contain">
-                    </div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <img src="{% static 'rux-vpn/images/icon.png' %}" alt="RUX VPN" class="h-7 w-auto">
-                    </div>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        Sıfır kayıt, sıfır log. VLESS-Reality protokolü ve blockchain tabanlı erişimle gerçek gizlilik.
-                    </p>
-                    <a href="{% url 'rux_vpn' %}" class="inline-flex items-center text-purple-400 font-semibold hover:text-purple-300 transition-colors">
-                        Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-
-                <!-- Rux PDF Card -->
-                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-file-pdf text-9xl text-white"></i>
-                    </div>
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 text-white text-2xl">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-indigo-400 transition-colors">Rux PDF</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        %100 çevrimdışı, gizlilik odaklı, ultra hızlı PDF okuyucu ve düzenleyici. Dosyalarınız daima cihazınızda kalır.
-                    </p>
-                    <a href="{% url 'rux_pdf' %}" class="inline-flex items-center text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
-                        Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-
-                <!-- Adretools Card -->
-                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-tools text-9xl text-white"></i>
-                    </div>
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20 text-white text-2xl">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">Adretools</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        PDF dönüştürücülerden resim işleme araçlarına kadar onlarca ücretsiz web aracı. Hızlı, güvenli ve kolay.
-                    </p>
-                    <a href="https://adretools.com/" target="_blank" class="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors">
-                        Araçları Kullan <i class="fas fa-external-link-alt ml-2 text-sm"></i>
-                    </a>
-                </div>
-
             </div>
         </div>
     </section>

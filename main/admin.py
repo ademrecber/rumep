@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import RuxPdfComment
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -77,18 +76,3 @@ class WallpaperAdmin(admin.ModelAdmin):
     @admin.display(description='Çözünürlük')
     def resolution(self, obj):
         return f'{obj.width} × {obj.height}' if obj.width else '—'
-
-@admin.register(RuxPdfComment)
-class RuxPdfCommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created_at', 'is_approved')
-    list_filter = ('is_approved', 'created_at')
-    search_fields = ('name', 'message')
-    actions = ['approve_comments', 'disapprove_comments']
-
-    def approve_comments(self, request, queryset):
-        queryset.update(is_approved=True)
-    approve_comments.short_description = "Seçili yorumları onayla"
-
-    def disapprove_comments(self, request, queryset):
-        queryset.update(is_approved=False)
-    disapprove_comments.short_description = "Seçili yorumların onayını kaldır"
