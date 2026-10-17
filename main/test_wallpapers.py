@@ -22,6 +22,21 @@ def upload():
 
 @override_settings(SECURE_SSL_REDIRECT=False, WALLPAPER_UPLOADS_ENABLED=True)
 class WallpaperAdminTests(TestCase):
+    def test_public_gallery_paginates_and_excludes_drafts(self):
+        Wallpaper.objects.bulk_create([
+            Wallpaper(title=str(i), image='wallpapers/test.jpg', is_published=True)
+            for i in range(23)
+        ] + [Wallpaper(title='draft', image='secret.jpg')])
+        first = self.client.get('/api/wallpapers/').json()
+        second = self.client.get('/api/wallpapers/?page=2').json()
+        third = self.client.get('/api/wallpapers/?page=3').json()
+        self.assertEqual([len(x['items']) for x in [first, second, third]], [10, 10, 3])
+        self.assertTrue(first['hasMore'])
+        self.assertFalse(third['hasMore'])
+        self.assertFalse(set(x['id'] for x in first['items']) & set(x['id'] for x in second['items']))
+        oldest = self.client.get('/api/wallpapers/?order=oldest').json()
+        self.assertLess(oldest['items'][0]['id'], first['items'][0]['id'])
+
     def setUp(self):
         self.folder = TemporaryDirectory()
         self.addCleanup(self.folder.cleanup)
