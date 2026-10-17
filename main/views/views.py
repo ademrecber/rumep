@@ -6,13 +6,28 @@ from django.contrib import messages
 from django.core.mail import send_mail
 import os
 import mimetypes
+import logging
 from fontTools.ttLib import TTFont
 from main.models import RuxPdfComment
 from main.forms import RuxPdfCommentForm
 
+logger = logging.getLogger(__name__)
+
 def landing_page(request):
     """Yeni modern ana sayfa"""
-    return render(request, 'main/landing_page.html')
+    try:
+        return render(request, 'main/landing_page.html')
+    except Exception:
+        # Keep the public landing page available if an optional template/static
+        # asset is malformed; the full traceback is still emitted to Railway.
+        logger.exception('Landing page rendering failed')
+        return HttpResponse(
+            '<!doctype html><html lang="tr"><meta charset="utf-8">'
+            '<title>Rumep</title><body><h1>Rumep</h1>'
+            '<p>Site güncelleniyor. Lütfen biraz sonra tekrar deneyin.</p>'
+            '<a href="/rumep-spor/">Rumep Spor</a></body></html>',
+            status=200,
+        )
 
 def rumep_spor(request):
     """Rumep Spor uygulaması ana sayfası"""
