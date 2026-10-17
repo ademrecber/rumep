@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+﻿{% extends 'main/base.html' %}
 {% load static %}
 
 {% block title %}Ana Sayfa{% endblock %}
@@ -53,21 +53,21 @@
 
         <div class="max-w-4xl mx-auto text-center relative z-10 py-20">
             <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wide text-indigo-300 mb-6 uppercase">
-                Dijital Dünyanın Yeni Yüzü
+                Dijital DÃ¼nyanÄ±n Yeni YÃ¼zÃ¼
             </span>
             <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
                 Hayallerinizi <br>
-                <span class="text-gradient">Dijital Gerçekliğe</span> Dönüştürüyoruz
+                <span class="text-gradient">Dijital GerÃ§ekliÄŸe</span> DÃ¶nÃ¼ÅŸtÃ¼rÃ¼yoruz
             </h1>
             <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Rumep, modern web teknolojileri, mobil uygulamalar ve yaratıcı tasarım çözümleri sunan yenilikçi bir platformdur. Projelerimizi keşfedin.
+                Rumep, modern web teknolojileri, mobil uygulamalar ve yaratÄ±cÄ± tasarÄ±m Ã§Ã¶zÃ¼mleri sunan yenilikÃ§i bir platformdur. Projelerimizi keÅŸfedin.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#projects" class="custom-btn-hero px-8 py-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 transform hover:-translate-y-1 transition-all">
-                    Projelerimizi İncele
+                    Projelerimizi Ä°ncele
                 </a>
                 <a href="{% url 'contact' %}" class="px-8 py-4 rounded-xl font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm">
-                    Bize Ulaşın
+                    Bize UlaÅŸÄ±n
                 </a>
             </div>
         </div>
@@ -79,7 +79,7 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Projelerimiz</h2>
                 <div class="h-1 w-24 bg-gradient-to-r from-yellow-400 via-red-500 to-green-500 mx-auto rounded-full"></div>
-                <p class="text-slate-400 mt-4 max-w-xl mx-auto">Hayatınızı kolaylaştıracak ve işinize değer katacak dijital ürünlerimiz.</p>
+                <p class="text-slate-400 mt-4 max-w-xl mx-auto">HayatÄ±nÄ±zÄ± kolaylaÅŸtÄ±racak ve iÅŸinize deÄŸer katacak dijital Ã¼rÃ¼nlerimiz.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -92,12 +92,12 @@
                     <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20 text-white text-2xl">
                         <i class="fas fa-pen-nib"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-yellow-400 transition-colors">Rumep Fontları</h3>
+                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-yellow-400 transition-colors">Rumep FontlarÄ±</h3>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        Kürdistan Bayrağı'ndan ilham alan özel tasarım emojiler ve ikon setleri. Yazı tiplerinizi özelleştirin.
+                        KÃ¼rdistan BayraÄŸÄ±'ndan ilham alan Ã¶zel tasarÄ±m emojiler ve ikon setleri. YazÄ± tiplerinizi Ã¶zelleÅŸtirin.
                     </p>
                     <a href="{% url 'font_list' %}" class="inline-flex items-center text-yellow-400 font-semibold hover:text-yellow-300 transition-colors">
-                        Fontları Keşfet <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        FontlarÄ± KeÅŸfet <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
 
@@ -111,7 +111,7 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors">Rumep Spor</h3>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        Amedspor ve diğer takımlar için canlı skorlar, fikstürler ve detaylı istatistikler. Spor dünyası cebinizde.
+                        Amedspor ve diÄŸer takÄ±mlar iÃ§in canlÄ± skorlar, fikstÃ¼rler ve detaylÄ± istatistikler. Spor dÃ¼nyasÄ± cebinizde.
                     </p>
                     <a href="{% url 'rumep_spor' %}" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors">
                         Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
@@ -124,13 +124,13 @@
                         <i class="fas fa-shield-alt text-9xl text-white"></i>
                     </div>
                     <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-violet-700 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 text-white text-2xl">
-                        <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN" class="h-9 w-9 object-contain">
+                        <img src="{% static 'rux-vpn/images/icon.png' %}" alt="RUX VPN" class="h-9 w-9 object-contain">
                     </div>
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="{% static 'rux-vpn/images/rux_logo.png' %}" alt="RUX VPN" class="h-7 w-auto">
+                        <img src="{% static 'rux-vpn/images/icon.png' %}" alt="RUX VPN" class="h-7 w-auto">
                     </div>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        Sıfır kayıt, sıfır log. VLESS-Reality protokolü ve blockchain tabanlı erişimle gerçek gizlilik.
+                        SÄ±fÄ±r kayÄ±t, sÄ±fÄ±r log. VLESS-Reality protokolÃ¼ ve blockchain tabanlÄ± eriÅŸimle gerÃ§ek gizlilik.
                     </p>
                     <a href="{% url 'rux_vpn' %}" class="inline-flex items-center text-purple-400 font-semibold hover:text-purple-300 transition-colors">
                         Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
@@ -147,7 +147,7 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-indigo-400 transition-colors">Rux PDF</h3>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        %100 çevrimdışı, gizlilik odaklı, ultra hızlı PDF okuyucu ve düzenleyici. Dosyalarınız daima cihazınızda kalır.
+                        %100 Ã§evrimdÄ±ÅŸÄ±, gizlilik odaklÄ±, ultra hÄ±zlÄ± PDF okuyucu ve dÃ¼zenleyici. DosyalarÄ±nÄ±z daima cihazÄ±nÄ±zda kalÄ±r.
                     </p>
                     <a href="{% url 'rux_pdf' %}" class="inline-flex items-center text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
                         Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
@@ -164,10 +164,10 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">Adretools</h3>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        PDF dönüştürücülerden resim işleme araçlarına kadar onlarca ücretsiz web aracı. Hızlı, güvenli ve kolay.
+                        PDF dÃ¶nÃ¼ÅŸtÃ¼rÃ¼cÃ¼lerden resim iÅŸleme araÃ§larÄ±na kadar onlarca Ã¼cretsiz web aracÄ±. HÄ±zlÄ±, gÃ¼venli ve kolay.
                     </p>
                     <a href="https://adretools.com/" target="_blank" class="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors">
-                        Araçları Kullan <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                        AraÃ§larÄ± Kullan <i class="fas fa-external-link-alt ml-2 text-sm"></i>
                     </a>
                 </div>
 
@@ -175,3 +175,4 @@
         </div>
     </section>
 {% endblock %}
+
