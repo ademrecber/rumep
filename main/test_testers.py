@@ -4,6 +4,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from .models import SporTestApplication
+from unittest.mock import patch
 
 
 class TesterSignupTests(TestCase):
@@ -34,6 +35,11 @@ class TesterSignupTests(TestCase):
     def test_tampered_and_expired_confirmations_do_not_create_rows(self):
         token = signing.dumps('user@gmail.com', salt='wrong-salt')
         response = self.client.post(self.url, {'action': 'confirm', 'confirmation': token})
+        self.assertContains(response, 'Onay süresi')
+        with patch('django.core.signing.time.time', return_value=1000000):
+            token = signing.dumps('user@gmail.com', salt='spor-tester')
+        with patch('django.core.signing.time.time', return_value=1000601):
+            response = self.client.post(self.url, {'action': 'confirm', 'confirmation': token})
         self.assertContains(response, 'Onay süresi')
         self.assertEqual(SporTestApplication.objects.count(), 0)
 
