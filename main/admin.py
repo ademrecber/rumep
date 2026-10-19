@@ -6,6 +6,39 @@ from django.utils.html import format_html
 from django.urls import reverse
 from .models import Wallpaper
 from .models import SporTestApplication
+from .models import SportPost
+
+
+class SportPostForm(forms.ModelForm):
+    class Meta:
+        model = SportPost
+        fields = '__all__'
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if 'image' in self.changed_data and image:
+            if not settings.WALLPAPER_UPLOADS_ENABLED:
+                raise ValidationError('Kalıcı görsel depolaması bağlı değil; yükleme kapalı.')
+            from .feed_images import prepare_post
+            prepare_post(image)
+            image.seek(0)
+        return image
+
+
+@admin.register(SportPost)
+class SportPostAdmin(admin.ModelAdmin):
+    form = SportPostForm
+    list_display = ('id', 'preview', 'is_published', 'file_size', 'published_at')
+    list_filter = ('is_published',)
+    search_fields = ('description',)
+    readonly_fields = ('preview', 'width', 'height', 'file_size', 'published_at', 'created_at', 'updated_at')
+    fields = ('image', 'preview', 'description', 'is_published', 'width', 'height', 'file_size', 'published_at', 'created_at', 'updated_at')
+
+    @admin.display(description='Önizleme')
+    def preview(self, obj):
+        if not obj.thumbnail:
+            return 'Kaydedince önizleme oluşur.'
+        return format_html('<img src="{}" width="96" style="border-radius:12px" alt="Paylaşım">', obj.thumbnail.url)
 
 
 @admin.register(SporTestApplication)

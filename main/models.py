@@ -30,6 +30,36 @@ class RuxPdfComment(models.Model):
         return f"{self.name} - {self.created_at.strftime('%d.%m.%Y %H:%M')}"
 
 
+class SportPost(models.Model):
+    description = models.TextField('Açıklama', blank=True, max_length=4000)
+    image = models.ImageField('Görsel', upload_to='spor-feed/originals/', max_length=200)
+    thumbnail = models.ImageField('Önizleme', upload_to='spor-feed/previews/', blank=True, editable=False)
+    width = models.PositiveIntegerField(default=0, editable=False)
+    height = models.PositiveIntegerField(default=0, editable=False)
+    file_size = models.PositiveIntegerField('Dosya boyutu', default=0, editable=False)
+    is_published = models.BooleanField('Yayında', default=False)
+    published_at = models.DateTimeField('Yayın tarihi', null=True, blank=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-published_at', '-pk']
+        verbose_name = 'Rumep Spor paylaşımı'
+        verbose_name_plural = 'Rumep Spor akışı'
+
+    def __str__(self):
+        return f'Paylaşım #{self.pk or "Yeni"}'
+
+    def save(self, *args, **kwargs):
+        if self.image and not self.image._committed:
+            from .feed_images import prepare_post
+            self.image, self.thumbnail, self.width, self.height = prepare_post(self.image)
+            self.file_size = self.image.size
+        if self.is_published and self.published_at is None:
+            self.published_at = timezone.now()
+        super().save(*args, **kwargs)
+
+
 class Wallpaper(models.Model):
     title = models.CharField('Başlık', max_length=160)
     description = models.TextField('Açıklama', blank=True, max_length=4000)
