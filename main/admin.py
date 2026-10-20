@@ -6,7 +6,31 @@ from django.utils.html import format_html
 from django.urls import reverse
 from .models import Wallpaper
 from .models import SporTestApplication
-from .models import SportPost
+from .models import SportPost, SportPostImage
+
+
+class SportPostImageForm(forms.ModelForm):
+    class Meta:
+        model = SportPostImage
+        fields = ('image', 'position')
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image and 'image' in self.changed_data:
+            if not settings.WALLPAPER_UPLOADS_ENABLED:
+                raise ValidationError('Kalıcı depolama bağlı değil; yükleme kapalı.')
+            from .feed_images import prepare_post
+            prepare_post(image)
+            image.seek(0)
+        return image
+
+
+class SportPostImageInline(admin.TabularInline):
+    model = SportPostImage
+    form = SportPostImageForm
+    extra = 1
+    max_num = 9
+    validate_max = True
 
 
 class SportPostForm(forms.ModelForm):
@@ -27,6 +51,7 @@ class SportPostForm(forms.ModelForm):
 
 @admin.register(SportPost)
 class SportPostAdmin(admin.ModelAdmin):
+    inlines = [SportPostImageInline]
     form = SportPostForm
     list_display = ('id', 'preview', 'is_published', 'file_size', 'published_at')
     list_filter = ('is_published',)

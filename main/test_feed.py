@@ -4,11 +4,24 @@ from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 from PIL import Image
-from .models import SportPost
+from .models import SportPost, SportPostImage
 
 
 @override_settings(SECURE_SSL_REDIRECT=False)
 class FeedTests(TestCase):
+    def test_gallery_orders_extra_images_and_checks_publication(self):
+        p = SportPost.objects.create(image='cover.jpg', width=800, height=1000, is_published=True)
+        second = SportPostImage.objects.create(post=p, image='second.jpg', position=2, width=800, height=1000)
+        first = SportPostImage.objects.create(post=p, image='first.jpg', position=1, width=1000, height=800)
+        data = self.client.get('/api/spor-feed/').json()['items'][0]
+        self.assertEqual(len(data['images']), 2)
+        self.assertIn(f'/images/{first.pk}/', data['images'][0]['imageUrl'])
+        self.assertIn(f'/images/{second.pk}/', data['images'][1]['imageUrl'])
+        self.assertEqual(self.client.get(data['images'][0]['imageUrl']).status_code, 302)
+        p.is_published = False
+        p.save()
+        self.assertEqual(self.client.get(data['images'][0]['imageUrl']).status_code, 404)
+
     def setUp(self):
         self.folder = TemporaryDirectory()
         self.addCleanup(self.folder.cleanup)

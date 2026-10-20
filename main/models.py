@@ -60,6 +60,28 @@ class SportPost(models.Model):
         super().save(*args, **kwargs)
 
 
+class SportPostImage(models.Model):
+    post = models.ForeignKey(SportPost, related_name='extra_images', on_delete=models.CASCADE)
+    image = models.ImageField('Ek görsel', upload_to='spor-feed/originals/', max_length=200)
+    thumbnail = models.ImageField(upload_to='spor-feed/previews/', blank=True, editable=False)
+    position = models.PositiveSmallIntegerField('Sıra', default=1)
+    width = models.PositiveIntegerField(default=0, editable=False)
+    height = models.PositiveIntegerField(default=0, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['position', 'pk']
+        verbose_name = 'Ek görsel'
+        verbose_name_plural = 'Ek görseller (kapaktan sonra)'
+
+    def save(self, *args, **kwargs):
+        if self.image and not self.image._committed:
+            from .feed_images import prepare_post
+            self.image, self.thumbnail, self.width, self.height = prepare_post(self.image)
+        super().save(*args, **kwargs)
+        SportPost.objects.filter(pk=self.post_id).update(updated_at=timezone.now())
+
+
 class Wallpaper(models.Model):
     title = models.CharField('Başlık', max_length=160)
     description = models.TextField('Açıklama', blank=True, max_length=4000)
