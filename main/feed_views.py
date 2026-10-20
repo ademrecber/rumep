@@ -16,6 +16,11 @@ def feed_api(request):
     except ValueError:
         return JsonResponse({'detail': 'Invalid pagination'}, status=400)
     rows = SportPost.objects.filter(is_published=True, published_at__lte=timezone.now())
+    if request.GET.get('post'):
+        try:
+            rows = rows.filter(pk=int(request.GET['post']))
+        except ValueError:
+            return JsonResponse({'detail': 'Invalid post'}, status=400)
     if before:
         rows = rows.filter(pk__lte=before)
     anchor = before or (rows.order_by('-pk').values_list('pk', flat=True).first() or 0)

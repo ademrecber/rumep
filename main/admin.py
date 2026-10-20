@@ -57,7 +57,7 @@ class SportPostAdmin(admin.ModelAdmin):
     list_filter = ('is_published',)
     search_fields = ('description',)
     readonly_fields = ('preview', 'width', 'height', 'file_size', 'published_at', 'created_at', 'updated_at')
-    fields = ('image', 'preview', 'description', 'is_published', 'width', 'height', 'file_size', 'published_at', 'created_at', 'updated_at')
+    fields = ('image', 'preview', 'description', 'is_published', 'notify_users', 'width', 'height', 'file_size', 'published_at', 'created_at', 'updated_at')
 
     @admin.display(description='Önizleme')
     def preview(self, obj):
@@ -123,7 +123,7 @@ class WallpaperAdmin(admin.ModelAdmin):
     list_filter = ('is_published',)
     search_fields = ('title', 'description')
     readonly_fields = ('preview', 'resolution', 'file_size', 'published_at', 'created_at', 'updated_at')
-    fields = ('title', 'description', 'image', 'preview', 'is_published', 'resolution', 'file_size', 'published_at', 'created_at', 'updated_at')
+    fields = ('title', 'description', 'image', 'preview', 'is_published', 'notify_users', 'resolution', 'file_size', 'published_at', 'created_at', 'updated_at')
 
     @admin.display(description='Önizleme')
     def preview(self, obj):

@@ -31,6 +31,8 @@ class RuxPdfComment(models.Model):
 
 
 class SportPost(models.Model):
+    notify_users = models.BooleanField('Yayımlandığında bildirim gönder', default=False)
+    notification_requested_at = models.DateTimeField(null=True, blank=True, editable=False)
     description = models.TextField('Açıklama', blank=True, max_length=4000)
     image = models.ImageField('Görsel', upload_to='spor-feed/originals/', max_length=200)
     thumbnail = models.ImageField('Önizleme', upload_to='spor-feed/previews/', blank=True, editable=False)
@@ -57,6 +59,8 @@ class SportPost(models.Model):
             self.file_size = self.image.size
         if self.is_published and self.published_at is None:
             self.published_at = timezone.now()
+        if self.is_published and self.notify_users and self.notification_requested_at is None:
+            self.notification_requested_at = timezone.now()
         super().save(*args, **kwargs)
 
 
@@ -83,6 +87,8 @@ class SportPostImage(models.Model):
 
 
 class Wallpaper(models.Model):
+    notify_users = models.BooleanField('Yayımlandığında bildirim gönder', default=False)
+    notification_requested_at = models.DateTimeField(null=True, blank=True, editable=False)
     title = models.CharField('Başlık', max_length=160)
     description = models.TextField('Açıklama', blank=True, max_length=4000)
     image = models.ImageField('Duvar kağıdı', upload_to='wallpapers/originals/', max_length=200)
@@ -112,4 +118,6 @@ class Wallpaper(models.Model):
             self.file_size = image.size
         if self.is_published and self.published_at is None:
             self.published_at = timezone.now()
+        if self.is_published and self.notify_users and self.notification_requested_at is None:
+            self.notification_requested_at = timezone.now()
         super().save(*args, **kwargs)

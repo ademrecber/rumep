@@ -5,6 +5,7 @@ from django.conf import settings
 import os
 from main.wallpaper_views import admin_wallpaper_preview, wallpaper_api
 from main.feed_views import feed_api, feed_image, feed_extra_image
+from main.content_notifications import pending_content, wallpaper_preview, wallpaper_detail
 
 def ads_txt_view(request):
     ads_txt_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'ads.txt')
@@ -33,6 +34,9 @@ def favicon_view(request):
         return HttpResponse(status=404)
 
 urlpatterns = [
+    path('api/content-notifications/', pending_content, name='content_notifications'),
+    path('api/wallpapers/<int:pk>/', wallpaper_detail, name='wallpaper_detail'),
+    path('api/wallpapers/<int:pk>/preview/', wallpaper_preview, name='wallpaper_public_preview'),
     path('api/spor-feed/', feed_api, name='spor_feed_api'),
     path('api/spor-feed/<int:pk>/images/<int:image_pk>/<str:variant>/', feed_extra_image, name='spor_feed_extra_image'),
     path('api/spor-feed/<int:pk>/<str:variant>/', feed_image, name='spor_feed_image'),
