@@ -7,6 +7,14 @@ from django.views.decorators.http import require_GET
 from .models import SportPost, Wallpaper
 
 
+def content_payload(p, kind, origin):
+    preview = reverse('spor_feed_image', args=[p.pk, 'preview']) if kind == 'post' else reverse('wallpaper_public_preview', args=[p.pk])
+    return {'id': f'content:{kind}:{p.pk}', 'kind': 'content', 'contentType': kind, 'contentId': p.pk,
+            'title': 'Tribünde yeni paylaşım' if kind == 'post' else 'Yeni duvar kâğıdı eklendi',
+            'body': (p.description or 'Yeni paylaşımı incele.')[:300] if kind == 'post' else f'{p.title} • Yeni duvar kâğıdını incele.'[:300],
+            'imageUrl': origin.rstrip('/') + preview, 'requestedAt': p.notification_requested_at.isoformat()}
+
+
 @require_GET
 def pending_content(request):
     now = timezone.now()
@@ -14,11 +22,7 @@ def pending_content(request):
     for kind, model in [('post', SportPost), ('wallpaper', Wallpaper)]:
         for p in model.objects.filter(is_published=True, notify_users=True, published_at__lte=now,
                                      notification_requested_at__gte=now-timedelta(hours=24), notification_requested_at__lte=now).order_by('-notification_requested_at')[:20]:
-            preview = reverse('spor_feed_image', args=[p.pk, 'preview']) if kind == 'post' else reverse('wallpaper_public_preview', args=[p.pk])
-            items.append({'id': f'content:{kind}:{p.pk}', 'kind': 'content', 'contentType': kind, 'contentId': p.pk,
-                          'title': 'Tribünde yeni paylaşım' if kind == 'post' else 'Yeni duvar kâğıdı eklendi',
-                          'body': (p.description or 'Yeni paylaşımı incele.')[:300] if kind == 'post' else f'{p.title} • Yeni duvar kâğıdını incele.'[:300],
-                          'imageUrl': request.build_absolute_uri(preview), 'requestedAt': p.notification_requested_at.isoformat()})
+            items.append(content_payload(p, kind, request.build_absolute_uri('/').rstrip('/')))
     response = JsonResponse({'items': items})
     response['Cache-Control'] = 'public, max-age=60'
     return response

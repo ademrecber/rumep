@@ -59,9 +59,13 @@ class SportPost(models.Model):
             self.file_size = self.image.size
         if self.is_published and self.published_at is None:
             self.published_at = timezone.now()
-        if self.is_published and self.notify_users and self.notification_requested_at is None:
+        request_push = self.is_published and self.notify_users and self.notification_requested_at is None
+        if request_push:
             self.notification_requested_at = timezone.now()
         super().save(*args, **kwargs)
+        if request_push:
+            from .content_push_hook import schedule_content_push
+            schedule_content_push('post', self.pk, self._state.db)
 
 
 class SportPostImage(models.Model):
@@ -118,6 +122,10 @@ class Wallpaper(models.Model):
             self.file_size = image.size
         if self.is_published and self.published_at is None:
             self.published_at = timezone.now()
-        if self.is_published and self.notify_users and self.notification_requested_at is None:
+        request_push = self.is_published and self.notify_users and self.notification_requested_at is None
+        if request_push:
             self.notification_requested_at = timezone.now()
         super().save(*args, **kwargs)
+        if request_push:
+            from .content_push_hook import schedule_content_push
+            schedule_content_push('wallpaper', self.pk, self._state.db)
