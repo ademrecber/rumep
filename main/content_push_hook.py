@@ -2,6 +2,7 @@
 import json
 import logging
 import os
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from django.db import transaction
 
@@ -25,11 +26,14 @@ def send_content_push(kind, pk, using=None):
         return
     data = content_payload(obj, kind, 'https://rumep.net')
     request = Request(HOOK_URL, data=json.dumps(data).encode('utf-8'), method='POST',
-                      headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'})
+                      headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {token}',
+                               'User-Agent': 'Rumep-Content-Publisher/1.0'})
     try:
         with urlopen(request, timeout=8) as response:
             if response.status != 200:
                 logger.warning('Content push hook deferred: %s', response.status)
+    except HTTPError as error:
+        logger.warning('Content push hook HTTP %s; scheduled poll will retry', error.code)
     except Exception:
         # Saving content succeeds even if delivery must wait for the backup poll.
         # Never log credentials, payloads or URL exception details.

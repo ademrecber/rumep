@@ -40,6 +40,8 @@ class ContentNotificationTests(TestCase):
         request = post.call_args.args[0]
         self.assertEqual(json.loads(request.data)['id'], f'content:post:{p.pk}')
         self.assertEqual(request.full_url, 'https://amedspor-football-api.emrahrecber88.workers.dev/hooks/content-published')
+        # Cloudflare rejects urllib's default Python user agent with HTTP 403/1010.
+        self.assertEqual(request.get_header('User-agent'), 'Rumep-Content-Publisher/1.0')
         self.assertEqual(post.call_args.kwargs['timeout'], 8)
 
     def test_explicit_published_content_only_and_edit_does_not_resend(self):
