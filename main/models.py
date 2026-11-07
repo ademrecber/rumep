@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from .club_news_models import ClubNews, ClubNewsSync
 
 
 class SporTestApplication(models.Model):
