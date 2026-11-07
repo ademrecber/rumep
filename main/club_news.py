@@ -17,6 +17,7 @@ from .models import ClubNews, ClubNewsSync
 OFFICIAL = 'https://www.amedspor.com.tr/news'
 RSS = 'https://www.aspor.com.tr/rss/amed-sportif-faaliyetler.xml'
 log = logging.getLogger(__name__)
+SYNC_KEY = 'public-news-v2'
 
 
 def allowed_url(url, official=False):
@@ -117,7 +118,7 @@ def parse_official(url, html, now):
                 section = section or str(entry.get('articleSection', '')).lower()
         except (ValueError, AttributeError):
             continue
-    title = title or parser.heading
+    title = clean(parser.heading) or title
     # The official site also publishes a visible, explicitly year-stamped date.
     if not date:
         months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
@@ -129,17 +130,19 @@ def parse_official(url, html, now):
                 except ValueError:
                     pass
                 break
-    if not section and clean(parser.heading) in parser.texts:
-        index = parser.texts.index(clean(parser.heading))
+    if clean(parser.heading) in parser.texts:
+        index = max(i for i, text in enumerate(parser.texts) if text == clean(parser.heading))
         if index > 0:
-            section = parser.texts[index - 1].lower()
+            visible_section = parser.texts[index - 1].lower()
+            if visible_section in ('transfer', 'ayrilik', 'ayrılık', 'duyuru', 'genel'):
+                section = visible_section
     try:
         published = datetime.fromisoformat(date.replace('Z', '+00:00'))
         if published.tzinfo is None:
             return None
     except (ValueError, TypeError):
         return None
-    if not clean(title) or published > now or published < now - timedelta(days=365):
+    if clean(title).lower() in ('', 'amedspor', 'amedspor - resmi web sitesi') or published > now or published < now - timedelta(days=365):
         return None
     # Only explicit official categories or explicit departure announcements classify.
     kind = 'transfer' if section == 'transfer' else 'news'
@@ -171,7 +174,7 @@ def download(url):
 def sync_news(fetch=download):
     now = timezone.now()
     with transaction.atomic():
-        state, _ = ClubNewsSync.objects.get_or_create(key='public-news', defaults={'next_attempt_at': now})
+        state, _ = ClubNewsSync.objects.get_or_create(key=SYNC_KEY, defaults={'next_attempt_at': now})
         state = ClubNewsSync.objects.select_for_update().get(pk=state.pk)
         if state.next_attempt_at > now:
             return 0
@@ -194,7 +197,7 @@ def sync_news(fetch=download):
         index.feed(fetch(OFFICIAL).decode('utf-8', errors='replace'))
         # Scan only a bounded first page. Existing old links are not repeatedly downloaded.
         urls = index.links[:20]
-        known = set(ClubNews.objects.filter(source_url__in=urls).values_list('source_url', flat=True))
+        known = set(ClubNews.objects.filter(source_url__in=urls).exclude(title='Amedspor').values_list('source_url', flat=True))
         candidates = [url for url in urls if url not in known][:6]
         for url in candidates:
             try:
@@ -206,7 +209,7 @@ def sync_news(fetch=download):
         successes += 1
     except Exception as exc:
         errors.append('official:' + type(exc).__name__)
-    ClubNewsSync.objects.filter(pk='public-news').update(
+    ClubNewsSync.objects.filter(pk=SYNC_KEY).update(
         last_success_at=now if successes else state.last_success_at,
         last_error=','.join(errors)[:100])
     # A bounded metadata archive; never store source images or full article bodies.

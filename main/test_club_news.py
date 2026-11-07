@@ -28,10 +28,11 @@ class ClubNewsTests(TestCase):
         self.assertIsNone(parse_official(url, '<h1>Undated</h1>', timezone.now()))
 
     def test_visible_official_date_and_category(self):
-        html = '<span>transfer</span><h1>Resmî duyuru</h1><div>17 Ağustos 2026, 18:54</div>'
+        html = '<meta property="og:title" content="Amedspor"><span>Resmî duyuru</span><span>transfer</span><h1>Resmî duyuru</h1><div>17 Ağustos 2026, 18:54</div>'
         from datetime import datetime, timezone as tz
         row = parse_official('https://www.amedspor.com.tr/news/example', html, datetime(2026, 11, 8, tzinfo=tz.utc))
         self.assertEqual(row['kind'], 'transfer')
+        self.assertEqual(row['title'], 'Resmî duyuru')
         self.assertEqual(row['published_at'].year, 2026)
 
     def test_sync_is_bounded_idempotent_and_failure_keeps_rows(self):
