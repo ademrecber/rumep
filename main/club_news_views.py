@@ -7,7 +7,7 @@ from .club_news import SYNC_KEY
 
 @require_GET
 def club_news_api(request):
-    rows = ClubNews.objects.filter(is_hidden=False, published_at__lte=timezone.now()).exclude(title='Amedspor')[:100]
+    rows = ClubNews.objects.filter(is_hidden=False, is_official=True, source='Amedspor', published_at__lte=timezone.now()).exclude(title='Amedspor')[:100]
     state = ClubNewsSync.objects.filter(pk=SYNC_KEY).first()
     response = JsonResponse({'items': [dict(
         id=f'rumep-news:{row.pk}', kind=row.kind, title=row.title, body=row.summary,

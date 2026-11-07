@@ -3,11 +3,9 @@ import json
 import logging
 import re
 from datetime import datetime, timedelta, timezone as dt_timezone
-from email.utils import parsedate_to_datetime
 from html import unescape
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
-from xml.etree import ElementTree
 
 import requests
 from django.db import transaction
@@ -15,41 +13,18 @@ from django.utils import timezone
 from .models import ClubNews, ClubNewsSync
 
 OFFICIAL = 'https://www.amedspor.com.tr/news'
-RSS = 'https://www.aspor.com.tr/rss/amed-sportif-faaliyetler.xml'
 log = logging.getLogger(__name__)
 SYNC_KEY = 'public-news-v2'
 
 
-def allowed_url(url, official=False):
+def allowed_url(url, official=True):
     parsed = urlsplit(url)
-    hosts = {'www.amedspor.com.tr', 'amedspor.com.tr'} if official else {'www.aspor.com.tr'}
+    hosts = {'www.amedspor.com.tr', 'amedspor.com.tr'}
     return parsed.scheme == 'https' and parsed.hostname in hosts and not parsed.username and not parsed.password and parsed.port in (None, 443)
 
 
 def clean(text, limit=200):
     return re.sub(r'\s+', ' ', unescape(re.sub(r'<[^>]*>', '', text or ''))).strip()[:limit]
-
-
-def parse_rss(body, now):
-    if b'<!DOCTYPE' in body.upper() or b'<!ENTITY' in body.upper():
-        raise ValueError('unsupported_xml')
-    result = []
-    for item in ElementTree.fromstring(body).findall('./channel/item')[:60]:
-        url = (item.findtext('link') or '').strip()
-        title = clean(item.findtext('title'))
-        try:
-            published = parsedate_to_datetime(item.findtext('pubDate') or '')
-            if published.tzinfo is None:
-                continue
-        except (ValueError, TypeError):
-            continue
-        if not title or not allowed_url(url) or published > now or published < now - timedelta(days=120):
-            continue
-        # An RSS headline can contain a transfer rumour. It always stays press news.
-        result.append(dict(source_url=url, source='A Spor', title=title,
-            summary='A Spor’un Amedspor gündemindeki haberi. Açıklamalar ve ayrıntılar kaynak sayfasında.',
-            kind='news', published_at=published, is_official=False))
-    return result
 
 
 class OfficialIndex(HTMLParser):
@@ -187,11 +162,6 @@ def sync_news(fetch=download):
             url = record.pop('source_url')
             ClubNews.objects.update_or_create(source_url=url, defaults=record)
             total += 1
-    try:
-        store(parse_rss(fetch(RSS), now))
-        successes += 1
-    except Exception as exc:
-        errors.append('rss:' + type(exc).__name__)
     try:
         index = OfficialIndex()
         index.feed(fetch(OFFICIAL).decode('utf-8', errors='replace'))
