@@ -8,12 +8,14 @@ from scripts.start_production import main
 class ProductionStartTests(TestCase):
     def test_prepares_runtime_before_starting_gunicorn(self):
         with patch('scripts.start_production.subprocess.run') as run, \
+                patch('scripts.start_production.subprocess.Popen') as news, \
                 patch('scripts.start_production.os.execvp') as start, \
                 patch.dict('os.environ', {'PORT': '9000'}):
             main()
         self.assertEqual([c.args[0][2] for c in run.call_args_list], ['migrate', 'collectstatic'])
         self.assertTrue(all(c.kwargs['check'] for c in run.call_args_list))
         self.assertIn('0.0.0.0:9000', start.call_args.args[1])
+        self.assertIn('sync_club_news', news.call_args.args[0])
 
     def test_failed_migration_prevents_server_start(self):
         with patch('scripts.start_production.subprocess.run',

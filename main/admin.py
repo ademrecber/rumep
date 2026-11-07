@@ -7,6 +7,19 @@ from django.urls import reverse
 from .models import Wallpaper
 from .models import SporTestApplication
 from .models import SportPost, SportPostImage
+from .models import ClubNews
+
+
+@admin.register(ClubNews)
+class ClubNewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'source', 'kind', 'published_at', 'is_hidden')
+    list_filter = ('source', 'kind', 'is_hidden')
+    search_fields = ('title',)
+    readonly_fields = ('source_url', 'source', 'published_at', 'is_official', 'imported_at')
+    fields = ('title', 'summary', 'kind', 'is_hidden', 'source_url', 'source', 'published_at', 'is_official', 'imported_at')
+
+    def has_add_permission(self, request):
+        return False
 
 
 class SportPostImageForm(forms.ModelForm):

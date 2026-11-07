@@ -9,6 +9,8 @@ def main():
     # A failed migration must not start a partially prepared deployment.
     for command in ('migrate', 'collectstatic'):
         subprocess.run([sys.executable, 'manage.py', command, '--noinput'], check=True)
+    if os.environ.get('CLUB_NEWS_SYNC_ENABLED', 'true').lower() == 'true':
+        subprocess.Popen([sys.executable, 'manage.py', 'sync_club_news', '--loop'])
     os.execvp('gunicorn', [
         'gunicorn', 'rumep.wsgi:application',
         '--bind', f"0.0.0.0:{os.environ.get('PORT', '8080')}",
