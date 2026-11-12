@@ -26,7 +26,7 @@ def app_ads_txt_view(request):
     return HttpResponse('google.com, pub-8541321354650330, DIRECT, f08c47fec0942fa0\n', content_type='text/plain')
 
 def favicon_view(request):
-    favicon_path = os.path.join(settings.BASE_DIR, 'staticfiles', 'favicon.ico')
+    favicon_path = os.path.join(settings.BASE_DIR, 'main', 'static', 'favicon.ico')
     try:
         with open(favicon_path, 'rb') as f:
             return HttpResponse(f.read(), content_type='image/x-icon')

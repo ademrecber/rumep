@@ -2,6 +2,7 @@
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#151719"><meta name="description" content="Rumep Spor: Amedspor taraftarları için maç takibi, anlaşılır analizler ve duvar kâğıtları.">
 <title>{% block title %}Rumep Spor · Taraftarın yeri{% endblock %}</title>
+{% include 'main/favicon.html' %}
 <link rel="stylesheet" href="{% static 'rumep-spor/site.css' %}?v=6"></head>
 <body><header class="nav"><a class="brand" href="{% url 'rumep_spor' %}"><img src="{% static 'rumep-spor/logo.webp' %}" alt="Rumep Spor" width="58" height="42"><span>Rumep <strong>Spor</strong></span></a><nav aria-label="Ana gezinme"><a href="/">Ana sayfa</a><a href="{% url 'rumep_spor' %}#ozellikler">Keşfet</a><a href="{% url 'rumep_spor' %}#ekranlar">Ekranlar</a><a class="nav-download" href="https://play.google.com/store/apps/details?id=net.rumep.spor">Google Play’den indir <span aria-hidden="true">↗</span></a></nav></header>
 <main>{% block content %}{% endblock %}</main>
