@@ -1,143 +1,37 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
-{% block title %}Ana Sayfa{% endblock %}
-
+{% block title %}Fikirden uygulamaya{% endblock %}
+{% block body_class %}rumep-studio{% endblock %}
 {% block extra_css %}
-<style>
-    .rumep-home-hero{min-height:0;padding:48px 24px;margin-top:0}
-    .rumep-home-intro{width:100%;max-width:900px;min-width:0;padding:0}
-    .rumep-home-intro h1{font-size:clamp(28px,4.5vw,56px);line-height:1.15;letter-spacing:-.035em;overflow-wrap:anywhere;margin-bottom:18px}
-    .rumep-home-intro p{font-size:16px;max-width:620px;margin-bottom:24px}
-    .rumep-home-intro .text-gradient{display:inline-block;max-width:100%}
-    #projects{padding-top:40px;padding-bottom:48px;scroll-margin-top:90px}
-    #projects>.max-w-7xl>.text-center{margin-bottom:28px}
-    @media(max-width:640px){
-      .rumep-home-hero{padding:28px 20px 30px}
-      .rumep-home-intro h1{font-size:clamp(25px,7vw,34px);line-height:1.2;margin-bottom:14px}
-      .rumep-home-intro>span{margin-bottom:16px;font-size:10px}
-      .rumep-home-intro p{font-size:14px;line-height:1.65;margin-bottom:20px}
-      .rumep-home-intro>div{flex-direction:row;flex-wrap:wrap;gap:10px}
-      .rumep-home-intro>div>a{padding:11px 14px;font-size:12px;flex:1;min-width:130px}
-      #projects{padding:28px 20px 40px}
-      #projects h2{font-size:27px}
-      #projects .glass-card{padding:24px}
-    }
-
-    /* Landing Page Specific Styles */
-    .hero-gradient {
-        background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.3), transparent 40%),
-                    radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.3), transparent 40%),
-                    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    }
-
-    .text-gradient {
-        background: linear-gradient(to right, #fbbf24, #f87171, #22c55e);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    
-    .custom-btn-hero {
-        background: linear-gradient(90deg, #4f46e5, #ec4899);
-        border: none;
-        color: white;
-        position: relative;
-        z-index: 1;
-        overflow: hidden;
-    }
-    
-    .custom-btn-hero::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(90deg, #ec4899, #4f46e5);
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.3s ease;
-    }
-    
-    .custom-btn-hero:hover::before {
-        opacity: 1;
-    }
-</style>
+<link rel="preload" as="image" href="{% static 'main/images/studio-hero.webp' %}">
+<link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=2">
 {% endblock %}
-
 {% block content %}
-    <!-- Hero Section -->
-    <section class="rumep-home-hero relative flex items-center justify-center hero-gradient overflow-hidden">
-        <!-- Floating Elements -->
-        <div class="absolute top-1/4 left-10 w-24 h-24 bg-yellow-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-10 w-32 h-32 bg-red-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-green-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-
-        <div class="rumep-home-intro mx-auto text-center relative z-10">
-            <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wide text-indigo-300 mb-6 uppercase">
-                Rumep uygulamaları
-            </span>
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
-                Kendi fikirlerimiz.<br>
-                <span class="text-gradient">Kendi uygulamalarımız.</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Geliştirdiğimiz uygulamaları burada bir araya getiriyoruz. Rumep Spor’u ve Rumep Fontları’nı keşfet; özelliklerine göz at, yenilikleri takip et.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#projects" class="custom-btn-hero px-8 py-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 transform hover:-translate-y-1 transition-all">
-                    Uygulamaları keşfet
-                </a>
-                <a href="{% url 'rumep_spor' %}" class="px-8 py-4 rounded-xl font-semibold bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm">
-                    Rumep Spor’u incele
-                </a>
-            </div>
+<div class="home-wrap">
+<section class="studio-hero" aria-labelledby="home-title">
+    <div class="hero-layout">
+        <div class="hero-copy">
+            <span class="studio-label">BAĞIMSIZ UYGULAMA STÜDYOSU</span>
+            <h1 id="home-title">Bir fikirle<br>başlar.<br><span>Hayatına karışır.</span></h1>
+            <p>Merak ettiğimiz şeyleri, kullanmayı sevdiğimiz uygulamalara dönüştürüyoruz. Rumep’in dünyasına hoş geldin.</p>
+            <a class="home-primary" href="#projects">Uygulamaları keşfet <span aria-hidden="true">↘</span></a>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-24 px-6 relative bg-slate-900 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Uygulamalarımız</h2>
-                <div class="h-1 w-24 bg-gradient-to-r from-yellow-400 via-red-500 to-green-500 mx-auto rounded-full"></div>
-                <p class="text-slate-400 mt-4 max-w-xl mx-auto">Geliştirdiğimiz uygulamalar ve her birinin kendine özgü dünyası.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                
-                <!-- Rumep Spor Card -->
-                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-futbol text-9xl text-white"></i>
-                    </div>
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 text-white text-2xl">
-                         <img src="{% static 'rumep-spor/app-icon.png' %}" alt="Rumep Spor uygulama ikonu" width="56" height="56" class="w-full h-full rounded-xl object-cover">
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors">Rumep Spor</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        Amedspor taraftarları için maç takibi, anlaşılır analizler ve duvar kâğıtları. Takımının heyecanı cebinde.
-                    </p>
-                    <a href="{% url 'rumep_spor' %}" class="inline-flex items-center text-green-400 font-semibold hover:text-green-300 transition-colors">
-                        Uygulamaya Git <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-
-                <!-- Rumep Fonts Card -->
-                <div class="glass-card rounded-2xl p-8 relative group overflow-hidden">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-font text-9xl text-white"></i>
-                    </div>
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20 text-white text-2xl">
-                        <i class="fas fa-pen-nib"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-yellow-400 transition-colors">Rumep Fontları</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        Kürdistan Bayrağı'ndan ilham alan özel tasarım emojiler ve ikon setleri. Yazı tiplerinizi özelleştirin.
-                    </p>
-                    <a href="{% url 'font_list' %}" class="inline-flex items-center text-yellow-400 font-semibold hover:text-yellow-300 transition-colors">
-                        Fontları Keşfet <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="hero-visual" aria-hidden="true">
+            <img src="{% static 'main/images/studio-hero.webp' %}" alt="" width="1536" height="1024" fetchpriority="high">
         </div>
-    </section>
+    </div>
+</section>
+<section id="projects" class="app-section" aria-labelledby="apps-title">
+<div class="section-heading"><div><span class="studio-label">ÜRETTİKLERİMİZ</span><h2 id="apps-title">Küçük bir fikir.<br>Bambaşka bir dünya.</h2></div><p>Bugün burada Rumep Spor var.<br>Yeni fikirler de sıradaki yerini alacak.</p></div>
+<div class="app-grid">
+<article class="featured-app">
+<div class="app-art"><span class="app-status"><span class="status-dot"></span> GOOGLE PLAY’DE YAYINDA</span><span class="art-word" aria-hidden="true">OYUNUN<br>İÇİNDE KAL.</span><img class="app-phone" src="{% static 'rumep-spor/screen-1.webp' %}" alt="Rumep Spor sezon özeti ve maç takibi ekranı" width="720" height="1489" fetchpriority="high"><span class="art-category">SPOR / ANDROID</span></div>
+<div class="app-info"><div class="app-identity"><img src="{% static 'rumep-spor/app-icon.png' %}" width="56" height="56" alt=""><div><h3>Rumep Spor</h3><span>Takımının heyecanı, cebinde.</span></div></div><p>Amedspor taraftarları için maç takibi, sezon analizleri ve duvar kâğıtları. Taraftarlığın her anını tek bir yerde keşfet.</p><div class="app-tags"><span>Maç merkezi</span><span>Canlı takip</span><span>Analizler</span></div><div class="app-links"><a href="{% url 'rumep_spor' %}">Uygulamayı keşfet <span aria-hidden="true">↗</span></a><a class="store-link" href="https://play.google.com/store/apps/details?id=net.rumep.spor"><svg viewBox="0 0 24 26" width="16" height="18" aria-hidden="true"><path fill="#32bbff" d="M1 1 14 13 1 25Z"/><path fill="#00d26a" d="m1 1 16 9-3 3Z"/><path fill="#ffce00" d="m17 10 5 3-5 3-3-3Z"/><path fill="#ff435b" d="m1 25 13-12 3 3Z"/></svg> Google Play</a></div></div>
+</article>
+<aside class="next-app"><div class="next-top"><span class="studio-label">SIRADAKİ FİKİR</span><span aria-hidden="true">02 / …</span></div><div class="idea-art" aria-hidden="true"><span class="idea-orbit orbit-one"></span><span class="idea-orbit orbit-two"></span><span class="idea-core">✳</span><span class="idea-spark">+</span></div><div class="next-copy"><span class="next-label">MERAK DEVAM EDİYOR</span><h3>Burada yeni<br>bir şey filizlenecek.</h3><p>Her uygulama bir merakla başlıyor. Yeni projelerimizi hazır olduklarında burada bulacaksın.</p><span class="coming-label"><span class="status-dot"></span> Yeni uygulamalar yolda</span></div></aside>
+</div>
+</section>
+<section class="studio-about"><span class="studio-label">RUMEP HAKKINDA</span><div><h2>Kullanmaktan keyif alacağımız<br>şeyler yapıyoruz.</h2><p>Sade tasarım, işe yarayan özellikler ve her gün biraz daha iyi bir deneyim. Ürettiğimiz her şeyin arkasındaki düşünce bu.</p><a href="{% url 'about' %}">Bizi biraz daha tanı <span aria-hidden="true">↗</span></a></div></section>
+<section class="home-contact"><div><span class="studio-label">BİR FİKRİN Mİ VAR?</span><h2>Konuşarak başlayalım.</h2></div><a class="home-primary" href="{% url 'contact' %}">Bize ulaş <span aria-hidden="true">↗</span></a></section>
+</div>
 {% endblock %}
-

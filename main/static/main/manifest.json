@@ -1,7 +1,7 @@
 {
   "name": "Rumep - Kürt Kültür Platformu",
   "short_name": "Rumep",
-  "description": "Kürdistan'ın dijital kültür merkezi",
+  "description": "Rumep uygulamaları ve dijital araçları",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

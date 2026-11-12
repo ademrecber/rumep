@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta_description %}Rumep’in geliştirdiği uygulamaları keşfet: Rumep Spor ve Rumep Fontları.{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Rumep’in geliştirdiği uygulamaları keşfet: Rumep Spor.{% endblock %}">
     <meta name="theme-color" content="#0f172a">
     {% csrf_token %}
     
@@ -97,7 +97,7 @@
     <!-- External CSS -->
     {% block extra_css %}{% endblock %}
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen {% block body_class %}{% endblock %}">
     
     <!-- Navbar -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
@@ -111,7 +111,7 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="{% url 'landing_page' %}#projeler" class="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors">Projeler</a>
+                        <a href="{% url 'landing_page' %}#projects" class="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors">Projeler</a>
                         <a href="{% url 'about' %}" class="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors">Hakkımızda</a>
                         <a href="{% url 'contact' %}" class="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-colors">İletişim</a>
                         
@@ -129,7 +129,7 @@
         <!-- Mobile Menu -->
         <div class="hidden md:hidden bg-slate-900/95" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
-                <a href="{% url 'landing_page' %}#projeler" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projeler</a>
+                <a href="{% url 'landing_page' %}#projects" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projeler</a>
                 <a href="{% url 'about' %}" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Hakkımızda</a>
                 <a href="{% url 'contact' %}" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">İletişim</a>
                 
@@ -152,7 +152,7 @@
                         <span class="text-white">Rumep</span>
                     </a>
                     <p class="text-slate-500 text-sm">
-                        Kendi fikirlerimizden doğan uygulamalar. Rumep Spor ve Rumep Fontları burada.
+                        Kendi fikirlerimizden doğan uygulamalar. Rumep Spor burada.
                     </p>
                 </div>
                 
@@ -172,7 +172,6 @@
                 <div>
                     <h4 class="text-white font-semibold mb-4">Projeler</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li><a href="{% url 'font_list' %}" class="hover:text-white transition-colors">Rumep Fonts</a></li>
                         <li><a href="{% url 'rumep_spor' %}" class="hover:text-white transition-colors">Rumep Spor</a></li>
                         
                     </ul>
@@ -184,7 +183,7 @@
                 </p>
                 <div class="flex gap-4">
                     <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/rumepnet/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors" aria-label="Instagram’da @rumepnet"><i class="fab fa-instagram" aria-hidden="true"></i><span>@rumepnet</span></a>
                     <a href="#" class="text-slate-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
                 </div>
             </div>
