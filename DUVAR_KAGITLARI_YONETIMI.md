@@ -1,5 +1,17 @@
 # Rumep Stüdyo — duvar kağıdı yönetimi
 
+## 20 Kasım 2026 — içerik sınırları
+
+- Tribün: en yeni 40 yayımlanmış paylaşım. Sıra yayın tarihi ve kayıt numarasıdır.
+- Duvar kâğıdı: en yeni 50 yayımlanmış kayıt. Galeriyle aynı oluşturulma tarihi/kayıt numarası sırası kullanılır.
+- Yalnızca yeni yayın/taslaktan yayına geçiş sonrasında temizlik tetiklenir; okuma, normal düzenleme veya zamanlayıcı temizlik başlatmaz. Taslaklar silinmez. Yeni yayın sınırı aşmadıkça eski kayıtlar korunur.
+- Temizlik, yayın işlemi başarıyla tamamlandıktan sonra çalışır. Eski paylaşımın ek görselleri de temizlenir. Başka bir paylaşım, ek görsel veya duvar kâğıdı tarafından kullanılan dosyalar korunur. Dosyalar veritabanı silme işlemi commit edildikten sonra silinir. Depolama silme hataları loglanır; böyle bir durumda dosya artıkları kalabilir.
+- PostgreSQL'de aynı türün eşzamanlı temizlikleri işlem süresince kilitlenir. Yeni tablo/migration ve sürekli açık bağlantı eklenmedi.
+- Yönetim ekranındaki Yayında alanı, kalıcı temizleme sınırını açıklar. Sınırı aşan içerik kalıcı olarak silinir; geri dönüş kopyası üretilmez.
+- 29 yerel Django testi başarılı. Gerçek Neon/S3 silme işlemi yapılmadı. Neon kota kesintisi ve Cloudflare içerik taşıması bu değişiklikle çözülmüş değildir; canlı etkinlik ayrıca doğrulanmalıdır.
+
+Aşağıdaki kurulum notları tarihsel kayıttır.
+
 Yerel uygulama hazır; canlıya henüz dağıtılmadı.
 
 ## Hazırlananlar

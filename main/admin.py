@@ -37,6 +37,7 @@ class SportPostForm(forms.ModelForm):
     class Meta:
         model = SportPost
         fields = '__all__'
+        help_texts = {'is_published': 'Tribünde en yeni 40 yayın korunur. Yeni yayınla sınır aşılırsa en eski yayınlar ve kullanılmayan görselleri kalıcı olarak temizlenir. Taslaklar korunur.'}
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
@@ -104,6 +105,7 @@ class WallpaperForm(forms.ModelForm):
     class Meta:
         model = Wallpaper
         fields = '__all__'
+        help_texts = {'is_published': 'En yeni 50 yayındaki duvar kâğıdı korunur. Sınır aşılırsa en eskiler ve kullanılmayan görselleri kalıcı olarak temizlenir. Taslaklar korunur.'}
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
