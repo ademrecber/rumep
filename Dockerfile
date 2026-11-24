@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 8080
-CMD ["python", "scripts/start_production.py"]
+CMD ["python", "scripts/start_public.py"]
